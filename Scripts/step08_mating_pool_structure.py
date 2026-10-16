@@ -25,7 +25,7 @@ Figures/Phase5/step29d_mating_pool_structure.{png,pdf}
         collector 32-tetraploid-allele floor) — same convention as
         Figure 2b.
 
-Tables/Phase5/step29d_mating_pool_summary.tsv
+tables/step29d_mating_pool_summary.tsv
     One row per location with the mating-pool structure (number of
     pools, largest pool, median pool size, etc.) summarised.
 
@@ -45,8 +45,8 @@ from srk_bl_constants import (
     BL_COLORS, BL_ORDER, locationCode_to_bl, location_label_series,
 )
 
-DEFAULT_TABLES  = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES  = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 INPUT_LOOKUP    = DEFAULT_TABLES / "step29c_event_to_component_50m.tsv"
 
 

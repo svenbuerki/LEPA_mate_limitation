@@ -19,15 +19,15 @@ WITHIN-POPULATION (deme-level) — secondary diagnostic
 
 Reads
 -----
-Tables/Phase5/step30h_cluster_assignments.tsv       (Phase I)
-Tables/Phase5/step30h_population_distances.tsv      (Phase I)
-Tables/Phase5/step29a_demes_per_population_year.tsv
-Tables/Phase5/step29a_population_crosswalk.tsv
+tables/step30h_cluster_assignments.tsv       (Phase I)
+tables/step30h_population_distances.tsv      (Phase I)
+tables/step29a_demes_per_population_year.tsv
+tables/step29a_population_crosswalk.tsv
 
 Outputs
 -------
-Tables/Phase5/step30h_landscape_per_population.tsv
-Tables/Phase5/step30h_landscape_per_BL.tsv
+tables/step30h_landscape_per_population.tsv
+tables/step30h_landscape_per_BL.tsv
 """
 from __future__ import annotations
 
@@ -37,9 +37,9 @@ import numpy as np
 import pandas as pd
 from scipy.spatial import ConvexHull
 
-from step28_seed_sampling_per_mother import haversine_meters
+from step17_seed_sampling_per_mother import haversine_meters
 
-TABLES = Path("Tables/Phase5")
+TABLES = Path("tables")
 
 CONNECTIVITY_THRESHOLDS_M = [1_000, 2_000, 5_000, 10_000]
 
@@ -199,7 +199,7 @@ def within_population_deme_frag(demes_py: pd.DataFrame,
     from srk_bl_constants import make_location_label  # noqa: F401  (dependency check)
     # Reuse the connected_components function from step29a without
     # importing matplotlib etc.
-    from step29a_populations import connected_components, DEME_RADIUS_M
+    from step01_populations import connected_components, DEME_RADIUS_M
 
     cw_both = cw[cw["event_year"].isin((2025, 2026))].copy()
     cw_both = cw_both.dropna(subset=["lat", "lon"])

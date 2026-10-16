@@ -14,13 +14,13 @@ Inputs (read-only)
     /Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/SQL_DB/LEPA_SQL.db
 
 Outputs (SAMPLING family — no prediction machinery here)
-    Tables/Phase5/step29_sampling_per_event.tsv
+    tables/step29_sampling_per_event.tsv
         One row per event with recommended mothers to sample.
-    Tables/Phase5/step29_sampling_per_location.tsv
+    tables/step29_sampling_per_location.tsv
         One row per location with total sampling design.
-    Tables/Phase5/step29_location_coverage_curves.tsv
+    tables/step29_location_coverage_curves.tsv
         Analytical + simulated coverage curves binned by total location size.
-    figures/Phase5/step29_location_coverage_curves.png/pdf
+    figures/step29_location_coverage_curves.png/pdf
         Expected maternal-allele coverage vs mothers sampled per location.
 """
 from __future__ import annotations
@@ -38,8 +38,8 @@ DEFAULT_DB = Path(
     "/Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/"
     "SQL_DB/LEPA_SQL.db"
 )
-DEFAULT_TABLES = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 # Empirical prior over Fgs (same file used by Step 30).
 DEFAULT_PRIOR_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 # Per-mother sampling design from Step 28 — carries the ACTUAL per-mother
@@ -50,7 +50,7 @@ DEFAULT_STEP28_TSV = DEFAULT_TABLES / "step28_seed_sampling_per_mother.tsv"
 # LEPA is tetraploid (2n = 4x): every plant carries PLOIDY = 4 SRK allele
 # copies, and each seed carries PATERNAL_ALLELES_PER_SEED = 2 paternal
 # alleles. Sourced from Step 28 so both scripts stay in lock-step.
-from step28_seed_sampling_per_mother import (
+from step17_seed_sampling_per_mother import (
     PLOIDY,
     PATERNAL_ALLELES_PER_SEED,
     n_for_miss_probability,

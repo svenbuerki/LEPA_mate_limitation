@@ -31,14 +31,14 @@ Inputs (read-only)
         Taxonomy      — taxonID, genus, specificEpithet  (filter to LEPA)
 
 Outputs
-    Tables/Phase5/step28_seed_sampling_per_mother.tsv
+    tables/step28_seed_sampling_per_mother.tsv
         Per-mother design table (785 LEPA mothers).
-    Tables/Phase5/step28_coverage_curves_by_Nfertile.tsv
+    tables/step28_coverage_curves_by_Nfertile.tsv
         Analytical + simulated coverage curves at fixed N_fertile bins.
-    figures/Phase5/step28_coverage_curves.png/pdf
+    figures/step28_coverage_curves.png/pdf
         Expected coverage vs #seeds, one line per N_fertile bin, with
         simulation-CI ribbons.
-    figures/Phase5/step28_per_mother_budget.png/pdf
+    figures/step28_per_mother_budget.png/pdf
         Seed budget vs recommended n, coloured by N_fertile bin — flags
         mothers whose budget is insufficient.
 """
@@ -57,8 +57,8 @@ DEFAULT_DB = Path(
     "/Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/"
     "SQL_DB/LEPA_SQL.db"
 )
-DEFAULT_TABLES = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 
 # -----------------------------------------------------------------------------
 # Ploidy — Lepidium papilliferum is TETRAPLOID (2n = 4x). Every somatic plant

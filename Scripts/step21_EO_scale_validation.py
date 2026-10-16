@@ -10,7 +10,7 @@ Data scope
 Per-individual allele calls come from
 `Tables/Phase4/step23_individual_allele_genotypes_with_nulls.tsv` (368
 individuals, 23 EOs, 49 functional alleles + Allele_NULL). The
-allele → Fg mapping comes from `Tables/Phase5/step26i_L1_carrier_inventory.tsv`
+allele → Fg mapping comes from `tables/step26i_L1_carrier_inventory.tsv`
 (the same inventory that P1 was built from — 49 alleles across 32
 Fgs). Inclusion: EOs with n ≥ 10 individuals having ≥ 1 functional
 copy. Individuals with 0 functional copies (fully-null tetraploids)
@@ -58,7 +58,7 @@ from srk_si_model import (
 # ---------------------------------------------------------------------------
 # I/O
 # ---------------------------------------------------------------------------
-DEFAULT_TABLES  = Path("Tables/Phase5")
+DEFAULT_TABLES  = Path("tables")
 DEFAULT_FIGURES = Path("Figures/Phase5")
 DEFAULT_ALLELE_FG_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_INDIV_TSV = Path(

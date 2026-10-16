@@ -11,13 +11,13 @@ beyond the species-wide prior (§ C.0.c H2).
 
 Outputs
 -------
-Tables/Phase5/step30g_prediction_population_year.tsv
+tables/step30g_prediction_population_year.tsv
     one row per (populationID, year) with:
       - n_demes, N_fertile_total
       - pred_srk_diversity_mean / lo95 / hi95
       - pred_pcompat_mean / lo95 / hi95
 
-Tables/Phase5/step30g_across_year_comparison.tsv
+tables/step30g_across_year_comparison.tsv
     one row per populationID present in BOTH years with:
       - pred_srk_diversity 2025 vs 2026 (delta + CI overlap flag)
       - pred_pcompat 2025 vs 2026 (delta + CI overlap flag)
@@ -30,14 +30,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from step28_seed_sampling_per_mother import PLOIDY
-from step30_srk_diversity_prediction_vs_observed import build_p1_prior
+from step17_seed_sampling_per_mother import PLOIDY
+from step19_predictions_core import build_p1_prior
 from srk_si_model import (
     load_class_map, build_class_i_mask, load_zygosity_dist,
     sample_genotypes_empirical, p_compat_sporophytic_empirical,
 )
 
-TABLES = Path("Tables/Phase5")
+TABLES = Path("tables")
 
 N_REPLICATES = 150               # per-population-year replicates
 N_FATHERS    = 300               # candidate fathers in each p_compat call

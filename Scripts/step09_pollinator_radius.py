@@ -34,7 +34,7 @@ Outputs
 -------
     tables/Phase5/step30_A_radius_sensitivity_per_location.tsv
     tables/Phase5/step30_A_radius_sensitivity_summary.tsv
-    figures/Phase5/step30_A_radius_sensitivity.png/pdf
+    figures/step30_A_radius_sensitivity.png/pdf
 """
 from __future__ import annotations
 
@@ -45,7 +45,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from srk_bl_constants import BL_COLORS, BL_ORDER, locationCode_to_bl
-from step28_seed_sampling_per_mother import (
+from step17_seed_sampling_per_mother import (
     haversine_meters, K_pool, K_SPECIES_FG, PLOIDY,
     mothers_for_full_detection, n_for_miss_probability,
     load_all_events, DEFAULT_DB,
@@ -59,8 +59,8 @@ from srk_si_model import (
 
 RADII_M = [10, 25, 50, 75, 100, 150, 200]
 
-TABLES = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES = Path("tables")
+FIGURES = Path("figures")
 EVENT_TSV = TABLES / "step28_events_spatial_neighborhood.tsv"
 PRIOR_TSV = TABLES / "step26i_L1_carrier_inventory.tsv"
 LOCATIONS_TSV = TABLES / "step29_sampling_per_location.tsv"

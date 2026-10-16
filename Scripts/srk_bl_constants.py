@@ -161,21 +161,21 @@ def location_label_series(df: pd.DataFrame,
 # base.
 #   - locationCode_to_bl()  — OLD EO-based BL (via Tables/EO_*_summary.csv)
 #   - populationID_to_bl()  — NEW population-based BL (via
-#                             Tables/Phase5/step30h_populationID_crosswalk.tsv)
+#                             tables/step30h_populationID_crosswalk.tsv)
 # New Phase 5 scripts (step30h_*, step30g_* post-remap) use the new
 # BL. Legacy per-locationCode figures (step30, step30c-e) still use
 # the EO-based mapping; migrate those scripts individually as needed.
 #
 # BL_COLORS stay the same 5-colour Set1 palette (BL names BL1..BL5
 # are reused with new meanings). The new BL_ORDER is read from
-# Tables/Phase5/step30h_bl_definition.tsv (area DESC → connectivity
+# tables/step30h_bl_definition.tsv (area DESC → connectivity
 # DESC rule) and will typically read BL1 → BL5 directly.
 
 DEFAULT_POPULATION_BL_TSV = Path(
-    "Tables/Phase5/step30h_bl_definition.tsv"
+    "tables/step30h_bl_definition.tsv"
 )
 DEFAULT_POPULATION_CROSSWALK_TSV = Path(
-    "Tables/Phase5/step30h_populationID_crosswalk.tsv"
+    "tables/step30h_populationID_crosswalk.tsv"
 )
 
 

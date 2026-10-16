@@ -26,8 +26,8 @@ from matplotlib.patches import Patch
 
 from srk_bl_constants import BL_COLORS, make_location_label
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 # BL_ORDER for the NEW population-based BL framework = BL1 → BL5
 # (area DESC → connectivity DESC rule, locked in step30h Phase III).
