@@ -44,7 +44,7 @@ Outputs
 -------
     tables/Phase5/step30_A_fragmentation_per_event.tsv
     tables/Phase5/step30_A_fragmentation_per_location.tsv
-    figures/Phase5/step30_A_fragmentation_index.png/pdf
+    figures/step30_A_fragmentation_index.png/pdf
 """
 from __future__ import annotations
 
@@ -57,12 +57,12 @@ import matplotlib.pyplot as plt
 from srk_bl_constants import (
     BL_COLORS, BL_ORDER, locationCode_to_bl, make_location_label,
 )
-from step28_seed_sampling_per_mother import (
+from step17_seed_sampling_per_mother import (
     PLOIDY, K_SPECIES_FG, K_pool,
 )
 
-DEFAULT_TABLES = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 
 CONN_TSV  = DEFAULT_TABLES / "step29_location_connectivity.tsv"
 EVENT_TSV = DEFAULT_TABLES / "step28_events_spatial_neighborhood.tsv"

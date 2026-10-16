@@ -14,8 +14,8 @@ Two figure sets:
    outline. One figure per candidate; a 2x2 panel compares
    candidates.
 
-Reads Tables/Phase5/step29a_* and (if present) the step30g
-candidate selection; writes figures/Phase5/step29a_*.
+Reads tables/step29a_* and (if present) the step30g
+candidate selection; writes figures/step29a_*.
 """
 from __future__ import annotations
 
@@ -29,8 +29,8 @@ from scipy.spatial import ConvexHull
 
 from srk_bl_constants import BL_COLORS, BL_ORDER, locationCode_to_bl, make_location_label
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 OCC_COLORS = {
     "both_years": "#5e3c99",   # purple

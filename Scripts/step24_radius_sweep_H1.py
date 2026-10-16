@@ -37,7 +37,7 @@ Reuses `step28.load_all_events + haversine_meters`, `step28.PLOIDY`,
 
 Outputs
 -------
-Tables/Phase5/step30f_srk_diversity_radius_sweep.tsv
+tables/step30f_srk_diversity_radius_sweep.tsv
 Figures/Phase5/step30f_srk_diversity_radius_sweep.{png,pdf}
 """
 from __future__ import annotations
@@ -48,13 +48,13 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from step28_seed_sampling_per_mother import (
+from step17_seed_sampling_per_mother import (
     DEFAULT_DB, load_all_events, haversine_meters, PLOIDY,
 )
-from step30_srk_diversity_prediction_vs_observed import build_p1_prior
+from step19_predictions_core import build_p1_prior
 
-TABLES = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES = Path("tables")
+FIGURES = Path("figures")
 
 RADII_M = [10, 25, 50, 75, 100, 150]
 N_REPLICATES = 2000

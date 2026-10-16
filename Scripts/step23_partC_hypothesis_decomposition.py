@@ -59,13 +59,13 @@ of Class I's mass, killing Class I × Class I compatibility.
 
 Outputs
 -------
-Tables/Phase5/step30_B_partC_hypothesis_decomposition.tsv
+tables/step30_B_partC_hypothesis_decomposition.tsv
     One row per clean-overlap location with observed, three single-
     swap counterfactuals, and the full P1 prediction, each with
     bootstrap 95 % CIs. The columns `driver_within_class`,
     `driver_class_balance`, `driver_zygosity` give the fraction of
     the observed→P1 gap each factor explains in isolation.
-figures/Phase5/step30_B_partC_hypothesis_decomposition.png / .pdf
+figures/step30_B_partC_hypothesis_decomposition.png / .pdf
     Grouped bar chart per location.
 
 CLI
@@ -92,15 +92,15 @@ from srk_si_model import (
     load_zygosity_dist,
     p_compat_sporophytic_empirical,
 )
-from step30c_srk_validation_at_eo_level import (
+from step21_EO_scale_validation import (
     load_allele_to_fg,
     load_individuals,
     compute_local_f,
     bootstrap_pcompat_mean,
 )
 
-DEFAULT_TABLES  = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES  = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 DEFAULT_PRIOR_TSV = DEFAULT_TABLES / "step30_A_prediction_prior_frequencies.tsv"
 DEFAULT_ALLELE_FG_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_INDIV_TSV = Path(

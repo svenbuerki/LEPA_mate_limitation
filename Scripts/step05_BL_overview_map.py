@@ -7,7 +7,7 @@ structure.
 
 Outputs
 -------
-figures/Phase5/step30h_overview_by_BL.png / .pdf
+figures/step30h_overview_by_BL.png / .pdf
 """
 from __future__ import annotations
 
@@ -18,8 +18,8 @@ import numpy as np
 import pandas as pd
 from scipy.spatial import ConvexHull
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 # Okabe-Ito palette, extended for 5 BLs
 BL_COLORS = {

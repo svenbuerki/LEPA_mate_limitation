@@ -11,17 +11,17 @@ allele (pollen donor). The two spectra are then compared to prediction.
 
 Output families are kept separate:
 
-    Tables/Phase5/step30_A_prediction_*      ← Phase A (prior only, no seed data)
-    Tables/Phase5/step30_B_comparison_*      ← Phase B (needs observed seed data)
-    Tables/Phase5/step30_B_mate_limitation_* ← Phase B (needs seed + mother genotypes)
-    Tables/Phase5/step30_B_si_escape_*       ← Phase B (needs seed + mother genotypes)
-    figures/Phase5/step30_A_*                ← Phase A figures
-    figures/Phase5/step30_B_*                ← Phase B figures
+    tables/step30_A_prediction_*      ← Phase A (prior only, no seed data)
+    tables/step30_B_comparison_*      ← Phase B (needs observed seed data)
+    tables/step30_B_mate_limitation_* ← Phase B (needs seed + mother genotypes)
+    tables/step30_B_si_escape_*       ← Phase B (needs seed + mother genotypes)
+    figures/step30_A_*                ← Phase A figures
+    figures/step30_B_*                ← Phase B figures
 
 Inputs (read-only)
     /Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/SQL_DB/LEPA_SQL.db
-    Tables/Phase5/step26i_L1_carrier_inventory.tsv  (prior — species-wide Fg counts)
-    Tables/Phase5/step29_sampling_per_location.tsv  (locations + M recommended)
+    tables/step26i_L1_carrier_inventory.tsv  (prior — species-wide Fg counts)
+    tables/step29_sampling_per_location.tsv  (locations + M recommended)
 
 CLI
     python step30_srk_diversity_prediction_vs_observed.py
@@ -50,8 +50,8 @@ DEFAULT_DB = Path(
     "/Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/"
     "SQL_DB/LEPA_SQL.db"
 )
-DEFAULT_TABLES  = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES  = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 DEFAULT_PRIOR_TSV       = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_LOCATIONS_TSV   = DEFAULT_TABLES / "step29_sampling_per_location.tsv"
 DEFAULT_CONNECTIVITY_TSV = DEFAULT_TABLES / "step29_location_connectivity.tsv"
@@ -160,7 +160,7 @@ def predicted_diversity_per_location(
             per-component pool size, coverage, and the share of
             mothers/seeds the proportional allocation gave it.
     """
-    from step28_seed_sampling_per_mother import PLOIDY, PATERNAL_ALLELES_PER_SEED
+    from step17_seed_sampling_per_mother import PLOIDY, PATERNAL_ALLELES_PER_SEED
 
     freqs = draw_frequencies(prior, N_POSTERIOR_DRAWS, rng)   # (draws, K_fg)
     f_mean = prior["f_mean"].values
@@ -351,7 +351,7 @@ def predicted_diversity_matched_to_seeds(seeds: pd.DataFrame,
     pollen donor's gamete). Use this in comparisons so the y-axis
     (observed) and x-axis (predicted) are on the same detection scale.
     """
-    from step28_seed_sampling_per_mother import PLOIDY, PATERNAL_ALLELES_PER_SEED
+    from step17_seed_sampling_per_mother import PLOIDY, PATERNAL_ALLELES_PER_SEED
     alleles_per_seed = PLOIDY // 2 + PATERNAL_ALLELES_PER_SEED    # 2 + 2 = 4
     freqs = draw_frequencies(prior, N_POSTERIOR_DRAWS, rng)
     rows = []
@@ -377,7 +377,7 @@ def predicted_pcompat_distribution(prior: pd.DataFrame,
     from the P1 prior — one row per mother with her genotype (4 alleles)
     and her analytical sporophytic P_compat.
     """
-    from step28_seed_sampling_per_mother import PLOIDY
+    from step17_seed_sampling_per_mother import PLOIDY
     from srk_si_model import (
         load_class_map, build_class_i_mask,
         load_zygosity_dist, sample_genotypes_empirical,
@@ -459,7 +459,7 @@ def predicted_pcompat_per_location(
             readers can see which components inside a fragmented
             location are predicted to struggle.
     """
-    from step28_seed_sampling_per_mother import PLOIDY
+    from step17_seed_sampling_per_mother import PLOIDY
     from srk_si_model import (
         load_class_map,
         build_class_i_mask,

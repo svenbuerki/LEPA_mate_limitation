@@ -43,7 +43,7 @@ STAGE 3  Below-expectation detection per (populationID, year):
                mean_resid < 0
 STAGE 4  Outputs:
              tables/Phase5/step30i_size_seed_population_strata.tsv
-             figures/Phase5/step30i_size_seed_population.png / .pdf
+             figures/step30i_size_seed_population.png / .pdf
 
 Conventions
 -----------
@@ -68,8 +68,8 @@ from statsmodels.stats.multitest import fdrcorrection
 
 from srk_bl_constants import BL_COLORS
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 DB_PATH = Path(
     "/Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/"

@@ -1,6 +1,6 @@
 """Step 29a — per-population per-year deme-size figure.
 
-Visualises the data in `Tables/Phase5/step29a_demes_per_population_year.tsv`
+Visualises the data in `tables/step29a_demes_per_population_year.tsv`
 (258 rows, one per (population, year, deme)) as a per-BL faceted figure:
 one row per population, two years overlaid as the open/filled circle
 convention used across Phase 5 (see Figures 8 and 10 of the compact
@@ -24,7 +24,7 @@ Design
 
 Output
 ------
-    figures/Phase5/step29a_demes_per_population_year.png + .pdf
+    figures/step29a_demes_per_population_year.png + .pdf
 
 The `populationID → locationCode(s)` lookup is in
 `step30g_populations_classified.tsv` (compact doc § Populations has
@@ -41,8 +41,8 @@ from matplotlib.lines import Line2D
 
 from srk_bl_constants import BL_COLORS
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 NEW_BL_ORDER = ["BL1", "BL2", "BL3", "BL4", "BL5"]
 Y_OFFSET     = 0.14   # vertical half-offset between year strips

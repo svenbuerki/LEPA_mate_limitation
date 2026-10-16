@@ -25,17 +25,17 @@ Approach
 
 Outputs
 -------
-Tables/Phase5/step30h_population_distances.tsv
+tables/step30h_population_distances.tsv
     long-form distance matrix (populationA, populationB,
     distance_m, pair label).
-Tables/Phase5/step30h_cluster_assignments.tsv
+tables/step30h_cluster_assignments.tsv
     populationID → cluster label at k_optimal, k=5 (for comparison
     with the old BL cardinality), and a tagged `cluster_k_optimal`
     column that becomes the input to Phase II / III.
-Tables/Phase5/step30h_silhouette_curve.tsv
+tables/step30h_silhouette_curve.tsv
     k vs silhouette coefficient; the whole curve for the report.
-figures/Phase5/step30h_dendrogram.png / .pdf
-figures/Phase5/step30h_silhouette_curve.png / .pdf
+figures/step30h_dendrogram.png / .pdf
+figures/step30h_silhouette_curve.png / .pdf
 """
 from __future__ import annotations
 
@@ -48,10 +48,10 @@ from scipy.cluster.hierarchy import dendrogram, fcluster, linkage
 from scipy.spatial.distance import squareform
 from sklearn.metrics import silhouette_score
 
-from step28_seed_sampling_per_mother import haversine_meters
+from step17_seed_sampling_per_mother import haversine_meters
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 K_RANGE = range(2, 11)
 

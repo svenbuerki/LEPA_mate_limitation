@@ -16,7 +16,7 @@ What this script does, per clean-overlap location:
     (`step30_A_prediction_location_pcompat.tsv` +
     `step30_A_prediction_location_diversity.tsv`)
 
-Outputs (all in `Tables/Phase5/` with the Phase-B naming convention,
+Outputs (all in `tables/` with the Phase-B naming convention,
 so they live alongside demo / future real seed-based outputs):
   step30_B_partC_clean_overlap_per_location.tsv
       One row per clean location with observed vs predicted P_compat
@@ -25,7 +25,7 @@ so they live alongside demo / future real seed-based outputs):
       Long form (location x Fg) with observed f, species-wide P1 f,
       and whether the Fg is present at the location.
 
-And a figure in `figures/Phase5/`:
+And a figure in `figures/`:
   step30_B_partC_clean_overlap.png / .pdf
       Three panels per location: observed vs predicted P_compat (dot
       + 95 % CI), observed vs predicted distinct Fg count, observed
@@ -64,15 +64,15 @@ from srk_si_model import (
 
 # step30c already has the per-individual loader and the local-f /
 # bootstrap helpers; reuse them to keep the model identical.
-from step30c_srk_validation_at_eo_level import (
+from step21_EO_scale_validation import (
     load_allele_to_fg,
     load_individuals,
     compute_local_f,
     bootstrap_pcompat_mean,
 )
 
-DEFAULT_TABLES  = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES  = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 DEFAULT_PRIOR_TSV   = DEFAULT_TABLES / "step30_A_prediction_prior_frequencies.tsv"
 DEFAULT_ALLELE_FG_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_INDIV_TSV   = Path(

@@ -17,8 +17,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 STABLE_COLOR   = "#5e3c99"  # purple — same as both-years occupancy
 UNSTABLE_COLOR = "#D55E00"  # vermillion

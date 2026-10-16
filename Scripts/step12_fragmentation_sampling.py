@@ -43,7 +43,7 @@ Outputs
 -------
     tables/Phase5/step29c_sampling_frag_aware_per_event.tsv
     tables/Phase5/step29c_sampling_comparison_per_location.tsv
-    figures/Phase5/step29c_sampling_comparison.png/pdf
+    figures/step29c_sampling_comparison.png/pdf
 """
 from __future__ import annotations
 
@@ -53,7 +53,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from step28_seed_sampling_per_mother import (
+from step17_seed_sampling_per_mother import (
     haversine_meters,
     mothers_for_full_detection,
     n_for_miss_probability,
@@ -71,8 +71,8 @@ from srk_bl_constants import (
 # n_seedlings_expected in step29c_partC_germplasmID_selection.tsv.
 GERMINATION_RATE = 0.60
 
-DEFAULT_TABLES = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 
 EVENT_TSV = DEFAULT_TABLES / "step28_events_spatial_neighborhood.tsv"
 CURRENT_M_TSV = (DEFAULT_TABLES /

@@ -18,10 +18,10 @@ existing output — no simulation is re-run.
 
 Outputs
 -------
-Tables/Phase5/step30h_bl_definition.tsv
+tables/step30h_bl_definition.tsv
     one row per BL with ordering keys (area, connectivity),
     centroid, population count, total N_fert.
-Tables/Phase5/step30h_populationID_crosswalk.tsv
+tables/step30h_populationID_crosswalk.tsv
     old → new populationID + old cluster → new BL mapping.
 
 Rewrites (new populationID + BL columns):
@@ -40,7 +40,7 @@ Rewrites (new populationID + BL columns):
     step30h_landscape_per_BL.tsv
 
 A backup copy of every rewritten TSV is first written to
-Tables/Phase5/_bl_renumber_backup/ so the pre-Phase-III state is
+tables/_bl_renumber_backup/ so the pre-Phase-III state is
 recoverable.
 """
 from __future__ import annotations
@@ -50,7 +50,7 @@ from pathlib import Path
 
 import pandas as pd
 
-TABLES = Path("Tables/Phase5")
+TABLES = Path("tables")
 BACKUP_DIR = TABLES / "_bl_renumber_backup"
 
 # Which column in each file carries the OLD populationID that we

@@ -28,7 +28,7 @@ Algorithm
    and 2026 above-ground, with ≥ 2 re-visited slickspots, ranked by
    total n_fertile.
 
-Outputs (Tables/Phase5/)
+Outputs (tables/)
 ------------------------
     step29a_population_crosswalk.tsv
     step29a_slickspot_summary.tsv
@@ -44,7 +44,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from step28_seed_sampling_per_mother import (
+from step17_seed_sampling_per_mother import (
     DEFAULT_DB, load_all_events, haversine_meters,
 )
 from srk_bl_constants import locationCode_to_bl
@@ -55,7 +55,7 @@ POPULATION_GAP_M   = 500.0    # population-level separation threshold
 DEME_RADIUS_M      = 50.0     # within-year deme radius (same as Phase 5 primary)
 YEARS              = (2025, 2026)
 
-TABLES = Path("Tables/Phase5")
+TABLES = Path("tables")
 
 
 # ---------------------------------------------------------------------------
@@ -379,32 +379,32 @@ def main() -> None:
     ).reset_index(drop=True)
     (TABLES / "step29a_population_crosswalk.tsv").write_text("")
     cw.to_csv(TABLES / "step29a_population_crosswalk.tsv", sep="\t", index=False)
-    print(f"[step29a] Wrote Tables/Phase5/step29a_population_crosswalk.tsv")
+    print(f"[step29a] Wrote tables/step29a_population_crosswalk.tsv")
 
     # ---- Slickspot summary ----
     slickspots_out = slickspots.copy()
     slickspots_out["locationCode"] = slickspots_out["locationID"].map(locid_to_loccode)
     slickspots_out.to_csv(TABLES / "step29a_slickspot_summary.tsv",
                            sep="\t", index=False)
-    print(f"[step29a] Wrote Tables/Phase5/step29a_slickspot_summary.tsv")
+    print(f"[step29a] Wrote tables/step29a_slickspot_summary.tsv")
 
     # ---- Population summary ----
     pop_sum = population_summary(slickspots, demes, locid_to_loccode)
     pop_sum.to_csv(TABLES / "step29a_population_summary.tsv",
                     sep="\t", index=False)
-    print(f"[step29a] Wrote Tables/Phase5/step29a_population_summary.tsv")
+    print(f"[step29a] Wrote tables/step29a_population_summary.tsv")
 
     # ---- Seed-cleaning priority ----
     cands = seedcleaning_priority(pop_sum)
     cands.to_csv(TABLES / "step29a_seedcleaning_priority.tsv",
                   sep="\t", index=False)
-    print(f"[step29a] Wrote Tables/Phase5/step29a_seedcleaning_priority.tsv  "
+    print(f"[step29a] Wrote tables/step29a_seedcleaning_priority.tsv  "
           f"({len(cands)} candidate populations)")
 
     # ---- Per-population-year demes ----
     demes.to_csv(TABLES / "step29a_demes_per_population_year.tsv",
                   sep="\t", index=False)
-    print(f"[step29a] Wrote Tables/Phase5/step29a_demes_per_population_year.tsv")
+    print(f"[step29a] Wrote tables/step29a_demes_per_population_year.tsv")
 
     # ---- Headline numbers ----
     occ = pop_sum["occupancy"].value_counts().to_dict()

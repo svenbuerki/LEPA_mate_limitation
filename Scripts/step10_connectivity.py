@@ -37,9 +37,9 @@ form mating clusters, others sit alone.
 
 Outputs
 -------
-Tables/Phase5/step29_location_connectivity.tsv
+tables/step29_location_connectivity.tsv
     One row per location with the metrics above at R = 10 / 25 / 50 m.
-figures/Phase5/step29_location_connectivity.png
+figures/step29_location_connectivity.png
     Per-location bar chart of `connected_share_10m`, panelled by BL
     (using the project-wide BL palette / order).
 """
@@ -51,11 +51,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from step28_seed_sampling_per_mother import haversine_meters
+from step17_seed_sampling_per_mother import haversine_meters
 from srk_bl_constants import BL_COLORS, BL_ORDER, locationCode_to_bl
 
-DEFAULT_TABLES = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 INPUT_SPATIAL = DEFAULT_TABLES / "step28_events_spatial_neighborhood.tsv"
 INPUT_LOCATIONS = DEFAULT_TABLES / "step29_sampling_per_location.tsv"
 RADII_M = (10.0, 25.0, 50.0)

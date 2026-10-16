@@ -72,8 +72,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-DEFAULT_CLASS_TSV = Path("Tables/Phase5/srk_fg_class.tsv")
-DEFAULT_ZYGOSITY_TSV = Path("Tables/Phase5/srk_zygosity_empirical.tsv")
+DEFAULT_CLASS_TSV = Path("tables/srk_fg_class.tsv")
+DEFAULT_ZYGOSITY_TSV = Path("tables/srk_zygosity_empirical.tsv")
 
 
 def load_class_map(tsv_path: Path = DEFAULT_CLASS_TSV) -> dict[str, str]:

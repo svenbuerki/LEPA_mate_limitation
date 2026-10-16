@@ -18,8 +18,8 @@ into one master table that lists every population with its:
 
 Outputs
 -------
-Tables/Phase5/step30g_populations_classified.tsv
-figures/Phase5/step30g_populations_classified.png / .pdf
+tables/step30g_populations_classified.tsv
+figures/step30g_populations_classified.png / .pdf
 """
 from __future__ import annotations
 
@@ -32,8 +32,8 @@ from matplotlib.patches import Rectangle
 
 from srk_bl_constants import make_location_label
 
-TABLES  = Path("Tables/Phase5")
-FIGURES = Path("figures/Phase5")
+TABLES  = Path("tables")
+FIGURES = Path("figures")
 
 CRASH_RATIO  = 0.25
 GROWTH_RATIO = 4.0
@@ -287,7 +287,7 @@ def main() -> None:
     df_write = df.drop(columns=["class_rank", "bl_rank"], errors="ignore")
     df_write.to_csv(TABLES / "step30g_populations_classified.tsv",
                      sep="\t", index=False)
-    print("[step30g-classified] Wrote Tables/Phase5/step30g_populations_classified.tsv")
+    print("[step30g-classified] Wrote tables/step30g_populations_classified.tsv")
     print()
     print("Class counts:")
     print(df["trend_class"].value_counts().reindex(CLASS_ORDER)

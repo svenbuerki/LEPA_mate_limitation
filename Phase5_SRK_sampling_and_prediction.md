@@ -136,11 +136,11 @@ mothers in DB, predicted pollen compatibility 0.779):
 
 **B1 is recommended** (★): it maximises within-BL contrast
 sharpness while holding BL identity constant. Full pair evaluations
-in [step29c_partC_between_location_candidates.tsv](Tables/Phase5/step29c_partC_between_location_candidates.tsv).
+in [step29c_partC_between_location_candidates.tsv](tables/step29c_partC_between_location_candidates.tsv).
 Per-mother sampling recipe (germplasmIDs to pull from the LEPA DB,
 with per-deme allocation, seeds-to-germinate and seedlings-to-
 genotype columns, 60 % germination correction baked in) in
-[step29c_partC_germplasmID_selection.tsv](Tables/Phase5/step29c_partC_germplasmID_selection.tsv).
+[step29c_partC_germplasmID_selection.tsv](tables/step29c_partC_germplasmID_selection.tsv).
 
 ## Contents
 
@@ -332,12 +332,12 @@ starting from the spatial hierarchy above:
 
 1. **Location → events.** A location's raw census
    `total_n_fertile` is the sum of per-event `n_fertile` counts
-   across all its 50 m-resolved events ([`step28_events_spatial_neighborhood.tsv`](tables/Phase5/step28_events_spatial_neighborhood.tsv)).
+   across all its 50 m-resolved events ([`step28_events_spatial_neighborhood.tsv`](tables/step28_events_spatial_neighborhood.tsv)).
 
 2. **Events → 50 m components.** For each location, build a graph on
    its events: two events are connected if their fertile plants sit
    within ≤ 50 m. Connected components of that graph are the 50 m
-   components `component_id_50m` ([`step29c_event_to_component_50m.tsv`](tables/Phase5/step29c_event_to_component_50m.tsv),
+   components `component_id_50m` ([`step29c_event_to_component_50m.tsv`](tables/step29c_event_to_component_50m.tsv),
    written by Step 29c; the same connectivity logic is reported at
    location scale in Step 29b).
 
@@ -358,8 +358,8 @@ starting from the spatial hierarchy above:
    `component_N_fertile_c`; per-component sampling is simulated
    against each component's own frequency vector; the location
    detected count is the union across components. Outputs:
-   [`step30_A_prediction_location_diversity.tsv`](tables/Phase5/step30_A_prediction_location_diversity.tsv)
-   + [`step30_A_prediction_component_diversity.tsv`](tables/Phase5/step30_A_prediction_component_diversity.tsv).
+   [`step30_A_prediction_location_diversity.tsv`](tables/step30_A_prediction_location_diversity.tsv)
+   + [`step30_A_prediction_component_diversity.tsv`](tables/step30_A_prediction_component_diversity.tsv).
 
 5. **Effective deme → pollen compatibility prediction (per
    component).** From each component's local Fg frequency vector,
@@ -371,8 +371,8 @@ starting from the spatial hierarchy above:
    P_compat**, Σ_c P_compat_c · component_N_fertile_c / Σ_c
    component_N_fertile_c (a continuous rate, so size-weighted mean,
    not union). Outputs:
-   [`step30_A_prediction_location_pcompat.tsv`](tables/Phase5/step30_A_prediction_location_pcompat.tsv)
-   + [`step30_A_prediction_component_pcompat.tsv`](tables/Phase5/step30_A_prediction_component_pcompat.tsv).
+   [`step30_A_prediction_location_pcompat.tsv`](tables/step30_A_prediction_location_pcompat.tsv)
+   + [`step30_A_prediction_component_pcompat.tsv`](tables/step30_A_prediction_component_pcompat.tsv).
 
 The whole causal chain of this framework — fragmentation → genetic
 drift → mate limitation — enters the predictions through step 3
@@ -477,10 +477,10 @@ design derived from it:
 > alleles per egg. Every seed therefore carries **2 maternal + 2
 > paternal SRK alleles** (not 1 + 1). This is baked into every
 > count-based formula in Parts A and B via a single project-wide
-> constant `PLOIDY = 4` (see `step28_seed_sampling_per_mother.py`).
+> constant `PLOIDY = 4` (see `step17_seed_sampling_per_mother.py`).
 > **The sporophytic self-incompatibility model** with Class I / Class II
 > dominance now drives § A.7's pollen compatibility formula ([`srk_si_model.py`](srk_si_model.py)
-> + [`tables/Phase5/srk_fg_class.tsv`](tables/Phase5/srk_fg_class.tsv))
+> + [`tables/srk_fg_class.tsv`](tables/srk_fg_class.tsv))
 > and Phase C's β₁ interpretation follows the new sporophytic scale.
 
 Every Phase A prediction below is built on a **species-wide empirical
@@ -574,8 +574,8 @@ numbers are the union (diversity, a set) or the size-weighted mean
 (pollen compatibility, a continuous rate) of the component-level
 results.
 
-**Prediction outputs.** Kept in `tables/Phase5/` prefixed
-`step30_A_prediction_*` and figures under `figures/Phase5/step30_A_*`.
+**Prediction outputs.** Kept in `tables/` prefixed
+`step30_A_prediction_*` and figures under `figures/step30_A_*`.
 They can be produced today, without any seed data at all. The
 corresponding *comparison* outputs (Phase B, once seed genotypes exist)
 carry a different prefix (`step30_B_*`) so prediction and comparison
@@ -714,10 +714,10 @@ beyond P1 (the H2 scenario of § C.0.c, now observable in the
 project's own data rather than needing a decades-long historical
 baseline).
 
-**Script.** `step29a_populations.py` builds the crosswalk +
-population-structure summary; `step30g_population_year_predictions.py`
+**Script.** `step01_populations.py` builds the crosswalk +
+population-structure summary; `step14_year_predictions.py`
 runs the per (populationID, year) SRK diversity + pollen
-compatibility simulation; `step29a_population_maps.py` draws the
+compatibility simulation; `step02_population_maps.py` draws the
 overview + candidate zoom figures.
 
 **Dataset-wide results (first run, 2025 + 2026 pooled).** Site
@@ -747,7 +747,7 @@ the appropriate across-year axis.
   be split, consistent with the metapopulation framing). The full
   crosswalk — DB locationID ↔ Phase 5 locationCode ↔ slickspot ↔
   (year, eventID) ↔ populationID — is in
-  [`step29a_population_crosswalk.tsv`](tables/Phase5/step29a_population_crosswalk.tsv),
+  [`step29a_population_crosswalk.tsv`](tables/step29a_population_crosswalk.tsv),
   so every legacy reference stays traceable through the new
   population frame.
 
@@ -785,7 +785,7 @@ split only the two spatial extremes; *k* ≥ 6 subdivides within
 BLs without raising the silhouette.
 
 <a id="fig-1c"></a>
-![Figure 1c](figures/Phase5/step30h_dendrogram.png)
+![Figure 1c](figures/step30h_dendrogram.png)
 
 **Figure 1c.** Ward's D2 dendrogram of the 44 Phase 5 populations
 on pairwise haversine distances (y-axis = linkage distance in
@@ -795,12 +795,12 @@ Phase 5. Leaf labels are the **post-numbering** populationIDs
 (populationID = position within BL on this dendrogram, numbered
 sequentially from BL1 to BL5), so adjacent IDs within a BL are
 also adjacent on the clustering tree. Source:
-`step30h_population_clustering.py`. Data:
-[`step30h_cluster_assignments.tsv`](tables/Phase5/step30h_cluster_assignments.tsv),
-[`step30h_population_distances.tsv`](tables/Phase5/step30h_population_distances.tsv).
+`step03_BL_clustering.py`. Data:
+[`step30h_cluster_assignments.tsv`](tables/step30h_cluster_assignments.tsv),
+[`step30h_population_distances.tsv`](tables/step30h_population_distances.tsv).
 
 <a id="fig-1d"></a>
-![Figure 1d](figures/Phase5/step30h_silhouette_curve.png)
+![Figure 1d](figures/step30h_silhouette_curve.png)
 
 **Figure 1d.** Silhouette curve for the Ward's D2 clustering,
 *k* = 2 … 10. *k*<sub>optimal</sub> = 5 (orange dashed line,
@@ -808,8 +808,8 @@ silhouette = 0.732); the *k* = 5 reference from the old Phase 4
 EO-level BL framework (grey dotted line) coincides with the
 optimum — the Snake River Plain population structure partitions
 into the same five groups that the EO-level analysis found two
-years earlier. Source: `step30h_population_clustering.py`. Data:
-[`step30h_silhouette_curve.tsv`](tables/Phase5/step30h_silhouette_curve.tsv).
+years earlier. Source: `step03_BL_clustering.py`. Data:
+[`step30h_silhouette_curve.tsv`](tables/step30h_silhouette_curve.tsv).
 
 **BL definition rule — area DESC → connectivity DESC.** The five
 Ward clusters are relabeled **BL1 … BL5** by (i) convex-hull area
@@ -834,10 +834,10 @@ within 5 km) and carries the drift-collapsed EO24 tail. Full
 per-BL landscape metrics (hull area, within-BL pair distances at
 1 / 2 / 5 / 10 km thresholds, min between-BL distance, centroid
 lat/lon) are in
-[`step30h_landscape_per_BL.tsv`](tables/Phase5/step30h_landscape_per_BL.tsv);
+[`step30h_landscape_per_BL.tsv`](tables/step30h_landscape_per_BL.tsv);
 per-population landscape metrics (BL membership + distance to
 nearest population in each other BL) are in
-[`step30h_landscape_per_population.tsv`](tables/Phase5/step30h_landscape_per_population.tsv).
+[`step30h_landscape_per_population.tsv`](tables/step30h_landscape_per_population.tsv).
 
 **Within-BL numbering: dendrogram leaf order.** Within each BL,
 populations are renumbered **sequentially by their dendrogram
@@ -850,13 +850,13 @@ clustering neighbours — making selection of comparable within-BL
 pairs for the Objective 3 test design (§ C.5–C.6) direct from the
 row ordering of every per-population figure. The renumbering is
 applied as a pure remap of all step29a / step30g / step30h TSVs
-by `step30h_define_bl.py`, with a `_bl_renumber_backup/` snapshot
+by `step04_BL_definition.py`, with a `_bl_renumber_backup/` snapshot
 of the pre-renumbering state kept for traceability. Old → new
 populationID mapping is in
-[`step30h_populationID_crosswalk.tsv`](tables/Phase5/step30h_populationID_crosswalk.tsv).
+[`step30h_populationID_crosswalk.tsv`](tables/step30h_populationID_crosswalk.tsv).
 
 <a id="fig-1e"></a>
-![Figure 1e](figures/Phase5/step30h_overview_by_BL.png)
+![Figure 1e](figures/step30h_overview_by_BL.png)
 
 **Figure 1e.** The 44 Phase 5 populations across the Snake River
 Plain, coloured by Bottleneck Lineage. Dot size ∝ total
@@ -865,7 +865,7 @@ matching colour. BL1 (14 populations, purple, N-E group, largest
 area), BL2 (9 populations, blue, S group), BL3 (11 populations,
 red, central-W group), BL4 (6 populations, orange, NW group), BL5
 (4 populations, green, far-W, drift-collapsed EO24 tail). Source:
-`step30h_bl_overview_map.py`.
+`step05_BL_overview_map.py`.
 
 #### A.5.0b Across-year population dynamic (Step 30g)
 
@@ -923,7 +923,7 @@ analysis** (`step30g_stable_candidate_pair.tsv`):
   compatibility 0.759 → 0.752 (stable at a tiny scale).
 
 <a id="fig-1f"></a>
-![Figure 1f](figures/Phase5/step30g_populations_classified.png)
+![Figure 1f](figures/step30g_populations_classified.png)
 
 **Figure 1f.** The 44 Phase 5 populations grouped by across-year
 trend class, each class as a vertical panel. Within each class
@@ -941,11 +941,11 @@ stable populations are BL1-dominant (4 populations); the four
 growth populations are BL3-dominant (3 populations); the eleven
 2026-only populations are BL1-dominant (7 populations, mostly
 EO27 variants that emerged in 2026 after a dry 2025). Source:
-`step30g_classified_summary.py`. Master table:
-[`step30g_populations_classified.tsv`](tables/Phase5/step30g_populations_classified.tsv).
+`step16_populations_classified.py`. Master table:
+[`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv).
 
 <a id="fig-1g"></a>
-![Figure 1g](figures/Phase5/step30g_across_year_scatter.png)
+![Figure 1g](figures/step30g_across_year_scatter.png)
 
 **Figure 1g.** Across-year prediction scatter per population
 (both-year populations only, n = 22). **Panel A** — predicted SRK
@@ -956,20 +956,20 @@ purple = both 95 % CIs overlap (stable); vermillion = CI mismatch
 absence of CI mismatches (0 / 22) reaffirms § C.0.b: pollen
 compatibility is robust year-to-year. Panel A's diversity CI
 mismatches concentrate the H2 signal (per-deme drift beyond the
-species-wide prior) — see § C.0.c. Source: `step30g_plot.py`.
+species-wide prior) — see § C.0.c. Source: `step15_year_scatter.py`.
 Data:
-[`step30g_across_year_comparison.tsv`](tables/Phase5/step30g_across_year_comparison.tsv).
+[`step30g_across_year_comparison.tsv`](tables/step30g_across_year_comparison.tsv).
 
 **Figures.** Overview + candidate panels + crash panels + across-
-year scatter are produced by `step29a_population_maps.py` and
-`step30g_plot.py` — see output map at the end of this doc.
+year scatter are produced by `step02_population_maps.py` and
+`step15_year_scatter.py` — see output map at the end of this doc.
 
 **Pollinator-radius choice.** Every fragmentation and downstream prediction in Phase 5 depends on the assumed pollen-flight radius. A dedicated sensitivity sweep across 10, 25, 50, 75, 100, 150, 200 m ([Figure 1](#fig-1)) demonstrates that **50 m is the biologically sound primary radius**: it sits within the halictid / small-bee foraging literature range, captures 43 % of the sampling-cost reduction available on the radius curve, and retains meaningful fragmentation variation across BLs (median connectivity 0.81, not yet saturated at 1.00 like at 75 m+). Every downstream analysis in this doc uses 50 m as the primary radius; 10 m and 25 m are always computed and stored as sensitivity checks.
 
 <a id="fig-1"></a>
-![Figure 1](figures/Phase5/step30_A_radius_sensitivity.png)
+![Figure 1](figures/step30_A_radius_sensitivity.png)
 
-**Figure 1.** Full pollinator-radius sensitivity sweep across 10, 25, 50, 75, 100, 150, 200 m, **2025 and 2026 overlaid** — the biological justification for adopting **50 m as the primary pollinator radius**. **2025 = open marker + dashed line** (39 locationIDs); **2026 = filled marker + solid line** (32 locationIDs — fewer locations had above-ground emergence in 2026). **Panel A** (landscape connectivity): median across locations rises from 0.00 at 10 m to 0.45 (2025) / 0.48 (2026) at 25 m to 0.81 (2025) / 0.80 (2026) at 50 m; plateaus at 1.00 by 75 m in 2025 and at ~ 1.00 by 150 m in 2026 (the 2026 above-ground footprint is more spread out). **Panel B** (§ B.4.2 sampling cost): total mothers required across the active locations drops from 887 (2025) / 1393 (2026) at 10 m to 505 (2025) / 741 (2026) at 50 m, then flattens to 328 (2025) / 520 (2026) at 200 m. **Panel C** (§ A.8 pollen-compatibility prediction, empirical zygosity) is essentially flat across all radii at ~0.77 in **both** years — because ~ 66 % of LEPA plants are single-identity homozygotes, radius-driven changes in effective N barely move P_compat. **Panel D**: 97–100 % of locations stay in the "sustainable" band at every radius in both years. **The two curves that DO change with radius are connectivity (Panel A) and sampling cost (Panel B); both stabilise around 75–100 m in 2025 and ~ 100–150 m in 2026. 50 m sits within the halictid / small-bee foraging literature range (10–100 m), captures a large fraction of the sampling-cost reduction available on that curve, and retains meaningful fragmentation variation across BLs. Source: `step29a_pollinator_radius_sensitivity.py`. Data: [`step30_A_radius_sensitivity_summary.tsv`](tables/Phase5/step30_A_radius_sensitivity_summary.tsv) (both years combined), [`step30_A_radius_sensitivity_per_location_2025.tsv`](tables/Phase5/step30_A_radius_sensitivity_per_location_2025.tsv), [`step30_A_radius_sensitivity_per_location_2026.tsv`](tables/Phase5/step30_A_radius_sensitivity_per_location_2026.tsv).
+**Figure 1.** Full pollinator-radius sensitivity sweep across 10, 25, 50, 75, 100, 150, 200 m, **2025 and 2026 overlaid** — the biological justification for adopting **50 m as the primary pollinator radius**. **2025 = open marker + dashed line** (39 locationIDs); **2026 = filled marker + solid line** (32 locationIDs — fewer locations had above-ground emergence in 2026). **Panel A** (landscape connectivity): median across locations rises from 0.00 at 10 m to 0.45 (2025) / 0.48 (2026) at 25 m to 0.81 (2025) / 0.80 (2026) at 50 m; plateaus at 1.00 by 75 m in 2025 and at ~ 1.00 by 150 m in 2026 (the 2026 above-ground footprint is more spread out). **Panel B** (§ B.4.2 sampling cost): total mothers required across the active locations drops from 887 (2025) / 1393 (2026) at 10 m to 505 (2025) / 741 (2026) at 50 m, then flattens to 328 (2025) / 520 (2026) at 200 m. **Panel C** (§ A.8 pollen-compatibility prediction, empirical zygosity) is essentially flat across all radii at ~0.77 in **both** years — because ~ 66 % of LEPA plants are single-identity homozygotes, radius-driven changes in effective N barely move P_compat. **Panel D**: 97–100 % of locations stay in the "sustainable" band at every radius in both years. **The two curves that DO change with radius are connectivity (Panel A) and sampling cost (Panel B); both stabilise around 75–100 m in 2025 and ~ 100–150 m in 2026. 50 m sits within the halictid / small-bee foraging literature range (10–100 m), captures a large fraction of the sampling-cost reduction available on that curve, and retains meaningful fragmentation variation across BLs. Source: `step09_pollinator_radius.py`. Data: [`step30_A_radius_sensitivity_summary.tsv`](tables/step30_A_radius_sensitivity_summary.tsv) (both years combined), [`step30_A_radius_sensitivity_per_location_2025.tsv`](tables/step30_A_radius_sensitivity_per_location_2025.tsv), [`step30_A_radius_sensitivity_per_location_2026.tsv`](tables/step30_A_radius_sensitivity_per_location_2026.tsv).
 
 **What this predicts and why it is separate from A.5–A.7.** A.5
 (predicted SRK diversity) and A.7 (predicted pollen compatibility)
@@ -1205,9 +1205,9 @@ within ≤ 50 m. Connected components of that graph are the location's
 demes. For each deme *c*, `component_N_fertile_c` is
 the sum of `n_fertile_e` across its events — the adult count that
 drives the per-component drift simulations in § A.6 and § A.8.
-`step29c_fragmentation_aware_sampling.py` writes the event →
+`step12_fragmentation_sampling.py` writes the event →
 deme lookup (`step29c_event_to_component_50m.tsv`);
-`step29a_population_maps.py` builds the population-level overview shown below.
+`step02_population_maps.py` builds the population-level overview shown below.
 
 **Dataset-wide result — how many demes do the 39 LEPA locations
 hold?** The connectivity rule yields **101 operational demes
@@ -1251,9 +1251,9 @@ per-component simulations whose aggregation back to the location
 depends on this deme decomposition.
 
 <a id="fig-1b"></a>
-![Figure 1b](figures/Phase5/step29a_populations_overview.png)
+![Figure 1b](figures/step29a_populations_overview.png)
 
-**Figure 1b.** The 44 Phase 5 populations across the Snake River Plain, 2025 + 2026 above-ground occupancy. One dot per population centroid, size ∝ total `n_fertile` across both years; colour-coded by occupancy (purple = both years, blue = 2025 only, orange = 2026 only). 22 of 44 populations are present in both years; 11 are 2025-only; 11 are 2026-only. 7.4 % of slickspots were re-visited at the 10 m scale across both years — the raw signal of annual-plant year-to-year flickering. Populations are built from the 500 m connectivity graph on pooled 2025 + 2026 event coordinates + historical locationID centroids; see § A.5.0. Source: `step29a_population_maps.py`.
+**Figure 1b.** The 44 Phase 5 populations across the Snake River Plain, 2025 + 2026 above-ground occupancy. One dot per population centroid, size ∝ total `n_fertile` across both years; colour-coded by occupancy (purple = both years, blue = 2025 only, orange = 2026 only). 22 of 44 populations are present in both years; 11 are 2025-only; 11 are 2026-only. 7.4 % of slickspots were re-visited at the 10 m scale across both years — the raw signal of annual-plant year-to-year flickering. Populations are built from the 500 m connectivity graph on pooled 2025 + 2026 event coordinates + historical locationID centroids; see § A.5.0. Source: `step02_population_maps.py`.
 
 ### A.6 Predicted SRK diversity per location
 
@@ -1345,9 +1345,9 @@ The BL5 tail's low diversity in Panel A is not an artefact of
 sampling — it is what drift has already done to those slickspots.
 
 <a id="fig-3"></a>
-![Figure 3](figures/Phase5/step30h_pred_diversity.png)
+![Figure 3](figures/step30h_pred_diversity.png)
 
-**Figure 3.** Predicted SRK allele diversity per population, 2025 and 2026 overlaid. One row per population; **open circle = 2025 draw**, **filled circle = 2026 draw** in the same BL colour, with a thin connector line joining the two when both years are present. 95 % CI horizontal error bars; dot size ∝ `N_fertile_total` for that year. Single-year populations show only the applicable year's marker and no connector. Panels stacked by BL (area DESC → connectivity DESC, BL1 at top → BL5 at bottom); within each BL rows ordered by the mean of available-year predicted means. Left margin: short `P{N}` identifiers; right margin: per-year `{K demes}d / {N adults}`. Dotted vertical line = species-wide ceiling (32 Fgs). The full `populationID → locationCode` map is in [`step30g_populations_classified.tsv`](tables/Phase5/step30g_populations_classified.tsv); per-population shift + CI-overlap flags in `step30g_across_year_comparison.tsv`. The within-population across-year comparison is the within-pipeline H2 test from § C.0.c — populations whose predicted diversity shifts materially between years carry the strongest signal of per-deme drift beyond the species-wide prior P1. Source: `step30h_predictions_by_BL_year.py`.
+**Figure 3.** Predicted SRK allele diversity per population, 2025 and 2026 overlaid. One row per population; **open circle = 2025 draw**, **filled circle = 2026 draw** in the same BL colour, with a thin connector line joining the two when both years are present. 95 % CI horizontal error bars; dot size ∝ `N_fertile_total` for that year. Single-year populations show only the applicable year's marker and no connector. Panels stacked by BL (area DESC → connectivity DESC, BL1 at top → BL5 at bottom); within each BL rows ordered by the mean of available-year predicted means. Left margin: short `P{N}` identifiers; right margin: per-year `{K demes}d / {N adults}`. Dotted vertical line = species-wide ceiling (32 Fgs). The full `populationID → locationCode` map is in [`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv); per-population shift + CI-overlap flags in `step30g_across_year_comparison.tsv`. The within-population across-year comparison is the within-pipeline H2 test from § C.0.c — populations whose predicted diversity shifts materially between years carry the strongest signal of per-deme drift beyond the species-wide prior P1. Source: `step20_predictions_by_BL_year.py`.
 
 
 ### A.7 Sporophytic self-incompatibility with Class I / Class II dominance
@@ -1361,7 +1361,7 @@ one mother vs three candidate fathers (§ A.8.5), and the
 compatibility rule by cross type (§ A.8.4).
 
 <a id="fig-4"></a>
-![Figure 4](figures/Phase5/step30_A_si_model_schematic.png)
+![Figure 4](figures/step30_A_si_model_schematic.png)
 
 **Figure 4.** Sporophytic SI with Class I / Class II dominance in tetraploid LEPA (Phase 5 § A.7). **Panel A — dominance within one plant.** Case A (plant with ≥ 1 Class I allele): only its Class I alleles are expressed on both pollen and stigma; Class II alleles are silent (shown faded). Case B (plant with only Class II alleles): all four Class II alleles are expressed co-dominantly. **Panel B — between-plant recognition, worked example.** Mother M carries `{FG001, FG002, FG024, FG031}`; her Case-A expressed set is {FG001, FG002}. Three candidate fathers: F1 shares FG001 with M → rejected; F2 is all-Class-II so between-class → always compatible; F3 shares FG002 with M → rejected. **Panel C — compatibility rule by cross type.** Class I × Class I: compatible if their expressed Class I alleles differ (Class II silent on both sides — sharing them is irrelevant). Class I × Class II: always compatible by construction (disjoint expressed classes). Class II × Class II: all four alleles expressed on both sides, compatible only if none are shared. Source: `si_model_schematic.py`.
 
@@ -1402,8 +1402,8 @@ matches the "Class I has more alleles" biological constraint:
 | **Class II (provisional)** | 6 (FG001–FG006) | 2 – 10 | ~65 % |
 
 The mapping is stored as a first-class TSV
-([`srk_fg_class.tsv`](tables/Phase5/srk_fg_class.tsv)); rerunning
-`step30_srk_diversity_prediction_vs_observed.py` regenerates every
+([`srk_fg_class.tsv`](tables/srk_fg_class.tsv)); rerunning
+`step19_predictions_core.py` regenerates every
 downstream number from the current version.
 
 **On the P1 frequency pattern.** In Brassica species without strong
@@ -1492,7 +1492,7 @@ distribution of distinct functional SRK identities per plant:
 | **3** (three identities) | AABC | 8 | **2.2 %** |
 | 4 (four identities) | — | 0 | 0 % |
 
-Source: [`srk_zygosity_empirical.tsv`](tables/Phase5/srk_zygosity_empirical.tsv).
+Source: [`srk_zygosity_empirical.tsv`](tables/srk_zygosity_empirical.tsv).
 
 **Two-thirds of LEPA plants carry only one distinct SRK identity** —
 this is far higher than a naive independent-tetraploid-draw model
@@ -1565,9 +1565,9 @@ aggregates to the location level by component-size weighting:
    its components, Σ_c (P_compat_{c,k} · N_c) / Σ_c N_c. Posterior
    CI across replicates.
 4. Both tables are emitted —
-   [`step30_A_prediction_location_pcompat.tsv`](tables/Phase5/step30_A_prediction_location_pcompat.tsv)
+   [`step30_A_prediction_location_pcompat.tsv`](tables/step30_A_prediction_location_pcompat.tsv)
    (one row per location, the headline Phase A number) and
-   [`step30_A_prediction_component_pcompat.tsv`](tables/Phase5/step30_A_prediction_component_pcompat.tsv)
+   [`step30_A_prediction_component_pcompat.tsv`](tables/step30_A_prediction_component_pcompat.tsv)
    (one row per (location, component), so that fragmented
    locations whose headline mean is "sustainable" but which hide a
    small-component drift signal are not invisible).
@@ -1587,17 +1587,17 @@ diploid gametophytic approximation used in Part 1 could not:
   plant share no expressed alleles by construction, so their cross
   is always compatible. This is the mechanism behind the H1b
   hypothesis in the existing cross-plan
-  ([`step26e_cross_plan_H1b_between_class_baseline.tsv`](tables/Phase5/step26e_cross_plan_H1b_between_class_baseline.tsv)).
+  ([`step26e_cross_plan_H1b_between_class_baseline.tsv`](tables/step26e_cross_plan_H1b_between_class_baseline.tsv)).
 
 **Class assignment.** The Fg → Class mapping lives in
-[`tables/Phase5/srk_fg_class.tsv`](tables/Phase5/srk_fg_class.tsv)
+[`tables/srk_fg_class.tsv`](tables/srk_fg_class.tsv)
 as a first-class TSV, editable by hand. The **provisional data-driven
 default** puts the 6 Fgs with ≥ 2 sub-alleles in Class I (FG001,
 FG002, FG003, FG004, FG005, FG006 — together ~65 % of P1 frequency)
 and the 26 single-allele Fgs in Class II (~35 %). FG024 is flagged
 `REVIEW` because it is single-allele but 18 % of P1 carriers, and
 its class may deserve manual reclassification once the SI literature
-is checked. Rerunning `step30_srk_diversity_prediction_vs_observed.py`
+is checked. Rerunning `step19_predictions_core.py`
 regenerates every downstream number from an edited TSV.
 
 **Analytical formulas.** Under a local Fg frequency vector *f* and
@@ -1642,7 +1642,7 @@ signal Phase C's β₁ will pick up is therefore expected to be
 gross "compatibility floor" the diploid model implied.
 
 **Traffic-light bands are recorded** in
-[`step30_A_traffic_light_bands.tsv`](tables/Phase5/step30_A_traffic_light_bands.tsv)
+[`step30_A_traffic_light_bands.tsv`](tables/step30_A_traffic_light_bands.tsv)
 so that any downstream analysis can join against them and reproduce
 the categorical labels.
 
@@ -1664,9 +1664,9 @@ a faithful estimator of the population-mean pollen compatibility at
 each location.
 
 <a id="fig-5"></a>
-![Figure 5](figures/Phase5/step30h_pred_pcompat.png)
+![Figure 5](figures/step30h_pred_pcompat.png)
 
-**Figure 5.** Predicted per-population pollen compatibility under sporophytic Class I / II SI + empirical LEPA zygosity, 2025 and 2026 overlaid. Same layout as Figure 3: **open circle = 2025**, **filled circle = 2026** in the same BL colour, thin connector line for both-year populations. 95 % CI horizontal error bars; dot size ∝ `N_fertile_total` for that year. Panels stacked by BL (BL1 at top → BL5 at bottom). Traffic-light background: red = failed (< 0.259), amber = struggling (0.259 – 0.519), green = sustainable (≥ 0.519). Green dotted line = sporophytic species mean 0.778. Left margin: short `P{N}` identifiers; right margin: per-year `{K demes}d / {N adults}`. The full `populationID → locationCode` map is in [`step30g_populations_classified.tsv`](tables/Phase5/step30g_populations_classified.tsv); class assignments in [`srk_fg_class.tsv`](tables/Phase5/srk_fg_class.tsv); empirical zygosity in [`srk_zygosity_empirical.tsv`](tables/Phase5/srk_zygosity_empirical.tsv). Nearly all populations ≥ 8 adults sit on or just below the species mean — the structural redundancy of Class I dominance + empirical zygosity (§ C.0.b) swamps between-population variation. **All 22 both-year populations show overlapping 95 % CIs between 2025 and 2026 (0 / 22 mismatches)**, so year-to-year differences are concentrated in the single-year populations (BL1's 2026-only EO27 variants + the single-plant BL3 tail). Source: `step30h_predictions_by_BL_year.py`.
+**Figure 5.** Predicted per-population pollen compatibility under sporophytic Class I / II SI + empirical LEPA zygosity, 2025 and 2026 overlaid. Same layout as Figure 3: **open circle = 2025**, **filled circle = 2026** in the same BL colour, thin connector line for both-year populations. 95 % CI horizontal error bars; dot size ∝ `N_fertile_total` for that year. Panels stacked by BL (BL1 at top → BL5 at bottom). Traffic-light background: red = failed (< 0.259), amber = struggling (0.259 – 0.519), green = sustainable (≥ 0.519). Green dotted line = sporophytic species mean 0.778. Left margin: short `P{N}` identifiers; right margin: per-year `{K demes}d / {N adults}`. The full `populationID → locationCode` map is in [`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv); class assignments in [`srk_fg_class.tsv`](tables/srk_fg_class.tsv); empirical zygosity in [`srk_zygosity_empirical.tsv`](tables/srk_zygosity_empirical.tsv). Nearly all populations ≥ 8 adults sit on or just below the species mean — the structural redundancy of Class I dominance + empirical zygosity (§ C.0.b) swamps between-population variation. **All 22 both-year populations show overlapping 95 % CIs between 2025 and 2026 (0 / 22 mismatches)**, so year-to-year differences are concentrated in the single-year populations (BL1's 2026-only EO27 variants + the single-plant BL3 tail). Source: `step20_predictions_by_BL_year.py`.
 
 ### A.9 Cross-plot: SRK diversity vs pollen compatibility
 
@@ -1793,7 +1793,7 @@ diversity and random-mating compatibility** at the location scale:
 - Fewer connected adults → higher per-mother probability that the pollen
   she sees carries her own alleles → lower random-mating compatibility.
 
-**How it is computed** ([`step29b_location_connectivity.py`](step29b_location_connectivity.py)).
+**How it is computed** ([`step10_connectivity.py`](step10_connectivity.py)).
 For each location, we build a graph on its events using haversine
 distance and draw an edge between events whose coordinates lie within
 R metres. Connected components are found by breadth-first search.
@@ -1836,7 +1836,7 @@ small solitary bee foraging literature.
 
 **Why 50 m as the primary?** A pollinator-radius sensitivity sweep
 across 10, 25, 50, 75, 100, 150, 200 m
-([`step30_A_radius_sensitivity_summary.tsv`](tables/Phase5/step30_A_radius_sensitivity_summary.tsv))
+([`step30_A_radius_sensitivity_summary.tsv`](tables/step30_A_radius_sensitivity_summary.tsv))
 shows two things:
 
 - **Connectivity plateaus at 75 m** — median location-scale
@@ -1996,13 +1996,13 @@ mothers × 34 = 2 108 allele draws) far exceeds the target even though
 each individual mother's 15-seed sample only reveals ~19 of her 32
 local pollen alleles.
 
-**Script.** [`step28_seed_sampling_per_mother.py`](step28_seed_sampling_per_mother.py). Outputs the
+**Script.** [`step17_seed_sampling_per_mother.py`](step17_seed_sampling_per_mother.py). Outputs the
 per-mother recipe TSV plus the two-panel coverage figure below.
 
 <a id="fig-9"></a>
-![Figure 9](figures/Phase5/step28_coverage_curves.png)
+![Figure 9](figures/step28_coverage_curves.png)
 
-**Figure 9.** two-panel SRK allele detection under **tetraploid LEPA** (4 SRK copies per plant; 2 paternal alleles per seed) on the absolute-allele scale, with the local pool capped at the species-wide ceiling of 32 Fgs. Shaded bands = 95 % simulation CI. **Panel A — per mother.** x = seeds genotyped, one curve per event-size bin (each seed contributes 2 paternal allele draws); the vertical red line at **15** marks the per-mother operational cap under tetraploid (never ask any single mother for more than 15 seeds). The 15-seed dots show what each event size **delivers per mother**: **4.0 of 4** (1–2 plants), **11.1 of 12** (3–5), **18.6 of 28** (6–10), **19.7 of 32** (11–20), **19.7 of 32** (21–50), **19.7 of 32** (>50). One mother's 15 seeds cannot saturate a 32-allele pool — this is the allele-detection limit for a single sampler, not undersampling. **Panel B — aggregation across mothers at a location.** x = number of mothers sampled at the location (15 seeds each = **34 allele draws per mother: 4 maternal + 2·15 = 30 paternal**). At the 5-mother benchmark (green dotted line, 75 cumulative seeds): **4.0 of 4**, **12.0 of 12**, **27.9 of 28**, **31.9 of 32**, **31.9 of 32**, **31.9 of 32** — every event size reaches its local ceiling. Because Panel B is a allele-detection simulation continuous in M, any real location can read off its own coverage by locating (its event-size bin, its actual M) on the correct curve. The "gap at large events" in Panel A closes cleanly at the location scale — see § B.4. Source: `step28_seed_sampling_per_mother.py`. Data: [`step28_coverage_curves_by_Nfertile.tsv`](tables/Phase5/step28_coverage_curves_by_Nfertile.tsv), [`step28_aggregation_curves_by_Nfertile.tsv`](tables/Phase5/step28_aggregation_curves_by_Nfertile.tsv).
+**Figure 9.** two-panel SRK allele detection under **tetraploid LEPA** (4 SRK copies per plant; 2 paternal alleles per seed) on the absolute-allele scale, with the local pool capped at the species-wide ceiling of 32 Fgs. Shaded bands = 95 % simulation CI. **Panel A — per mother.** x = seeds genotyped, one curve per event-size bin (each seed contributes 2 paternal allele draws); the vertical red line at **15** marks the per-mother operational cap under tetraploid (never ask any single mother for more than 15 seeds). The 15-seed dots show what each event size **delivers per mother**: **4.0 of 4** (1–2 plants), **11.1 of 12** (3–5), **18.6 of 28** (6–10), **19.7 of 32** (11–20), **19.7 of 32** (21–50), **19.7 of 32** (>50). One mother's 15 seeds cannot saturate a 32-allele pool — this is the allele-detection limit for a single sampler, not undersampling. **Panel B — aggregation across mothers at a location.** x = number of mothers sampled at the location (15 seeds each = **34 allele draws per mother: 4 maternal + 2·15 = 30 paternal**). At the 5-mother benchmark (green dotted line, 75 cumulative seeds): **4.0 of 4**, **12.0 of 12**, **27.9 of 28**, **31.9 of 32**, **31.9 of 32**, **31.9 of 32** — every event size reaches its local ceiling. Because Panel B is a allele-detection simulation continuous in M, any real location can read off its own coverage by locating (its event-size bin, its actual M) on the correct curve. The "gap at large events" in Panel A closes cleanly at the location scale — see § B.4. Source: `step17_seed_sampling_per_mother.py`. Data: [`step28_coverage_curves_by_Nfertile.tsv`](tables/step28_coverage_curves_by_Nfertile.tsv), [`step28_aggregation_curves_by_Nfertile.tsv`](tables/step28_aggregation_curves_by_Nfertile.tsv).
 
 #### B.3.1 Does 15 seeds give enough Part C testing power?
 
@@ -2013,7 +2013,7 @@ as regression power** — the § C.1 mate-limitation test needs
 per-mother observed P_compat precise enough that β̂₁ is
 identifiable. Two Monte-Carlo simulations answer that separately.
 
-**Figure 9a — per-mother P_compat precision** ([`step28d_pcompat_precision.png`](figures/Phase5/step28d_pcompat_precision.png)).
+**Figure 9a — per-mother P_compat precision** ([`step28d_pcompat_precision.png`](figures/step28d_pcompat_precision.png)).
 For a mother with true P_compat p, each of her seeds is an independent
 Bernoulli(p) draw of paternal compatibility. Observed P_compat has
 binomial SE `√(p·(1−p) / n_seeds)`. **Result:** SE drops steeply from
@@ -2021,7 +2021,7 @@ binomial SE `√(p·(1−p) / n_seeds)`. **Result:** SE drops steeply from
 improves only marginally (~0.06 at 50 seeds). Precision-per-seed
 returns diminish sharply above 15.
 
-**Figure 9b — § C.1 mate-limitation regression power** ([`step28d_matelim_power.png`](figures/Phase5/step28d_matelim_power.png)).
+**Figure 9b — § C.1 mate-limitation regression power** ([`step28d_matelim_power.png`](figures/step28d_matelim_power.png)).
 Full-pipeline simulation of 505 mothers across 39 locations under the
 model `seeds ~ intercept + β₁ · P_compat_obs + ε`, with `P_compat_obs`
 noised by the seed-count-driven binomial variance. **Result at
@@ -2068,7 +2068,7 @@ Totals under the fragmentation-aware allocation (§ B.4.2):
 
 The germination rate is held in a single constant
 `GERMINATION_RATE = 0.60` in
-`step29c_fragmentation_aware_sampling.py`. The per-mother sampling
+`step12_fragmentation_sampling.py`. The per-mother sampling
 TSV `step29c_partC_germplasmID_selection.tsv` now carries both
 `n_seeds_to_germinate = min(25, seeds_available)` and
 `n_seedlings_to_genotype = min(15, round(n_seeds_to_germinate · 0.60))`
@@ -2145,7 +2145,7 @@ the small census — a mathematical certainty, not a design failure.
 
 Field sampling effort is auditable at the per-mother level. The field
 team receives one number per germplasmID
-([`step29_field_team_sampling_recipe.tsv`](tables/Phase5/step29_field_team_sampling_recipe.tsv)).
+([`step29_field_team_sampling_recipe.tsv`](tables/step29_field_team_sampling_recipe.tsv)).
 
 #### B.4.1 How many mothers per location to observe every predicted SRK allele
 
@@ -2192,7 +2192,7 @@ private-allele floor binds at 31 / 52 locations** — for the majority
 of LEPA locations the real sampling constraint is not the
 allele-detection maths, it is the number of events that must each be
 represented. Numeric per-location results in
-[`step28_mothers_for_full_detection_by_location.tsv`](tables/Phase5/step28_mothers_for_full_detection_by_location.tsv);
+[`step28_mothers_for_full_detection_by_location.tsv`](tables/step28_mothers_for_full_detection_by_location.tsv);
 the visual view has been superseded by [Figure 12](#fig-12) (§ B.4.2)
 which shows the honest fragmentation-aware allocation against what
 the LEPA DB already holds.
@@ -2282,7 +2282,7 @@ floor we ourselves lowered. § B.4.2 is the allocation that Phase C's
 column and § B.4's proportional-to-N_fertile allocation are now
 **reference / audit views**, not the operational recipe. The
 operational per-event allocation is
-[`step29c_sampling_frag_aware_per_event.tsv`](tables/Phase5/step29c_sampling_frag_aware_per_event.tsv),
+[`step29c_sampling_frag_aware_per_event.tsv`](tables/step29c_sampling_frag_aware_per_event.tsv),
 column `M_frag` — one row per event, one number per event, which
 already satisfies both the per-component 90 %
 guarantee and the ≥ 1 mother-per-event maternal-genotype floor.
@@ -2296,9 +2296,9 @@ mothers exactly at the locations where within-location K^(50m)
 variance is highest, which is where β₂ has the most identifiability.
 
 <a id="fig-12"></a>
-![Figure 12](figures/Phase5/step29c_sampling_comparison.png)
+![Figure 12](figures/step29c_sampling_comparison.png)
 
-**Figure 12.** Do we have the mothers the fragmentation-aware design asks for? Per LEPA location, panelled by Bottleneck Lineage in BL_ORDER. **Solid bar** = mothers needed under the § B.4.2 target (`M_frag_aware`). **Light bar** = mothers already collected and stored in the LEPA DB. Green "covered" annotation = DB has ≥ target; red "short by N" = DB has fewer than the target and would need a field top-up. Row labels give locationCode, number of events, number of 50 m components, census, and effective deme. **33 / 39 locations are fully covered by the current DB. 6 / 39 locations are short (25 mothers total — the 2026 field top-up).** The six short locations are EO27-1 (short by 10), EO27RT (5), EO26-2 (4), EO8 (3), EO67 (2), and EO8 (1). Source: `step29c_fragmentation_aware_sampling.py`. Data: [`step29c_sampling_comparison_per_location.tsv`](tables/Phase5/step29c_sampling_comparison_per_location.tsv), [`step29c_sampling_frag_aware_per_event.tsv`](tables/Phase5/step29c_sampling_frag_aware_per_event.tsv).
+**Figure 12.** Do we have the mothers the fragmentation-aware design asks for? Per LEPA location, panelled by Bottleneck Lineage in BL_ORDER. **Solid bar** = mothers needed under the § B.4.2 target (`M_frag_aware`). **Light bar** = mothers already collected and stored in the LEPA DB. Green "covered" annotation = DB has ≥ target; red "short by N" = DB has fewer than the target and would need a field top-up. Row labels give locationCode, number of events, number of 50 m components, census, and effective deme. **33 / 39 locations are fully covered by the current DB. 6 / 39 locations are short (25 mothers total — the 2026 field top-up).** The six short locations are EO27-1 (short by 10), EO27RT (5), EO26-2 (4), EO8 (3), EO67 (2), and EO8 (1). Source: `step12_fragmentation_sampling.py`. Data: [`step29c_sampling_comparison_per_location.tsv`](tables/step29c_sampling_comparison_per_location.tsv), [`step29c_sampling_frag_aware_per_event.tsv`](tables/step29c_sampling_frag_aware_per_event.tsv).
 
 #### B.4.3 The locked field-team recipe
 
@@ -2339,11 +2339,11 @@ census.
 **Three authoritative files** — one for the field team, one for the
 lab, and one for querying the event → component mapping.
 
-1. [`Tables/Phase5/step29c_sampling_frag_aware_per_event.tsv`](tables/Phase5/step29c_sampling_frag_aware_per_event.tsv)
+1. [`tables/step29c_sampling_frag_aware_per_event.tsv`](tables/step29c_sampling_frag_aware_per_event.tsv)
    — the **field-team recipe**. One row per event, column
    `M_frag` = number of mothers to sample at that event. Used by the
    field team when planning a new season's collection.
-2. [`Tables/Phase5/step29c_partC_germplasmID_selection.tsv`](tables/Phase5/step29c_partC_germplasmID_selection.tsv)
+2. [`tables/step29c_partC_germplasmID_selection.tsv`](tables/step29c_partC_germplasmID_selection.tsv)
    — the **lab recipe for Part C**. One row per selected `germplasmID`
    already in the LEPA DB, drawn from the field-team recipe using the
    **50 m deme target** (not per-event). Sorted
@@ -2366,7 +2366,7 @@ lab, and one for querying the event → component mapping.
    `component_M_target`, `component_n_available_in_DB`,
    `component_gap`, `selection_reason` (`floor` or `top_seeds`),
    `selection_priority_within_component`, `event_M_frag`.
-3. [`Tables/Phase5/step29c_event_to_component_50m.tsv`](tables/Phase5/step29c_event_to_component_50m.tsv)
+3. [`tables/step29c_event_to_component_50m.tsv`](tables/step29c_event_to_component_50m.tsv)
    — the **event → 50 m component lookup**. One row per event,
    columns `locationID`, `locationCode`, `eventID`, `component_id_50m`,
    `event_n_fertile`, `component_N_fertile`, `component_N_events`,
@@ -2411,8 +2411,8 @@ The `--year YYYY` flag (documented under § A.2) is the single interface
 for running either Step 28 or Step 29 year by year:
 
 ```
-python step28_seed_sampling_per_mother.py --year 2025
-python step29_event_location_sampling.py --year 2025
+python step17_seed_sampling_per_mother.py --year 2025
+python step11_event_location_sampling.py --year 2025
 ```
 
 For the two-year analysis, run each step once per year and roll up in
@@ -2457,7 +2457,7 @@ Both use the sporophytic Class I / II dominance rules from § A.7.3
 and the empirical LEPA zygosity distribution from § A.7.3a.
 Confidence intervals come from a mother-resampling bootstrap.
 
-**Current numbers for the three split EOs** (from `step30c_srk_validation_at_eo_level.py`):
+**Current numbers for the three split EOs** (from `step21_EO_scale_validation.py`):
 
 | EO | adults | Observed P_compat (95 % CI) | Predicted P_compat (95 % CI) | Interpretation |
 |---|---:|---|---|---|
@@ -2477,10 +2477,10 @@ and this background section will fold into the output map.
 
 **Outputs.**
 
-- Table: `tables/Phase5/step30_C_pcompat_validation_at_eo.tsv` — one
+- Table: `tables/step30_C_pcompat_validation_at_eo.tsv` — one
   row per EO, with observed + predicted P_compat mean and 95 % CI,
   observed Class I mass, and observed distinct-identity distribution.
-- Script: `step30c_srk_validation_at_eo_level.py`.
+- Script: `step21_EO_scale_validation.py`.
 
 ### C.0.a Part C anchor at Phase 5 location scale (clean-overlap EOs)
 
@@ -2494,7 +2494,7 @@ EO70 (74), EO76 (76) = 187 adults**. The other three § C.0 EOs
 their 151 adults can be used at the finer scale; that is scheduled
 as future work.
 
-**Script `step30d_partC_clean_overlap.py`** reads
+**Script `step22_partC_clean_overlap.py`** reads
 `Tables/Phase4/step23_individual_allele_genotypes_with_nulls.tsv`,
 filters to the three clean EOs, and for each location computes:
 
@@ -2524,20 +2524,20 @@ and keeps most mothers compatible even with limited local diversity.
 
 **Outputs.**
 
-- Table: `tables/Phase5/step30_B_partC_clean_overlap_per_location.tsv`
+- Table: `tables/step30_B_partC_clean_overlap_per_location.tsv`
   — one row per clean location with observed vs Phase 5 predicted
   pollen compatibility, observed vs Phase 5 predicted distinct allele
   count, and the no-drift upper bound at the adult sample size.
-- Table: `tables/Phase5/step30_B_partC_clean_overlap_fg_frequencies.tsv`
+- Table: `tables/step30_B_partC_clean_overlap_fg_frequencies.tsv`
   — long form (locationCode × allele) with observed f, species-wide
   P1 f, and present/absent flag.
-- Figure 10: `figures/Phase5/step30_B_partC_clean_overlap.png` — see
+- Figure 10: `figures/step30_B_partC_clean_overlap.png` — see
   below.
-- Script: `step30d_partC_clean_overlap.py`.
+- Script: `step22_partC_clean_overlap.py`.
 
-![Figure 10](figures/Phase5/step30_B_partC_clean_overlap.png)
+![Figure 10](figures/step30_B_partC_clean_overlap.png)
 
-**Figure 10.** Phase 5 Part C anchor at the three clean-overlap EOs (EO67, EO70, EO76; 1:1 with a Phase 5 locationCode). Panel order follows the biological flow: SRK diversity → pollen compatibility → per-allele drift residual. **Panel A** — predicted vs observed number of distinct SRK alleles per location (ceiling = 32), 1:1 diagonal; EO67 sits on the diagonal, EO70 and EO76 fall far below (6/32 and 9/32 observed). **Panel B** — predicted vs observed pollen compatibility under random mating, with the traffic-light background bands (red = failed < 0.26, amber = struggling < 0.52, green = sustainable ≥ 0.52). EO67 and EO76 near the diagonal; EO70 is the clear outlier (observed 0.53 vs predicted 0.78). **Panel C** — allele frequency residual per allele per location (one row each), alleles sorted by species-wide frequency most-common → rarest; **green = positive residual (observed > species-wide)**, **red = negative (depleted)**, **× = absent at this location**. The residual exposes the drift signature that the raw-frequency plot blurred — EO70 shows classical FG001 (+21 %) and FG024 (+18 %) enrichment with 26/32 alleles absent; EO76 has milder enrichment of FG012 / FG010; EO67 elevates the normally-rare FG018 and FG023 instead of the common alleles — a founder-effect signature. Source: `step30d_partC_clean_overlap.py`.
+**Figure 10.** Phase 5 Part C anchor at the three clean-overlap EOs (EO67, EO70, EO76; 1:1 with a Phase 5 locationCode). Panel order follows the biological flow: SRK diversity → pollen compatibility → per-allele drift residual. **Panel A** — predicted vs observed number of distinct SRK alleles per location (ceiling = 32), 1:1 diagonal; EO67 sits on the diagonal, EO70 and EO76 fall far below (6/32 and 9/32 observed). **Panel B** — predicted vs observed pollen compatibility under random mating, with the traffic-light background bands (red = failed < 0.26, amber = struggling < 0.52, green = sustainable ≥ 0.52). EO67 and EO76 near the diagonal; EO70 is the clear outlier (observed 0.53 vs predicted 0.78). **Panel C** — allele frequency residual per allele per location (one row each), alleles sorted by species-wide frequency most-common → rarest; **green = positive residual (observed > species-wide)**, **red = negative (depleted)**, **× = absent at this location**. The residual exposes the drift signature that the raw-frequency plot blurred — EO70 shows classical FG001 (+21 %) and FG024 (+18 %) enrichment with 26/32 alleles absent; EO76 has milder enrichment of FG012 / FG010; EO67 elevates the normally-rare FG018 and FG023 instead of the common alleles — a founder-effect signature. Source: `step22_partC_clean_overlap.py`.
 
 **Why P1 is empirical, not uniform.** A uniform-frequency P1
 (Dirichlet(α = 1) over the 32 Fgs, equivalent to the P0 "uninformative"
@@ -2560,7 +2560,7 @@ compatibility alone would have hidden: EO70 and EO76 both lose
 ~23 of their predicted alleles, but observed pollen compatibility
 drops by 0.25 at EO70 and barely 0.02 at EO76. EO67, with just 7
 alleles against a predicted 10.8, lands at 0.70 — in the
-sustainable band. The script `step30e_pcompat_hypothesis_decomposition.py`
+sustainable band. The script `step23_partC_hypothesis_decomposition.py`
 decomposes each location's observed → species-wide gap into three
 competing mechanisms by swapping ONE factor at a time to the
 species-wide reference while keeping observed mother genotypes
@@ -2656,17 +2656,17 @@ either tipping point.
 
 **Outputs.**
 
-- Table: `tables/Phase5/step30_B_partC_hypothesis_decomposition.tsv`
+- Table: `tables/step30_B_partC_hypothesis_decomposition.tsv`
   — per-location diversity trigger + three single-swap pollen
   compatibility counterfactuals with bootstrap 95 % CIs + driver
   fractions.
-- Figure 11: `figures/Phase5/step30_B_partC_hypothesis_decomposition.png`
+- Figure 11: `figures/step30_B_partC_hypothesis_decomposition.png`
   — see below.
-- Script: `step30e_pcompat_hypothesis_decomposition.py`.
+- Script: `step23_partC_hypothesis_decomposition.py`.
 
-![Figure 11](figures/Phase5/step30_B_partC_hypothesis_decomposition.png)
+![Figure 11](figures/step30_B_partC_hypothesis_decomposition.png)
 
-**Figure 11.** Competing-hypothesis decomposition of per-location pollen compatibility, triggered by the SRK diversity discrepancy in Figure 10 Panel A. For each clean-overlap location (EO67, EO70, EO76) five pollen-compatibility values are shown from the same simulation (sporophytic Class I / II + empirical zygosity, 800 candidate fathers per mother, observed mother genotypes held fixed), differing only in which part of the father-drawing distribution is swapped to the species-wide reference. **Green — Predicted (species-wide):** fathers from P1 + species-wide zygosity. **Black — Observed:** fathers from observed local allele frequencies and observed local zygosity. **Blue — Swap within-class spread:** keep observed Class I and Class II total masses, reshape the within-class spread to P1 (isolates drift concentration). **Red — Swap Class I / II balance:** keep within-class shape observed, rescale class totals to species-wide (isolates between-class rescue). **Yellow — Swap zygosity:** keep observed allele frequencies, swap father zygosity to species-wide 66/32/2 % (isolates the per-mother expressed-set channel). Error bars = bootstrap 95 % CI. Traffic-light bands shaded in the background; dashed grey line = species-wide pollen compatibility 0.78. **Gold star** marks the dominant single-factor explanation of the Predicted → Observed gap at each location. Reading rules: a blue/red/yellow bar jumping toward green = that factor caused the gap; staying next to black = not involved; dropping below black = **buffering** (observed state better than species-wide). **EO70** — classical within-class drift collapse (FG024 absorbs 35 % of pool). **EO67** — small deficit explained by within-class spread; zygosity slightly buffering. **EO76** — small deficit despite 23/32 alleles lost; **zygosity actively buffers** (yellow drops below black), and within-class spread overshoots because the specific alleles present at EO76 are better-spread than drift-only P1 would deliver. Source: `step30e_pcompat_hypothesis_decomposition.py`.
+**Figure 11.** Competing-hypothesis decomposition of per-location pollen compatibility, triggered by the SRK diversity discrepancy in Figure 10 Panel A. For each clean-overlap location (EO67, EO70, EO76) five pollen-compatibility values are shown from the same simulation (sporophytic Class I / II + empirical zygosity, 800 candidate fathers per mother, observed mother genotypes held fixed), differing only in which part of the father-drawing distribution is swapped to the species-wide reference. **Green — Predicted (species-wide):** fathers from P1 + species-wide zygosity. **Black — Observed:** fathers from observed local allele frequencies and observed local zygosity. **Blue — Swap within-class spread:** keep observed Class I and Class II total masses, reshape the within-class spread to P1 (isolates drift concentration). **Red — Swap Class I / II balance:** keep within-class shape observed, rescale class totals to species-wide (isolates between-class rescue). **Yellow — Swap zygosity:** keep observed allele frequencies, swap father zygosity to species-wide 66/32/2 % (isolates the per-mother expressed-set channel). Error bars = bootstrap 95 % CI. Traffic-light bands shaded in the background; dashed grey line = species-wide pollen compatibility 0.78. **Gold star** marks the dominant single-factor explanation of the Predicted → Observed gap at each location. Reading rules: a blue/red/yellow bar jumping toward green = that factor caused the gap; staying next to black = not involved; dropping below black = **buffering** (observed state better than species-wide). **EO70** — classical within-class drift collapse (FG024 absorbs 35 % of pool). **EO67** — small deficit explained by within-class spread; zygosity slightly buffering. **EO76** — small deficit despite 23/32 alleles lost; **zygosity actively buffers** (yellow drops below black), and within-class spread overshoots because the specific alleles present at EO76 are better-spread than drift-only P1 would deliver. Source: `step23_partC_hypothesis_decomposition.py`.
 
 ### C.0.c Hypothesis test — can the diversity gap be closed by tightening the deme radius?
 
@@ -2800,19 +2800,19 @@ seed-genotyping).
 
 **Output files.**
 
-- Table: `tables/Phase5/step30f_srk_diversity_radius_sweep.tsv`
+- Table: `tables/step30f_srk_diversity_radius_sweep.tsv`
   — rows for all three EOs × six radii with `pred_mean` /
   `pred_lo95` / `pred_hi95`, `n_components`, `component_sizes`,
   `observed`, `obs_inside_CI`.
-- Figure 13: `figures/Phase5/step30f_srk_diversity_radius_sweep.png`
+- Figure 13: `figures/step30f_srk_diversity_radius_sweep.png`
   — gap-focused single panel (y = predicted − observed); EO67
   omitted (invariant deme count across sweep).
-- Script: `step30f_srk_diversity_hypothesis_test.py`.
+- Script: `step24_radius_sweep_H1.py`.
 
 <a id="fig-13"></a>
-![Figure 13](figures/Phase5/step30f_srk_diversity_radius_sweep.png)
+![Figure 13](figures/step30f_srk_diversity_radius_sweep.png)
 
-**Figure 13.** SRK diversity gap (y = predicted − observed distinct SRK alleles) vs pollinator radius at EO70 and EO76. x = radius used to rebuild the deme partition (10 → 150 m, log scale). Lines + 95 % CI bands = per-location per-radius simulation (2000 replicates per combination). Right-side labels show the gap at the largest radius; parenthetical observed counts come from the Phase 4 adult SRK genotypes (a single measurement, not a sweep output — hence shown as labels, not as horizontal lines). Zero line = perfect match. Vertical dotted line at 50 m marks the current operational deme. H1 (deme too wide) would predict the gap to shrink toward zero as radius tightens; it stays flat at +22 and +23 across all radii, including the 10 m extreme that fragments EO70 into 3 demes and EO76 into 17 — rejecting H1 within the P1 drift assumption. EO67 is omitted from the figure because its deme partition is invariant across the sweep (only two events in 2025, > 150 m apart), making the test non-informative there; see § C.0.c text. Source: `step30f_srk_diversity_hypothesis_test.py`. Data: [`step30f_srk_diversity_radius_sweep.tsv`](tables/Phase5/step30f_srk_diversity_radius_sweep.tsv).
+**Figure 13.** SRK diversity gap (y = predicted − observed distinct SRK alleles) vs pollinator radius at EO70 and EO76. x = radius used to rebuild the deme partition (10 → 150 m, log scale). Lines + 95 % CI bands = per-location per-radius simulation (2000 replicates per combination). Right-side labels show the gap at the largest radius; parenthetical observed counts come from the Phase 4 adult SRK genotypes (a single measurement, not a sweep output — hence shown as labels, not as horizontal lines). Zero line = perfect match. Vertical dotted line at 50 m marks the current operational deme. H1 (deme too wide) would predict the gap to shrink toward zero as radius tightens; it stays flat at +22 and +23 across all radii, including the 10 m extreme that fragments EO70 into 3 demes and EO76 into 17 — rejecting H1 within the P1 drift assumption. EO67 is omitted from the figure because its deme partition is invariant across the sweep (only two events in 2025, > 150 m apart), making the test non-informative there; see § C.0.c text. Source: `step24_radius_sweep_H1.py`. Data: [`step30f_srk_diversity_radius_sweep.tsv`](tables/step30f_srk_diversity_radius_sweep.tsv).
 
 ### C.1 Test 1 — Mate-limitation regression (goals 1 + 2)
 
@@ -2820,7 +2820,7 @@ Under strict SI + random mating in a **tetraploid sporophytic** system
 (§ A.3, § A.8), a mother's per-mother compatibility is given by the
 closed-form § A.8 Case-A / Case-B formulas, driven by the local Fg
 frequency vector *f* and the Class I / II assignment in
-[`srk_fg_class.tsv`](tables/Phase5/srk_fg_class.tsv):
+[`srk_fg_class.tsv`](tables/srk_fg_class.tsv):
 
 - **Case A** — mother has ≥ 1 Class I allele; expressed set M ⊆
   Class I; $P_{\text{compat}}(m) = (1 - p(M))^4$.
@@ -2894,7 +2894,7 @@ figure.
 
 ### C.3 Step 30 script behaviour (CLI + phase filenames)
 
-**Script.** [`step30_srk_diversity_prediction_vs_observed.py`](step30_srk_diversity_prediction_vs_observed.py)
+**Script.** [`step19_predictions_core.py`](step19_predictions_core.py)
 
 The script always produces the prediction family. If a `--seed-genotypes`
 TSV is provided (columns `locationID`, `eventID`, `germplasmID`, `seed_id`,
@@ -2937,7 +2937,7 @@ seed lot per mother = one maternal genotype + n paternal alleles.
 **Data-generation pipeline.**
 
 1. **Seed extractions.** For each mother in the field-team recipe
-   ([`step29_field_team_sampling_recipe.tsv`](tables/Phase5/step29_field_team_sampling_recipe.tsv)),
+   ([`step29_field_team_sampling_recipe.tsv`](tables/step29_field_team_sampling_recipe.tsv)),
    genotype the recommended number of seeds (**typically 15 under
    the tetraploid per-mother cap**, capped at her real seed budget; 2 paternal
    allele draws per seed). Total per-year effort: 765 mothers × ~15
@@ -2964,7 +2964,7 @@ seed lot per mother = one maternal genotype + n paternal alleles.
 **Running Phase B.**
 
 ```
-python step30_srk_diversity_prediction_vs_observed.py \
+python step19_predictions_core.py \
     --year 2025 \
     --seed-genotypes  real_seed_genotypes.tsv \
     --mother-genotypes real_mother_genotypes.tsv \
@@ -3067,17 +3067,17 @@ collected and germinated.
 A more targeted subset — say 15 SMALL mothers × 15 seedlings and
 30 – 60 BIG mothers × 15 seedlings — brings the cost well below
 2 000 seedlings. Exact per-mother allocation per deme is in
-[`step29c_partC_germplasmID_selection.tsv`](tables/Phase5/step29c_partC_germplasmID_selection.tsv).
+[`step29c_partC_germplasmID_selection.tsv`](tables/step29c_partC_germplasmID_selection.tsv).
 
 **Alternative pairs kept on file.** The Executive summary of the
 compact doc (`Phase5_SRK_summary_for_colleagues.md`) lists the
 three within-BL stable options (D1 ★ = BL3, D2 = BL2 P21 + P16,
 D3 = BL1 P3 + P13). The stable-population inventory +
 `populationID → locationCode` lookup is in
-[`step30g_populations_classified.tsv`](tables/Phase5/step30g_populations_classified.tsv).
+[`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv).
 
 **Field-team recipe for the pilot.** The lab recipe is
-[`step29c_partC_germplasmID_selection.tsv`](tables/Phase5/step29c_partC_germplasmID_selection.tsv),
+[`step29c_partC_germplasmID_selection.tsv`](tables/step29c_partC_germplasmID_selection.tsv),
 sorted `EOID → locationID → component → germplasmID`; the
 per-mother columns `n_seeds_to_germinate` (= 25) and
 `n_seedlings_to_genotype` (= 15 at 60 % germination) are already
@@ -3086,18 +3086,18 @@ baked in. Filter to the P34 and P32 locationIDs (21 for P34; 15,
 
 **Companion tables for pilot review:**
 
-- [`step30g_populations_classified.tsv`](tables/Phase5/step30g_populations_classified.tsv) — stable / crash / growth / 2025_only / 2026_only classification + per-year N_fertile + mothers in DB; the primary filter for selecting within-BL stable pairs.
-- [`step29c_sampling_comparison_per_location.tsv`](tables/Phase5/step29c_sampling_comparison_per_location.tsv) — head-to-head of current vs fragmentation-aware M per location.
-- [`step28_seed_sampling_per_mother.tsv`](tables/Phase5/step28_seed_sampling_per_mother.tsv) — analyst view (per-mother targets, achievable coverage, budget flags).
-- [`step29_location_connectivity.tsv`](tables/Phase5/step29_location_connectivity.tsv) — the 50 m primary + 10 m / 50 m sensitivity connectivity metrics.
-- [`step30_A_prediction_location_diversity.tsv`](tables/Phase5/step30_A_prediction_location_diversity.tsv) — predicted SRK allele count with 95 % CI per location (2025 single-year, legacy).
-- [`step30_A_prediction_location_pcompat.tsv`](tables/Phase5/step30_A_prediction_location_pcompat.tsv) — predicted random-mating pollen compatibility with 95 % CI per location (2025 single-year, legacy).
+- [`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv) — stable / crash / growth / 2025_only / 2026_only classification + per-year N_fertile + mothers in DB; the primary filter for selecting within-BL stable pairs.
+- [`step29c_sampling_comparison_per_location.tsv`](tables/step29c_sampling_comparison_per_location.tsv) — head-to-head of current vs fragmentation-aware M per location.
+- [`step28_seed_sampling_per_mother.tsv`](tables/step28_seed_sampling_per_mother.tsv) — analyst view (per-mother targets, achievable coverage, budget flags).
+- [`step29_location_connectivity.tsv`](tables/step29_location_connectivity.tsv) — the 50 m primary + 10 m / 50 m sensitivity connectivity metrics.
+- [`step30_A_prediction_location_diversity.tsv`](tables/step30_A_prediction_location_diversity.tsv) — predicted SRK allele count with 95 % CI per location (2025 single-year, legacy).
+- [`step30_A_prediction_location_pcompat.tsv`](tables/step30_A_prediction_location_pcompat.tsv) — predicted random-mating pollen compatibility with 95 % CI per location (2025 single-year, legacy).
 
 **Downstream in Phase B.** Once P34 and P32 seed genotypes exist,
 run Step 30 with the pilot subset:
 
 ```
-python step30_srk_diversity_prediction_vs_observed.py \
+python step19_predictions_core.py \
     --year 2025 \
     --seed-genotypes  real_seeds_BL3_pilot.tsv \
     --mother-genotypes real_mothers_BL3_pilot.tsv \
@@ -3119,81 +3119,81 @@ or right-click → *Save link as…* to pull the TSV into your local pipeline.
 
 **Tables** (all TSV):
 
-- [`step28_events_spatial_neighborhood.tsv`](tables/Phase5/step28_events_spatial_neighborhood.tsv) — event spatial reference (lat, lon, per-radius neighbourhood counts).
-- [`step28_seed_sampling_per_mother.tsv`](tables/Phase5/step28_seed_sampling_per_mother.tsv) — per-mother analyst view (K, achievable coverage, budget flags).
-- [`step28_coverage_curves_by_Nfertile.tsv`](tables/Phase5/step28_coverage_curves_by_Nfertile.tsv) — per-mother analytical + simulation curves by event-size bin.
-- [`step28_aggregation_curves_by_Nfertile.tsv`](tables/Phase5/step28_aggregation_curves_by_Nfertile.tsv) — aggregation curves showing expected distinct alleles at a location for M = 1 … 30 mothers × 15 seeds each (tetraploid per-mother cap), one row per (event-size bin, M).
-- [`step28_mothers_for_full_detection_by_bin.tsv`](tables/Phase5/step28_mothers_for_full_detection_by_bin.tsv) — uniform-model M for a 90 % chance of observing every one of K_local alleles, one row per event-size bin.
-- [`step28_mothers_for_full_detection_by_location.tsv`](tables/Phase5/step28_mothers_for_full_detection_by_location.tsv) — per-location `M_recommended` combining the per-mother allele-detection bound with the private-allele floor (≥ 1 mother per event).
-- [`step29c_sampling_frag_aware_per_event.tsv`](tables/Phase5/step29c_sampling_frag_aware_per_event.tsv) — per-event fragmentation-aware allocation under the 50 m connected-component decomposition; columns include `component_id`, `component_K`, `component_M_target`, `M_paternal_only`, `M_frag`.
-- [`step29c_partC_BL5_pilot_candidates.tsv`](tables/Phase5/step29c_partC_BL5_pilot_candidates.tsv) — § C.6 BL5 pilot candidate pairs (A1, A2 ★, A3) with per-location deme structure, mother counts in the LEPA DB, and design rationale. One row per candidate.
-- [`step29d_mating_pool_summary.tsv`](tables/Phase5/step29d_mating_pool_summary.tsv) — § A.5 per-location deme structure summary (n_mating_pools, largest/smallest/median deme size, demes below SI / 8-plant species-pool thresholds). Feeds Figure 1b and the BL5 pilot candidate file.
-- [`step29c_sampling_comparison_per_location.tsv`](tables/Phase5/step29c_sampling_comparison_per_location.tsv) — per-location head-to-head of current (§ B.4.1) vs fragmentation-aware (§ B.4.2) M_recommended, with `n_components_50m`, `sum_M_paternal_only`, and `delta`.
-- [`step29_sampling_per_event.tsv`](tables/Phase5/step29_sampling_per_event.tsv) — per-event allocation.
-- [`step29_sampling_per_location.tsv`](tables/Phase5/step29_sampling_per_location.tsv) — per-location design table with connectivity-informed columns.
-- [`step29_location_coverage_curves.tsv`](tables/Phase5/step29_location_coverage_curves.tsv) — analytical curves by location size.
-- [`step29_field_team_sampling_recipe.tsv`](tables/Phase5/step29_field_team_sampling_recipe.tsv) — **FIELD TEAM per-germplasmID recipe** (one row per mother with the actionable seed count).
-- [`step29_location_connectivity.tsv`](tables/Phase5/step29_location_connectivity.tsv) — within-location pollen connectivity at 10 / **25 (primary)** / 50 m.
-- [`step30_A_prediction_prior_frequencies.tsv`](tables/Phase5/step30_A_prediction_prior_frequencies.tsv) — the P1 species-wide Fg prior.
-- [`step30_A_prediction_location_diversity.tsv`](tables/Phase5/step30_A_prediction_location_diversity.tsv) — predicted SRK allele diversity per location (union across its 50 m components).
-- [`step30_A_prediction_component_diversity.tsv`](tables/Phase5/step30_A_prediction_component_diversity.tsv) — per 50 m component diversity: pool size, allocated mothers + seeds, A_delivered, Fgs detected, and coverage.
-- [`step30_A_prediction_location_pcompat.tsv`](tables/Phase5/step30_A_prediction_location_pcompat.tsv) — predicted random-mating pollen compatibility per location (size-weighted mean across its 50 m components).
-- [`step30_A_prediction_component_pcompat.tsv`](tables/Phase5/step30_A_prediction_component_pcompat.tsv) — per 50 m component pollen compatibility — exposes struggling sub-components hidden inside a sustainable-mean location.
-- [`step30_A_prediction_per_mother_fecundation.tsv`](tables/Phase5/step30_A_prediction_per_mother_fecundation.tsv) — species-wide compatibility reference distribution under the sporophytic tetraploid model.
-- [`srk_fg_class.tsv`](tables/Phase5/srk_fg_class.tsv) — Fg → dominance class (I / II) mapping used by the sporophytic pollen compatibility model in § A.8. Provisional data-driven default; editable by hand as biology is refined.
-- [`srk_zygosity_empirical.tsv`](tables/Phase5/srk_zygosity_empirical.tsv) — empirical LEPA distribution of distinct functional SRK identities per plant, from Canu-amplicon Step 23 (n = 367). Used to draw mother and father genotypes under the sporophytic finite-population model (§ A.8.3a, § A.8).
-- [`step30_A_traffic_light_bands.tsv`](tables/Phase5/step30_A_traffic_light_bands.tsv) — recalibrated failed / struggling / sustainable band boundaries against the sporophytic species-mean pollen compatibility.
-- [`step30_A_fragmentation_per_event.tsv`](tables/Phase5/step30_A_fragmentation_per_event.tsv) — per-event fragmentation index F_event = 1 − K_spatial_50m / 32 (purely spatial, no allele frequencies).
-- [`step30_A_fragmentation_per_location.tsv`](tables/Phase5/step30_A_fragmentation_per_location.tsv) — per-location fragmentation index F_location = 1 − within-location connectivity at 50 m, with median event-scale F for the same location.
+- [`step28_events_spatial_neighborhood.tsv`](tables/step28_events_spatial_neighborhood.tsv) — event spatial reference (lat, lon, per-radius neighbourhood counts).
+- [`step28_seed_sampling_per_mother.tsv`](tables/step28_seed_sampling_per_mother.tsv) — per-mother analyst view (K, achievable coverage, budget flags).
+- [`step28_coverage_curves_by_Nfertile.tsv`](tables/step28_coverage_curves_by_Nfertile.tsv) — per-mother analytical + simulation curves by event-size bin.
+- [`step28_aggregation_curves_by_Nfertile.tsv`](tables/step28_aggregation_curves_by_Nfertile.tsv) — aggregation curves showing expected distinct alleles at a location for M = 1 … 30 mothers × 15 seeds each (tetraploid per-mother cap), one row per (event-size bin, M).
+- [`step28_mothers_for_full_detection_by_bin.tsv`](tables/step28_mothers_for_full_detection_by_bin.tsv) — uniform-model M for a 90 % chance of observing every one of K_local alleles, one row per event-size bin.
+- [`step28_mothers_for_full_detection_by_location.tsv`](tables/step28_mothers_for_full_detection_by_location.tsv) — per-location `M_recommended` combining the per-mother allele-detection bound with the private-allele floor (≥ 1 mother per event).
+- [`step29c_sampling_frag_aware_per_event.tsv`](tables/step29c_sampling_frag_aware_per_event.tsv) — per-event fragmentation-aware allocation under the 50 m connected-component decomposition; columns include `component_id`, `component_K`, `component_M_target`, `M_paternal_only`, `M_frag`.
+- [`step29c_partC_BL5_pilot_candidates.tsv`](tables/step29c_partC_BL5_pilot_candidates.tsv) — § C.6 BL5 pilot candidate pairs (A1, A2 ★, A3) with per-location deme structure, mother counts in the LEPA DB, and design rationale. One row per candidate.
+- [`step29d_mating_pool_summary.tsv`](tables/step29d_mating_pool_summary.tsv) — § A.5 per-location deme structure summary (n_mating_pools, largest/smallest/median deme size, demes below SI / 8-plant species-pool thresholds). Feeds Figure 1b and the BL5 pilot candidate file.
+- [`step29c_sampling_comparison_per_location.tsv`](tables/step29c_sampling_comparison_per_location.tsv) — per-location head-to-head of current (§ B.4.1) vs fragmentation-aware (§ B.4.2) M_recommended, with `n_components_50m`, `sum_M_paternal_only`, and `delta`.
+- [`step29_sampling_per_event.tsv`](tables/step29_sampling_per_event.tsv) — per-event allocation.
+- [`step29_sampling_per_location.tsv`](tables/step29_sampling_per_location.tsv) — per-location design table with connectivity-informed columns.
+- [`step29_location_coverage_curves.tsv`](tables/step29_location_coverage_curves.tsv) — analytical curves by location size.
+- [`step29_field_team_sampling_recipe.tsv`](tables/step29_field_team_sampling_recipe.tsv) — **FIELD TEAM per-germplasmID recipe** (one row per mother with the actionable seed count).
+- [`step29_location_connectivity.tsv`](tables/step29_location_connectivity.tsv) — within-location pollen connectivity at 10 / **25 (primary)** / 50 m.
+- [`step30_A_prediction_prior_frequencies.tsv`](tables/step30_A_prediction_prior_frequencies.tsv) — the P1 species-wide Fg prior.
+- [`step30_A_prediction_location_diversity.tsv`](tables/step30_A_prediction_location_diversity.tsv) — predicted SRK allele diversity per location (union across its 50 m components).
+- [`step30_A_prediction_component_diversity.tsv`](tables/step30_A_prediction_component_diversity.tsv) — per 50 m component diversity: pool size, allocated mothers + seeds, A_delivered, Fgs detected, and coverage.
+- [`step30_A_prediction_location_pcompat.tsv`](tables/step30_A_prediction_location_pcompat.tsv) — predicted random-mating pollen compatibility per location (size-weighted mean across its 50 m components).
+- [`step30_A_prediction_component_pcompat.tsv`](tables/step30_A_prediction_component_pcompat.tsv) — per 50 m component pollen compatibility — exposes struggling sub-components hidden inside a sustainable-mean location.
+- [`step30_A_prediction_per_mother_fecundation.tsv`](tables/step30_A_prediction_per_mother_fecundation.tsv) — species-wide compatibility reference distribution under the sporophytic tetraploid model.
+- [`srk_fg_class.tsv`](tables/srk_fg_class.tsv) — Fg → dominance class (I / II) mapping used by the sporophytic pollen compatibility model in § A.8. Provisional data-driven default; editable by hand as biology is refined.
+- [`srk_zygosity_empirical.tsv`](tables/srk_zygosity_empirical.tsv) — empirical LEPA distribution of distinct functional SRK identities per plant, from Canu-amplicon Step 23 (n = 367). Used to draw mother and father genotypes under the sporophytic finite-population model (§ A.8.3a, § A.8).
+- [`step30_A_traffic_light_bands.tsv`](tables/step30_A_traffic_light_bands.tsv) — recalibrated failed / struggling / sustainable band boundaries against the sporophytic species-mean pollen compatibility.
+- [`step30_A_fragmentation_per_event.tsv`](tables/step30_A_fragmentation_per_event.tsv) — per-event fragmentation index F_event = 1 − K_spatial_50m / 32 (purely spatial, no allele frequencies).
+- [`step30_A_fragmentation_per_location.tsv`](tables/step30_A_fragmentation_per_location.tsv) — per-location fragmentation index F_location = 1 − within-location connectivity at 50 m, with median event-scale F for the same location.
 
 **Figures** (PNG + PDF):
 
-- [`step28_coverage_curves.pdf`](figures/Phase5/step28_coverage_curves.pdf) / [`.png`](figures/Phase5/step28_coverage_curves.png) — per-mother coverage vs seeds and aggregation across mothers, one curve per event-size bin, with the per-mother cap. Justifies the tetraploid per-mother cap of 15 seeds/mother.
-- [`step28d_pcompat_precision.pdf`](figures/Phase5/step28d_pcompat_precision.pdf) / [`.png`](figures/Phase5/step28d_pcompat_precision.png) — Part C justification (§ B.3.1) — per-mother observed P_compat SE vs seed count; precision plateau at ~15 seeds.
-- [`step28d_matelim_power.pdf`](figures/Phase5/step28d_matelim_power.pdf) / [`.png`](figures/Phase5/step28d_matelim_power.png) — Part C justification (§ B.3.1) — § C.1 mate-limitation regression power vs seed count; ≥ 99 % power at n_seeds = 15 for medium/large β₁, marginal at small β₁.
-- [`step29c_sampling_comparison.pdf`](figures/Phase5/step29c_sampling_comparison.pdf) / [`.png`](figures/Phase5/step29c_sampling_comparison.png) — fragmentation-aware sampling target (§ B.4.2) vs mothers already collected in the LEPA DB, BL-panelled.
-- [`step29a_populations_overview.pdf`](figures/Phase5/step29a_populations_overview.pdf) / [`.png`](figures/Phase5/step29a_populations_overview.png) — Figure 1b: the 44 Phase 5 populations across the Snake River Plain, colour-coded by 2025 + 2026 occupancy.
-- [`step30h_dendrogram.pdf`](figures/Phase5/step30h_dendrogram.pdf) / [`.png`](figures/Phase5/step30h_dendrogram.png) — Figure 1c: Ward's D2 dendrogram at the population level; the *k* = 5 cut defines the five Bottleneck Lineages.
-- [`step30h_silhouette_curve.pdf`](figures/Phase5/step30h_silhouette_curve.pdf) / [`.png`](figures/Phase5/step30h_silhouette_curve.png) — Figure 1d: silhouette-based *k* selection confirming *k*<sub>optimal</sub> = 5.
-- [`step30h_overview_by_BL.pdf`](figures/Phase5/step30h_overview_by_BL.pdf) / [`.png`](figures/Phase5/step30h_overview_by_BL.png) — Figure 1e: Snake River Plain overview with populations and convex hulls coloured by BL1 … BL5.
-- [`step30g_populations_classified.pdf`](figures/Phase5/step30g_populations_classified.pdf) / [`.png`](figures/Phase5/step30g_populations_classified.png) — Figure 1f: the 44 populations grouped by across-year trend class (crash / stable / growth / ambiguous / 2025_only / 2026_only), sorted by BL within each class.
-- [`step30h_pred_diversity.pdf`](figures/Phase5/step30h_pred_diversity.pdf) / [`.png`](figures/Phase5/step30h_pred_diversity.png) — Figure 3: predicted SRK allele diversity per population, 2025 (open) vs 2026 (filled) overlaid, grouped by new BL.
-- [`step30_A_si_model_schematic.pdf`](figures/Phase5/step30_A_si_model_schematic.pdf) / [`.png`](figures/Phase5/step30_A_si_model_schematic.png) — Figure 4: three-panel pedagogical schematic of the sporophytic Class I / II model (§ A.7).
-- [`step30h_pred_pcompat.pdf`](figures/Phase5/step30h_pred_pcompat.pdf) / [`.png`](figures/Phase5/step30h_pred_pcompat.png) — Figure 5: per-population pollen compatibility, 2025 (open) vs 2026 (filled) overlaid, traffic-light bands.
-- [`step30g_across_year_scatter.pdf`](figures/Phase5/step30g_across_year_scatter.pdf) / [`.png`](figures/Phase5/step30g_across_year_scatter.png) — Figure 1g: across-year prediction scatter (2025 x vs 2026 y), both metrics.
+- [`step28_coverage_curves.pdf`](figures/step28_coverage_curves.pdf) / [`.png`](figures/step28_coverage_curves.png) — per-mother coverage vs seeds and aggregation across mothers, one curve per event-size bin, with the per-mother cap. Justifies the tetraploid per-mother cap of 15 seeds/mother.
+- [`step28d_pcompat_precision.pdf`](figures/step28d_pcompat_precision.pdf) / [`.png`](figures/step28d_pcompat_precision.png) — Part C justification (§ B.3.1) — per-mother observed P_compat SE vs seed count; precision plateau at ~15 seeds.
+- [`step28d_matelim_power.pdf`](figures/step28d_matelim_power.pdf) / [`.png`](figures/step28d_matelim_power.png) — Part C justification (§ B.3.1) — § C.1 mate-limitation regression power vs seed count; ≥ 99 % power at n_seeds = 15 for medium/large β₁, marginal at small β₁.
+- [`step29c_sampling_comparison.pdf`](figures/step29c_sampling_comparison.pdf) / [`.png`](figures/step29c_sampling_comparison.png) — fragmentation-aware sampling target (§ B.4.2) vs mothers already collected in the LEPA DB, BL-panelled.
+- [`step29a_populations_overview.pdf`](figures/step29a_populations_overview.pdf) / [`.png`](figures/step29a_populations_overview.png) — Figure 1b: the 44 Phase 5 populations across the Snake River Plain, colour-coded by 2025 + 2026 occupancy.
+- [`step30h_dendrogram.pdf`](figures/step30h_dendrogram.pdf) / [`.png`](figures/step30h_dendrogram.png) — Figure 1c: Ward's D2 dendrogram at the population level; the *k* = 5 cut defines the five Bottleneck Lineages.
+- [`step30h_silhouette_curve.pdf`](figures/step30h_silhouette_curve.pdf) / [`.png`](figures/step30h_silhouette_curve.png) — Figure 1d: silhouette-based *k* selection confirming *k*<sub>optimal</sub> = 5.
+- [`step30h_overview_by_BL.pdf`](figures/step30h_overview_by_BL.pdf) / [`.png`](figures/step30h_overview_by_BL.png) — Figure 1e: Snake River Plain overview with populations and convex hulls coloured by BL1 … BL5.
+- [`step30g_populations_classified.pdf`](figures/step30g_populations_classified.pdf) / [`.png`](figures/step30g_populations_classified.png) — Figure 1f: the 44 populations grouped by across-year trend class (crash / stable / growth / ambiguous / 2025_only / 2026_only), sorted by BL within each class.
+- [`step30h_pred_diversity.pdf`](figures/step30h_pred_diversity.pdf) / [`.png`](figures/step30h_pred_diversity.png) — Figure 3: predicted SRK allele diversity per population, 2025 (open) vs 2026 (filled) overlaid, grouped by new BL.
+- [`step30_A_si_model_schematic.pdf`](figures/step30_A_si_model_schematic.pdf) / [`.png`](figures/step30_A_si_model_schematic.png) — Figure 4: three-panel pedagogical schematic of the sporophytic Class I / II model (§ A.7).
+- [`step30h_pred_pcompat.pdf`](figures/step30h_pred_pcompat.pdf) / [`.png`](figures/step30h_pred_pcompat.png) — Figure 5: per-population pollen compatibility, 2025 (open) vs 2026 (filled) overlaid, traffic-light bands.
+- [`step30g_across_year_scatter.pdf`](figures/step30g_across_year_scatter.pdf) / [`.png`](figures/step30g_across_year_scatter.png) — Figure 1g: across-year prediction scatter (2025 x vs 2026 y), both metrics.
 
 **Phase A validation (adult SRK genotypes from Phase 4 — Part C § C.0):**
 
 **Primary Phase A validation — § C.0.a + § C.0.b** (clean-overlap EOs at Phase 5 location scale):
 
-- [`step30_B_partC_clean_overlap_per_location.tsv`](tables/Phase5/step30_B_partC_clean_overlap_per_location.tsv) — § C.0.a one row per clean location (EO67, EO70, EO76 — 187 adults). Observed vs Phase 5 predicted pollen compatibility, observed vs Phase 5 predicted distinct allele count, no-drift upper bound at the adult sample size.
-- [`step30_B_partC_clean_overlap_fg_frequencies.tsv`](tables/Phase5/step30_B_partC_clean_overlap_fg_frequencies.tsv) — long form, one row per (clean locationCode × allele) with observed f, species-wide P1 f, and present/absent flag.
-- [`step30_B_partC_clean_overlap.pdf`](figures/Phase5/step30_B_partC_clean_overlap.pdf) / [`.png`](figures/Phase5/step30_B_partC_clean_overlap.png) — Figure 10: three-panel per-location figure (SRK diversity + pollen compatibility + per-allele drift residual).
-- [`step30_B_partC_hypothesis_decomposition.tsv`](tables/Phase5/step30_B_partC_hypothesis_decomposition.tsv) — § C.0.b decomposition: diversity trigger (observed vs Phase 5 predicted allele counts), observed + three single-swap counterfactual pollen compatibility estimates, driver fractions for within-class spread, Class I/II balance, zygosity.
-- [`step30_B_partC_hypothesis_decomposition.pdf`](figures/Phase5/step30_B_partC_hypothesis_decomposition.pdf) / [`.png`](figures/Phase5/step30_B_partC_hypothesis_decomposition.png) — Figure 11: grouped bar chart with gold-star markers on the dominant explanation per location.
-- [`step30f_srk_diversity_radius_sweep.tsv`](tables/Phase5/step30f_srk_diversity_radius_sweep.tsv) — § C.0.c SRK-diversity radius sweep: one row per (EO, radius) with `n_components`, `component_sizes`, `pred_mean` / `pred_lo95` / `pred_hi95`, `observed`, `obs_inside_CI`.
-- [`step30f_srk_diversity_radius_sweep.pdf`](figures/Phase5/step30f_srk_diversity_radius_sweep.pdf) / [`.png`](figures/Phase5/step30f_srk_diversity_radius_sweep.png) — Figure 13: predicted-vs-observed diversity across radii 10 → 150 m for EO67, EO70, EO76 (deme-size vs residual-drift test).
+- [`step30_B_partC_clean_overlap_per_location.tsv`](tables/step30_B_partC_clean_overlap_per_location.tsv) — § C.0.a one row per clean location (EO67, EO70, EO76 — 187 adults). Observed vs Phase 5 predicted pollen compatibility, observed vs Phase 5 predicted distinct allele count, no-drift upper bound at the adult sample size.
+- [`step30_B_partC_clean_overlap_fg_frequencies.tsv`](tables/step30_B_partC_clean_overlap_fg_frequencies.tsv) — long form, one row per (clean locationCode × allele) with observed f, species-wide P1 f, and present/absent flag.
+- [`step30_B_partC_clean_overlap.pdf`](figures/step30_B_partC_clean_overlap.pdf) / [`.png`](figures/step30_B_partC_clean_overlap.png) — Figure 10: three-panel per-location figure (SRK diversity + pollen compatibility + per-allele drift residual).
+- [`step30_B_partC_hypothesis_decomposition.tsv`](tables/step30_B_partC_hypothesis_decomposition.tsv) — § C.0.b decomposition: diversity trigger (observed vs Phase 5 predicted allele counts), observed + three single-swap counterfactual pollen compatibility estimates, driver fractions for within-class spread, Class I/II balance, zygosity.
+- [`step30_B_partC_hypothesis_decomposition.pdf`](figures/step30_B_partC_hypothesis_decomposition.pdf) / [`.png`](figures/step30_B_partC_hypothesis_decomposition.png) — Figure 11: grouped bar chart with gold-star markers on the dominant explanation per location.
+- [`step30f_srk_diversity_radius_sweep.tsv`](tables/step30f_srk_diversity_radius_sweep.tsv) — § C.0.c SRK-diversity radius sweep: one row per (EO, radius) with `n_components`, `component_sizes`, `pred_mean` / `pred_lo95` / `pred_hi95`, `observed`, `obs_inside_CI`.
+- [`step30f_srk_diversity_radius_sweep.pdf`](figures/step30f_srk_diversity_radius_sweep.pdf) / [`.png`](figures/step30f_srk_diversity_radius_sweep.png) — Figure 13: predicted-vs-observed diversity across radii 10 → 150 m for EO67, EO70, EO76 (deme-size vs residual-drift test).
 
 **Background diagnostic for split EOs — § C.0** (EO-scale pending Phase 5 remap):
 
-- [`step30_C_pcompat_validation_at_eo.tsv`](tables/Phase5/step30_C_pcompat_validation_at_eo.tsv) — per-EO observed vs predicted pollen compatibility for EO18, EO25, EO27 (clean-overlap EOs are now in the two files above instead). Observed Class I mass + distinct-identity distribution per EO. No companion figure; see § C.0 for the three-row result table.
+- [`step30_C_pcompat_validation_at_eo.tsv`](tables/step30_C_pcompat_validation_at_eo.tsv) — per-EO observed vs predicted pollen compatibility for EO18, EO25, EO27 (clean-overlap EOs are now in the two files above instead). Observed Class I mass + distinct-identity distribution per EO. No companion figure; see § C.0 for the three-row result table.
 
 ### Phase B — Post-genotyping (requires observed seed genotypes)
 
-**Tables** (produced by `step30_srk_diversity_prediction_vs_observed.py --seed-genotypes … --mother-genotypes …`):
+**Tables** (produced by `step19_predictions_core.py --seed-genotypes … --mother-genotypes …`):
 
-- `tables/Phase5/step30_B_comparison_location_diversity.tsv` — posterior vs predicted diversity per location.
-- `tables/Phase5/step30_B_comparison_maternal_vs_paternal.tsv` — spectra test per location.
-- `tables/Phase5/step30_B_mate_limitation_per_location.tsv` — Test 1 · location-level.
-- `tables/Phase5/step30_B_mate_limitation_per_mother.tsv` — Test 1 · per-mother detail.
-- `tables/Phase5/step30_B_mate_limitation_coefficients.tsv` — Test 1 · β₁, β₂, β₃ estimates with 95 % CI.
-- `tables/Phase5/step30_B_si_escape_permutation.tsv` — out-of-scope permutation-test scaffold ([Appendix](#appendix--out-of-scope--future-work)).
+- `tables/step30_B_comparison_location_diversity.tsv` — posterior vs predicted diversity per location.
+- `tables/step30_B_comparison_maternal_vs_paternal.tsv` — spectra test per location.
+- `tables/step30_B_mate_limitation_per_location.tsv` — Test 1 · location-level.
+- `tables/step30_B_mate_limitation_per_mother.tsv` — Test 1 · per-mother detail.
+- `tables/step30_B_mate_limitation_coefficients.tsv` — Test 1 · β₁, β₂, β₃ estimates with 95 % CI.
+- `tables/step30_B_si_escape_permutation.tsv` — out-of-scope permutation-test scaffold ([Appendix](#appendix--out-of-scope--future-work)).
 
 **Figures**:
 
-- `figures/Phase5/step30_B_comparison_diversity.pdf/png` — observed vs predicted diversity.
-- `figures/Phase5/step30_B_mate_limitation.pdf/png` — Test 1 · location scatter.
-- `figures/Phase5/step30_B_si_escape.pdf/png` — out-of-scope permutation-test scaffold ([Appendix](#appendix--out-of-scope--future-work)).
+- `figures/step30_B_comparison_diversity.pdf/png` — observed vs predicted diversity.
+- `figures/step30_B_mate_limitation.pdf/png` — Test 1 · location scatter.
+- `figures/step30_B_si_escape.pdf/png` — out-of-scope permutation-test scaffold ([Appendix](#appendix--out-of-scope--future-work)).
 
 ### Phase B — DEMO (synthetic pipeline-validation outputs, `--demo` mode)
 

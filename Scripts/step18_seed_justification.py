@@ -24,8 +24,8 @@ Outputs
 -------
     tables/Phase5/step28d_pcompat_precision.tsv
     tables/Phase5/step28d_matelim_power.tsv
-    figures/Phase5/step28d_pcompat_precision.png (+ .pdf)
-    figures/Phase5/step28d_matelim_power.png     (+ .pdf)
+    figures/step28d_pcompat_precision.png (+ .pdf)
+    figures/step28d_matelim_power.png     (+ .pdf)
 """
 from __future__ import annotations
 
@@ -35,8 +35,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-DEFAULT_TABLES  = Path("Tables/Phase5")
-DEFAULT_FIGURES = Path("figures/Phase5")
+DEFAULT_TABLES  = Path("tables")
+DEFAULT_FIGURES = Path("figures")
 
 RNG_SEED = 2033
 N_REPS   = 500   # Monte-Carlo replicates per (n_seeds, scenario) cell
@@ -290,7 +290,7 @@ def main() -> None:
         df_prec,
         DEFAULT_FIGURES / "step28d_pcompat_precision.png",
         DEFAULT_FIGURES / "step28d_pcompat_precision.pdf")
-    print("[step28d] Wrote figures/Phase5/step28d_pcompat_precision.{png,pdf}")
+    print("[step28d] Wrote figures/step28d_pcompat_precision.{png,pdf}")
 
     # ---- Figure B: § C.1 mate-limitation regression power ----
     prior_tsv = DEFAULT_TABLES / "step30_A_prediction_prior_frequencies.tsv"
@@ -305,7 +305,7 @@ def main() -> None:
         df_power,
         DEFAULT_FIGURES / "step28d_matelim_power.png",
         DEFAULT_FIGURES / "step28d_matelim_power.pdf")
-    print("[step28d] Wrote figures/Phase5/step28d_matelim_power.{png,pdf}")
+    print("[step28d] Wrote figures/step28d_matelim_power.{png,pdf}")
 
     # ---- Console summary ----
     print()
