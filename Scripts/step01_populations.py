@@ -1,6 +1,6 @@
-"""Step 29a — build the Phase 5 population + slickspot crosswalk.
+"""Step 29a — build the population + slickspot crosswalk.
 
-Phase 5 § A.5.0. Three-level spatial hierarchy for an annual plant:
+§ A.5.0. Three-level spatial hierarchy for an annual plant:
 
     Species > Population (500 m, stable across years) > Deme (50 m,
     within-year) > Event.
@@ -50,10 +50,10 @@ from step17_seed_sampling_per_mother import (
 from srk_bl_constants import locationCode_to_bl
 
 # ---- Tunables ----
-SLICKSPOT_BUFFER_M = 10.0     # cross-year slickspot match radius
-POPULATION_GAP_M   = 500.0    # population-level separation threshold
-DEME_RADIUS_M      = 50.0     # within-year deme radius (same as Phase 5 primary)
-YEARS              = (2025, 2026)
+SLICKSPOT_BUFFER_M = 10.0 # cross-year slickspot match radius
+POPULATION_GAP_M = 500.0 # population-level separation threshold
+DEME_RADIUS_M = 50.0 # within-year deme radius (same as primary)
+YEARS = (2025, 2026)
 
 TABLES = Path("tables")
 
@@ -80,14 +80,14 @@ def load_locationID_centroids(db_path: Path) -> pd.DataFrame:
         df = pd.read_sql_query(
             """
             SELECT DISTINCT
-                e.locationID              AS locationID,
-                e.eventDecimalLatitude    AS lat,
-                e.eventDecimalLongitude   AS lon
+                e.locationID AS locationID,
+                e.eventDecimalLatitude AS lat,
+                e.eventDecimalLongitude AS lon
             FROM Events e
             JOIN Occurrences o ON o.eventID = e.eventID
-            JOIN Taxonomy    t ON o.taxonID = t.taxonID
+            JOIN Taxonomy t ON o.taxonID = t.taxonID
             WHERE t.genus='Lepidium' AND t.specificEpithet='papilliferum'
-              AND e.eventDecimalLatitude  IS NOT NULL
+              AND e.eventDecimalLatitude IS NOT NULL
               AND e.eventDecimalLongitude IS NOT NULL
               AND (o.provenance IS NULL OR o.provenance = 'in situ')
             """,
@@ -105,7 +105,7 @@ def load_locationID_centroids(db_path: Path) -> pd.DataFrame:
 
 def load_locationID_to_locationCode(db_path: Path) -> pd.Series:
     """locationID → locationCode map from the DB `Locations` table —
-    covers every DB location, not just the 2025-year Phase 5 subset
+    covers every DB location, not just the 2025-year mate-limitation subset
     that step29d_mating_pool_summary.tsv carries. Needed so the
     2026-only populations (new slickspots) still get a real EO code
     instead of a `locID_N` fallback."""
@@ -189,15 +189,15 @@ def build_slickspot_summary(events_ss: pd.DataFrame) -> pd.DataFrame:
         n_f_25, n_e_25 = _agg_year(sub, 2025)
         n_f_26, n_e_26 = _agg_year(sub, 2026)
         rows.append({
-            "slickspotID":      int(ss_id),
-            "locationID":       int(sub["locationID"].iloc[0]),
-            "lat":              float(sub["lat"].mean()),
-            "lon":              float(sub["lon"].mean()),
-            "n_fertile_2025":   n_f_25,
-            "n_fertile_2026":   n_f_26,
-            "n_events_2025":    n_e_25,
-            "n_events_2026":    n_e_26,
-            "both_years":       (n_e_25 > 0) and (n_e_26 > 0),
+            "slickspotID": int(ss_id),
+            "locationID": int(sub["locationID"].iloc[0]),
+            "lat": float(sub["lat"].mean()),
+            "lon": float(sub["lon"].mean()),
+            "n_fertile_2025": n_f_25,
+            "n_fertile_2026": n_f_26,
+            "n_events_2025": n_e_25,
+            "n_events_2026": n_e_26,
+            "both_years": (n_e_25 > 0) and (n_e_26 > 0),
         })
     return pd.DataFrame(rows)
 
@@ -268,10 +268,10 @@ def rebuild_demes(events_ss: pd.DataFrame,
         n_fert = sub["n_fertile"].to_numpy()
         for d_idx, comp in enumerate(comps, start=1):
             rows.append({
-                "populationID":        int(pop_id),
-                "year":                int(yr),
-                "demeID":              d_idx,
-                "n_events":            len(comp),
+                "populationID": int(pop_id),
+                "year": int(yr),
+                "demeID": d_idx,
+                "n_events": len(comp),
                 "component_N_fertile": int(n_fert[comp].sum()),
             })
     return pd.DataFrame(rows)
@@ -398,7 +398,7 @@ def main() -> None:
     cands = seedcleaning_priority(pop_sum)
     cands.to_csv(TABLES / "step29a_seedcleaning_priority.tsv",
                   sep="\t", index=False)
-    print(f"[step29a] Wrote tables/step29a_seedcleaning_priority.tsv  "
+    print(f"[step29a] Wrote tables/step29a_seedcleaning_priority.tsv "
           f"({len(cands)} candidate populations)")
 
     # ---- Per-population-year demes ----
@@ -411,10 +411,10 @@ def main() -> None:
     print()
     print(f"[step29a] ========== Population summary ==========")
     print(f"[step29a] {n_pop} populations total")
-    print(f"[step29a]   both years above-ground   : {occ.get('both_years', 0)}")
-    print(f"[step29a]   2025 only                 : {occ.get('2025_only', 0)}")
-    print(f"[step29a]   2026 only                 : {occ.get('2026_only', 0)}")
-    print(f"[step29a]   candidate (≥2 re-visited) : {len(cands)}")
+    print(f"[step29a] both years above-ground : {occ.get('both_years', 0)}")
+    print(f"[step29a] 2025 only : {occ.get('2025_only', 0)}")
+    print(f"[step29a] 2026 only : {occ.get('2026_only', 0)}")
+    print(f"[step29a] candidate (≥2 re-visited) : {len(cands)}")
 
     # ---- Legacy locationCode → populationID aggregation ----
     code_counts = (cw.dropna(subset=["locationCode"])
@@ -431,7 +431,7 @@ def main() -> None:
                     .groupby("populationID")["locationCode"].nunique())
     merged_pops = pop_counts[pop_counts > 1]
     print(f"[step29a] Populations aggregating multiple locationCodes: "
-          f"{len(merged_pops)} populations (merge ≥ 2 Phase 5 locationCodes)")
+          f"{len(merged_pops)} populations (merge ≥ 2 locationCodes)")
 
 
 if __name__ == "__main__":

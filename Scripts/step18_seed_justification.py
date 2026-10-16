@@ -22,10 +22,10 @@ allele-detection goal.
 
 Outputs
 -------
-    tables/Phase5/step28d_pcompat_precision.tsv
-    tables/Phase5/step28d_matelim_power.tsv
+    tables//step28d_pcompat_precision.tsv
+    tables//step28d_matelim_power.tsv
     figures/step28d_pcompat_precision.png (+ .pdf)
-    figures/step28d_matelim_power.png     (+ .pdf)
+    figures/step28d_matelim_power.png (+ .pdf)
 """
 from __future__ import annotations
 
@@ -35,11 +35,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-DEFAULT_TABLES  = Path("tables")
+DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
 
 RNG_SEED = 2033
-N_REPS   = 500   # Monte-Carlo replicates per (n_seeds, scenario) cell
+N_REPS = 500 # Monte-Carlo replicates per (n_seeds, scenario) cell
 
 
 # ----------------------------------------------------------------------
@@ -61,19 +61,19 @@ def build_pcompat_precision() -> pd.DataFrame:
     analytical binomial SE (they differ negligibly at n_seeds ≥ 5).
     """
     rng = np.random.default_rng(RNG_SEED)
-    n_seeds_grid   = np.array([3, 5, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50])
-    p_true_grid    = [0.30, 0.50, 0.68, 0.85]  # 0.68 = species mean
+    n_seeds_grid = np.array([3, 5, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50])
+    p_true_grid = [0.30, 0.50, 0.68, 0.85] # 0.68 = species mean
     rows = []
     for p_true in p_true_grid:
         for n in n_seeds_grid:
             obs = rng.binomial(n, p_true, size=N_REPS) / n
             rows.append({
-                "n_seeds":        int(n),
-                "true_P_compat":  float(p_true),
-                "mean_observed":  float(obs.mean()),
-                "SE_observed":    float(obs.std(ddof=1)),
-                "SE_analytical":  float(np.sqrt(p_true * (1 - p_true) / n)),
-                "n_reps":         N_REPS,
+                "n_seeds": int(n),
+                "true_P_compat": float(p_true),
+                "mean_observed": float(obs.mean()),
+                "SE_observed": float(obs.std(ddof=1)),
+                "SE_analytical": float(np.sqrt(p_true * (1 - p_true) / n)),
+                "n_reps": N_REPS,
             })
     return pd.DataFrame(rows)
 
@@ -160,11 +160,11 @@ def build_matelim_power(prior_tsv: Path) -> pd.DataFrame:
     p_mean_species = 0.68
     # Draw true per-mother P_compat around the species mean with realistic
     # variance across mothers (drift + zygosity contribute ~0.10 SD).
-    n_mothers  = 505
+    n_mothers = 505
     n_seeds_grid = [5, 8, 10, 12, 15, 18, 20, 25, 30, 40]
-    beta_grid    = [50, 100, 150, 200]      # seeds per unit P_compat
-    sigma_seeds  = 30.0                     # per-mother residual SD
-    intercept    = 100.0                    # base seeds when P_compat = 0
+    beta_grid = [50, 100, 150, 200] # seeds per unit P_compat
+    sigma_seeds = 30.0 # per-mother residual SD
+    intercept = 100.0 # base seeds when P_compat = 0
 
     rows = []
     for beta in beta_grid:
@@ -197,15 +197,15 @@ def build_matelim_power(prior_tsv: Path) -> pd.DataFrame:
                     reject_count += 1
                 beta_hats.append(bhat[1])
             rows.append({
-                "n_seeds":         int(n_seeds),
-                "true_beta_1":     float(beta),
-                "power":           reject_count / N_REPS,
-                "mean_beta_hat":   float(np.mean(beta_hats)),
-                "attenuation":     float(np.mean(beta_hats) / beta),
-                "n_reps":          N_REPS,
-                "n_mothers":       n_mothers,
-                "intercept":       intercept,
-                "sigma_seeds":     sigma_seeds,
+                "n_seeds": int(n_seeds),
+                "true_beta_1": float(beta),
+                "power": reject_count / N_REPS,
+                "mean_beta_hat": float(np.mean(beta_hats)),
+                "attenuation": float(np.mean(beta_hats) / beta),
+                "n_reps": N_REPS,
+                "n_mothers": n_mothers,
+                "intercept": intercept,
+                "sigma_seeds": sigma_seeds,
             })
     return pd.DataFrame(rows)
 
@@ -254,7 +254,7 @@ def plot_matelim_power(df: pd.DataFrame, out_png: Path, out_pdf: Path):
                  label="No attenuation")
     axB.axvline(15, color="#333", ls="--", lw=1.0, alpha=0.5)
     axB.set_xlabel("Number of seeds per mother genotyped")
-    axB.set_ylabel("Attenuation of β̂₁  (mean β̂₁ ÷ true β₁)")
+    axB.set_ylabel("Attenuation of β̂₁ (mean β̂₁ ÷ true β₁)")
     axB.set_ylim(0, 1.1)
     axB.set_title(
         "B. Errors-in-variables attenuation vs seed count",

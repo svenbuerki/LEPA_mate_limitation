@@ -1,13 +1,13 @@
-"""LEPA sporophytic SI model with Class I / Class II dominance (Phase 5 Part 2).
+"""LEPA sporophytic SI model with Class I / Class II dominance ( Part 2).
 
 Used by Step 30 to compute the per-mother random-mating pollen
 compatibility `P_compat` under the biologically correct sporophytic
 model, replacing the diploid per-pollen-allele approximation used in
-Phase 5 Part 1's § A.6.
+ Part 1's § A.6.
 
 Biological model
 ----------------
-LEPA is tetraploid (see § A.3 of the Phase 5 doc). Each somatic plant
+LEPA is tetraploid (see § A.3 of the doc). Each somatic plant
 carries 4 SRK allele copies. Sporophytic self-incompatibility means
 recognition is decided in the sporophyte generation (2n = 4x in LEPA)
 — the pollen coat carries proteins deposited by the pollen parent's
@@ -33,7 +33,7 @@ Class II dominance rule:
 Configuration
 -------------
 The Fg → Class mapping is a first-class TSV at
-`tables/Phase5/srk_fg_class.tsv` — editable by hand as the biology is
+`tables//srk_fg_class.tsv` — editable by hand as the biology is
 refined. `load_class_map()` reads it into a dict.
 
 The provisional data-driven default (see the rationale column of the
@@ -53,7 +53,7 @@ expressed set M has total mass p(M) = Σ_{j ∈ M} f_j is:
       P_compat = (1 − p(M))^4
 
   Case B — mother has ONLY Class II alleles (M = mother's 4 alleles):
-      P_compat = 1 − (1 − p_I)^4  +  (1 − p_I − p(M))^4
+      P_compat = 1 − (1 − p_I)^4 + (1 − p_I − p(M))^4
 
 Derivation: the father draws 4 alleles i.i.d. from f; his expressed
 set is his Class I alleles if any, else all four. Case A: any father
@@ -140,8 +140,8 @@ def p_compat_sporophytic_batch(mother_genotypes: np.ndarray,
     p_I = float(local_f[class_i_mask].sum())
     out = np.empty(M, dtype=float)
     # Broadcast approach: per-mother processing (M is small in practice).
-    is_i_all = class_i_mask[mother_genotypes]           # (M, 4) bool
-    has_i = is_i_all.any(axis=1)                        # (M,) bool
+    is_i_all = class_i_mask[mother_genotypes] # (M, 4) bool
+    has_i = is_i_all.any(axis=1) # (M,) bool
 
     # ---- Case A: mothers with any Class I ----
     if has_i.any():
@@ -245,13 +245,13 @@ def sample_genotypes_empirical(n: int,
         if k == 1:
             positions = rng.choice(
                 len(available_idx), size=n_k, p=available_f)
-            distinct = available_idx[positions][:, None]        # (n_k, 1)
+            distinct = available_idx[positions][:, None] # (n_k, 1)
         else:
             distinct_positions = np.empty((n_k, k), dtype=int)
             for i in range(n_k):
                 distinct_positions[i] = rng.choice(
                     len(available_idx), size=k, replace=False, p=available_f)
-            distinct = available_idx[distinct_positions]        # (n_k, k)
+            distinct = available_idx[distinct_positions] # (n_k, k)
         if k < 4:
             pad_col = distinct[:, 0:1]
             padded = np.concatenate(
@@ -288,12 +288,12 @@ def p_compat_sporophytic_empirical(
     # Sample fathers ONCE per call — used across all mothers for
     # efficiency; each mother sees the same simulated father sub-population.
     fathers = sample_genotypes_empirical(n_fathers, local_f, zygosity_probs, rng)
-    father_class_i = class_i_mask[fathers]                    # (F, 4)
-    father_has_i   = father_class_i.any(axis=1)               # (F,)
+    father_class_i = class_i_mask[fathers] # (F, 4)
+    father_has_i = father_class_i.any(axis=1) # (F,)
     # A father allele participates in SI iff:
-    #   father has Class I AND allele is Class I, OR
-    #   father has no Class I (Case B) — then ALL alleles participate.
-    father_include = father_class_i | ~father_has_i[:, None]  # (F, 4)
+    # father has Class I AND allele is Class I, OR
+    # father has no Class I (Case B) — then ALL alleles participate.
+    father_include = father_class_i | ~father_has_i[:, None] # (F, 4)
 
     results = np.empty(M, dtype=float)
     for i in range(M):
@@ -306,9 +306,9 @@ def p_compat_sporophytic_empirical(
         m_mask = np.zeros(K_fg, dtype=bool)
         m_mask[m_expr] = True
         # For each father, is any of his EXPRESSED alleles in M?
-        father_in_M = m_mask[fathers]                          # (F, 4)
-        overlap_positions = father_in_M & father_include       # (F, 4)
-        compat = ~overlap_positions.any(axis=1)                # (F,)
+        father_in_M = m_mask[fathers] # (F, 4)
+        overlap_positions = father_in_M & father_include # (F, 4)
+        compat = ~overlap_positions.any(axis=1) # (F,)
         results[i] = float(compat.mean())
     return results
 
@@ -340,7 +340,7 @@ def traffic_light_bands(species_mean: float,
     diploid gametophytic bands (0.20 / 0.40, which were 0.32 and 0.63
     of the diploid species mean 0.63)."""
     return {
-        "failed_max":      failed_frac * species_mean,
-        "struggling_max":  struggling_frac * species_mean,
-        "species_mean":    species_mean,
+        "failed_max": failed_frac * species_mean,
+        "struggling_max": struggling_frac * species_mean,
+        "species_mean": species_mean,
     }

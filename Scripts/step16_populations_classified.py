@@ -6,11 +6,11 @@ into one master table that lists every population with its:
   - legacy locationCodes (comma-separated)
   - occupancy pattern (both_years / 2025_only / 2026_only)
   - trend classification across years:
-      stable       — both CIs overlap on both metrics (both-year only)
-      growth       — N_fert_2026 / N_fert_2025 >= 4 with positive Δdiv
-      crash        — N_fert_2026 / N_fert_2025 <= 0.25 with negative Δdiv
-      ambiguous    — both-year but doesn't meet stable/growth/crash
-      single_year  — present only in 2025 or 2026 above-ground
+      stable — both CIs overlap on both metrics (both-year only)
+      growth — N_fert_2026 / N_fert_2025 >= 4 with positive Δdiv
+      crash — N_fert_2026 / N_fert_2025 <= 0.25 with negative Δdiv
+      ambiguous — both-year but doesn't meet stable/growth/crash
+      single_year — present only in 2025 or 2026 above-ground
   - N_fertile per year + total
   - n_events per year
   - deme counts per year
@@ -32,22 +32,22 @@ from matplotlib.patches import Rectangle
 
 from srk_bl_constants import make_location_label
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
-CRASH_RATIO  = 0.25
+CRASH_RATIO = 0.25
 GROWTH_RATIO = 4.0
 STABLE_FLOOR = 20
 
 CLASS_ORDER = ["crash", "stable", "growth", "ambiguous",
                "2025_only", "2026_only"]
 CLASS_COLORS = {
-    "crash":     "#D55E00",   # vermillion
-    "stable":    "#5e3c99",   # purple
-    "growth":    "#009E73",   # teal green
-    "ambiguous": "#aaaaaa",   # grey
-    "2025_only": "#0072B2",   # blue
-    "2026_only": "#E69F00",   # orange
+    "crash": "#D55E00", # vermillion
+    "stable": "#5e3c99", # purple
+    "growth": "#009E73", # teal green
+    "ambiguous": "#aaaaaa", # grey
+    "2025_only": "#0072B2", # blue
+    "2026_only": "#E69F00", # orange
 }
 BAR_2025 = "#0072B2"
 BAR_2026 = "#E69F00"
@@ -90,7 +90,7 @@ def build_population_labels() -> pd.Series:
             if code and code != "nan":
                 parts.append(make_location_label(code, loc_id))
             else:
-                # Historical locationID with no Phase 5 locationCode
+                # Historical locationID with no locationCode
                 parts.append(f"locID_{loc_id}")
         parts = sorted(set(parts))
         labels[int(pop_id)] = ", ".join(parts)
@@ -98,7 +98,7 @@ def build_population_labels() -> pd.Series:
 
 
 def build_master() -> pd.DataFrame:
-    pop  = pd.read_csv(TABLES / "step29a_population_summary.tsv",
+    pop = pd.read_csv(TABLES / "step29a_population_summary.tsv",
                         sep="\t", encoding="utf-8-sig")
     comp = pd.read_csv(TABLES / "step30g_across_year_comparison.tsv",
                         sep="\t", encoding="utf-8-sig")
@@ -191,9 +191,9 @@ def plot_summary(df: pd.DataFrame,
     # BL facet strip positions (in axes-fraction x, data y via
     # ax.get_yaxis_transform()). Strip sits in the left margin,
     # outside the plot area.
-    STRIP_X     = -0.085   # x-centre of coloured stripe
-    STRIP_W     = 0.016    # stripe width (axes-fraction)
-    LABEL_X     = -0.100   # x-centre of BL text (further left)
+    STRIP_X = -0.085 # x-centre of coloured stripe
+    STRIP_W = 0.016 # stripe width (axes-fraction)
+    LABEL_X = -0.100 # x-centre of BL text (further left)
 
     width = 0.4
     for ax, cls in zip(axes, classes_present):
@@ -269,7 +269,7 @@ def plot_summary(df: pd.DataFrame,
     axes[0].legend(loc="lower right", fontsize=10, frameon=True)
 
     fig.suptitle(
-        "Phase 5 populations — 2025 vs 2026 N_fertile by across-year "
+        "populations — 2025 vs 2026 N_fertile by across-year "
         f"trend class (n = {len(df)} populations); BL facet strip on "
         f"left",
         fontsize=12, y=0.995,
@@ -295,9 +295,9 @@ def main() -> None:
     print()
     print("Full breakdown (populationID, label, N_fert 2025/2026, class):")
     for _, r in df.iterrows():
-        print(f"  P{int(r['populationID']):>2}  "
-              f"{str(r['population_label']):<36}  "
-              f"{int(r['n_fertile_2025']):>4}/{int(r['n_fertile_2026']):>4}  "
+        print(f" P{int(r['populationID']):>2} "
+              f"{str(r['population_label']):<36} "
+              f"{int(r['n_fertile_2025']):>4}/{int(r['n_fertile_2026']):>4} "
               f"{r['trend_class']}")
 
     plot_summary(

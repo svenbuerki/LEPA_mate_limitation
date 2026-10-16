@@ -1,12 +1,12 @@
-"""Step 30h — hierarchical geographic clustering of the 44 Phase 5
+"""Step 30h — hierarchical geographic clustering of the 44 
 populations.
 
-Phase 5 § A.4.5 (new). Replicates the content of the external
+§ A.4.5 (new). Replicates the content of the external
 LEPA_EO_spatial_clustering repo (Ward's D2 at the EO level) but now
 at the POPULATION level, using the 2 years of pooled 2025+2026 data
 that produced the 44 populations in step29a. The purpose is to
 re-check whether the Bottleneck-Lineage (BL) grouping used
-throughout Phase 5 still holds, and to let the data pick the BL
+throughout still holds, and to let the data pick the BL
 cardinality k rather than forcing k = 5.
 
 Approach
@@ -50,7 +50,7 @@ from sklearn.metrics import silhouette_score
 
 from step17_seed_sampling_per_mother import haversine_meters
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
 K_RANGE = range(2, 11)
@@ -72,10 +72,10 @@ def load_population_centroids() -> pd.DataFrame:
     for pop_id, g in cw.groupby("populationID"):
         rows.append({
             "populationID": int(pop_id),
-            "lat":          float(np.average(g["lat"], weights=g["w"])),
-            "lon":          float(np.average(g["lon"], weights=g["w"])),
+            "lat": float(np.average(g["lat"], weights=g["w"])),
+            "lon": float(np.average(g["lon"], weights=g["w"])),
             "n_fert_total": int(g["n_fertile"].sum()),
-            "n_events":     int(g["eventID"].nunique()),
+            "n_events": int(g["eventID"].nunique()),
         })
     return pd.DataFrame(rows).sort_values("populationID").reset_index(drop=True)
 
@@ -102,7 +102,7 @@ def long_form_distances(cents: pd.DataFrame,
             rows.append({
                 "populationA": int(ids[i]),
                 "populationB": int(ids[j]),
-                "distance_m":  float(D[i, j]),
+                "distance_m": float(D[i, j]),
             })
     df = pd.DataFrame(rows).sort_values("distance_m").reset_index(drop=True)
     return df
@@ -228,11 +228,11 @@ def main() -> None:
     # framework. When k_optimal happens to be 5 the two are
     # identical, which is itself the message.
     labels_opt = fcluster(Z, t=k_optimal, criterion="maxclust")
-    labels_5   = fcluster(Z, t=5,         criterion="maxclust")
+    labels_5 = fcluster(Z, t=5, criterion="maxclust")
     assigns = cents.copy()
     assigns["cluster_k_optimal"] = labels_opt
-    assigns["cluster_k5"]        = labels_5
-    assigns["k_optimal"]         = k_optimal
+    assigns["cluster_k5"] = labels_5
+    assigns["k_optimal"] = k_optimal
 
     # Figures first (so we can read the dendrogram leaf order out
     # before writing cluster_assignments.tsv).

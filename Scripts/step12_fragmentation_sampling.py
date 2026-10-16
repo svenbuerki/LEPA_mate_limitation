@@ -41,8 +41,8 @@ and a location that is one well-connected cluster is unchanged.
 
 Outputs
 -------
-    tables/Phase5/step29c_sampling_frag_aware_per_event.tsv
-    tables/Phase5/step29c_sampling_comparison_per_location.tsv
+    tables//step29c_sampling_frag_aware_per_event.tsv
+    tables//step29c_sampling_comparison_per_location.tsv
     figures/step29c_sampling_comparison.png/pdf
 """
 from __future__ import annotations
@@ -119,14 +119,14 @@ def allocate_component(comp_subset: pd.DataFrame,
     a cap at each event's N_fertile."""
     N_c = int(comp_subset["n_fertile"].sum())
     n_events_c = len(comp_subset)
-    K_c_raw = K_pool(N_c)   # PLOIDY * (N_c - 1) under tetraploid
+    K_c_raw = K_pool(N_c) # PLOIDY * (N_c - 1) under tetraploid
     K_c = min(K_c_raw, K_SPECIES_FG)
     M_paternal = (1 if K_c <= 1
                   else mothers_for_full_detection(K_c, target_prob))
     M_c_final = max(M_paternal, n_events_c)
 
     events_out = comp_subset.copy().reset_index(drop=True)
-    events_out["M_frag"] = 1  # maternal-genotype floor
+    events_out["M_frag"] = 1 # maternal-genotype floor
     remaining = M_c_final - n_events_c
     if remaining > 0:
         weights = events_out["n_fertile"].astype(float).values
@@ -202,9 +202,9 @@ def build_per_location(event_df: pd.DataFrame) -> pd.DataFrame:
     cur_slim = cur[["locationID", "locationCode", "K_local",
                     "M_uniform_full_detection", "M_event_coverage",
                     "M_recommended"]].rename(columns={
-        "M_recommended":           "M_current",
+        "M_recommended": "M_current",
         "M_uniform_full_detection": "M_current_uniform",
-        "M_event_coverage":         "M_current_event_floor",
+        "M_event_coverage": "M_current_event_floor",
     })
     per_loc = per_loc.merge(cur_slim, on="locationID", how="left")
     # Merge step29b connectivity so the figure label can show N_fert_eff
@@ -358,12 +358,12 @@ def select_germplasm_for_partC(per_event_df: pd.DataFrame,
     # 15 **seedlings** per mother; given a ~60 % germination rate we
     # need to germinate ~ceil(15 / 0.60) = 25 seeds per mother to hit
     # that seedling target in expectation. Columns:
-    #   seedlings_target          — Rule 2 target (15 seedlings)
-    #   n_seeds_to_germinate      — min(25, seeds_available)
-    #   n_seedlings_expected      — round(n_seeds_to_germinate * 0.60)
-    #   n_seedlings_to_genotype   — min(15, n_seedlings_expected)
+    # seedlings_target — Rule 2 target (15 seedlings)
+    # n_seeds_to_germinate — min(25, seeds_available)
+    # n_seedlings_expected — round(n_seeds_to_germinate * 0.60)
+    # n_seedlings_to_genotype — min(15, n_seedlings_expected)
     seeds_to_germinate_target = int(np.ceil(
-        seeds_per_mother_target / GERMINATION_RATE))  # 25
+        seeds_per_mother_target / GERMINATION_RATE)) # 25
     selected["seedlings_target"] = seeds_per_mother_target
     selected["n_seeds_to_germinate"] = np.minimum(
         selected["seeds_available"].astype(int),
@@ -379,7 +379,7 @@ def select_germplasm_for_partC(per_event_df: pd.DataFrame,
     # Backward-compat column (deprecated — kept for one release).
     selected["n_seeds_to_genotype"] = selected["n_seedlings_to_genotype"]
 
-    # Project-wide EOID = base EO code (strips Phase 5 dash suffixes:
+    # Project-wide EOID = base EO code (strips dash suffixes:
     # EO18-7 → EO18, EO27RT → EO27, EO27-3 → EO27). The TSV's primary
     # sort key is EOID; locationID disambiguates within-EO splits.
     selected["EOID"] = selected["locationCode"].astype(str).map(base_eo)
@@ -440,15 +440,15 @@ def plot_comparison(loc_df: pd.DataFrame, out_png: Path, out_pdf: Path):
         share = sub.get("largest_component_share_50m",
                         pd.Series([1.0] * len(sub))).fillna(1.0)
         eff = (sub["total_N_fertile"].astype(float) * share).round().astype(int)
-        labels = [f"{r['locationCode']}  "
+        labels = [f"{r['locationCode']} "
                   f"(events = {int(r['n_events'])}, "
                   f"50 m components = {int(r['n_components_50m'])}, "
                   f"census = {int(r['total_N_fertile'])}, "
                   f"effective = {int(e)})"
                   for (_, r), e in zip(sub.iterrows(), eff)]
         # Status annotation to the right of each row:
-        #   short by N  → red, DB lacks mothers to hit the target
-        #   covered     → grey, DB has enough (or more) already
+        # short by N → red, DB lacks mothers to hit the target
+        # covered → grey, DB has enough (or more) already
         for i, r in sub.iterrows():
             short = int(r["shortage"])
             end_x = max(int(r["M_frag_aware"]),
@@ -484,13 +484,13 @@ def plot_comparison(loc_df: pd.DataFrame, out_png: Path, out_pdf: Path):
                      loc_df["n_mothers_available_in_DB"].max()))
     axes[-1].set_xlim(0, xmax + 18)
     axes[-1].set_xlabel(
-        "Mothers per location  —  target (§ B.4.2) vs already collected "
+        "Mothers per location — target (§ B.4.2) vs already collected "
         "in the LEPA DB",
         fontsize=11)
-    n_short_loc  = int((loc_df["shortage"] > 0).sum())
-    total_short  = int(loc_df["shortage"].sum())
+    n_short_loc = int((loc_df["shortage"] > 0).sum())
+    total_short = int(loc_df["shortage"].sum())
     total_target = int(loc_df["M_frag_aware"].sum())
-    total_avail  = int(loc_df["n_mothers_available_in_DB"].sum())
+    total_avail = int(loc_df["n_mothers_available_in_DB"].sum())
     fig.suptitle(
         f"Mothers per LEPA location — do we have what the design asks for?\n"
         f"Target: {total_target}. In LEPA DB: {total_avail}. "
@@ -518,7 +518,7 @@ def main() -> None:
         "M_frag"]].rename(columns={"component_id_within_loc": "component_id"})
     out_ev = DEFAULT_TABLES / "step29c_sampling_frag_aware_per_event.tsv"
     ev_out.to_csv(out_ev, sep="\t", index=False)
-    print(f"[step29c] Wrote {out_ev}  ({len(ev_out)} events)")
+    print(f"[step29c] Wrote {out_ev} ({len(ev_out)} events)")
 
     # ---- Dedicated event → 50 m component lookup ----
     # A lean TSV joining (locationID, eventID) → component_id_50m so
@@ -531,7 +531,7 @@ def main() -> None:
         "n_fertile", "component_N_fertile", "component_N_events",
         "component_K", "component_M_target"]].rename(columns={
             "component_id_within_loc": "component_id_50m",
-            "n_fertile":                "event_n_fertile",
+            "n_fertile": "event_n_fertile",
         }).drop_duplicates(subset=["locationID", "eventID"]).copy()
     # locationCode attached from the field recipe. Deduplicate to one
     # (locationID, eventID, locationCode) row before merging so the
@@ -554,7 +554,7 @@ def main() -> None:
                     ).reset_index(drop=True)
     out_lookup = DEFAULT_TABLES / "step29c_event_to_component_50m.tsv"
     lookup.to_csv(out_lookup, sep="\t", index=False)
-    print(f"[step29c] Wrote {out_lookup}  "
+    print(f"[step29c] Wrote {out_lookup} "
           f"({len(lookup)} events across "
           f"{lookup.groupby(['locationID','component_id_50m']).ngroups} components)")
 
@@ -571,19 +571,19 @@ def main() -> None:
     tidy = loc[[c for c in tidy_cols if c in loc.columns]]
     out_loc = DEFAULT_TABLES / "step29c_sampling_comparison_per_location.tsv"
     tidy.to_csv(out_loc, sep="\t", index=False)
-    print(f"[step29c] Wrote {out_loc}  ({len(tidy)} locations)")
+    print(f"[step29c] Wrote {out_loc} ({len(tidy)} locations)")
 
-    n_target  = int(loc["M_frag_aware"].sum())
-    n_avail   = int(loc["n_mothers_available_in_DB"].sum())
+    n_target = int(loc["M_frag_aware"].sum())
+    n_avail = int(loc["n_mothers_available_in_DB"].sum())
     n_short_loc = int((loc["shortage"] > 0).sum())
-    n_covered   = int((loc["shortage"] == 0).sum())
-    n_short_m   = int(loc["shortage"].sum())
+    n_covered = int((loc["shortage"] == 0).sum())
+    n_short_m = int(loc["shortage"].sum())
     print(f"[step29c] Fragmentation-aware sampling summary:")
-    print(f"  Target (M_frag_aware)               : {n_target} mothers")
-    print(f"  Already in LEPA DB (n_available)    : {n_avail} mothers")
-    print(f"  Locations fully covered by DB       : {n_covered} / {len(loc)}")
-    print(f"  Locations short of target           : {n_short_loc} / {len(loc)}")
-    print(f"  Total mothers short (2026 top-up)   : {n_short_m}")
+    print(f" Target (M_frag_aware) : {n_target} mothers")
+    print(f" Already in LEPA DB (n_available) : {n_avail} mothers")
+    print(f" Locations fully covered by DB : {n_covered} / {len(loc)}")
+    print(f" Locations short of target : {n_short_loc} / {len(loc)}")
+    print(f" Total mothers short (2026 top-up) : {n_short_m}")
 
     # ---- Part C germplasmID selection ----
     # Pick specific germplasmIDs from the LEPA DB to satisfy the
@@ -594,15 +594,15 @@ def main() -> None:
     partC = select_germplasm_for_partC(ev, field_recipe_tsv)
     out_partC = DEFAULT_TABLES / "step29c_partC_germplasmID_selection.tsv"
     partC.to_csv(out_partC, sep="\t", index=False)
-    n_selected   = len(partC)
-    total_seeds  = int(partC["n_seeds_to_germinate"].sum())
+    n_selected = len(partC)
+    total_seeds = int(partC["n_seeds_to_germinate"].sum())
     total_slings = int(partC["n_seedlings_to_genotype"].sum())
     per_comp_gap = (partC.groupby(["locationID", "component_id_within_loc"])
                           ["component_gap"].first())
-    n_comps_short  = int((per_comp_gap > 0).sum())
+    n_comps_short = int((per_comp_gap > 0).sum())
     total_shortage = int(per_comp_gap.sum())
-    m_frag_target  = int(ev["M_frag"].sum())
-    print(f"[step29c] Wrote {out_partC}  "
+    m_frag_target = int(ev["M_frag"].sum())
+    print(f"[step29c] Wrote {out_partC} "
           f"({n_selected} germplasmIDs selected of {m_frag_target} "
           f"M_frag target; {total_seeds} seeds to germinate at "
           f"{GERMINATION_RATE:.0%} germination → "

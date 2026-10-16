@@ -2,7 +2,7 @@
 """Step 29a — Pollinator-radius sensitivity analysis.
 
 Biological justification for the 50 m primary pollen-flight radius
-adopted by every downstream Phase 5 script (§ 29b connectivity,
+adopted by every downstream script (§ 29b connectivity,
 § 29c fragmentation-aware sampling, § 30 SRK predictions, § 30b
 fragmentation index).
 
@@ -32,8 +32,8 @@ primary radius.
 
 Outputs
 -------
-    tables/Phase5/step30_A_radius_sensitivity_per_location.tsv
-    tables/Phase5/step30_A_radius_sensitivity_summary.tsv
+    tables//step30_A_radius_sensitivity_per_location.tsv
+    tables//step30_A_radius_sensitivity_summary.tsv
     figures/step30_A_radius_sensitivity.png/pdf
 """
 from __future__ import annotations
@@ -65,9 +65,9 @@ EVENT_TSV = TABLES / "step28_events_spatial_neighborhood.tsv"
 PRIOR_TSV = TABLES / "step26i_L1_carrier_inventory.tsv"
 LOCATIONS_TSV = TABLES / "step29_sampling_per_location.tsv"
 
-TARGET_PROB = 0.90            # § B.4.2 90 %-chance-to-see-every-allele target
-N_DRAWS_MC = 120              # simulation replicates per location
-N_FATHERS_MC = 200            # MC candidate fathers per replicate
+TARGET_PROB = 0.90 # § B.4.2 90 %-chance-to-see-every-allele target
+N_DRAWS_MC = 120 # simulation replicates per location
+N_FATHERS_MC = 200 # MC candidate fathers per replicate
 
 
 # ---------------------------------------------------------------------------
@@ -167,18 +167,18 @@ def compute_per_location(events: pd.DataFrame, m_lookup: dict,
         )
 
         rows.append({
-            "locationID":                 int(loc_id),
-            "radius_m":                   int(radius_m),
-            "n_events":                   n_events,
-            "total_n_fertile":            total_nf,
-            "n_components":               len(comps),
-            "largest_component_share":    largest_share,
-            "connected_share":            connected_share,
-            "F_location":                 F_location,
-            "N_fertile_effective":        n_fert_eff,
-            "M_actual_in_step28":         M_actual,
-            "M_frag_aware":               int(M_frag),
-            "predicted_P_compat_mean":    pc_mean,
+            "locationID": int(loc_id),
+            "radius_m": int(radius_m),
+            "n_events": n_events,
+            "total_n_fertile": total_nf,
+            "n_components": len(comps),
+            "largest_component_share": largest_share,
+            "connected_share": connected_share,
+            "F_location": F_location,
+            "N_fertile_effective": n_fert_eff,
+            "M_actual_in_step28": M_actual,
+            "M_frag_aware": int(M_frag),
+            "predicted_P_compat_mean": pc_mean,
         })
     return pd.DataFrame(rows)
 
@@ -202,7 +202,7 @@ def plot_sensitivity(summaries_by_year: dict,
     year_style = {
         2025: dict(marker="o", linestyle="--", markerfacecolor="white",
                    markeredgewidth=1.6, label_tag="2025 (open)"),
-        2026: dict(marker="o", linestyle="-",  markerfacecolor=None,
+        2026: dict(marker="o", linestyle="-", markerfacecolor=None,
                    markeredgewidth=0.6, label_tag="2026 (filled)"),
     }
     # Per-panel colour (same between years)
@@ -282,7 +282,7 @@ def plot_sensitivity(summaries_by_year: dict,
 
     years_tag = " + ".join(str(y) for y in sorted(summaries_by_year.keys()))
     fig.suptitle(
-        "Sensitivity of Phase 5 predictions + sampling to the "
+        "Sensitivity of predictions + sampling to the "
         "pollinator radius\n"
         "(fragmentation, § B.4.2 M_frag, § A.8 pollen compatibility, "
         f"sustainable fraction — LEPA Snake River Plain, {years_tag} field)",
@@ -301,7 +301,7 @@ def _sweep_one_year(events: pd.DataFrame, m_lookup: dict,
     rng = np.random.default_rng(rng_seed)
     rows_per_r = []
     for r in RADII_M:
-        print(f"[sensitivity]   radius {r} m …")
+        print(f"[sensitivity] radius {r} m …")
         rows = compute_per_location(events, m_lookup, prior_f, class_i_mask,
                                      zygosity_probs, r, rng)
         rows_per_r.append(rows)
@@ -387,13 +387,13 @@ def main() -> None:
               f"\n[sensitivity] Year {yr} — loading events from LEPA DB")
         events = load_all_events(DEFAULT_DB, year=yr)
         if events.empty:
-            print(f"[sensitivity]   WARNING: no events for {yr}; skipping.")
+            print(f"[sensitivity] WARNING: no events for {yr}; skipping.")
             continue
         events = events.dropna(subset=["lat", "lon", "n_fertile"]).copy()
         events["n_fertile"] = events["n_fertile"].astype(int)
         n_loc = int(events["locationID"].nunique())
         n_evt = len(events)
-        print(f"[sensitivity]   {n_evt} events across {n_loc} locationIDs")
+        print(f"[sensitivity] {n_evt} events across {n_loc} locationIDs")
         n_locations_by_year[yr] = n_loc
 
         # Fallback m_lookup for locationIDs missing from the static lookup
@@ -411,9 +411,9 @@ def main() -> None:
 
         out_ploc = TABLES / f"step30_A_radius_sensitivity_per_location_{yr}.tsv"
         per_loc.to_csv(out_ploc, sep="\t", index=False)
-        out_sum  = TABLES / f"step30_A_radius_sensitivity_summary_{yr}.tsv"
+        out_sum = TABLES / f"step30_A_radius_sensitivity_summary_{yr}.tsv"
         summary.to_csv(out_sum, sep="\t", index=False)
-        print(f"[sensitivity]   wrote {out_ploc.name}, {out_sum.name}")
+        print(f"[sensitivity] wrote {out_ploc.name}, {out_sum.name}")
         print(summary[["radius_m", "connected_share_median", "M_frag_total",
                         "P_compat_median", "frac_sustainable"]]
               .round(3).to_string(index=False))

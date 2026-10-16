@@ -11,17 +11,17 @@ allele (pollen donor). The two spectra are then compared to prediction.
 
 Output families are kept separate:
 
-    tables/step30_A_prediction_*      ← Phase A (prior only, no seed data)
-    tables/step30_B_comparison_*      ← Phase B (needs observed seed data)
+    tables/step30_A_prediction_* ← Phase A (prior only, no seed data)
+    tables/step30_B_comparison_* ← Phase B (needs observed seed data)
     tables/step30_B_mate_limitation_* ← Phase B (needs seed + mother genotypes)
-    tables/step30_B_si_escape_*       ← Phase B (needs seed + mother genotypes)
-    figures/step30_A_*                ← Phase A figures
-    figures/step30_B_*                ← Phase B figures
+    tables/step30_B_si_escape_* ← Phase B (needs seed + mother genotypes)
+    figures/step30_A_* ← Phase A figures
+    figures/step30_B_* ← Phase B figures
 
 Inputs (read-only)
     /Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/SQL_DB/LEPA_SQL.db
-    tables/step26i_L1_carrier_inventory.tsv  (prior — species-wide Fg counts)
-    tables/step29_sampling_per_location.tsv  (locations + M recommended)
+    tables/step26i_L1_carrier_inventory.tsv (prior — species-wide Fg counts)
+    tables/step29_sampling_per_location.tsv (locations + M recommended)
 
 CLI
     python step30_srk_diversity_prediction_vs_observed.py
@@ -50,14 +50,14 @@ DEFAULT_DB = Path(
     "/Users/sven/Documents/Current_projects/LEPA_fieldwork_protocol/"
     "SQL_DB/LEPA_SQL.db"
 )
-DEFAULT_TABLES  = Path("tables")
+DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
-DEFAULT_PRIOR_TSV       = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
-DEFAULT_LOCATIONS_TSV   = DEFAULT_TABLES / "step29_sampling_per_location.tsv"
+DEFAULT_PRIOR_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
+DEFAULT_LOCATIONS_TSV = DEFAULT_TABLES / "step29_sampling_per_location.tsv"
 DEFAULT_CONNECTIVITY_TSV = DEFAULT_TABLES / "step29_location_connectivity.tsv"
 DEFAULT_EVENT_COMPONENT_TSV = DEFAULT_TABLES / "step29c_event_to_component_50m.tsv"
 
-PRIOR_ESS = 20.0        # effective sample size of the P1 prior; small so real
+PRIOR_ESS = 20.0 # effective sample size of the P1 prior; small so real
                         # seed data can shift it after modest sampling.
 N_POSTERIOR_DRAWS = 4_000
 RNG_SEED = 2030
@@ -70,16 +70,16 @@ def build_p1_prior(carrier_tsv: Path) -> pd.DataFrame:
     """Aggregate per-allele carrier counts to per-Fg frequency estimates.
 
     Returns a DataFrame indexed by Fg with columns:
-        n_carriers  — total individuals carrying any allele of that Fg
-        f_mean      — empirical mean frequency (normalised)
-        alpha       — Dirichlet alpha (f_mean * PRIOR_ESS + a small smoother)
+        n_carriers — total individuals carrying any allele of that Fg
+        f_mean — empirical mean frequency (normalised)
+        alpha — Dirichlet alpha (f_mean * PRIOR_ESS + a small smoother)
     """
     df = pd.read_csv(carrier_tsv, sep="\t", encoding="utf-8-sig")
     fg = (df.groupby("Fg", as_index=False)
             .agg(n_carriers=("n_carriers", "sum")))
     total = fg["n_carriers"].sum()
     fg["f_mean"] = fg["n_carriers"] / total
-    fg["alpha"] = fg["f_mean"] * PRIOR_ESS + 0.5   # 0.5 = weak smoother
+    fg["alpha"] = fg["f_mean"] * PRIOR_ESS + 0.5 # 0.5 = weak smoother
     fg = fg.sort_values("f_mean", ascending=False).reset_index(drop=True)
     return fg
 
@@ -162,7 +162,7 @@ def predicted_diversity_per_location(
     """
     from step17_seed_sampling_per_mother import PLOIDY, PATERNAL_ALLELES_PER_SEED
 
-    freqs = draw_frequencies(prior, N_POSTERIOR_DRAWS, rng)   # (draws, K_fg)
+    freqs = draw_frequencies(prior, N_POSTERIOR_DRAWS, rng) # (draws, K_fg)
     f_mean = prior["f_mean"].values
     K_fg = freqs.shape[1]
 
@@ -285,24 +285,24 @@ def predicted_diversity_per_location(
             cov_arr = comp_coverage_mat[c_idx]
             det_arr = comp_detected_mat[c_idx]
             comp_rows.append({
-                "locationID":                 loc_id,
-                "locationCode":               loc_code,
-                "component_id_50m":           int(comp_id),
-                "component_N_fertile":        int(N_c),
-                "component_M_allocated":      int(M_c_each[c_idx]),
-                "component_seeds_allocated":  int(seeds_c_each[c_idx]),
+                "locationID": loc_id,
+                "locationCode": loc_code,
+                "component_id_50m": int(comp_id),
+                "component_N_fertile": int(N_c),
+                "component_M_allocated": int(M_c_each[c_idx]),
+                "component_seeds_allocated": int(seeds_c_each[c_idx]),
                 "component_A_delivered_actual": int(A_actual_each[c_idx]),
                 "component_A_delivered_design_at_15seeds":
                                               int(A_design_each[c_idx]),
-                "component_pool_size_mean":   float(pool_arr.mean()),
-                "component_pool_size_lo":     float(np.quantile(pool_arr, 0.025)),
-                "component_pool_size_hi":     float(np.quantile(pool_arr, 0.975)),
+                "component_pool_size_mean": float(pool_arr.mean()),
+                "component_pool_size_lo": float(np.quantile(pool_arr, 0.025)),
+                "component_pool_size_hi": float(np.quantile(pool_arr, 0.975)),
                 "component_Fgs_detected_mean": float(det_arr.mean()),
-                "component_Fgs_detected_lo":   float(np.quantile(det_arr, 0.025)),
-                "component_Fgs_detected_hi":   float(np.quantile(det_arr, 0.975)),
-                "component_coverage_mean":    float(cov_arr.mean()),
-                "component_coverage_lo":      float(np.quantile(cov_arr, 0.025)),
-                "component_coverage_hi":      float(np.quantile(cov_arr, 0.975)),
+                "component_Fgs_detected_lo": float(np.quantile(det_arr, 0.025)),
+                "component_Fgs_detected_hi": float(np.quantile(det_arr, 0.975)),
+                "component_coverage_mean": float(cov_arr.mean()),
+                "component_coverage_lo": float(np.quantile(cov_arr, 0.025)),
+                "component_coverage_hi": float(np.quantile(cov_arr, 0.975)),
             })
 
         A_delivered_design = M_used * (PLOIDY
@@ -310,33 +310,33 @@ def predicted_diversity_per_location(
         A_delivered_actual = PLOIDY * M_used + PATERNAL_ALLELES_PER_SEED * total_seeds
 
         loc_rows.append({
-            "locationID":                    loc_id,
-            "locationCode":                  loc_code,
-            "M_mothers_in_db":               M_used,
-            "M_achievable_ceiling":          M_ceiling,
-            "N_fertile_effective":           N_fert_eff,
-            "n_components_50m":              n_comps,
-            "A_delivered_actual":            A_delivered_actual,
+            "locationID": loc_id,
+            "locationCode": loc_code,
+            "M_mothers_in_db": M_used,
+            "M_achievable_ceiling": M_ceiling,
+            "N_fertile_effective": N_fert_eff,
+            "n_components_50m": n_comps,
+            "A_delivered_actual": A_delivered_actual,
             "A_delivered_design_at_15seeds": A_delivered_design,
-            "total_n_seeds_realised_exp":    total_seeds,
+            "total_n_seeds_realised_exp": total_seeds,
             # Species-wide (of the 32 P1 alleles):
-            "predicted_distinct_Fgs":        float(np.mean(exp_distinct)),
-            "predicted_distinct_Fgs_lo":     float(np.quantile(exp_distinct, 0.025)),
-            "predicted_distinct_Fgs_hi":     float(np.quantile(exp_distinct, 0.975)),
+            "predicted_distinct_Fgs": float(np.mean(exp_distinct)),
+            "predicted_distinct_Fgs_lo": float(np.quantile(exp_distinct, 0.025)),
+            "predicted_distinct_Fgs_hi": float(np.quantile(exp_distinct, 0.975)),
             "predicted_species_coverage_mean": float(np.mean(exp_distinct) / K_fg),
-            "n_fg_species_wide":             K_fg,
+            "n_fg_species_wide": K_fg,
             # Location-local — UNBIASED (union across components):
             "predicted_local_pool_size_mean": float(loc_pool_sizes.mean()),
-            "predicted_local_pool_size_lo":   float(np.quantile(loc_pool_sizes, 0.025)),
-            "predicted_local_pool_size_hi":   float(np.quantile(loc_pool_sizes, 0.975)),
+            "predicted_local_pool_size_lo": float(np.quantile(loc_pool_sizes, 0.025)),
+            "predicted_local_pool_size_hi": float(np.quantile(loc_pool_sizes, 0.975)),
             # Location-local — SAMPLING (union across components):
             "predicted_local_Fgs_detected_from_sampling_mean": float(loc_detected.mean()),
-            "predicted_local_Fgs_detected_from_sampling_lo":   float(np.quantile(loc_detected, 0.025)),
-            "predicted_local_Fgs_detected_from_sampling_hi":   float(np.quantile(loc_detected, 0.975)),
+            "predicted_local_Fgs_detected_from_sampling_lo": float(np.quantile(loc_detected, 0.025)),
+            "predicted_local_Fgs_detected_from_sampling_hi": float(np.quantile(loc_detected, 0.975)),
             # Location-local — COVERAGE (detected union / present union):
             "predicted_local_coverage_mean": float(loc_coverages.mean()),
-            "predicted_local_coverage_lo":   float(np.quantile(loc_coverages, 0.025)),
-            "predicted_local_coverage_hi":   float(np.quantile(loc_coverages, 0.975)),
+            "predicted_local_coverage_lo": float(np.quantile(loc_coverages, 0.025)),
+            "predicted_local_coverage_hi": float(np.quantile(loc_coverages, 0.975)),
         })
     return pd.DataFrame(loc_rows), pd.DataFrame(comp_rows)
 
@@ -352,16 +352,16 @@ def predicted_diversity_matched_to_seeds(seeds: pd.DataFrame,
     (observed) and x-axis (predicted) are on the same detection scale.
     """
     from step17_seed_sampling_per_mother import PLOIDY, PATERNAL_ALLELES_PER_SEED
-    alleles_per_seed = PLOIDY // 2 + PATERNAL_ALLELES_PER_SEED    # 2 + 2 = 4
+    alleles_per_seed = PLOIDY // 2 + PATERNAL_ALLELES_PER_SEED # 2 + 2 = 4
     freqs = draw_frequencies(prior, N_POSTERIOR_DRAWS, rng)
     rows = []
     for loc_id, sub in seeds.groupby("locationID"):
-        n_alleles = alleles_per_seed * len(sub)   # tetraploid: 4 per seed
+        n_alleles = alleles_per_seed * len(sub) # tetraploid: 4 per seed
         exp_distinct = (1.0 - (1.0 - freqs) ** n_alleles).sum(axis=1)
         rows.append({
-            "locationID":                        loc_id,
-            "n_seed_alleles":                    int(n_alleles),
-            "predicted_distinct_Fgs_matched":    float(np.mean(exp_distinct)),
+            "locationID": loc_id,
+            "n_seed_alleles": int(n_alleles),
+            "predicted_distinct_Fgs_matched": float(np.mean(exp_distinct)),
             "predicted_distinct_Fgs_matched_lo": float(np.quantile(exp_distinct, 0.025)),
             "predicted_distinct_Fgs_matched_hi": float(np.quantile(exp_distinct, 0.975)),
         })
@@ -397,11 +397,11 @@ def predicted_pcompat_distribution(prior: pd.DataFrame,
     # Distinct-identity count per mother
     n_distinct = np.array([len(set(m.tolist())) for m in mothers])
     return pd.DataFrame({
-        "sim_mother_id":  np.arange(n_mothers),
+        "sim_mother_id": np.arange(n_mothers),
         **{f"mother_Fg_{i+1}": fg_ids[mothers[:, i]] for i in range(PLOIDY)},
         "n_distinct_functional_alleles": n_distinct,
         "expresses_class_I": has_class_i,
-        "P_compat":       p_compat,
+        "P_compat": p_compat,
         "fecundation_failure_rate": 1.0 - p_compat,
     })
 
@@ -416,7 +416,7 @@ def predicted_pcompat_per_location(
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Phase-A **per-component** prediction of random-mating P_compat
     under the sporophytic tetraploid SI model with Class I / Class II
-    dominance (see `srk_si_model.py` and § A.6 of the Phase 5 doc), then
+    dominance (see `srk_si_model.py` and § A.6 of the doc), then
     aggregated to the location level by component-size weighting.
 
     Rationale (per-component, not location-wide proxy)
@@ -446,7 +446,7 @@ def predicted_pcompat_per_location(
       5. Component mean = mean over `n_sim_mothers` sampled mothers.
       6. Component-level posterior CI across the `n_draws` replicates.
       7. Location mean on replicate k =
-            Σ_c  P_compat_{c,k} · N_c / Σ_c N_c
+            Σ_c P_compat_{c,k} · N_c / Σ_c N_c
          Posterior CI across the resulting n_draws location means.
 
     Returns
@@ -552,28 +552,28 @@ def predicted_pcompat_per_location(
 
             arr = comp_mean_mat[c_idx]
             comp_rows.append({
-                "locationID":                 loc_id,
-                "locationCode":               loc_code,
-                "component_id_50m":           int(comp_id),
-                "component_N_fertile":        int(N_c),
-                "component_weight":           float(comp_weights[c_idx]),
-                "component_P_compat_mean":    float(arr.mean()),
-                "component_P_compat_lo":      float(np.quantile(arr, 0.025)),
-                "component_P_compat_hi":      float(np.quantile(arr, 0.975)),
+                "locationID": loc_id,
+                "locationCode": loc_code,
+                "component_id_50m": int(comp_id),
+                "component_N_fertile": int(N_c),
+                "component_weight": float(comp_weights[c_idx]),
+                "component_P_compat_mean": float(arr.mean()),
+                "component_P_compat_lo": float(np.quantile(arr, 0.025)),
+                "component_P_compat_hi": float(np.quantile(arr, 0.975)),
             })
 
         # Size-weighted location mean per replicate.
         loc_means_per_draw = (comp_weights[:, None] * comp_mean_mat).sum(axis=0)
         N_fert_eff = int(comp_sizes.sum())
         loc_rows.append({
-            "locationID":              loc_id,
-            "locationCode":            loc_code,
-            "N_fertile_effective":     N_fert_eff,
-            "n_components_50m":        len(comps),
-            "M_mothers_in_db":         M_db,
+            "locationID": loc_id,
+            "locationCode": loc_code,
+            "N_fertile_effective": N_fert_eff,
+            "n_components_50m": len(comps),
+            "M_mothers_in_db": M_db,
             "predicted_P_compat_mean": float(loc_means_per_draw.mean()),
-            "predicted_P_compat_lo":   float(np.quantile(loc_means_per_draw, 0.025)),
-            "predicted_P_compat_hi":   float(np.quantile(loc_means_per_draw, 0.975)),
+            "predicted_P_compat_lo": float(np.quantile(loc_means_per_draw, 0.025)),
+            "predicted_P_compat_hi": float(np.quantile(loc_means_per_draw, 0.975)),
         })
 
     return pd.DataFrame(loc_rows), pd.DataFrame(comp_rows)
@@ -625,14 +625,14 @@ def simulate_seed_genotypes(locations: pd.DataFrame, prior: pd.DataFrame,
             seeds_est = int(rng.poisson(mean_ovules_per_mother * p_compat))
             germplasm_id = f"sim_L{row['locationID']}_M{m_idx}"
             mother_rows.append({
-                "locationID":     row["locationID"],
-                "locationCode":   row["locationCode"],
-                "germplasmID":    germplasm_id,
-                "mother_Fg_a":    fg_ids[a],
-                "mother_Fg_b":    fg_ids[b],
-                "P_compat_true":  p_compat,
-                "K_spatial":      K_spatial,
-                "seeds_est":      seeds_est,
+                "locationID": row["locationID"],
+                "locationCode": row["locationCode"],
+                "germplasmID": germplasm_id,
+                "mother_Fg_a": fg_ids[a],
+                "mother_Fg_b": fg_ids[b],
+                "P_compat_true": p_compat,
+                "K_spatial": K_spatial,
+                "seeds_est": seeds_est,
             })
             for s in range(seeds_per_mother):
                 mat = a if rng.random() < 0.5 else b
@@ -641,12 +641,12 @@ def simulate_seed_genotypes(locations: pd.DataFrame, prior: pd.DataFrame,
                 if (pat == a or pat == b) and (rng.random() >= si_escape_rate):
                     continue
                 seed_rows.append({
-                    "locationID":   row["locationID"],
+                    "locationID": row["locationID"],
                     "locationCode": row["locationCode"],
-                    "germplasmID":  germplasm_id,
-                    "seed_id":      seed_counter,
-                    "maternal_Fg":  fg_ids[mat],
-                    "paternal_Fg":  fg_ids[pat],
+                    "germplasmID": germplasm_id,
+                    "seed_id": seed_counter,
+                    "maternal_Fg": fg_ids[mat],
+                    "paternal_Fg": fg_ids[pat],
                 })
                 seed_counter += 1
     return pd.DataFrame(seed_rows), pd.DataFrame(mother_rows)
@@ -679,8 +679,8 @@ def location_posterior(seeds: pd.DataFrame, prior: pd.DataFrame,
         # Observed distinct Fgs in this location's sample
         observed = set(sub["maternal_Fg"]).union(set(sub["paternal_Fg"]))
         rows.append({
-            "locationID":            loc_id,
-            "n_seeds":               len(sub),
+            "locationID": loc_id,
+            "n_seeds": len(sub),
             "observed_distinct_Fgs": len(observed),
             "posterior_mean_distinct_Fgs":
                 float(np.mean((draws > 0).sum(axis=1))),
@@ -710,11 +710,11 @@ def maternal_vs_paternal(seeds: pd.DataFrame) -> pd.DataFrame:
                 (p - expected_p) ** 2 / np.where(expected_p > 0, expected_p, 1)
             )
         rows.append({
-            "locationID":       loc_id,
-            "n_distinct_Fgs":   len(fgs),
+            "locationID": loc_id,
+            "n_distinct_Fgs": len(fgs),
             "n_maternal_alleles": int(m.sum()),
             "n_paternal_alleles": int(p.sum()),
-            "chi2":             float(chi2),
+            "chi2": float(chi2),
         })
     return pd.DataFrame(rows)
 
@@ -756,8 +756,8 @@ def mate_limitation_regression(seeds: pd.DataFrame,
     When provided, it enters the regression as an explicit predictor
     so we can separate three effects:
 
-      β₁ (P_compat)     — allele-frequency drift → mate limitation
-      β₂ (K_spatial)    — mother-level spatial neighbourhood size
+      β₁ (P_compat) — allele-frequency drift → mate limitation
+      β₂ (K_spatial) — mother-level spatial neighbourhood size
       β₃ (connectivity) — within-location pollen-flow fragmentation
 
     Rationale (design doc § 2.2.1). Mate limitation is a *population*-level
@@ -799,12 +799,12 @@ def mate_limitation_regression(seeds: pd.DataFrame,
     loc_code_col = ("locationCode"
                     if "locationCode" in per_mother.columns else None)
     agg_dict = {
-        "n_mothers":         ("germplasmID", "count"),
-        "mean_seeds":        ("seeds_est", "mean"),
-        "std_seeds":         ("seeds_est", "std"),
-        "mean_P_compat":     ("P_compat_posterior", "mean"),
-        "std_P_compat":      ("P_compat_posterior", "std"),
-        "mean_K_spatial":    ("K_spatial", "mean"),
+        "n_mothers": ("germplasmID", "count"),
+        "mean_seeds": ("seeds_est", "mean"),
+        "std_seeds": ("seeds_est", "std"),
+        "mean_P_compat": ("P_compat_posterior", "mean"),
+        "std_P_compat": ("P_compat_posterior", "std"),
+        "mean_K_spatial": ("K_spatial", "mean"),
     }
     per_location = per_mother.groupby("locationID", as_index=False).agg(**agg_dict)
     if loc_code_col:
@@ -826,8 +826,8 @@ def mate_limitation_regression(seeds: pd.DataFrame,
 
     # Fit location-level OLS weighted by n_mothers
     X_dict = {
-        "const":     1.0,
-        "P_compat":  per_location["mean_P_compat"].values,
+        "const": 1.0,
+        "P_compat": per_location["mean_P_compat"].values,
         "K_spatial": per_location["mean_K_spatial"].astype(float).values,
     }
     terms = ["P_compat", "K_spatial"]
@@ -840,7 +840,7 @@ def mate_limitation_regression(seeds: pd.DataFrame,
 
     fit = sm.WLS(y, X, weights=w).fit()
     per_location["predicted_mean_seeds"] = fit.predict(X)
-    per_location["residual_mean_seeds"]  = y - per_location["predicted_mean_seeds"]
+    per_location["residual_mean_seeds"] = y - per_location["predicted_mean_seeds"]
 
     # Mother-level predictions from the location-level model
     per_mother = per_mother.merge(
@@ -851,12 +851,12 @@ def mate_limitation_regression(seeds: pd.DataFrame,
                                     - per_mother["predicted_seeds_from_location_model"])
 
     coefs = pd.DataFrame({
-        "term":     terms,
+        "term": terms,
         "estimate": [fit.params[t] for t in terms],
-        "std_err":  [fit.bse[t] for t in terms],
-        "ci_lo":    [fit.conf_int().loc[t, 0] for t in terms],
-        "ci_hi":    [fit.conf_int().loc[t, 1] for t in terms],
-        "p_value":  [fit.pvalues[t] for t in terms],
+        "std_err": [fit.bse[t] for t in terms],
+        "ci_lo": [fit.conf_int().loc[t, 0] for t in terms],
+        "ci_hi": [fit.conf_int().loc[t, 1] for t in terms],
+        "p_value": [fit.pvalues[t] for t in terms],
     })
     coefs["significant_95"] = (coefs["ci_lo"] > 0) | (coefs["ci_hi"] < 0)
     return per_mother, per_location, coefs
@@ -878,10 +878,10 @@ def si_escape_permutation(seeds: pd.DataFrame,
     baseline `p_null` (default 0.02 = 2 %) to accommodate genotyping error
     and rare true escapes. The test is a one-sided **exact Binomial test**:
 
-        H0 : pi_self_match  <=  p_null       (strict SI or near-strict)
-        H1 : pi_self_match  >   p_null       (partial-SI escape signature)
+        H0 : pi_self_match <= p_null (strict SI or near-strict)
+        H1 : pi_self_match > p_null (partial-SI escape signature)
 
-    p-value = P( X >= n_self_matching  |  X ~ Binomial(n_seeds, p_null) ).
+    p-value = P( X >= n_self_matching | X ~ Binomial(n_seeds, p_null) ).
 
     Returns per-location table with n_seeds_scored, n_self_matching,
     pi_self_match, wilson_ci_lo / hi, binomial p-value and a
@@ -893,7 +893,7 @@ def si_escape_permutation(seeds: pd.DataFrame,
     """
     from scipy import stats
 
-    _ = rng  # unused now; kept for backwards-compatible signature
+    _ = rng # unused now; kept for backwards-compatible signature
     seeds_with_mother = seeds.merge(
         mothers[["germplasmID", "mother_Fg_a", "mother_Fg_b"]],
         on="germplasmID", how="left"
@@ -906,8 +906,8 @@ def si_escape_permutation(seeds: pd.DataFrame,
         mB = sub["mother_Fg_b"].values
         match = (paternal == mA) | (paternal == mB)
         n_seeds = int(len(sub))
-        n_self  = int(match.sum())
-        pi      = n_self / n_seeds if n_seeds > 0 else np.nan
+        n_self = int(match.sum())
+        pi = n_self / n_seeds if n_seeds > 0 else np.nan
 
         # One-sided exact Binomial test against p_null
         # p-value = P(X >= n_self | Binomial(n_seeds, p_null))
@@ -925,14 +925,14 @@ def si_escape_permutation(seeds: pd.DataFrame,
             ci_lo, ci_hi = np.nan, np.nan
 
         rows.append({
-            "locationID":       loc_id,
-            "n_seeds_scored":   n_seeds,
-            "n_self_matching":  n_self,
-            "pi_self_match":    pi,
-            "wilson_ci_lo":     ci_lo,
-            "wilson_ci_hi":     ci_hi,
-            "p_null_used":      p_null,
-            "p_binomial":       p_bin,
+            "locationID": loc_id,
+            "n_seeds_scored": n_seeds,
+            "n_self_matching": n_self,
+            "pi_self_match": pi,
+            "wilson_ci_lo": ci_lo,
+            "wilson_ci_hi": ci_hi,
+            "p_null_used": p_null,
+            "p_binomial": p_bin,
         })
     df = pd.DataFrame(rows).sort_values("p_binomial").reset_index(drop=True)
     # Benjamini-Hochberg FDR
@@ -949,11 +949,11 @@ def si_escape_permutation(seeds: pd.DataFrame,
 # 5 — figures
 # ---------------------------------------------------------------------------
 def _year_suffix(year: int | None) -> str:
-    return f"  —  {year}" if year is not None else ""
+    return f" — {year}" if year is not None else ""
 
 
 def _demo_suffix(demo: bool) -> str:
-    return "   [DEMO — synthetic data]" if demo else ""
+    return " [DEMO — synthetic data]" if demo else ""
 
 
 def _add_demo_watermark(fig, demo: bool):
@@ -981,7 +981,7 @@ def plot_diversity_unbiased_vs_sampling(pred: pd.DataFrame,
     (what our seed genotyping will recover, driven by M × 15 seeds)
     and the coverage ratio.
 
-    Layout matches every other Phase 5 per-location figure: rows =
+    Layout matches every other per-location figure: rows =
     Bottleneck Lineages in canonical BL_ORDER (BL4 → BL5 → BL3 → BL1
     → BL2, top-to-bottom); columns = Panel A / B / C. Row heights
     ∝ number of locations per BL. Within each BL row, locations are
@@ -1034,7 +1034,7 @@ def plot_diversity_unbiased_vs_sampling(pred: pd.DataFrame,
         figsize=(15.5, max(6.5, 0.30 * sum(heights) + 2.5)),
         gridspec_kw={
             "height_ratios": heights,
-            "width_ratios":  [1.0, 1.0, 0.75],
+            "width_ratios": [1.0, 1.0, 0.75],
         },
         sharex="col",
     )
@@ -1047,7 +1047,7 @@ def plot_diversity_unbiased_vs_sampling(pred: pd.DataFrame,
         # floating-point noise can push the quantile a hair above
         # the mean, which matplotlib otherwise rejects.
         xerr_lo = (sub[mean_col] - sub[lo_col]).clip(lower=0.0)
-        xerr_hi = (sub[hi_col]   - sub[mean_col]).clip(lower=0.0)
+        xerr_hi = (sub[hi_col] - sub[mean_col]).clip(lower=0.0)
         for i in range(len(sub)):
             ax.errorbar(
                 sub[mean_col].iloc[i], y[i],
@@ -1078,7 +1078,7 @@ def plot_diversity_unbiased_vs_sampling(pred: pd.DataFrame,
         axA_row.set_ylim(-0.7, len(sub) - 0.3)
         site_labels = location_label_series(sub)
         labels = [
-            f"{label}  ({int(k)} deme{'s' if int(k) != 1 else ''}, "
+            f"{label} ({int(k)} deme{'s' if int(k) != 1 else ''}, "
             f"{int(n)} adults, "
             f"mothers sampled = {int(m)}, "
             f"seeds recorded = {int(s)})"
@@ -1151,8 +1151,8 @@ def plot_diversity_unbiased_vs_sampling(pred: pd.DataFrame,
     fig.suptitle(
         "Predicted SRK allele diversity per LEPA location"
         f"{_year_suffix(year)}\n"
-        "A: what the population holds — driven by the effective breeding unit at the location.  "
-        "B: what our sampling detects — from the mothers and seeds already recorded in the LEPA DB.  "
+        "A: what the population holds — driven by the effective breeding unit at the location. "
+        "B: what our sampling detects — from the mothers and seeds already recorded in the LEPA DB. "
         "C: coverage = B ÷ A (dotted line = 90 % target).\n"
         "Panelled by Bottleneck Lineage in BL_ORDER.",
         fontsize=11, y=0.995,
@@ -1195,9 +1195,9 @@ def plot_prediction_fecundation(pcompat_per_loc: pd.DataFrame,
         axes = [axes]
 
     # Traffic-light thresholds — recalibrated against sporophytic species mean
-    T_FAILED_HI     = bands["failed_max"]     if bands else 0.20
+    T_FAILED_HI = bands["failed_max"] if bands else 0.20
     T_STRUGGLING_HI = bands["struggling_max"] if bands else 0.40
-    SPECIES_MEAN    = bands["species_mean"]   if bands else 0.63
+    SPECIES_MEAN = bands["species_mean"] if bands else 0.63
     x_upper = max(0.30, min(1.0, 2.0 * SPECIES_MEAN))
     band_alpha = 0.12
 
@@ -1208,7 +1208,7 @@ def plot_prediction_fecundation(pcompat_per_loc: pd.DataFrame,
         y = np.arange(len(sub))
 
         # Traffic-light bands
-        ax.axvspan(0.0, T_FAILED_HI,       color="#b2182b",
+        ax.axvspan(0.0, T_FAILED_HI, color="#b2182b",
                     alpha=band_alpha, zorder=0)
         ax.axvspan(T_FAILED_HI, T_STRUGGLING_HI, color="#e08214",
                     alpha=band_alpha, zorder=0)
@@ -1237,7 +1237,7 @@ def plot_prediction_fecundation(pcompat_per_loc: pd.DataFrame,
             pd.Series(1, index=sub.index)).astype(int)
         site_labels = location_label_series(sub)
         labels = [
-            f"{label}  ({int(k)} deme{'s' if int(k) != 1 else ''}, "
+            f"{label} ({int(k)} deme{'s' if int(k) != 1 else ''}, "
             f"{int(n)} adults, "
             f"mothers sampled = {int(m)})"
             for label, k, n, m in zip(
@@ -1263,19 +1263,19 @@ def plot_prediction_fecundation(pcompat_per_loc: pd.DataFrame,
     from matplotlib.lines import Line2D
     tl_handles = [
         Patch(facecolor="#b2182b", alpha=0.35,
-              label=f"failed  (< {T_FAILED_HI:.3f})"),
+              label=f"failed (< {T_FAILED_HI:.3f})"),
         Patch(facecolor="#e08214", alpha=0.35,
-              label=f"struggling  ({T_FAILED_HI:.3f}–{T_STRUGGLING_HI:.3f})"),
+              label=f"struggling ({T_FAILED_HI:.3f}–{T_STRUGGLING_HI:.3f})"),
         Patch(facecolor="#1b7837", alpha=0.35,
-              label=f"sustainable  (≥ {T_STRUGGLING_HI:.3f})"),
+              label=f"sustainable (≥ {T_STRUGGLING_HI:.3f})"),
         Line2D([0], [0], color="#1b7837", ls=":", lw=1.2,
-               label=f"sporophytic species mean  ({SPECIES_MEAN:.3f})"),
+               label=f"sporophytic species mean ({SPECIES_MEAN:.3f})"),
     ]
     axes[0].legend(handles=tl_handles, loc="upper left",
                     fontsize=9, frameon=True)
 
     axes[-1].set_xlabel(
-        "Predicted pollen compatibility under random mating  "
+        "Predicted pollen compatibility under random mating "
         "(mean across sampled mothers per location; 95 % credible interval)",
         fontsize=11,
     )
@@ -1330,7 +1330,7 @@ def plot_diversity_vs_pcompat(pred_div: pd.DataFrame,
     # Species-mean P_compat reference (sporophytic Part 2)
     SPECIES_MEAN = bands["species_mean"] if bands else 0.63
     ax.axhline(SPECIES_MEAN, color="#1b7837", ls=":", lw=1.2, alpha=0.7,
-               label=f"sporophytic species-mean P_compat  ({SPECIES_MEAN:.3f})")
+               label=f"sporophytic species-mean P_compat ({SPECIES_MEAN:.3f})")
 
     bls = [b for b in BL_ORDER if b in m["BL"].values]
     if (m["BL"] == "Unassigned").any():
@@ -1358,7 +1358,7 @@ def plot_diversity_vs_pcompat(pred_div: pd.DataFrame,
             m.loc[mask, "predicted_distinct_Fgs"],
             m.loc[mask, "predicted_P_compat_mean"],
             s=sizes, c=colour, edgecolor="white", linewidth=0.6,
-            label=f"{bl}  (n = {int(mask.sum())})",
+            label=f"{bl} (n = {int(mask.sum())})",
             alpha=0.9, zorder=2,
         )
 
@@ -1426,11 +1426,11 @@ def plot_mate_limitation(per_location: pd.DataFrame, coefs: pd.DataFrame,
     # (green). Thresholds recalibrated against the sporophytic tetraploid
     # species mean (§ A.6, Part 2). Defaults preserve backward-compatible
     # gametophytic thresholds if `bands` is not supplied.
-    T_FAILED_HI     = bands["failed_max"]     if bands else 0.20
+    T_FAILED_HI = bands["failed_max"] if bands else 0.20
     T_STRUGGLING_HI = bands["struggling_max"] if bands else 0.40
-    SPECIES_MEAN    = bands["species_mean"]   if bands else 0.63
+    SPECIES_MEAN = bands["species_mean"] if bands else 0.63
     x_upper = max(0.30, min(1.0, 2.0 * SPECIES_MEAN))
-    band_alpha  = 0.14
+    band_alpha = 0.14
     ax_scatter.axvspan(0.0, T_FAILED_HI,
                         color="#b2182b", alpha=band_alpha, zorder=0)
     ax_scatter.axvspan(T_FAILED_HI, T_STRUGGLING_HI,
@@ -1443,10 +1443,10 @@ def plot_mate_limitation(per_location: pd.DataFrame, coefs: pd.DataFrame,
         x, y, xerr=x_sem, yerr=y_sem,
         fmt="none", ecolor="#a6cee3", elinewidth=1.0, capsize=2.5, zorder=1,
     )
-    sizes = 40 + 12 * np.sqrt(w)   # dot size ~ √n_mothers (slightly larger)
+    sizes = 40 + 12 * np.sqrt(w) # dot size ~ √n_mothers (slightly larger)
     # Dot colour by traffic-light tier at the mean compatibility
     def _tier_colour(pc: float) -> str:
-        if pc < T_FAILED_HI:     return "#b2182b"
+        if pc < T_FAILED_HI: return "#b2182b"
         if pc < T_STRUGGLING_HI: return "#e08214"
         return "#1b7837"
     dot_colours = [_tier_colour(pc) for pc in x]
@@ -1476,7 +1476,7 @@ def plot_mate_limitation(per_location: pd.DataFrame, coefs: pd.DataFrame,
         # p-value on β₁ from the accompanying coefs table (P_compat term)
         p_val = float(coefs.loc[coefs["term"] == "P_compat", "p_value"].iloc[0])
         p_str = "< 1e-4" if p_val < 1e-4 else f"= {p_val:.3g}"
-        slope_line_label = (f"fitted slope = {slope:.1f}   "
+        slope_line_label = (f"fitted slope = {slope:.1f} "
                             f"(p {p_str})")
         ax_scatter.plot(xs, intercept + slope * xs,
                         color="#333333", ls="--", lw=1.6, alpha=0.9,
@@ -1487,13 +1487,13 @@ def plot_mate_limitation(per_location: pd.DataFrame, coefs: pd.DataFrame,
     from matplotlib.lines import Line2D
     tl_handles = [
         Patch(facecolor="#b2182b", alpha=0.35,
-              label=f"failed  (< {T_FAILED_HI:.3f})"),
+              label=f"failed (< {T_FAILED_HI:.3f})"),
         Patch(facecolor="#e08214", alpha=0.35,
-              label=f"struggling  ({T_FAILED_HI:.3f} – {T_STRUGGLING_HI:.3f})"),
+              label=f"struggling ({T_FAILED_HI:.3f} – {T_STRUGGLING_HI:.3f})"),
         Patch(facecolor="#1b7837", alpha=0.35,
-              label=f"sustainable  (≥ {T_STRUGGLING_HI:.3f})"),
+              label=f"sustainable (≥ {T_STRUGGLING_HI:.3f})"),
         Line2D([0], [0], color="#1b7837", ls=":", lw=1.2,
-               label=f"species mean  ({SPECIES_MEAN:.3f})"),
+               label=f"species mean ({SPECIES_MEAN:.3f})"),
     ]
     ax_scatter.set_xlim(0.0, x_upper)
     lg_handles, lg_labels = ax_scatter.get_legend_handles_labels()
@@ -1504,11 +1504,11 @@ def plot_mate_limitation(per_location: pd.DataFrame, coefs: pd.DataFrame,
     )
 
     ax_scatter.set_xlabel(
-        "Predicted pollen compatibility under random mating  "
+        "Predicted pollen compatibility under random mating "
         "(mean across sampled mothers per location)",
         fontsize=11,
     )
-    ax_scatter.set_ylabel("Observed seeds per mother  (mean per location)",
+    ax_scatter.set_ylabel("Observed seeds per mother (mean per location)",
                           fontsize=11)
     ax_scatter.set_xlim(0.0, 1.0)
     ax_scatter.set_title(
@@ -1552,11 +1552,11 @@ def plot_si_escape(perm: pd.DataFrame,
     ax.set_yticks(y)
     ax.set_yticklabels(labels, fontsize=7)
     ax.set_xlabel("Observed rate of pollen alleles matching the mother's "
-                  "own alleles  (= self-incompatibility escape rate)")
+                  "own alleles (= self-incompatibility escape rate)")
     n_sig = int(((df['q_bh_fdr'] <= q_threshold) & (df['pi_self_match'] > 0)).sum())
     ax.set_title(
         f"Self-incompatibility escape signal across LEPA locations"
-        f"{_year_suffix(year)}   —   {n_sig} / {len(df)} locations "
+        f"{_year_suffix(year)} — {n_sig} / {len(df)} locations "
         f"reject strict self-incompatibility "
         f"({int(q_threshold*100)} % false-discovery rate)"
         f"{_demo_suffix(demo)}",
@@ -1586,18 +1586,18 @@ def plot_comparison_diversity(merged: pd.DataFrame,
 
     use_matched=False → x = predicted at M mothers (may sit below observed
                          if far more seeds were genotyped than M implies).
-    use_matched=True  → x = predicted at the actual n_seeds × 2 allele draws
+    use_matched=True → x = predicted at the actual n_seeds × 2 allele draws
                          per location (like-for-like scale).
     """
     if use_matched:
-        x     = merged["predicted_distinct_Fgs_matched"]
-        x_lo  = merged["predicted_distinct_Fgs_matched_lo"]
-        x_hi  = merged["predicted_distinct_Fgs_matched_hi"]
+        x = merged["predicted_distinct_Fgs_matched"]
+        x_lo = merged["predicted_distinct_Fgs_matched_lo"]
+        x_hi = merged["predicted_distinct_Fgs_matched_hi"]
         xlab = "Predicted number of distinct SRK alleles"
     else:
-        x     = merged["predicted_distinct_Fgs"]
-        x_lo  = merged["predicted_distinct_Fgs_lo"]
-        x_hi  = merged["predicted_distinct_Fgs_hi"]
+        x = merged["predicted_distinct_Fgs"]
+        x_lo = merged["predicted_distinct_Fgs_lo"]
+        x_hi = merged["predicted_distinct_Fgs_hi"]
         xlab = "Predicted number of distinct SRK alleles"
 
     fig, ax = plt.subplots(figsize=(7.5, 6.0))
@@ -1669,7 +1669,7 @@ def main() -> None:
                          "same value into the Step 30 figure titles.")
     args = ap.parse_args()
 
-    tables_dir  = Path(DEFAULT_TABLES); tables_dir.mkdir(parents=True, exist_ok=True)
+    tables_dir = Path(DEFAULT_TABLES); tables_dir.mkdir(parents=True, exist_ok=True)
     figures_dir = Path(DEFAULT_FIGURES); figures_dir.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(RNG_SEED)
 
@@ -1706,7 +1706,7 @@ def main() -> None:
                              "n_components_"))
         ]
         conn = conn[keep].rename(columns={
-            "n_events":        "conn_n_events",
+            "n_events": "conn_n_events",
             "total_n_fertile": "conn_total_n_fertile",
         })
         locations = locations.merge(conn, on="locationID", how="left")
@@ -1791,16 +1791,16 @@ def main() -> None:
         n_mothers=10_000, n_fathers=1_500, rng=rng)
     bands = traffic_light_bands(species_mean_pc)
     bands_df = pd.DataFrame([{
-        "si_model":                    "sporophytic_class_I_dominant_empirical_zygosity",
-        "species_mean":                bands["species_mean"],
-        "failed_max":                  bands["failed_max"],
-        "struggling_max":              bands["struggling_max"],
-        "class_I_count":               int(class_i_mask.sum()),
-        "class_I_P1_freq":             float(prior["f_mean"].values[class_i_mask].sum()),
-        "zygosity_p_1_distinct":       float(zygosity_probs_main[0]),
-        "zygosity_p_2_distinct":       float(zygosity_probs_main[1]),
-        "zygosity_p_3_distinct":       float(zygosity_probs_main[2]),
-        "zygosity_p_4_distinct":       float(zygosity_probs_main[3]),
+        "si_model": "sporophytic_class_I_dominant_empirical_zygosity",
+        "species_mean": bands["species_mean"],
+        "failed_max": bands["failed_max"],
+        "struggling_max": bands["struggling_max"],
+        "class_I_count": int(class_i_mask.sum()),
+        "class_I_P1_freq": float(prior["f_mean"].values[class_i_mask].sum()),
+        "zygosity_p_1_distinct": float(zygosity_probs_main[0]),
+        "zygosity_p_2_distinct": float(zygosity_probs_main[1]),
+        "zygosity_p_3_distinct": float(zygosity_probs_main[2]),
+        "zygosity_p_4_distinct": float(zygosity_probs_main[3]),
     }])
     bands_path = tables_dir / "step30_A_traffic_light_bands.tsv"
     bands_df.to_csv(bands_path, sep="\t", index=False)
@@ -1844,7 +1844,7 @@ def main() -> None:
             seeds_per_mother=args.demo_seeds_per_mother, rng=rng,
             si_escape_rate=args.demo_si_escape_rate,
         )
-        demo_seeds_path   = tables_dir / "step30_B_DEMO_seed_genotypes.tsv"
+        demo_seeds_path = tables_dir / "step30_B_DEMO_seed_genotypes.tsv"
         demo_mothers_path = tables_dir / "step30_B_DEMO_mother_genotypes.tsv"
         seeds.to_csv(demo_seeds_path, sep="\t", index=False)
         mothers.to_csv(demo_mothers_path, sep="\t", index=False)
@@ -1870,7 +1870,7 @@ def main() -> None:
         comparison_path = tables_dir / f"step30_B{tag}_comparison_location_diversity.tsv"
         merged.to_csv(comparison_path, sep="\t", index=False)
         print(f"[step30] Wrote {comparison_path}"
-              + ("  (scale-matched prediction included)"
+              + (" (scale-matched prediction included)"
                  if args.match_seed_count else ""))
 
         mp = maternal_vs_paternal(seeds)
@@ -1894,23 +1894,23 @@ def main() -> None:
                 ]].copy()
             reg_df, per_loc_reg, coefs = mate_limitation_regression(
                 seeds, mothers, prior, connectivity=conn_df)
-            reg_path      = tables_dir / f"step30_B{tag}_mate_limitation_per_mother.tsv"
-            per_loc_path  = tables_dir / f"step30_B{tag}_mate_limitation_per_location.tsv"
-            coefs_path    = tables_dir / f"step30_B{tag}_mate_limitation_coefficients.tsv"
+            reg_path = tables_dir / f"step30_B{tag}_mate_limitation_per_mother.tsv"
+            per_loc_path = tables_dir / f"step30_B{tag}_mate_limitation_per_location.tsv"
+            coefs_path = tables_dir / f"step30_B{tag}_mate_limitation_coefficients.tsv"
             reg_df.to_csv(reg_path, sep="\t", index=False)
             per_loc_reg.to_csv(per_loc_path, sep="\t", index=False)
             coefs.to_csv(coefs_path, sep="\t", index=False)
-            print(f"[step30] Test 1  Mate-limitation regression (LOCATION "
+            print(f"[step30] Test 1 Mate-limitation regression (LOCATION "
                   f"level, {len(per_loc_reg)} locations) → {per_loc_path}")
-            print(f"[step30]                                per-mother detail "
+            print(f"[step30] per-mother detail "
                   f"→ {reg_path}")
             for _, coef_row in coefs.iterrows():
-                print(f"[step30]   β ({coef_row['term']}) = "
+                print(f"[step30] β ({coef_row['term']}) = "
                       f"{coef_row['estimate']:.3f} "
                       f"[95 % CI {coef_row['ci_lo']:.3f}, "
-                      f"{coef_row['ci_hi']:.3f}]  "
+                      f"{coef_row['ci_hi']:.3f}] "
                       f"p = {coef_row['p_value']:.3g}"
-                      + ("  SIGNIFICANT" if coef_row["significant_95"] else ""))
+                      + (" SIGNIFICANT" if coef_row["significant_95"] else ""))
             plot_mate_limitation(per_loc_reg, coefs,
                 out_png=figures_dir / f"step30_B{tag}_mate_limitation.png",
                 out_pdf=figures_dir / f"step30_B{tag}_mate_limitation.pdf",
@@ -1921,7 +1921,7 @@ def main() -> None:
             perm_path = tables_dir / f"step30_B{tag}_si_escape_permutation.tsv"
             perm.to_csv(perm_path, sep="\t", index=False)
             n_sig = int((perm["q_bh_fdr"] <= 0.05).sum())
-            print(f"[step30] Test 2  SI-escape permutation written to "
+            print(f"[step30] Test 2 SI-escape permutation written to "
                   f"{perm_path} — {n_sig}/{len(perm)} locations reject "
                   f"strict-SI at FDR ≤ 0.05.")
             # locationCode mapping for the SI-escape figure

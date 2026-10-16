@@ -1,9 +1,9 @@
-"""Step 30 Part C — Clean-overlap EOs → Phase 5 location-scale comparison.
+"""Step 30 Part C — Clean-overlap EOs → location-scale comparison.
 
-Three EOs sit 1:1 with a Phase 5 locationCode AND carry n >= 10
+Three EOs sit 1:1 with a locationCode AND carry n >= 10
 functional-carrier adult genotypes in Phase 4 Step 23 (the clean
 overlap set): EO76, EO70, EO67. For these three the Phase 4 adult SRK
-data can feed Phase 5 Part C *directly*, at the Phase 5 location
+data can feed Part C *directly*, at the location
 scale, with no event-level remap required.
 
 What this script does, per clean-overlap location:
@@ -12,7 +12,7 @@ What this script does, per clean-overlap location:
     empirical zygosity, with FATHERS drawn from OBSERVED local Fg
     frequencies
   - Observed SRK diversity = |observed Fg set|
-  - Compared to the Phase 5 per-location prediction tables
+  - Compared to the per-location prediction tables
     (`step30_A_prediction_location_pcompat.tsv` +
     `step30_A_prediction_location_diversity.tsv`)
 
@@ -42,7 +42,7 @@ Caveats
     frequency skew (same caveat as step30c).
   * The three split EOs (EO18, EO25, EO27) are deliberately excluded
     here; they need an Individual -> germplasmID -> eventID remap
-    before their adults can be used at the Phase 5 location scale.
+    before their adults can be used at the location scale.
 """
 from __future__ import annotations
 
@@ -71,23 +71,23 @@ from step21_EO_scale_validation import (
     bootstrap_pcompat_mean,
 )
 
-DEFAULT_TABLES  = Path("tables")
+DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
-DEFAULT_PRIOR_TSV   = DEFAULT_TABLES / "step30_A_prediction_prior_frequencies.tsv"
+DEFAULT_PRIOR_TSV = DEFAULT_TABLES / "step30_A_prediction_prior_frequencies.tsv"
 DEFAULT_ALLELE_FG_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
-DEFAULT_INDIV_TSV   = Path(
+DEFAULT_INDIV_TSV = Path(
     "Tables/Phase4/step23_individual_allele_genotypes_with_nulls.tsv")
 DEFAULT_PRED_PCOMPAT = DEFAULT_TABLES / "step30_A_prediction_location_pcompat.tsv"
 DEFAULT_PRED_DIVERSITY = DEFAULT_TABLES / "step30_A_prediction_location_diversity.tsv"
-DEFAULT_BANDS_TSV   = DEFAULT_TABLES / "step30_A_traffic_light_bands.tsv"
+DEFAULT_BANDS_TSV = DEFAULT_TABLES / "step30_A_traffic_light_bands.tsv"
 
-# EO <-> Phase 5 locationCode is 1:1 for these three.
+# EO <-> locationCode is 1:1 for these three.
 CLEAN_OVERLAP_EOS = ["EO67", "EO70", "EO76"]
 
-# EO → Phase 5 populationID mapping (post step30h renumber,
+# EO → populationID mapping (post step30h renumber,
 # 2026-10-06). The three clean-overlap EOs are the SRK-genotyped
 # populations used across § C.0.a / § C.0.b / § C.0.c; the figures
-# now display both the Phase 5 populationID and the legacy EO code
+# now display both the populationID and the legacy EO code
 # so a reader can cross-reference against the per-population figures
 # upstream in the compact doc.
 EO_TO_POP = {
@@ -98,7 +98,7 @@ EO_TO_POP = {
 
 
 def eo_label(eo: str) -> str:
-    """Display label combining the Phase 5 populationID with the
+    """Display label combining the populationID with the
     legacy EO code — e.g. 'P3 (EO67)'. If an EO is not in the
     mapping (e.g. a split EO like EO18 would be), fall back to the
     EO code alone."""
@@ -106,14 +106,14 @@ def eo_label(eo: str) -> str:
     return f"{pop} ({eo})" if pop else eo
 
 N_MC_FATHERS = 800
-N_BOOTSTRAP  = 400
-RNG_SEED     = 2033
+N_BOOTSTRAP = 400
+RNG_SEED = 2033
 
-COLOUR_OBS   = "#333333"
-COLOUR_PRED  = "#2b6cb0"
-COLOUR_FAILED     = "#c94b4b"
+COLOUR_OBS = "#333333"
+COLOUR_PRED = "#2b6cb0"
+COLOUR_FAILED = "#c94b4b"
 COLOUR_STRUGGLING = "#e6b325"
-COLOUR_SUSTAIN    = "#3c8f4c"
+COLOUR_SUSTAIN = "#3c8f4c"
 
 
 def per_location_stats(indiv_df: pd.DataFrame,
@@ -124,7 +124,7 @@ def per_location_stats(indiv_df: pd.DataFrame,
                        pred_diversity: pd.DataFrame,
                        rng: np.random.Generator,
                        eos: List[str]) -> pd.DataFrame:
-    """One row per clean-overlap EO (= Phase 5 locationCode)."""
+    """One row per clean-overlap EO (= locationCode)."""
     prior_f = prior["f_mean"].values
     fg_labels = prior["Fg"].astype(str).tolist()
     rows = []
@@ -151,11 +151,11 @@ def per_location_stats(indiv_df: pd.DataFrame,
             genotypes, prior_f, class_i_mask, zygosity_probs,
             N_MC_FATHERS, N_BOOTSTRAP, rng)
 
-        # Phase 5 per-location prediction (component-based)
+        # per-location prediction (component-based)
         pc_row = pred_pcompat[pred_pcompat["locationCode"] == eo]
         div_row = pred_diversity[pred_diversity["locationCode"] == eo]
         if pc_row.empty or div_row.empty:
-            print(f"[step30d] {eo} not found in Phase 5 prediction tables "
+            print(f"[step30d] {eo} not found in prediction tables "
                   "— skipping.")
             continue
         pc_row = pc_row.iloc[0]
@@ -173,42 +173,42 @@ def per_location_stats(indiv_df: pd.DataFrame,
             (1.0 - (1.0 - prior_f) ** n_allele_draws_adults).sum())
 
         rows.append({
-            "locationCode":            eo,
-            "locationID":              int(pc_row["locationID"]),
-            "EO":                      eo,
-            "n_components_50m":        int(pc_row.get("n_components_50m", 1)),
-            "N_fertile_effective":     int(pc_row["N_fertile_effective"]),
-            "n_adults_total":          n_total,
-            "n_functional_carriers":   n_fun,
-            "n_SC_fully_null":         n_sc,
+            "locationCode": eo,
+            "locationID": int(pc_row["locationID"]),
+            "EO": eo,
+            "n_components_50m": int(pc_row.get("n_components_50m", 1)),
+            "N_fertile_effective": int(pc_row["N_fertile_effective"]),
+            "n_adults_total": n_total,
+            "n_functional_carriers": n_fun,
+            "n_SC_fully_null": n_sc,
             # Observed
-            "obs_distinct_Fgs":        n_distinct_obs,
-            "obs_p_ClassI":            float(local_f_obs[class_i_mask].sum()),
+            "obs_distinct_Fgs": n_distinct_obs,
+            "obs_p_ClassI": float(local_f_obs[class_i_mask].sum()),
             # Sample-size-adjusted no-drift upper bound (species-wide
             # P1 at 4·n_fun adult allele draws). Deficit from this
             # upper bound to the observed count isolates DRIFT from
             # SAMPLING.
             "exp_distinct_adult_sample_from_P1_upper": exp_distinct_P1,
-            "obs_pcompat_mean":        obs_mean,
-            "obs_pcompat_lo95":        obs_lo,
-            "obs_pcompat_hi95":        obs_hi,
+            "obs_pcompat_mean": obs_mean,
+            "obs_pcompat_lo95": obs_lo,
+            "obs_pcompat_hi95": obs_hi,
             # Predicted at adult scale (same mothers, P1 fathers)
             "pred_adult_pcompat_mean": pred_adult_mean,
             "pred_adult_pcompat_lo95": pred_adult_lo,
             "pred_adult_pcompat_hi95": pred_adult_hi,
-            # Phase 5 per-location prediction (component-based union
+            # per-location prediction (component-based union
             # for diversity, size-weighted mean for P_compat)
-            "pred_phase5_distinct_Fgs":        float(
+            "pred_phase5_distinct_Fgs": float(
                 div_row["predicted_local_pool_size_mean"]),
-            "pred_phase5_distinct_Fgs_lo":     float(
+            "pred_phase5_distinct_Fgs_lo": float(
                 div_row["predicted_local_pool_size_lo"]),
-            "pred_phase5_distinct_Fgs_hi":     float(
+            "pred_phase5_distinct_Fgs_hi": float(
                 div_row["predicted_local_pool_size_hi"]),
-            "pred_phase5_pcompat_mean":        float(
+            "pred_phase5_pcompat_mean": float(
                 pc_row["predicted_P_compat_mean"]),
-            "pred_phase5_pcompat_lo95":        float(
+            "pred_phase5_pcompat_lo95": float(
                 pc_row["predicted_P_compat_lo"]),
-            "pred_phase5_pcompat_hi95":        float(
+            "pred_phase5_pcompat_hi95": float(
                 pc_row["predicted_P_compat_hi"]),
         })
     return pd.DataFrame(rows)
@@ -232,11 +232,11 @@ def per_fg_frequencies(indiv_df: pd.DataFrame,
         local_f = compute_local_f(fg_stack)
         for j, fg in enumerate(fg_labels):
             rows.append({
-                "locationCode":    eo,
-                "EO":              eo,
-                "Fg":              fg,
-                "f_observed":      float(local_f[j]),
-                "f_P1_species":    float(prior_f[j]),
+                "locationCode": eo,
+                "EO": eo,
+                "Fg": fg,
+                "f_observed": float(local_f[j]),
+                "f_P1_species": float(prior_f[j]),
                 "present_in_location": bool(local_f[j] > 0),
             })
     return pd.DataFrame(rows)
@@ -298,12 +298,12 @@ def draw_figure(stats: pd.DataFrame,
         label = eo_label(r["locationCode"])
         if r["pred_phase5_distinct_Fgs"] > 0.65 * hiA:
             axA.annotate(
-                label + "  ",
+                label + " ",
                 xy=(r["pred_phase5_distinct_Fgs"], r["obs_distinct_Fgs"]),
                 fontsize=9, va="center", ha="right")
         else:
             axA.annotate(
-                "  " + label,
+                " " + label,
                 xy=(r["pred_phase5_distinct_Fgs"], r["obs_distinct_Fgs"]),
                 fontsize=9, va="center", ha="left")
     axA.set_xlim(0, hiA); axA.set_ylim(0, hiA)
@@ -312,7 +312,7 @@ def draw_figure(stats: pd.DataFrame,
     axA.set_ylabel("Observed number of distinct SRK alleles",
                    fontsize=10)
     axA.set_title(
-        f"A  SRK allele diversity per population (ceiling = {n_fg} alleles)",
+        f"A SRK allele diversity per population (ceiling = {n_fg} alleles)",
         fontsize=11, loc="left")
     axA.spines["top"].set_visible(False)
     axA.spines["right"].set_visible(False)
@@ -349,12 +349,12 @@ def draw_figure(stats: pd.DataFrame,
         label = eo_label(r["locationCode"])
         if r["pred_phase5_pcompat_mean"] > 0.65 * hiB:
             axB.annotate(
-                label + "  ",
+                label + " ",
                 xy=(r["pred_phase5_pcompat_mean"], r["obs_pcompat_mean"]),
                 fontsize=9, va="center", ha="right")
         else:
             axB.annotate(
-                "  " + label,
+                " " + label,
                 xy=(r["pred_phase5_pcompat_mean"], r["obs_pcompat_mean"]),
                 fontsize=9, va="center", ha="left")
     axB.set_xlim(0, hiB); axB.set_ylim(0, hiB)
@@ -364,7 +364,7 @@ def draw_figure(stats: pd.DataFrame,
     axB.set_ylabel(
         "Observed pollen compatibility",
         fontsize=10)
-    axB.set_title("B  Pollen compatibility under random mating",
+    axB.set_title("B Pollen compatibility under random mating",
                    fontsize=11, loc="left")
     axB.spines["top"].set_visible(False)
     axB.spines["right"].set_visible(False)
@@ -408,7 +408,7 @@ def draw_figure(stats: pd.DataFrame,
             ax_i.set_xticklabels(prior_order, rotation=90, fontsize=7)
             ax_i.set_xlabel(
                 "32 SRK alleles, sorted by species-wide frequency "
-                "(most-common → rarest).  × marker = allele absent at "
+                "(most-common → rarest). × marker = allele absent at "
                 "this location.",
                 fontsize=9)
         else:
@@ -418,7 +418,7 @@ def draw_figure(stats: pd.DataFrame,
         obs_fgs = int(stats.set_index("locationCode").loc[loc,
                                                            "obs_distinct_Fgs"])
         ax_i.text(0.995, 0.90,
-                   f"{eo_label(loc)}  (n={n_fun} adults, "
+                   f"{eo_label(loc)} (n={n_fun} adults, "
                    f"{obs_fgs}/{n_fg} alleles present)",
                    transform=ax_i.transAxes,
                    fontsize=10, ha="right", va="top", fontweight="bold")
@@ -439,13 +439,13 @@ def draw_figure(stats: pd.DataFrame,
         ax_i.set_ylim(-y_lim, y_lim)
 
     axC_rows[0].set_title(
-        "C  Allele frequency residuals per population — drift signature  "
+        "C Allele frequency residuals per population — drift signature "
         "(green = enriched vs species-wide, red = depleted)",
         fontsize=11, loc="left")
 
     fig.suptitle(
         "Part C — Clean-overlap populations (P3 = EO67, P41 = EO70, "
-        "P39 = EO76)  |  adult SRK genotypes  |  species-mean "
+        "P39 = EO76) | adult SRK genotypes | species-mean "
         f"pollen compatibility = {bands['species_mean']:.3f}",
         fontsize=12, y=0.995,
     )
@@ -481,8 +481,8 @@ def main() -> None:
     zygosity_probs = load_zygosity_dist()
     bands_df = pd.read_csv(DEFAULT_BANDS_TSV, sep="\t", encoding="utf-8-sig")
     bands = {
-        "species_mean":   float(bands_df["species_mean"].iloc[0]),
-        "failed_max":     float(bands_df["failed_max"].iloc[0]),
+        "species_mean": float(bands_df["species_mean"].iloc[0]),
+        "failed_max": float(bands_df["failed_max"].iloc[0]),
         "struggling_max": float(bands_df["struggling_max"].iloc[0]),
     }
 
@@ -506,29 +506,29 @@ def main() -> None:
     draw_figure(stats, freqs, bands, prior, fig_png, fig_pdf)
     print(f"[step30d] Wrote {fig_png} + .pdf")
 
-    # Short console summary — observed vs Phase 5 predicted at the
+    # Short console summary — observed vs predicted at the
     # three clean locations.
     print()
-    print("[step30d] ============== SUMMARY — observed vs Phase 5 predicted ==============")
+    print("[step30d] ============== SUMMARY — observed vs predicted ==============")
     for _, r in stats.iterrows():
-        print(f"[step30d] {r['locationCode']}  (adults = "
+        print(f"[step30d] {r['locationCode']} (adults = "
               f"{int(r['n_functional_carriers'])})")
-        print(f"[step30d]   SRK diversity (distinct Fgs):")
-        print(f"[step30d]      observed in adults          = "
+        print(f"[step30d] SRK diversity (distinct Fgs):")
+        print(f"[step30d] observed in adults = "
               f"{int(r['obs_distinct_Fgs'])} of 32")
-        print(f"[step30d]      no-drift upper bound at n   = "
-              f"{r['exp_distinct_adult_sample_from_P1_upper']:.1f} of 32  "
+        print(f"[step30d] no-drift upper bound at n = "
+              f"{r['exp_distinct_adult_sample_from_P1_upper']:.1f} of 32 "
               f"(if P1 held locally)")
-        print(f"[step30d]      Phase 5 predicted (full location) = "
-              f"{r['pred_phase5_distinct_Fgs']:.1f}  "
+        print(f"[step30d] predicted (full location) = "
+              f"{r['pred_phase5_distinct_Fgs']:.1f} "
               f"[{r['pred_phase5_distinct_Fgs_lo']:.1f}, "
               f"{r['pred_phase5_distinct_Fgs_hi']:.1f}]")
-        print(f"[step30d]   Pollen compatibility:")
-        print(f"[step30d]      observed in adults          = "
-              f"{r['obs_pcompat_mean']:.3f}  "
+        print(f"[step30d] Pollen compatibility:")
+        print(f"[step30d] observed in adults = "
+              f"{r['obs_pcompat_mean']:.3f} "
               f"[{r['obs_pcompat_lo95']:.3f}, {r['obs_pcompat_hi95']:.3f}]")
-        print(f"[step30d]      Phase 5 predicted (component) = "
-              f"{r['pred_phase5_pcompat_mean']:.3f}  "
+        print(f"[step30d] predicted (component) = "
+              f"{r['pred_phase5_pcompat_mean']:.3f} "
               f"[{r['pred_phase5_pcompat_lo95']:.3f}, "
               f"{r['pred_phase5_pcompat_hi95']:.3f}]")
 

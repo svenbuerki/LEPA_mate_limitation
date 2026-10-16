@@ -1,6 +1,6 @@
 """Step 29d — Mating pool structure per location.
 
-Phase 5 defines a **50 m connected component** as one mating pool —
+ defines a **50 m connected component** as one mating pool —
 the set of adult plants that share a pollen pool at the 50 m
 pollinator radius. A location may hold one mating pool (fully
 connected) or many (fragmented), and each pool has its own
@@ -11,7 +11,7 @@ display figure.
 This script fills that gap. It reads the event → 50 m component
 lookup written by step29c and emits:
 
-Figures/Phase5/step29d_mating_pool_structure.{png,pdf}
+Figures//step29d_mating_pool_structure.{png,pdf}
     Two-panel figure.
       Panel A — Dataset summary scatter: total adults (x, log) vs
         number of 50 m mating pools (y) per location, coloured by
@@ -45,9 +45,9 @@ from srk_bl_constants import (
     BL_COLORS, BL_ORDER, locationCode_to_bl, location_label_series,
 )
 
-DEFAULT_TABLES  = Path("tables")
+DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
-INPUT_LOOKUP    = DEFAULT_TABLES / "step29c_event_to_component_50m.tsv"
+INPUT_LOOKUP = DEFAULT_TABLES / "step29c_event_to_component_50m.tsv"
 
 
 def build_summary(lookup: pd.DataFrame) -> pd.DataFrame:
@@ -66,16 +66,16 @@ def build_summary(lookup: pd.DataFrame) -> pd.DataFrame:
             ["locationID", "locationCode"], sort=False):
         sizes = sub["component_N_fertile"].astype(int).values
         rows.append({
-            "locationID":           int(loc_id),
-            "locationCode":         loc_code,
-            "n_mating_pools_50m":   int(len(sizes)),
-            "total_adults":         int(sizes.sum()),
-            "largest_pool_N":       int(sizes.max()),
-            "smallest_pool_N":      int(sizes.min()),
-            "median_pool_N":        float(np.median(sizes)),
-            "largest_pool_share":   float(sizes.max() / sizes.sum()),
-            "n_pools_below_SI_floor_1":        int((sizes <= 1).sum()),
-            "n_pools_below_coupon_floor_8":    int((sizes < 8).sum()),
+            "locationID": int(loc_id),
+            "locationCode": loc_code,
+            "n_mating_pools_50m": int(len(sizes)),
+            "total_adults": int(sizes.sum()),
+            "largest_pool_N": int(sizes.max()),
+            "smallest_pool_N": int(sizes.min()),
+            "median_pool_N": float(np.median(sizes)),
+            "largest_pool_share": float(sizes.max() / sizes.sum()),
+            "n_pools_below_SI_floor_1": int((sizes <= 1).sum()),
+            "n_pools_below_coupon_floor_8": int((sizes < 8).sum()),
         })
     summary = pd.DataFrame(rows)
     summary["BL"] = locationCode_to_bl(summary["locationCode"]).values
@@ -144,7 +144,7 @@ def plot_mating_pool_structure(summary: pd.DataFrame,
         ax_i.axvline(0.5, color="#b2182b", ls=":", lw=0.9, alpha=0.4)
         # Row labels on Panel A (leftmost column).
         y_labels = [
-            f"{row['display_label']}  "
+            f"{row['display_label']} "
             f"({row['n_mating_pools_50m']} deme"
             f"{'s' if row['n_mating_pools_50m'] != 1 else ''}, "
             f"{row['total_adults']} adults)"
@@ -157,7 +157,7 @@ def plot_mating_pool_structure(summary: pd.DataFrame,
         ax_i.set_xticks([0.0, 0.25, 0.5, 0.75, 1.0])
         if ax_i is axesA[-1]:
             ax_i.set_xlabel(
-                "Fraction in the largest deme  "
+                "Fraction in the largest deme "
                 "(1.0 = fully connected)",
                 fontsize=9,
             )
@@ -166,7 +166,7 @@ def plot_mating_pool_structure(summary: pd.DataFrame,
         ax_i.spines["top"].set_visible(False)
         ax_i.spines["right"].set_visible(False)
     axesA[0].set_title(
-        "A  Within-location connectivity share",
+        "A Within-location connectivity share",
         fontsize=10, loc="left")
 
     # -----------------------------------------------------------------
@@ -189,7 +189,7 @@ def plot_mating_pool_structure(summary: pd.DataFrame,
                 color=colour, edgecolor="white", linewidth=0.5,
                 alpha=0.85, zorder=3,
             )
-            y_labels.append("")  # row labels live on Panel A
+            y_labels.append("") # row labels live on Panel A
         ax_i.axvline(1, color="#b2182b", ls=":", lw=1.0, alpha=0.7)
         ax_i.axvline(8, color="#333333", ls="--", lw=0.9, alpha=0.5)
         ax_i.set_xscale("log", base=2)
@@ -206,7 +206,7 @@ def plot_mating_pool_structure(summary: pd.DataFrame,
     axesB[-1].set_xticks(xticks)
     axesB[-1].set_xticklabels([str(x) for x in xticks], fontsize=9)
     axesB[-1].set_xlabel(
-        "Adult plants per deme  (log₂)",
+        "Adult plants per deme (log₂)",
         fontsize=10,
     )
     # Share x-limits
@@ -222,7 +222,7 @@ def plot_mating_pool_structure(summary: pd.DataFrame,
         ax_i.set_xticklabels([])
 
     axesB[0].set_title(
-        "B  Deme sizes  (one dot per 50 m component)",
+        "B Deme sizes (one dot per 50 m component)",
         fontsize=10, loc="left")
 
     fig.suptitle(
@@ -262,7 +262,7 @@ def main() -> None:
     print(f"[step29d] Locations: {len(summary)}")
     print(f"[step29d] Total 50 m mating pools: {len(pools)}")
     print(f"[step29d] Mean pools per location: "
-          f"{summary['n_mating_pools_50m'].mean():.1f}  "
+          f"{summary['n_mating_pools_50m'].mean():.1f} "
           f"(median {int(summary['n_mating_pools_50m'].median())}, "
           f"max {summary['n_mating_pools_50m'].max()})")
     print(f"[step29d] Pool sizes: min {pools['component_N_fertile'].min()}, "

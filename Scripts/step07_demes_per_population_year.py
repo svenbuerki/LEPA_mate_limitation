@@ -3,7 +3,7 @@
 Visualises the data in `tables/step29a_demes_per_population_year.tsv`
 (258 rows, one per (population, year, deme)) as a per-BL faceted figure:
 one row per population, two years overlaid as the open/filled circle
-convention used across Phase 5 (see Figures 8 and 10 of the compact
+convention used across (see Figures 8 and 10 of the compact
 doc / Figures 3 and 5 of the long doc).
 
 Design
@@ -18,7 +18,7 @@ Design
 - Reference lines: red at x = 1 (single-plant SI floor); grey at
   x = 8 (species-pool floor — 4 alleles × 8 plants = 32 copies);
   dashed at x = 32 (species ceiling).
-- Right margin: `2025 Kd/N  ·  2026 Kd/N` using the compact doc's
+- Right margin: `2025 Kd/N · 2026 Kd/N` using the compact doc's
   standard annotation convention.
 - BL label in the top-left corner of each subplot (coloured box).
 
@@ -41,15 +41,15 @@ from matplotlib.lines import Line2D
 
 from srk_bl_constants import BL_COLORS
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
 NEW_BL_ORDER = ["BL1", "BL2", "BL3", "BL4", "BL5"]
-Y_OFFSET     = 0.14   # vertical half-offset between year strips
+Y_OFFSET = 0.14 # vertical half-offset between year strips
 
-REF_SI_FLOOR          = 1
-REF_SPECIES_POOL_8    = 8
-REF_SPECIES_CEILING   = 32
+REF_SI_FLOOR = 1
+REF_SPECIES_POOL_8 = 8
+REF_SPECIES_CEILING = 32
 
 
 def main() -> None:
@@ -106,9 +106,9 @@ def main() -> None:
                     continue
                 sizes = g["component_N_fertile"].to_numpy().astype(float)
                 sizes = np.clip(sizes, 1, None)
-                yoff  = -Y_OFFSET if yr == 2025 else +Y_OFFSET
-                mfc   = ("white" if yr == 2025 else colour)
-                mew   = (1.4 if yr == 2025 else 0.5)
+                yoff = -Y_OFFSET if yr == 2025 else +Y_OFFSET
+                mfc = ("white" if yr == 2025 else colour)
+                mew = (1.4 if yr == 2025 else 0.5)
                 ax.scatter(sizes,
                            np.full_like(sizes, yi + yoff, dtype=float),
                            s=42, facecolor=mfc, edgecolor=colour,
@@ -146,7 +146,7 @@ def main() -> None:
                     k = int(row2["n_demes"].iat[0])
                     n = int(row2["N_fert"].iat[0])
                     parts.append(f"{yr} {k}d/{n}")
-            right.append("  ·  ".join(parts))
+            right.append(" · ".join(parts))
         ax2.set_yticklabels(right, fontsize=7.5, color="#444")
         ax2.tick_params(axis="y", length=0, pad=2)
         for s in ("top", "right", "left"):
@@ -183,7 +183,7 @@ def main() -> None:
                 fontsize=9, frameon=True, ncol=3)
 
     fig.suptitle(
-        "Phase 5 — deme-size distribution per population per year  "
+        " — deme-size distribution per population per year "
         "(2025 open · 2026 filled, log x-scale)",
         fontsize=13, y=0.998,
     )
