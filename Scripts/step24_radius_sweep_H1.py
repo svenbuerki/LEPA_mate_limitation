@@ -1,6 +1,6 @@
 """Step 30f — SRK diversity hypothesis test via radius sweep.
 
-Phase 5 § C.0.c. Companion to § C.0.b (step30e), which decomposes the
+§ C.0.c. Companion to § C.0.b (step30e), which decomposes the
 pollen-compatibility prediction. This script addresses the parallel
 question for SRK **allele diversity**: at EO67, EO70, EO76 (the three
 clean-overlap locations), the 50 m prediction over-estimates observed
@@ -38,7 +38,7 @@ Reuses `step28.load_all_events + haversine_meters`, `step28.PLOIDY`,
 Outputs
 -------
 tables/step30f_srk_diversity_radius_sweep.tsv
-Figures/Phase5/step30f_srk_diversity_radius_sweep.{png,pdf}
+Figures//step30f_srk_diversity_radius_sweep.{png,pdf}
 """
 from __future__ import annotations
 
@@ -68,12 +68,12 @@ RNG_SEED = 2030
 # locationIDs taken from Phase 2 Locations table and confirmed in
 # step30_B_partC_clean_overlap_per_location.tsv.
 TARGETS = [
-    ("EO67", 39, "#8a8a8a", False),  # grey; invariant deme count, TSV only
-    ("EO70", 26, "#D55E00", True),   # vermillion; plotted
-    ("EO76",  2, "#009E73", True),   # teal green; plotted
+    ("EO67", 39, "#8a8a8a", False), # grey; invariant deme count, TSV only
+    ("EO70", 26, "#D55E00", True), # vermillion; plotted
+    ("EO76", 2, "#009E73", True), # teal green; plotted
 ]
 
-# EO → Phase 5 populationID mapping (post step30h renumber,
+# EO → populationID mapping (post step30h renumber,
 # 2026-10-06). Used to display 'P41 (EO70)' / 'P39 (EO76)' /
 # 'P3 (EO67)' in the figure.
 EO_TO_POP = {"EO67": "P3", "EO70": "P41", "EO76": "P39"}
@@ -163,32 +163,32 @@ def main() -> None:
             counts = simulate_location_pool(comp_sizes, p1_vec, rng, N_REPLICATES)
             obs_count = int(obs_by_id[loc_id])
             rows.append({
-                "EO":                  eo_code,
-                "locationID":          loc_id,
-                "radius_m":            r,
-                "n_components":        len(comps),
-                "n_fert_total":        int(sum(comp_sizes)),
-                "component_sizes":     ",".join(str(s) for s in
+                "EO": eo_code,
+                "locationID": loc_id,
+                "radius_m": r,
+                "n_components": len(comps),
+                "n_fert_total": int(sum(comp_sizes)),
+                "component_sizes": ",".join(str(s) for s in
                                                  sorted(comp_sizes, reverse=True)),
-                "largest_comp_N":      int(max(comp_sizes)) if comp_sizes else 0,
-                "pred_mean":           float(counts.mean()),
-                "pred_lo95":           float(np.quantile(counts, 0.025)),
-                "pred_hi95":           float(np.quantile(counts, 0.975)),
-                "observed":            obs_count,
-                "gap_pred_minus_obs":  float(counts.mean() - obs_count),
-                "obs_inside_CI":       bool(
+                "largest_comp_N": int(max(comp_sizes)) if comp_sizes else 0,
+                "pred_mean": float(counts.mean()),
+                "pred_lo95": float(np.quantile(counts, 0.025)),
+                "pred_hi95": float(np.quantile(counts, 0.975)),
+                "observed": obs_count,
+                "gap_pred_minus_obs": float(counts.mean() - obs_count),
+                "obs_inside_CI": bool(
                     np.quantile(counts, 0.025) <= obs_count
                     <= np.quantile(counts, 0.975)
                 ),
             })
-            print(f"  r = {r:>3} m  |  "
-                  f"{len(comps):>2} demes  "
+            print(f" r = {r:>3} m | "
+                  f"{len(comps):>2} demes "
                   f"(largest {max(comp_sizes) if comp_sizes else 0:>4}, "
-                  f"smallest {min(comp_sizes) if comp_sizes else 0:>3})  |  "
+                  f"smallest {min(comp_sizes) if comp_sizes else 0:>3}) | "
                   f"predicted {counts.mean():5.1f} "
                   f"[{np.quantile(counts, 0.025):4.1f}, "
-                  f"{np.quantile(counts, 0.975):4.1f}]  "
-                  f"vs observed {obs_count}  "
+                  f"{np.quantile(counts, 0.975):4.1f}] "
+                  f"vs observed {obs_count} "
                   f"{'(inside CI)' if np.quantile(counts, 0.025) <= obs_count <= np.quantile(counts, 0.975) else ''}")
 
     df = pd.DataFrame(rows)
@@ -215,7 +215,7 @@ def main() -> None:
 
         ax.plot(sub["radius_m"], gap_mean, "-o",
                 color=color, linewidth=2.4, markersize=7,
-                label=f"{eo_label(eo_code)}  (observed = {obs_val} alleles)")
+                label=f"{eo_label(eo_code)} (observed = {obs_val} alleles)")
         ax.fill_between(sub["radius_m"], gap_lo, gap_hi,
                          color=color, alpha=0.18)
 
@@ -243,7 +243,7 @@ def main() -> None:
     ax.set_xscale("log")
     ax.set_xticks(RADII_M)
     ax.set_xticklabels([str(r) for r in RADII_M])
-    ax.set_xlabel("Pollinator radius used to build the deme partition  (m, log scale)")
+    ax.set_xlabel("Pollinator radius used to build the deme partition (m, log scale)")
     ax.set_ylabel("Predicted − observed distinct SRK alleles\n(the diversity gap at each radius)")
     ax.set_title(
         "SRK diversity gap vs pollinator radius — P41 (EO70) and P39 (EO76)\n"
@@ -258,7 +258,7 @@ def main() -> None:
         fig.savefig(FIGURES / f"step30f_srk_diversity_radius_sweep.{ext}",
                     dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print(f"[step30f] Wrote {FIGURES}/step30f_srk_diversity_radius_sweep.{{png,pdf}}  "
+    print(f"[step30f] Wrote {FIGURES}/step30f_srk_diversity_radius_sweep.{{png,pdf}} "
           f"(EO67 omitted from plot: deme count invariant across sweep)")
 
 

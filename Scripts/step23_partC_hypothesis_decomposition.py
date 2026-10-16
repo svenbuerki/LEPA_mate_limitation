@@ -3,7 +3,7 @@
 This diagnostic is **triggered by the per-location SRK diversity
 discrepancy** surfaced in Panel A of the Part C anchor figure
 (`step30_B_partC_clean_overlap.png`). When a location's observed
-distinct-allele count sits far below the Phase 5 prediction, the
+distinct-allele count sits far below the prediction, the
 local pool has drifted and the next question is *how that drift
 redistributes into the pollen compatibility prediction*. Two
 locations with the same number of lost alleles can land at very
@@ -11,7 +11,7 @@ different observed pollen compatibilities depending on **which**
 alleles were lost. This script quantifies that.
 
 For each clean-overlap location (EO67, EO70, EO76) the observed
-pollen compatibility can deviate from Phase 5's P1-based prediction
+pollen compatibility can deviate 's P1-based prediction
 through three distinct biological mechanisms:
 
   1. **Class I / II mass imbalance** — the Class I share of the
@@ -34,15 +34,15 @@ by swapping ONE factor at a time against the species-wide P1
 reference and recomputing pollen compatibility against the SAME
 observed mother genotypes:
 
-    observed_full     — observed f_local + observed zygosity (truth)
+    observed_full — observed f_local + observed zygosity (truth)
     swap_within_class — class balance kept at observed, within-class
                         spread reshaped to the P1 shape
-    swap_class_bal    — within-class spread kept at observed, class
+    swap_class_bal — within-class spread kept at observed, class
                         balance (p_I) reshaped to the P1 value
-    swap_zygosity     — f_local kept at observed, father zygosity
+    swap_zygosity — f_local kept at observed, father zygosity
                         reshaped to species-wide
-    pred_P1_full      — species-wide P1 f + species-wide zygosity
-                        (= Phase 5 prediction with observed mothers)
+    pred_P1_full — species-wide P1 f + species-wide zygosity
+                        (= prediction with observed mothers)
 
 If `swap_within_class` moves pollen compatibility close to
 `pred_P1_full`, within-class concentration is the dominant driver.
@@ -99,21 +99,21 @@ from step21_EO_scale_validation import (
     bootstrap_pcompat_mean,
 )
 
-DEFAULT_TABLES  = Path("tables")
+DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
 DEFAULT_PRIOR_TSV = DEFAULT_TABLES / "step30_A_prediction_prior_frequencies.tsv"
 DEFAULT_ALLELE_FG_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_INDIV_TSV = Path(
     "Tables/Phase4/step23_individual_allele_genotypes_with_nulls.tsv")
 DEFAULT_BANDS_TSV = DEFAULT_TABLES / "step30_A_traffic_light_bands.tsv"
-# Link to the Phase 5 diversity prediction so the trigger metric (how
+# Link to the diversity prediction so the trigger metric (how
 # many Fgs did the location *lose*?) can be reported alongside each
 # decomposition.
 DEFAULT_PRED_DIVERSITY = DEFAULT_TABLES / "step30_A_prediction_location_diversity.tsv"
 
 CLEAN_OVERLAP_EOS = ["EO67", "EO70", "EO76"]
 
-# EO → Phase 5 populationID mapping (post step30h renumber,
+# EO → populationID mapping (post step30h renumber,
 # 2026-10-06). Keeps figures aligned with the per-population
 # naming used across the compact doc.
 EO_TO_POP = {
@@ -130,8 +130,8 @@ def eo_label(eo: str) -> str:
     return f"{pop} ({eo})" if pop else eo
 
 N_MC_FATHERS = 800
-N_BOOTSTRAP  = 400
-RNG_SEED     = 2034
+N_BOOTSTRAP = 400
+RNG_SEED = 2034
 
 
 # ---------------------------------------------------------------------------
@@ -214,20 +214,20 @@ def per_eo_decomposition(indiv_df: pd.DataFrame,
 
         # Counterfactual local-frequency vectors
         f_swap_within = swap_within_class_spread(f_obs, f_P1, class_i_mask)
-        f_swap_class  = swap_class_balance(f_obs, f_P1, class_i_mask)
+        f_swap_class = swap_class_balance(f_obs, f_P1, class_i_mask)
 
         # Bootstrap pollen compatibility under each scenario, same
         # mother genotypes throughout — so the comparison isolates the
         # father-drawing side of the model.
         scenarios = {
-            "observed_full":     (f_obs, zyg_obs),
+            "observed_full": (f_obs, zyg_obs),
             "swap_within_class": (f_swap_within, zyg_obs),
-            "swap_class_bal":    (f_swap_class, zyg_obs),
-            "swap_zygosity":     (f_obs, zygosity_species),
-            "pred_P1_full":      (f_P1, zygosity_species),
+            "swap_class_bal": (f_swap_class, zyg_obs),
+            "swap_zygosity": (f_obs, zygosity_species),
+            "pred_P1_full": (f_P1, zygosity_species),
         }
         # Diversity-trigger metrics — this diagnostic is motivated
-        # by the observed vs Phase 5 SRK diversity gap at this
+        # by the observed vs SRK diversity gap at this
         # location. Record it alongside each pollen compatibility
         # row so the chain is explicit.
         n_distinct_obs = int((f_obs > 0).sum())
@@ -241,22 +241,22 @@ def per_eo_decomposition(indiv_df: pd.DataFrame,
             pred_div_lo = np.nan
             pred_div_hi = np.nan
         row = {
-            "locationCode":          eo,
+            "locationCode": eo,
             "n_functional_carriers": n_fun,
             # SRK diversity trigger — the gap that motivated the
             # decomposition in the first place.
-            "obs_distinct_SRK_alleles":           n_distinct_obs,
-            "pred_phase5_distinct_SRK_alleles":   pred_div,
+            "obs_distinct_SRK_alleles": n_distinct_obs,
+            "pred_phase5_distinct_SRK_alleles": pred_div,
             "pred_phase5_distinct_SRK_alleles_lo": pred_div_lo,
             "pred_phase5_distinct_SRK_alleles_hi": pred_div_hi,
-            "diversity_gap_obs_minus_pred":       (n_distinct_obs - pred_div
+            "diversity_gap_obs_minus_pred": (n_distinct_obs - pred_div
                                                     if not np.isnan(pred_div)
                                                     else np.nan),
             # Local-pool composition metrics
-            "obs_p_ClassI":          float(f_obs[class_i_mask].sum()),
-            "p1_p_ClassI":           float(f_P1[class_i_mask].sum()),
-            "obs_zyg_1_distinct":    float(zyg_obs[0]) if len(zyg_obs) > 0 else np.nan,
-            "obs_zyg_2_distinct":    float(zyg_obs[1]) if len(zyg_obs) > 1 else np.nan,
+            "obs_p_ClassI": float(f_obs[class_i_mask].sum()),
+            "p1_p_ClassI": float(f_P1[class_i_mask].sum()),
+            "obs_zyg_1_distinct": float(zyg_obs[0]) if len(zyg_obs) > 0 else np.nan,
+            "obs_zyg_2_distinct": float(zyg_obs[1]) if len(zyg_obs) > 1 else np.nan,
             "obs_zyg_3plus_distinct":float(zyg_obs[2:].sum()) if len(zyg_obs) > 2 else np.nan,
         }
         for scen_name, (f_use, zyg_use) in scenarios.items():
@@ -291,11 +291,11 @@ def draw_figure(stats: pd.DataFrame,
     # Order: baseline (prediction) → ground truth (observed) → three
     # single-swap scenarios that explain the gap between them.
     scen_labels = [
-        ("pred_P1_full",      "Predicted (species-wide)",                "#3c8f4c"),
-        ("observed_full",     "Observed",                                "#8a8a8a"),
+        ("pred_P1_full", "Predicted (species-wide)", "#3c8f4c"),
+        ("observed_full", "Observed", "#8a8a8a"),
         ("swap_within_class", "Swap within-class spread → species-wide", "#2b6cb0"),
-        ("swap_class_bal",    "Swap Class I/II balance → species-wide",  "#c94b4b"),
-        ("swap_zygosity",     "Swap zygosity → species-wide",            "#e6b325"),
+        ("swap_class_bal", "Swap Class I/II balance → species-wide", "#c94b4b"),
+        ("swap_zygosity", "Swap zygosity → species-wide", "#e6b325"),
     ]
     n_loc = len(stats)
     n_scen = len(scen_labels)
@@ -314,7 +314,7 @@ def draw_figure(stats: pd.DataFrame,
                 lw=0.8, ls="--", alpha=0.5)
 
     width = 1.0
-    # Horizontal offset for each scenario WITHIN a group.  Visual
+    # Horizontal offset for each scenario WITHIN a group. Visual
     # separator between the two reference bars (Predicted + Observed)
     # and the three single-swap explanations lives in `GAP`.
     GAP = 0.9
@@ -343,7 +343,7 @@ def draw_figure(stats: pd.DataFrame,
     for s_idx, (scen, label, colour) in enumerate(scen_labels):
         xs = group_centres + scen_offsets[s_idx] - local_centre
         means = stats[f"pcompat_{scen}_mean"].values
-        lows  = stats[f"pcompat_{scen}_lo95"].values
+        lows = stats[f"pcompat_{scen}_lo95"].values
         highs = stats[f"pcompat_{scen}_hi95"].values
         yerr = np.array([means - lows, highs - means])
         yerr = np.clip(yerr, 0.0, None)
@@ -412,8 +412,8 @@ def main() -> None:
     zyg_species = load_zygosity_dist()
     bands_df = pd.read_csv(DEFAULT_BANDS_TSV, sep="\t", encoding="utf-8-sig")
     bands = {
-        "species_mean":   float(bands_df["species_mean"].iloc[0]),
-        "failed_max":     float(bands_df["failed_max"].iloc[0]),
+        "species_mean": float(bands_df["species_mean"].iloc[0]),
+        "failed_max": float(bands_df["failed_max"].iloc[0]),
         "struggling_max": float(bands_df["struggling_max"].iloc[0]),
     }
     pred_div = pd.read_csv(DEFAULT_PRED_DIVERSITY, sep="\t",
@@ -438,24 +438,24 @@ def main() -> None:
     print("[step30e] ===== Diversity-trigger diagnostic: SRK diversity → P_compat =====")
     for _, r in stats.iterrows():
         gap = r["pcompat_pred_P1_full_mean"] - r["pcompat_observed_full_mean"]
-        print(f"[step30e] {r['locationCode']}  (n={int(r['n_functional_carriers'])} adults)")
-        print(f"[step30e]   TRIGGER — SRK diversity:")
-        print(f"[step30e]      observed = {int(r['obs_distinct_SRK_alleles'])}/32 alleles  |  "
-              f"Phase 5 predicted = {r['pred_phase5_distinct_SRK_alleles']:.1f}  "
+        print(f"[step30e] {r['locationCode']} (n={int(r['n_functional_carriers'])} adults)")
+        print(f"[step30e] TRIGGER — SRK diversity:")
+        print(f"[step30e] observed = {int(r['obs_distinct_SRK_alleles'])}/32 alleles | "
+              f"predicted = {r['pred_phase5_distinct_SRK_alleles']:.1f} "
               f"[{r['pred_phase5_distinct_SRK_alleles_lo']:.1f}, "
-              f"{r['pred_phase5_distinct_SRK_alleles_hi']:.1f}]  |  "
+              f"{r['pred_phase5_distinct_SRK_alleles_hi']:.1f}] | "
               f"gap = {r['diversity_gap_obs_minus_pred']:+.1f}")
-        print(f"[step30e]   DOWNSTREAM — pollen compatibility:")
-        print(f"[step30e]      observed = {r['pcompat_observed_full_mean']:.3f}  |  "
-              f"Phase 5 pred (P1) = {r['pcompat_pred_P1_full_mean']:.3f}  |  "
+        print(f"[step30e] DOWNSTREAM — pollen compatibility:")
+        print(f"[step30e] observed = {r['pcompat_observed_full_mean']:.3f} | "
+              f" pred (P1) = {r['pcompat_pred_P1_full_mean']:.3f} | "
               f"gap = {gap:+.3f}")
-        print(f"[step30e]   DECOMPOSITION — which factor explains the gap?")
-        print(f"[step30e]      within-class allele spread   {r['driver_swap_within_class_fraction'] * 100:+6.1f}%   "
-              f"(swap →  {r['pcompat_swap_within_class_mean']:.3f})")
-        print(f"[step30e]      Class I/II balance           {r['driver_swap_class_bal_fraction'] * 100:+6.1f}%   "
-              f"(swap →  {r['pcompat_swap_class_bal_mean']:.3f})")
-        print(f"[step30e]      zygosity composition         {r['driver_swap_zygosity_fraction'] * 100:+6.1f}%   "
-              f"(swap →  {r['pcompat_swap_zygosity_mean']:.3f})")
+        print(f"[step30e] DECOMPOSITION — which factor explains the gap?")
+        print(f"[step30e] within-class allele spread {r['driver_swap_within_class_fraction'] * 100:+6.1f}% "
+              f"(swap → {r['pcompat_swap_within_class_mean']:.3f})")
+        print(f"[step30e] Class I/II balance {r['driver_swap_class_bal_fraction'] * 100:+6.1f}% "
+              f"(swap → {r['pcompat_swap_class_bal_mean']:.3f})")
+        print(f"[step30e] zygosity composition {r['driver_swap_zygosity_fraction'] * 100:+6.1f}% "
+              f"(swap → {r['pcompat_swap_zygosity_mean']:.3f})")
 
 
 if __name__ == "__main__":

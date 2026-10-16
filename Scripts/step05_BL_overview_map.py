@@ -1,6 +1,6 @@
 """Step 30h / Phase V — BL overview map on the Snake River Plain.
 
-Phase 5 § A.4.5. Simple geographic map: one dot per population,
+§ A.4.5. Simple geographic map: one dot per population,
 coloured by new BL, sized by `n_fert_total`, with the new population
 IDs labeled. Thin BL convex-hull outlines reinforce the cluster
 structure.
@@ -18,16 +18,16 @@ import numpy as np
 import pandas as pd
 from scipy.spatial import ConvexHull
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
 # Okabe-Ito palette, extended for 5 BLs
 BL_COLORS = {
-    "BL1": "#0072B2",   # blue
-    "BL2": "#009E73",   # teal green
-    "BL3": "#E69F00",   # orange
-    "BL4": "#D55E00",   # vermillion
-    "BL5": "#CC79A7",   # pink
+    "BL1": "#0072B2", # blue
+    "BL2": "#009E73", # teal green
+    "BL3": "#E69F00", # orange
+    "BL4": "#D55E00", # vermillion
+    "BL5": "#CC79A7", # pink
 }
 
 
@@ -71,7 +71,7 @@ def main() -> None:
         ax.scatter(grp["lon"], grp["lat"], s=s, c=color,
                    alpha=0.85, edgecolor="white", linewidth=0.7,
                    zorder=3,
-                   label=f"{bl}  (n = {int(row['n_populations'])}, "
+                   label=f"{bl} (n = {int(row['n_populations'])}, "
                          f"{row['convex_hull_area_km2']:.0f} km²)")
 
     # Label populations (only when there's room — skip the densest BL5)
@@ -84,7 +84,7 @@ def main() -> None:
     ax.set_xlabel("Longitude (°)")
     ax.set_ylabel("Latitude (°)")
     ax.set_title(
-        "Phase 5 populations across the Snake River Plain — "
+        "populations across the Snake River Plain — "
         "new BL framework (Ward's D2, k = 5, silhouette = 0.732)\n"
         "Dot size ∝ total N_fertile across 2025 + 2026; "
         "dashed hulls = BL convex outlines.",

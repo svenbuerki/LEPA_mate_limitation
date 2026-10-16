@@ -1,6 +1,6 @@
 """Step 30h / Phase IV — predictions in the fecundation style, per year.
 
-Phase 5 § A.4.5. Rebuilt to match `step30_A_prediction_fecundation.png`:
+§ A.4.5. Rebuilt to match `step30_A_prediction_fecundation.png`:
 dots + 95 % CI error bars, traffic-light background bands (pollen
 compatibility only), species-mean reference line, BL-coloured points,
 BL label on the right in bold BL colour, one row per population,
@@ -26,7 +26,7 @@ from matplotlib.patches import Patch
 
 from srk_bl_constants import BL_COLORS, make_location_label
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
 # BL_ORDER for the NEW population-based BL framework = BL1 → BL5
@@ -34,12 +34,12 @@ FIGURES = Path("figures")
 NEW_BL_ORDER = ["BL1", "BL2", "BL3", "BL4", "BL5"]
 
 # Traffic-light thresholds — same as step30_A_prediction_fecundation
-T_FAILED_HI     = 0.259
+T_FAILED_HI = 0.259
 T_STRUGGLING_HI = 0.519
 SPECIES_MEAN_PC = 0.778
-X_UPPER_PC      = 1.0
+X_UPPER_PC = 1.0
 
-K_FG_CEILING    = 32  # SRK diversity species-wide ceiling
+K_FG_CEILING = 32 # SRK diversity species-wide ceiling
 
 
 def population_labels() -> dict[int, str]:
@@ -67,7 +67,7 @@ def population_labels() -> dict[int, str]:
 def plot_metric_year(pred_y: pd.DataFrame,
                        labels: dict[int, str],
                        year: int,
-                       metric: str,                 # "pcompat" | "srk_diversity"
+                       metric: str, # "pcompat" | "srk_diversity"
                        x_label: str,
                        suptitle: str,
                        x_upper: float,
@@ -121,7 +121,7 @@ def plot_metric_year(pred_y: pd.DataFrame,
         ax.scatter(means, y, s=sizes, c=colour, edgecolor="white",
                    linewidth=0.6, zorder=2)
 
-        # Row labels: 'P{N}  ({EO_locID})  (K demes, N adults)'
+        # Row labels: 'P{N} ({EO_locID}) (K demes, N adults)'
         row_lbls = []
         for _, r in sub.iterrows():
             pid = int(r["populationID"])
@@ -129,7 +129,7 @@ def plot_metric_year(pred_y: pd.DataFrame,
             k = int(r["n_demes"])
             n = int(r["N_fertile_total"])
             row_lbls.append(
-                f"P{pid:>2}  ({loc_lbl})  "
+                f"P{pid:>2} ({loc_lbl}) "
                 f"({k} deme{'s' if k != 1 else ''}, {n} adults)"
             )
         ax.set_yticks(y)
@@ -150,19 +150,19 @@ def plot_metric_year(pred_y: pd.DataFrame,
     if traffic_light:
         legend_handles += [
             Patch(facecolor="#b2182b", alpha=0.35,
-                  label=f"failed  (< {T_FAILED_HI:.3f})"),
+                  label=f"failed (< {T_FAILED_HI:.3f})"),
             Patch(facecolor="#e08214", alpha=0.35,
-                  label=f"struggling  "
+                  label=f"struggling "
                         f"({T_FAILED_HI:.3f}–{T_STRUGGLING_HI:.3f})"),
             Patch(facecolor="#1b7837", alpha=0.35,
-                  label=f"sustainable  (≥ {T_STRUGGLING_HI:.3f})"),
+                  label=f"sustainable (≥ {T_STRUGGLING_HI:.3f})"),
         ]
     if species_mean_x is not None:
         tag = ("sporophytic species mean"
                if traffic_light else "species-wide ceiling")
         legend_handles.append(
             Line2D([0], [0], color="#1b7837", ls=":", lw=1.2,
-                   label=f"{tag}  ({species_mean_x:.3f})"),
+                   label=f"{tag} ({species_mean_x:.3f})"),
         )
     if legend_handles:
         axes[0].legend(handles=legend_handles, loc="upper left",
@@ -314,7 +314,7 @@ def plot_metric_both_years(pred: pd.DataFrame,
                 k26 = int(p26.loc[pid, "n_demes"])
                 n26 = int(p26.loc[pid, "N_fertile_total"])
                 parts.append(f"2026 {k26}d/{n26}")
-            right_lbls.append("  ·  ".join(parts))
+            right_lbls.append(" · ".join(parts))
         ax2.set_yticklabels(right_lbls, fontsize=7.5, color="#444")
         ax2.tick_params(axis="y", length=0, pad=2)
         for s in ("top", "right", "left"):
@@ -346,18 +346,18 @@ def plot_metric_both_years(pred: pd.DataFrame,
     if traffic_light:
         legend_handles += [
             Patch(facecolor="#b2182b", alpha=0.35,
-                  label=f"failed  (< {T_FAILED_HI:.3f})"),
+                  label=f"failed (< {T_FAILED_HI:.3f})"),
             Patch(facecolor="#e08214", alpha=0.35,
                   label=f"struggling"),
             Patch(facecolor="#1b7837", alpha=0.35,
-                  label=f"sustainable  (≥ {T_STRUGGLING_HI:.3f})"),
+                  label=f"sustainable (≥ {T_STRUGGLING_HI:.3f})"),
         ]
     if species_mean_x is not None:
         tag = ("sporophytic species mean"
                if traffic_light else "species-wide ceiling")
         legend_handles.append(
             Line2D([0], [0], color="#1b7837", ls=":", lw=1.2,
-                   label=f"{tag}  ({species_mean_x:.3f})"),
+                   label=f"{tag} ({species_mean_x:.3f})"),
         )
     fig.legend(handles=legend_handles,
                 loc="upper center",
@@ -383,7 +383,7 @@ def main() -> None:
     plot_metric_both_years(
         pred, labels,
         metric="srk_diversity",
-        x_label=("Predicted distinct SRK alleles at the population  "
+        x_label=("Predicted distinct SRK alleles at the population "
                   "(mean; 95 % credible interval)"),
         suptitle=("Predicted SRK allele diversity — Snake River Plain "
                    "populations — 2025 (open) vs 2026 (filled)"),
@@ -398,7 +398,7 @@ def main() -> None:
     plot_metric_both_years(
         pred, labels,
         metric="pcompat",
-        x_label=("Predicted pollen compatibility under random mating  "
+        x_label=("Predicted pollen compatibility under random mating "
                   "(mean per population; 95 % credible interval)"),
         suptitle=("Predicted per-mother pollen compatibility — Snake "
                    "River Plain populations — 2025 (open) vs 2026 (filled)"),

@@ -1,6 +1,6 @@
 """Step 30h / Phase II — landscape + within-population fragmentation metrics.
 
-Phase 5 § A.4.5. The main fragmentation signal in LEPA lives at the
+§ A.4.5. The main fragmentation signal in LEPA lives at the
 LANDSCAPE scale (between populations), not within a population at
 the deme level. This script computes the two layers of fragmentation
 metrics that feed the BL definition:
@@ -19,8 +19,8 @@ WITHIN-POPULATION (deme-level) — secondary diagnostic
 
 Reads
 -----
-tables/step30h_cluster_assignments.tsv       (Phase I)
-tables/step30h_population_distances.tsv      (Phase I)
+tables/step30h_cluster_assignments.tsv (Phase I)
+tables/step30h_population_distances.tsv (Phase I)
 tables/step29a_demes_per_population_year.tsv
 tables/step29a_population_crosswalk.tsv
 
@@ -142,7 +142,7 @@ def per_bl_landscape(cents: pd.DataFrame,
             pts = sub[["lon", "lat"]].to_numpy()
             try:
                 hull = ConvexHull(pts)
-                deg2_area = hull.volume   # 2D area in deg^2
+                deg2_area = hull.volume # 2D area in deg^2
                 # Approx km^2 at this latitude
                 mean_lat = np.deg2rad(float(sub["lat"].mean()))
                 km_per_deg_lat = 110.574
@@ -152,21 +152,21 @@ def per_bl_landscape(cents: pd.DataFrame,
                 pass
 
         row = {
-            "BL_cluster_id":            int(cl_id),
-            "n_populations":            int(n_pop),
-            "total_N_fert":             int(sub["n_fert_total"].sum()),
-            "centroid_lat":             float(sub["lat"].mean()),
-            "centroid_lon":             float(sub["lon"].mean()),
-            "convex_hull_area_km2":     round(hull_area_km2, 3)
+            "BL_cluster_id": int(cl_id),
+            "n_populations": int(n_pop),
+            "total_N_fert": int(sub["n_fert_total"].sum()),
+            "centroid_lat": float(sub["lat"].mean()),
+            "centroid_lon": float(sub["lon"].mean()),
+            "convex_hull_area_km2": round(hull_area_km2, 3)
                                           if hull_area_km2 == hull_area_km2
                                           else float("nan"),
-            "mean_within_BL_dist_m":    (float(np.mean(d_within))
+            "mean_within_BL_dist_m": (float(np.mean(d_within))
                                           if len(d_within) else float("nan")),
-            "median_within_BL_dist_m":  (float(np.median(d_within))
+            "median_within_BL_dist_m": (float(np.median(d_within))
                                           if len(d_within) else float("nan")),
-            "max_within_BL_dist_m":     (float(np.max(d_within))
+            "max_within_BL_dist_m": (float(np.max(d_within))
                                           if len(d_within) else float("nan")),
-            "min_between_BL_dist_m":    min_between,
+            "min_between_BL_dist_m": min_between,
         }
         # Within-BL connectivity at thresholds
         if len(d_within):
@@ -196,7 +196,7 @@ def within_population_deme_frag(demes_py: pd.DataFrame,
     demeID) with `component_N_fertile` but no coordinates — we recover
     deme centroids by re-running the 50 m connected-component logic
     on the crosswalk."""
-    from srk_bl_constants import make_location_label  # noqa: F401  (dependency check)
+    from srk_bl_constants import make_location_label # noqa: F401 (dependency check)
     # Reuse the connected_components function from step29a without
     # importing matplotlib etc.
     from step01_populations import connected_components, DEME_RADIUS_M
@@ -229,16 +229,16 @@ def within_population_deme_frag(demes_py: pd.DataFrame,
             # upper triangle only
             iu = np.triu_indices(n_demes, k=1)
             mean_d = float(np.mean(D[iu]))
-            max_d  = float(np.max(D[iu]))
+            max_d = float(np.max(D[iu]))
         else:
             mean_d = 0.0
-            max_d  = 0.0
+            max_d = 0.0
         rows.append({
-            "populationID":            int(pop_id),
-            "year":                    int(yr),
-            "n_demes":                 n_demes,
-            "mean_inter_deme_dist_m":  round(mean_d, 1),
-            "max_inter_deme_dist_m":   round(max_d, 1),
+            "populationID": int(pop_id),
+            "year": int(yr),
+            "n_demes": n_demes,
+            "mean_inter_deme_dist_m": round(mean_d, 1),
+            "max_inter_deme_dist_m": round(max_d, 1),
         })
     return pd.DataFrame(rows)
 

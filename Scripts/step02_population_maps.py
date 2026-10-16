@@ -29,13 +29,13 @@ from scipy.spatial import ConvexHull
 
 from srk_bl_constants import BL_COLORS, BL_ORDER, locationCode_to_bl, make_location_label
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
 OCC_COLORS = {
-    "both_years": "#5e3c99",   # purple
-    "2025_only":  "#0072B2",   # Okabe-Ito blue
-    "2026_only":  "#D55E00",   # Okabe-Ito vermillion
+    "both_years": "#5e3c99", # purple
+    "2025_only": "#0072B2", # Okabe-Ito blue
+    "2026_only": "#D55E00", # Okabe-Ito vermillion
 }
 
 
@@ -78,7 +78,7 @@ def plot_overview(pop_summary: pd.DataFrame,
     ax.set_xlabel("Longitude (°)")
     ax.set_ylabel("Latitude (°)")
     ax.set_title(
-        "Phase 5 populations across the Snake River Plain — "
+        "populations across the Snake River Plain — "
         "2025 + 2026 above-ground occupancy\n"
         "One dot per population; size ∝ total n_fertile across both "
         "years; colour = occupancy pattern.",
@@ -124,7 +124,7 @@ def _plot_one_population(ax: plt.Axes,
     pts = events_pop[["lat", "lon"]].to_numpy()
     if len(pts) >= 3:
         try:
-            hull = ConvexHull(pts[:, [1, 0]])  # lon,lat
+            hull = ConvexHull(pts[:, [1, 0]]) # lon,lat
             poly = pts[hull.vertices][:, [1, 0]]
             poly = np.vstack([poly, poly[:1]])
             ax.plot(poly[:, 0], poly[:, 1], ":",
@@ -178,10 +178,10 @@ def plot_candidate_panels(candidates: pd.DataFrame,
             else:
                 labels.append(f"locID_{lid}")
         location_label = ", ".join(labels)
-        title = (f"populationID = {pop_id}  {role}\n"
-                 f"locations: {location_label}  |  "
-                 f"N_fert 2025/2026 = {info['n_fertile_2025']}/{info['n_fertile_2026']}  "
-                 f"|  slickspots {info['n_slickspots']} "
+        title = (f"populationID = {pop_id} {role}\n"
+                 f"locations: {location_label} | "
+                 f"N_fert 2025/2026 = {info['n_fertile_2025']}/{info['n_fertile_2026']} "
+                 f"| slickspots {info['n_slickspots']} "
                  f"(both-years {info['n_slickspots_both_years']})")
         _plot_one_population(ax, events_pop, slick_pop, title)
     # hide any extra axes
@@ -206,9 +206,9 @@ def plot_candidate_panels(candidates: pd.DataFrame,
 def main() -> None:
     pop_summary = pd.read_csv(TABLES / "step29a_population_summary.tsv",
                                sep="\t", encoding="utf-8-sig")
-    slickspots  = pd.read_csv(TABLES / "step29a_slickspot_summary.tsv",
+    slickspots = pd.read_csv(TABLES / "step29a_slickspot_summary.tsv",
                                sep="\t", encoding="utf-8-sig")
-    crosswalk   = pd.read_csv(TABLES / "step29a_population_crosswalk.tsv",
+    crosswalk = pd.read_csv(TABLES / "step29a_population_crosswalk.tsv",
                                sep="\t", encoding="utf-8-sig")
 
     # ---- Overview ----

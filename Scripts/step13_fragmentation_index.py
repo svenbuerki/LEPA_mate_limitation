@@ -27,7 +27,7 @@ pool, 1 = she has no reachable donor at all.
 
 Location scale (per location)
 -----------------------------
-    connected_share_50m         (from step29_location_connectivity.tsv)
+    connected_share_50m (from step29_location_connectivity.tsv)
     largest_component_share_50m (from same)
 
 At the location level, fragmentation is the fraction of adults NOT in
@@ -42,8 +42,8 @@ per-location F_location becomes an explicit location-level covariate.
 
 Outputs
 -------
-    tables/Phase5/step30_A_fragmentation_per_event.tsv
-    tables/Phase5/step30_A_fragmentation_per_location.tsv
+    tables//step30_A_fragmentation_per_event.tsv
+    tables//step30_A_fragmentation_per_location.tsv
     figures/step30_A_fragmentation_index.png/pdf
 """
 from __future__ import annotations
@@ -64,7 +64,7 @@ from step17_seed_sampling_per_mother import (
 DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
 
-CONN_TSV  = DEFAULT_TABLES / "step29_location_connectivity.tsv"
+CONN_TSV = DEFAULT_TABLES / "step29_location_connectivity.tsv"
 EVENT_TSV = DEFAULT_TABLES / "step28_events_spatial_neighborhood.tsv"
 
 R_PRIMARY = 50
@@ -74,8 +74,8 @@ R_PRIMARY = 50
 # N_ceiling_plants such that PLOIDY * (N-1) >= K_SPECIES_FG, i.e.
 # N >= K_SPECIES_FG / PLOIDY + 1 = 9. Rounded to 8 (the point at which
 # PLOIDY * N = K_SPECIES_FG copies excluding the mother).
-N_FLOOR_SINGLE = 1                                # single-plant SI floor
-N_CEILING_SPECIES = K_SPECIES_FG // PLOIDY        # = 8 under tetraploid
+N_FLOOR_SINGLE = 1 # single-plant SI floor
+N_CEILING_SPECIES = K_SPECIES_FG // PLOIDY # = 8 under tetraploid
 
 
 def build_event_table() -> pd.DataFrame:
@@ -88,7 +88,7 @@ def build_event_table() -> pd.DataFrame:
     N_reach_col = f"N_compatible_spatial_{R_PRIMARY}m"
 
     df = ev.merge(loc_meta, on="locationID", how="left")
-    df["K_spatial_50m"] = df[K_col].astype(int)          # PLOIDY-aware
+    df["K_spatial_50m"] = df[K_col].astype(int) # PLOIDY-aware
     # N_reachable_50m = donor plant count in the 50 m neighbourhood
     # (excluding the mother's own N_fertile-1). This is the axis the
     # A.7 figure now uses so readers see plants, not allele copies.
@@ -195,7 +195,7 @@ def plot_event_K_by_location(ev_df: pd.DataFrame, loc_df: pd.DataFrame,
                            linewidth=0.4, alpha=0.75, zorder=3)
         labels = [
             f"{make_location_label(r['locationCode'], r['locationID'])}"
-            f"   (events = {int(r['n_events'])}, "
+            f" (events = {int(r['n_events'])}, "
             f"adults = {int(r['total_n_fertile'])})"
             for _, r in sub_locs.iterrows()
         ]
@@ -213,9 +213,9 @@ def plot_event_K_by_location(ev_df: pd.DataFrame, loc_df: pd.DataFrame,
         ax.spines["right"].set_visible(False)
 
     axes[-1].set_xlabel(
-        "Pollen-donor plants reachable within 50 m per event  "
+        "Pollen-donor plants reachable within 50 m per event "
         "(N_reachable_50m = Σ N_fertile in events within 50 m − 1)\n"
-        f"Red dotted: N = {N_FLOOR_SINGLE} single-plant SI floor  ·  "
+        f"Red dotted: N = {N_FLOOR_SINGLE} single-plant SI floor · "
         f"Grey dashed: N = {N_CEILING_SPECIES} plants = {PLOIDY * N_CEILING_SPECIES} "
         f"tetraploid allele copies, the coupon-collector floor for the 32-Fg "
         f"species pool",
@@ -240,21 +240,21 @@ def main() -> None:
     ev = build_event_table()
     out_ev = DEFAULT_TABLES / "step30_A_fragmentation_per_event.tsv"
     ev.to_csv(out_ev, sep="\t", index=False)
-    print(f"[step30b] Wrote {out_ev}  ({len(ev)} events)")
+    print(f"[step30b] Wrote {out_ev} ({len(ev)} events)")
 
     loc = build_location_table(ev)
     out_loc = DEFAULT_TABLES / "step30_A_fragmentation_per_location.tsv"
     loc.to_csv(out_loc, sep="\t", index=False)
-    print(f"[step30b] Wrote {out_loc}  ({len(loc)} locations)")
+    print(f"[step30b] Wrote {out_loc} ({len(loc)} locations)")
 
     print("[step30b] Fragmentation summary (50 m primary):")
-    print(f"  Events with ≥ 1 neighbour within 50 m : "
+    print(f" Events with ≥ 1 neighbour within 50 m : "
           f"{int(ev['has_neighbour_50m'].sum())} / {len(ev)}")
-    print(f"  Locations with F_location ≥ 0.5      : "
+    print(f" Locations with F_location ≥ 0.5 : "
           f"{int((loc['F_location'] >= 0.5).sum())} / {len(loc)}")
-    print(f"  Median event-scale F_event           : "
+    print(f" Median event-scale F_event : "
           f"{ev['F_event'].median():.3f}")
-    print(f"  Median location-scale F_location     : "
+    print(f" Median location-scale F_location : "
           f"{loc['F_location'].median():.3f}")
 
     DEFAULT_FIGURES.mkdir(parents=True, exist_ok=True)

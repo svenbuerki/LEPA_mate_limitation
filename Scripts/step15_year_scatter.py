@@ -17,11 +17,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
-STABLE_COLOR   = "#5e3c99"  # purple — same as both-years occupancy
-UNSTABLE_COLOR = "#D55E00"  # vermillion
+STABLE_COLOR = "#5e3c99" # purple — same as both-years occupancy
+UNSTABLE_COLOR = "#D55E00" # vermillion
 
 
 def main() -> None:
@@ -42,9 +42,9 @@ def main() -> None:
     )
 
     for i, (ax, metric, lo_col, hi_col, label) in enumerate([
-        (axes[0], "diversity", "diversity_CI_overlap",   None,
+        (axes[0], "diversity", "diversity_CI_overlap", None,
             "Predicted distinct SRK alleles"),
-        (axes[1], "pcompat",   "pcompat_CI_overlap",     None,
+        (axes[1], "pcompat", "pcompat_CI_overlap", None,
             "Predicted pollen compatibility"),
     ]):
         x = comp[f"pred_{metric}_2025"]
@@ -88,7 +88,7 @@ def main() -> None:
         ax.legend(loc="lower right", fontsize=9, frameon=True)
 
     fig.suptitle(
-        "Phase 5 across-year prediction comparison per population "
+        " across-year prediction comparison per population "
         f"(both-year populations only; n = {len(comp)})\n"
         "Dot size ∝ total N_fertile. Purple = both 95 % CIs overlap "
         "(stable). Vermillion = CI mismatch (prediction shifted).",

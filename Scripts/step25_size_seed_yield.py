@@ -1,8 +1,8 @@
-"""Step 30i — size → seed-yield test at the Phase 5 **population** level.
+"""Step 30i — size → seed-yield test at the **population** level.
 
 Adapted from the Field-work protocol's `size_seed_model.py` / `size_matched_
 comparison.py` / `per_eo_trends.py` family (ported from EO level to the
-Phase 5 populationID level, 2026-10-07).
+populationID level, 2026-10-07).
 
 Goal
 ----
@@ -21,19 +21,19 @@ The EO-level version applied a `min-n = 15 mother plants` threshold that
 discarded small populations. **Small populations are the ones we most
 want to see** (user instruction 2026-10-07): they are where drift is
 expected to be strongest and where the Phase A P_compat prediction is
-most informative. This Phase 5 version **keeps every population with
+most informative. This version **keeps every population with
 ≥ 2 plants** (minimum for a CI) and **does not discard any**.
 
 Pipeline
 --------
-STAGE 1  Predictor selection — 10-fold cross-validated RMSE on log10
+STAGE 1 Predictor selection — 10-fold cross-validated RMSE on log10
          seed yield among candidate allometries:
              height / crown / area (ellipse) / crown + height
          Winner = lowest mean CV-RMSE.
-STAGE 2  Expectation model — refit the winner on all plants (both
+STAGE 2 Expectation model — refit the winner on all plants (both
          years pooled); fitted value = expected log10(yield) for a
          plant of that size. Residual = observed − expected.
-STAGE 3  Below-expectation detection per (populationID, year):
+STAGE 3 Below-expectation detection per (populationID, year):
              - mean residual = log10 fold-of-expectation (0 = on curve)
              - 95 % CI from the per-population residual spread
              - one-sample t-test (where n ≥ 3) or Wilcoxon (n ≥ 6)
@@ -41,14 +41,14 @@ STAGE 3  Below-expectation detection per (populationID, year):
                combinations with n ≥ 3
              - Flag "below expectation" (seed shortfall) if FDR-sig and
                mean_resid < 0
-STAGE 4  Outputs:
-             tables/Phase5/step30i_size_seed_population_strata.tsv
+STAGE 4 Outputs:
+             tables//step30i_size_seed_population_strata.tsv
              figures/step30i_size_seed_population.png / .pdf
 
 Conventions
 -----------
 BL colour palette + BL ordering (BL1 → BL5, area DESC → connectivity
-DESC) match the rest of Phase 5 — [[feedback_bl_order_area_first]] and
+DESC) match the rest of — [[feedback_bl_order_area_first]] and
 the new population-level BL framework (§ Bottleneck Lineages of the
 compact doc). Figures follow the project convention: **2025 = open
 circle, 2026 = filled circle**, same BL colour, per-population row.
@@ -68,7 +68,7 @@ from statsmodels.stats.multitest import fdrcorrection
 
 from srk_bl_constants import BL_COLORS
 
-TABLES  = Path("tables")
+TABLES = Path("tables")
 FIGURES = Path("figures")
 
 DB_PATH = Path(
@@ -78,9 +78,9 @@ DB_PATH = Path(
 
 NEW_BL_ORDER = ["BL1", "BL2", "BL3", "BL4", "BL5"]
 CANDIDATES = {
-    "height":       "logy ~ logh",
-    "crown":        "logy ~ logc",
-    "area":         "logy ~ logarea",
+    "height": "logy ~ logh",
+    "crown": "logy ~ logc",
+    "area": "logy ~ logarea",
     "crown+height": "logy ~ logc + logh",
 }
 N_FOLDS = 10
@@ -110,13 +110,13 @@ def load_occurrences() -> pd.DataFrame:
             SELECT occurrenceID,
                    eventID,
                    occurrenceDate,
-                   occurrenceHeight    AS h,
+                   occurrenceHeight AS h,
                    occurrenceCrownSize AS c,
-                   seedQuantityTotal   AS y
+                   seedQuantityTotal AS y
             FROM vOccurrenceTraits
-            WHERE occurrenceHeight    > 0
+            WHERE occurrenceHeight > 0
               AND occurrenceCrownSize > 0
-              AND seedQuantityTotal   > 0
+              AND seedQuantityTotal > 0
             """,
             con,
         )
@@ -196,9 +196,9 @@ def per_population_year_test(df: pd.DataFrame) -> pd.DataFrame:
             p_t = float(p_t)
         else:
             mean = float(r.mean()) if n >= 1 else np.nan
-            ci   = np.nan
-            t    = np.nan
-            p_t  = np.nan
+            ci = np.nan
+            t = np.nan
+            p_t = np.nan
         if n >= 6:
             try:
                 _, p_w = stats.wilcoxon(r)
@@ -255,11 +255,11 @@ def summarise_per_population(res: pd.DataFrame) -> pd.DataFrame:
     EITHER year is flagged mate-limited the population is flagged).
     Useful as the one-shot 'which populations to prioritize' table."""
     PRIORITY = {
-        "mate_limited":            0,  # highest priority
-        "candidate_mate_limited":  1,
-        "insufficient_data":       2,
-        "buffered":                3,
-        "buffered_surplus":        4,  # lowest priority
+        "mate_limited": 0, # highest priority
+        "candidate_mate_limited": 1,
+        "insufficient_data": 2,
+        "buffered": 3,
+        "buffered_surplus": 4, # lowest priority
     }
     rows = []
     for pid, g in res.groupby("populationID"):
@@ -303,7 +303,7 @@ def plot_species_calibration(df: pd.DataFrame, gm,
                                best: str, cv_table: pd.DataFrame,
                                out_png: Path, out_pdf: Path) -> None:
     """Panel A of the original Field-work-protocol figure, ported to
-    the Phase 5 population frame: observed seed yield vs the
+    the population frame: observed seed yield vs the
     species-wide allometric expectation. One dot per plant, coloured
     by its population's BL. **This is the 'across-species' half of
     the test** — the species-wide curve that every per-population
@@ -322,48 +322,48 @@ def plot_species_calibration(df: pd.DataFrame, gm,
         axL.scatter(10 ** g["expected"], g["y"],
                      s=16, alpha=0.55, color=col,
                      edgecolor="white", linewidth=0.3,
-                     label=f"{bl}  (n = {len(g)} plants)")
+                     label=f"{bl} (n = {len(g)} plants)")
     lim_lo = max(min(observed.min(), expected.min()) * 0.6, 0.3)
     lim_hi = max(observed.max(), expected.max()) * 1.4
 
     # Species curve = 1:1 — black dashed, prominent
     axL.plot([lim_lo, lim_hi], [lim_lo, lim_hi],
               color="black", linestyle="--", lw=1.6, alpha=0.95,
-              label="y = x · on the species curve  (fold = 1)",
+              label="y = x · on the species curve (fold = 1)",
               zorder=1.5)
     # ½× — SHORTFALL side (observed is HALF of expected): red,
     # dash-dot. Sits BELOW the 1:1 line.
     axL.plot([lim_lo, lim_hi], [lim_lo * 0.5, lim_hi * 0.5],
               color="#b2182b", linestyle=(0, (5, 2, 1, 2)), lw=1.3,
               alpha=0.85,
-              label="y = x / 2 · ½ × expectation  (shortfall band)",
+              label="y = x / 2 · ½ × expectation (shortfall band)",
               zorder=1.4)
     # 2× — SURPLUS side (observed is DOUBLE of expected): green,
     # densely dotted. Sits ABOVE the 1:1 line.
     axL.plot([lim_lo, lim_hi], [lim_lo * 2.0, lim_hi * 2.0],
               color="#1b7837", linestyle=(0, (1, 2)), lw=1.3,
               alpha=0.85,
-              label="y = 2 x · 2 × expectation  (surplus band)",
+              label="y = 2 x · 2 × expectation (surplus band)",
               zorder=1.4)
 
     # End-of-line labels at the right edge so the three lines are
     # self-explanatory even without the legend.
     for yfrac, text, col in [
-        (lim_hi,       "y = x",      "black"),
-        (lim_hi * 0.5, "y = x / 2",  "#b2182b"),
-        (lim_hi * 2.0, "y = 2x",     "#1b7837"),
+        (lim_hi, "y = x", "black"),
+        (lim_hi * 0.5, "y = x / 2", "#b2182b"),
+        (lim_hi * 2.0, "y = 2x", "#1b7837"),
     ]:
         if yfrac <= lim_hi * 1.05 and yfrac >= lim_lo:
-            axL.text(lim_hi * 0.96, yfrac, "  " + text,
+            axL.text(lim_hi * 0.96, yfrac, " " + text,
                       color=col, fontsize=9, fontweight="bold",
                       ha="left", va="center",
                       bbox=dict(facecolor="white", edgecolor="none",
                                  alpha=0.85, pad=1.0))
     axL.set_xscale("log"); axL.set_yscale("log")
     axL.set_xlim(lim_lo, lim_hi); axL.set_ylim(lim_lo, lim_hi)
-    axL.set_xlabel("Expected seed yield per plant  (from the species-wide "
+    axL.set_xlabel("Expected seed yield per plant (from the species-wide "
                     f"{best} model, log scale)", fontsize=10)
-    axL.set_ylabel("Observed seed yield per plant  (log scale)", fontsize=10)
+    axL.set_ylabel("Observed seed yield per plant (log scale)", fontsize=10)
     axL.legend(loc="lower right", fontsize=8, frameon=True, ncol=1)
     axL.spines["top"].set_visible(False); axL.spines["right"].set_visible(False)
     axL.grid(True, which="both", alpha=0.3)
@@ -375,7 +375,7 @@ def plot_species_calibration(df: pd.DataFrame, gm,
               transform=axL.transAxes, fontsize=11.5, va="top", ha="left",
               fontweight="bold")
     axL.text(0.02, 0.945,
-              f"R² = {gm.rsquared:.2f}  ·  one dot per plant  "
+              f"R² = {gm.rsquared:.2f} · one dot per plant "
               f"(n = {len(df)} plants, {df['populationID'].nunique()} "
               f"populations, {df['year'].nunique()} years)",
               transform=axL.transAxes, fontsize=8.5, va="top", ha="left",
@@ -388,23 +388,23 @@ def plot_species_calibration(df: pd.DataFrame, gm,
 
     # Panel label at the very top
     axR.text(0.02, 0.985,
-              "B. Model build  —  how the species-wide expectation is set",
+              "B. Model build — how the species-wide expectation is set",
               transform=axR.transAxes, fontsize=11.5, va="top", ha="left",
               fontweight="bold")
 
     # --- TOP block: STAGE 1 predictor-selection CV table -----------
     axR.text(0.02, 0.90,
-              "STAGE 1  ·  predictor selection (10-fold cross-validation)",
+              "STAGE 1 · predictor selection (10-fold cross-validation)",
               transform=axR.transAxes, fontsize=10.5, va="top", ha="left",
               fontweight="bold")
     axR.text(0.02, 0.855,
-              "Lower CV-RMSE = better out-of-sample fit  →  wins Stage 2.",
+              "Lower CV-RMSE = better out-of-sample fit → wins Stage 2.",
               transform=axR.transAxes, fontsize=8.5, va="top", ha="left",
               color="#555")
     cv_hdr = f"{'predictor':<13}{'CV-RMSE':>9}{'±sd':>7}{'R²_in':>7}{'AIC':>9}"
     cv_lines = [cv_hdr]
     for _, r in cv_table.iterrows():
-        marker = "  ★" if r["predictor"] == best else "   "
+        marker = " ★" if r["predictor"] == best else " "
         cv_lines.append(
             f"{r['predictor']:<13}"
             f"{r['cv_rmse']:>9.3f}"
@@ -416,7 +416,7 @@ def plot_species_calibration(df: pd.DataFrame, gm,
     axR.text(0.02, 0.80, "\n".join(cv_lines), transform=axR.transAxes,
               fontsize=9.5, va="top", ha="left", family="monospace")
     axR.text(0.02, 0.53,
-              f"→  Winner: {best}  (★)",
+              f"→ Winner: {best} (★)",
               transform=axR.transAxes, fontsize=10, va="top", ha="left",
               color="#1b7837", fontweight="bold")
 
@@ -425,7 +425,7 @@ def plot_species_calibration(df: pd.DataFrame, gm,
 
     # --- BOTTOM block: STAGE 2 refitted expectation model ----------
     axR.text(0.02, 0.42,
-              "STAGE 2  ·  refitted expectation model (all plants pooled)",
+              "STAGE 2 · refitted expectation model (all plants pooled)",
               transform=axR.transAxes, fontsize=10.5, va="top", ha="left",
               fontweight="bold")
     axR.text(0.02, 0.375,
@@ -434,15 +434,15 @@ def plot_species_calibration(df: pd.DataFrame, gm,
               transform=axR.transAxes, fontsize=8.5, va="top", ha="left",
               color="#555")
 
-    coef_bits = ",   ".join(
+    coef_bits = ", ".join(
         f"{k} = {v:+.3f}" for k, v in gm.params.to_dict().items()
     )
     sd_log = float(np.sqrt(gm.scale))
     stats_lines = [
-        f"Formula       :  log₁₀(yield) ~ {CANDIDATES[best].split('~',1)[1].strip()}",
-        f"Coefficients  :  {coef_bits}",
-        f"R² (in sample):  {gm.rsquared:.3f}",
-        f"Residual SD   :  {sd_log:.3f} log₁₀   (≈ × / ÷ {10**sd_log:.1f})",
+        f"Formula : log₁₀(yield) ~ {CANDIDATES[best].split('~',1)[1].strip()}",
+        f"Coefficients : {coef_bits}",
+        f"R² (in sample): {gm.rsquared:.3f}",
+        f"Residual SD : {sd_log:.3f} log₁₀ (≈ × / ÷ {10**sd_log:.1f})",
     ]
     axR.text(0.02, 0.27, "\n".join(stats_lines), transform=axR.transAxes,
               fontsize=9.5, va="top", ha="left", family="monospace")
@@ -453,7 +453,7 @@ def plot_species_calibration(df: pd.DataFrame, gm,
               color="#333", style="italic")
 
     fig.suptitle(
-        "Phase 5 § C.0.d · Species-wide size → seed-yield expectation  "
+        "§ C.0.d · Species-wide size → seed-yield expectation "
         "(across-species build; the per-population test is Figure 17b)",
         fontsize=12.5, y=0.995,
     )
@@ -501,11 +501,11 @@ def plot_forest(res: pd.DataFrame, df: pd.DataFrame,
 
         for _, row in sub.iterrows():
             pid = int(row["populationID"])
-            yr  = int(row["year"])
-            yi  = y_pos[pid] + (-0.14 if yr == 2025 else 0.14)
+            yr = int(row["year"])
+            yi = y_pos[pid] + (-0.14 if yr == 2025 else 0.14)
             fold = row["fold_of_expectation"]
-            lo   = row["fold_lo95"]
-            hi   = row["fold_hi95"]
+            lo = row["fold_lo95"]
+            hi = row["fold_hi95"]
             # Error bar if CI exists
             if not np.isnan(lo) and not np.isnan(hi):
                 ax.plot([lo, hi], [yi, yi], color=colour, lw=1.3,
@@ -560,7 +560,7 @@ def plot_forest(res: pd.DataFrame, df: pd.DataFrame,
                 r = sub[(sub["populationID"] == pid) & (sub["year"] == yr)]
                 if not r.empty:
                     parts.append(f"{yr} n={int(r['n_plants'].iat[0])}")
-            right.append("  ·  ".join(parts))
+            right.append(" · ".join(parts))
         ax2 = ax.twinx()
         ax2.set_ylim(ax.get_ylim())
         ax2.set_yticks(list(y_pos.values()))
@@ -578,10 +578,10 @@ def plot_forest(res: pd.DataFrame, df: pd.DataFrame,
                            linewidth=1.0))
 
     axes[-1].set_xlabel(
-        "Fold of expectation  =  observed yield ÷ expected from size "
-        "(log scale)   ·   < 1 = seed shortfall  ·  > 1 = seed surplus"
-        "\nred halo = FDR < 0.05 BELOW   ·   green halo = FDR < 0.05 "
-        "ABOVE   (both for that specific population × year)",
+        "Fold of expectation = observed yield ÷ expected from size "
+        "(log scale) · < 1 = seed shortfall · > 1 = seed surplus"
+        "\nred halo = FDR < 0.05 BELOW · green halo = FDR < 0.05 "
+        "ABOVE (both for that specific population × year)",
         fontsize=10,
     )
 
@@ -595,22 +595,22 @@ def plot_forest(res: pd.DataFrame, df: pd.DataFrame,
                 markerfacecolor="#444", markeredgecolor="white",
                 markeredgewidth=0.5, markersize=8, label="2026 (filled)"),
         Line2D([0], [0], color="#444", ls="--", lw=1.0,
-                label="on species curve  (fold = 1)"),
+                label="on species curve (fold = 1)"),
         Line2D([0], [0], marker="o", linestyle="",
                 markerfacecolor="none", markeredgecolor="#b2182b",
                 markeredgewidth=2.0, markersize=13,
-                label="red halo = FDR < 0.05 BELOW  (seed shortfall)"),
+                label="red halo = FDR < 0.05 BELOW (seed shortfall)"),
         Line2D([0], [0], marker="o", linestyle="",
                 markerfacecolor="none", markeredgecolor="#1b7837",
                 markeredgewidth=2.0, markersize=13,
-                label="green halo = FDR < 0.05 ABOVE  (seed surplus)"),
+                label="green halo = FDR < 0.05 ABOVE (seed surplus)"),
     ]
     fig.legend(handles=legend_handles,
                 loc="upper center", bbox_to_anchor=(0.5, 0.965),
                 fontsize=9, frameon=True, ncol=4)
 
     fig.suptitle(
-        "Phase 5 — per-population observed seed yield vs size expectation  "
+        " — per-population observed seed yield vs size expectation "
         f"(all populations with ≥ 2 plants, n = {res['populationID'].nunique()} "
         f"populations across {df['year'].nunique()} years)",
         fontsize=12, y=0.998,
@@ -628,12 +628,12 @@ def plot_forest(res: pd.DataFrame, df: pd.DataFrame,
 def main() -> None:
     print("[step30i] Loading occurrences from LEPA DB …")
     occ = load_occurrences()
-    print(f"[step30i]   n = {len(occ)} occurrences with (height, crown, seed yield)")
+    print(f"[step30i] n = {len(occ)} occurrences with (height, crown, seed yield)")
 
     cw = load_population_crosswalk()
     merged = occ.merge(cw, left_on=["year", "eventID"],
                         right_on=["event_year", "eventID"], how="inner")
-    print(f"[step30i]   n = {len(merged)} occurrences joinable to a Phase 5 populationID")
+    print(f"[step30i] n = {len(merged)} occurrences joinable to a populationID")
 
     meta = load_population_meta()
     merged = merged.merge(meta, on="populationID", how="left")
@@ -642,7 +642,7 @@ def main() -> None:
     # not polluted. Should be zero when both outputs are in sync.
     n_missing_bl = int(merged["BL"].isna().sum())
     if n_missing_bl:
-        print(f"[step30i]   WARNING: {n_missing_bl} occurrences have no BL "
+        print(f"[step30i] WARNING: {n_missing_bl} occurrences have no BL "
               f"assignment (populationID not in classified TSV) — dropped.")
         merged = merged.dropna(subset=["BL"]).copy()
 
@@ -650,12 +650,12 @@ def main() -> None:
     print("[step30i] STAGE 1 — predictor selection (10-fold CV)")
     best, best_formula, cv_table = pick_best_predictor(merged)
     print(cv_table.to_string(index=False))
-    print(f"[step30i]   -> selected predictor: {best}  ({best_formula})")
+    print(f"[step30i] -> selected predictor: {best} ({best_formula})")
 
     # ---- STAGE 2 — global expectation model ----
     gm = smf.ols(best_formula, merged).fit()
     merged["expected"] = gm.fittedvalues
-    merged["resid"]    = merged["logy"] - merged["expected"]
+    merged["resid"] = merged["logy"] - merged["expected"]
     print(f"[step30i] STAGE 2 — global expectation model: "
           f"R² = {gm.rsquared:.3f}, "
           f"residual SD = {np.sqrt(gm.scale):.3f} log10 "
@@ -680,9 +680,9 @@ def main() -> None:
     print(f"[step30i] Below-expectation (FDR < 0.05 AND mean_resid < 0): "
           f"{len(flagged_below)} (population, year) rows")
     for _, r in flagged_below.iterrows():
-        print(f"           P{int(r['populationID']):>2} {r['BL']} "
-              f"{int(r['year'])}  fold = {r['fold_of_expectation']:.2f}  "
-              f"n = {int(r['n_plants'])}  "
+        print(f" P{int(r['populationID']):>2} {r['BL']} "
+              f"{int(r['year'])} fold = {r['fold_of_expectation']:.2f} "
+              f"n = {int(r['n_plants'])} "
               f"({r['population_label']})")
     print(f"[step30i] Above-expectation (FDR < 0.05 AND mean_resid > 0): "
           f"{len(flagged_above)} (population, year) rows")
@@ -708,7 +708,7 @@ def main() -> None:
                      "insufficient_data", "buffered", "buffered_surplus"):
         n = int((prio["conservation_priority"] == bucket).sum())
         if n:
-            print(f"           {bucket:<28} {n}")
+            print(f" {bucket:<28} {n}")
 
     FIGURES.mkdir(parents=True, exist_ok=True)
     # Figure 17a — species-wide calibration (across-species evidence)

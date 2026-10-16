@@ -8,9 +8,9 @@ with the LEPA_EO_spatial_clustering figures.
 
 Public API
 ----------
-BL_COLORS               dict {BLn: hex colour} — Set1 cluster-index mapping.
-BL_ORDER                list of BLn strings, area-then-connectivity DESC.
-load_eo_to_bl(...)      map {EOcode: BL} from EO_group_BL_summary.csv
+BL_COLORS dict {BLn: hex colour} — Set1 cluster-index mapping.
+BL_ORDER list of BLn strings, area-then-connectivity DESC.
+load_eo_to_bl(...) map {EOcode: BL} from EO_group_BL_summary.csv
 locationCode_to_bl(...) map {locationCode: BL} — locationCode → base EO → BL
                         (locationCodes like "EO18-7" map to "EO18" → its BL).
 make_location_label(...) str — `{locationCode}_{locationID}` single-site
@@ -31,16 +31,16 @@ from pathlib import Path
 import pandas as pd
 
 # ---------------------------------------------------------------------------
-DEFAULT_BL_SUMMARY_CSV       = Path("Tables/EO_BL_summary.csv")
-DEFAULT_EO_GROUP_BL_CSV      = Path("Tables/EO_group_BL_summary.csv")
+DEFAULT_BL_SUMMARY_CSV = Path("Tables/EO_BL_summary.csv")
+DEFAULT_EO_GROUP_BL_CSV = Path("Tables/EO_group_BL_summary.csv")
 
 # BL → hex colour (Set1 palette, cluster-index mapping).
 BL_COLORS: dict[str, str] = {
-    "BL1": "#984EA3",   # purple
-    "BL2": "#377EB8",   # blue
-    "BL3": "#E41A1C",   # red
-    "BL4": "#FF7F00",   # orange
-    "BL5": "#4DAF4A",   # green
+    "BL1": "#984EA3", # purple
+    "BL2": "#377EB8", # blue
+    "BL3": "#E41A1C", # red
+    "BL4": "#FF7F00", # orange
+    "BL5": "#4DAF4A", # green
 }
 
 
@@ -59,7 +59,7 @@ def load_bl_order(path: Path = DEFAULT_BL_SUMMARY_CSV) -> list[str]:
 try:
     BL_ORDER = load_bl_order()
 except FileNotFoundError:
-    BL_ORDER = ["BL4", "BL5", "BL3", "BL1", "BL2"]   # documented default
+    BL_ORDER = ["BL4", "BL5", "BL3", "BL1", "BL2"] # documented default
 
 
 # ---------------------------------------------------------------------------
@@ -91,11 +91,11 @@ def base_eo(location_code: str) -> str:
 
     Examples::
 
-        'EO18-7'  → 'EO18'
-        'EO25-A'  → 'EO25'
-        'EO27RT'  → 'EO27'    (reintroduction / reserve-treatment subunit)
-        'EO8'     → 'EO08'    (zero-padded to match the BL summary CSV)
-        'EO118'   → 'EO118'   (three-digit codes unchanged)
+        'EO18-7' → 'EO18'
+        'EO25-A' → 'EO25'
+        'EO27RT' → 'EO27' (reintroduction / reserve-treatment subunit)
+        'EO8' → 'EO08' (zero-padded to match the BL summary CSV)
+        'EO118' → 'EO118' (three-digit codes unchanged)
 
     Returns an empty string when the code does not start with 'EO'.
     """
@@ -120,7 +120,7 @@ def locationCode_to_bl(location_codes,
 
 
 def make_location_label(location_code: str, location_id: int | str) -> str:
-    """Project-wide display label for a single Phase 5 location.
+    """Project-wide display label for a single location.
 
     Returns `{location_code}_{location_id}`.
 
@@ -128,7 +128,7 @@ def make_location_label(location_code: str, location_id: int | str) -> str:
     physical sites that share one `locationCode` (EO8 covers four
     locationIDs; EO18-7, EO26-3, EO27-1 each cover four; EO27 covers
     three; EO26 covers two). Those sites are > 500 m apart and the
-    Phase 5 pipeline treats each `locationID` as a separate location
+    mate-limitation pipeline treats each `locationID` as a separate location
     (correct), but the raw `locationCode` is ambiguous for display.
     Joining code + locationID with `_` gives every row across every
     figure (step29d, step30 Figures 3 / 4, step30b, step30c, step30d,
@@ -139,7 +139,7 @@ def make_location_label(location_code: str, location_id: int | str) -> str:
 
 def location_label_series(df: pd.DataFrame,
                            code_col: str = "locationCode",
-                           id_col:   str = "locationID") -> pd.Series:
+                           id_col: str = "locationID") -> pd.Series:
     """Vectorised `make_location_label` for a DataFrame.
 
     Returns a Series of `{code}_{id}` strings aligned with `df`'s index.
@@ -150,7 +150,7 @@ def location_label_series(df: pd.DataFrame,
 
 
 # ---------------------------------------------------------------------------
-# NEW BL framework (2026-10-06, Phase 5 § A.4.5) — populationID-based
+# NEW BL framework (2026-10-06, § A.4.5) — populationID-based
 # ---------------------------------------------------------------------------
 # From 2026-10-06 the Bottleneck Lineage (BL) is a POPULATION-level
 # property, not an EO property. The population-level BL framework was
@@ -159,10 +159,10 @@ def location_label_series(df: pd.DataFrame,
 #
 # Transition status (2026-10-06): both frameworks coexist in the code
 # base.
-#   - locationCode_to_bl()  — OLD EO-based BL (via Tables/EO_*_summary.csv)
-#   - populationID_to_bl()  — NEW population-based BL (via
-#                             tables/step30h_populationID_crosswalk.tsv)
-# New Phase 5 scripts (step30h_*, step30g_* post-remap) use the new
+# - locationCode_to_bl() — OLD EO-based BL (via Tables/EO_*_summary.csv)
+# - populationID_to_bl() — NEW population-based BL (via
+# tables/step30h_populationID_crosswalk.tsv)
+# New scripts (step30h_*, step30g_* post-remap) use the new
 # BL. Legacy per-locationCode figures (step30, step30c-e) still use
 # the EO-based mapping; migrate those scripts individually as needed.
 #

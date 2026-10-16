@@ -1,6 +1,6 @@
 """Step 30g — Phase A predictions per (populationID, year).
 
-Phase 5 § A.5.0 companion. Takes the per-year deme partition built
+§ A.5.0 companion. Takes the per-year deme partition built
 in Step 29a and runs the standard Phase A simulation (per-deme
 draws from P1 → union to the population) at each (populationID,
 year) combination. The point: within a population, 2025 and 2026
@@ -39,24 +39,24 @@ from srk_si_model import (
 
 TABLES = Path("tables")
 
-N_REPLICATES = 150               # per-population-year replicates
-N_FATHERS    = 300               # candidate fathers in each p_compat call
-N_MOTHERS    = 60                # mothers simulated per population-year
-RNG_SEED     = 2030              # (lighter params than step30; this is a
-                                 #  comparison across pop-years, not an
-                                 #  absolute-CI product. Up these if the
-                                 #  pcompat CIs are too wide to call
-                                 #  stable vs unstable.)
+N_REPLICATES = 150 # per-population-year replicates
+N_FATHERS = 300 # candidate fathers in each p_compat call
+N_MOTHERS = 60 # mothers simulated per population-year
+RNG_SEED = 2030 # (lighter params than step30; this is a
+                                 # comparison across pop-years, not an
+                                 # absolute-CI product. Up these if the
+                                 # pcompat CIs are too wide to call
+                                 # stable vs unstable.)
 
 # ---- Candidate-selection tunables ----
 # Site visitation effort was equal across 2025 and 2026. The extra 2026
 # occurrence records (mother plants collected for seed banking) are not
-# used at this Phase 5 stage, so raw N_fertile sums are the appropriate
+# used at this stage, so raw N_fertile sums are the appropriate
 # across-year comparison axis. Mean-per-event is kept as an informational
 # column in the comparison TSV but is not the primary classifier.
-MIN_N_FERT_SMALL_STABLE = 20     # SMALL stable candidate floor on
+MIN_N_FERT_SMALL_STABLE = 20 # SMALL stable candidate floor on
                                  # N_fert_total across both years.
-CRASH_RATIO_THRESHOLD   = 0.25   # raw-N_fert ratio N_fert_2026 /
+CRASH_RATIO_THRESHOLD = 0.25 # raw-N_fert ratio N_fert_2026 /
                                  # N_fert_2025 <= this AND negative
                                  # delta_diversity.
 
@@ -132,18 +132,18 @@ def main() -> None:
             deme_sizes, p1_vec, class_i_mask, zygosity_probs, rng,
         )
         rows.append({
-            "populationID":            int(pop_id),
-            "year":                    int(yr),
-            "n_demes":                 len(deme_sizes),
-            "N_fertile_total":         int(sum(deme_sizes)),
-            "largest_deme_N":          int(max(deme_sizes)),
-            "smallest_deme_N":         int(min(deme_sizes)),
+            "populationID": int(pop_id),
+            "year": int(yr),
+            "n_demes": len(deme_sizes),
+            "N_fertile_total": int(sum(deme_sizes)),
+            "largest_deme_N": int(max(deme_sizes)),
+            "smallest_deme_N": int(min(deme_sizes)),
             "pred_srk_diversity_mean": float(div.mean()),
             "pred_srk_diversity_lo95": float(np.quantile(div, 0.025)),
             "pred_srk_diversity_hi95": float(np.quantile(div, 0.975)),
-            "pred_pcompat_mean":       float(np.nanmean(pc)),
-            "pred_pcompat_lo95":       float(np.nanquantile(pc, 0.025)),
-            "pred_pcompat_hi95":       float(np.nanquantile(pc, 0.975)),
+            "pred_pcompat_mean": float(np.nanmean(pc)),
+            "pred_pcompat_lo95": float(np.nanquantile(pc, 0.025)),
+            "pred_pcompat_hi95": float(np.nanquantile(pc, 0.975)),
         })
     pred = pd.DataFrame(rows)
     pred.to_csv(TABLES / "step30g_prediction_population_year.tsv",
@@ -183,22 +183,22 @@ def main() -> None:
             r[("pred_pcompat_hi95", 2026)],
         )
         comp_rows.append({
-            "populationID":            int(pop_id),
-            "n_demes_2025":            int(r[("n_demes", 2025)]),
-            "n_demes_2026":            int(r[("n_demes", 2026)]),
-            "N_fert_2025":             int(r[("N_fertile_total", 2025)]),
-            "N_fert_2026":             int(r[("N_fertile_total", 2026)]),
-            "N_fert_total":            int(r[("N_fertile_total", 2025)]
+            "populationID": int(pop_id),
+            "n_demes_2025": int(r[("n_demes", 2025)]),
+            "n_demes_2026": int(r[("n_demes", 2026)]),
+            "N_fert_2025": int(r[("N_fertile_total", 2025)]),
+            "N_fert_2026": int(r[("N_fertile_total", 2026)]),
+            "N_fert_total": int(r[("N_fertile_total", 2025)]
                                             + r[("N_fertile_total", 2026)]),
-            "pred_diversity_2025":     float(d25),
-            "pred_diversity_2026":     float(d26),
-            "delta_diversity":         float(d26 - d25),
-            "diversity_CI_overlap":    bool(div_overlap),
-            "pred_pcompat_2025":       float(p25),
-            "pred_pcompat_2026":       float(p26),
-            "delta_pcompat":           float(p26 - p25),
-            "pcompat_CI_overlap":      bool(pc_overlap),
-            "stable_across_years":     bool(div_overlap and pc_overlap),
+            "pred_diversity_2025": float(d25),
+            "pred_diversity_2026": float(d26),
+            "delta_diversity": float(d26 - d25),
+            "diversity_CI_overlap": bool(div_overlap),
+            "pred_pcompat_2025": float(p25),
+            "pred_pcompat_2026": float(p26),
+            "delta_pcompat": float(p26 - p25),
+            "pcompat_CI_overlap": bool(pc_overlap),
+            "stable_across_years": bool(div_overlap and pc_overlap),
         })
     comp = (pd.DataFrame(comp_rows)
               .sort_values("N_fert_total", ascending=False)
@@ -226,13 +226,13 @@ def main() -> None:
         print()
         print("[step30g] ========== Candidate pair (stable; N_fert_total >= "
               f"{MIN_N_FERT_SMALL_STABLE}) ==========")
-        print(f"[step30g] LARGE : populationID={large['populationID']}  "
-              f"N_fert 2025/2026={large['N_fert_2025']}/{large['N_fert_2026']}  "
-              f"pred_pcompat 2025/2026={large['pred_pcompat_2025']:.3f}/{large['pred_pcompat_2026']:.3f}  "
+        print(f"[step30g] LARGE : populationID={large['populationID']} "
+              f"N_fert 2025/2026={large['N_fert_2025']}/{large['N_fert_2026']} "
+              f"pred_pcompat 2025/2026={large['pred_pcompat_2025']:.3f}/{large['pred_pcompat_2026']:.3f} "
               f"pred_diversity 2025/2026={large['pred_diversity_2025']:.1f}/{large['pred_diversity_2026']:.1f}")
-        print(f"[step30g] SMALL : populationID={small['populationID']}  "
-              f"N_fert 2025/2026={small['N_fert_2025']}/{small['N_fert_2026']}  "
-              f"pred_pcompat 2025/2026={small['pred_pcompat_2025']:.3f}/{small['pred_pcompat_2026']:.3f}  "
+        print(f"[step30g] SMALL : populationID={small['populationID']} "
+              f"N_fert 2025/2026={small['N_fert_2025']}/{small['N_fert_2026']} "
+              f"pred_pcompat 2025/2026={small['pred_pcompat_2025']:.3f}/{small['pred_pcompat_2026']:.3f} "
               f"pred_diversity 2025/2026={small['pred_diversity_2025']:.1f}/{small['pred_diversity_2026']:.1f}")
 
     # ---- Secondary target: crash populations (clear 2026 < 2025 collapse) ----
@@ -247,26 +247,26 @@ def main() -> None:
         & (~comp["diversity_CI_overlap"])
     ].sort_values("crash_ratio").reset_index(drop=True)
     crash.to_csv(TABLES / "step30g_crash_candidates.tsv", sep="\t", index=False)
-    print(f"[step30g] Wrote step30g_crash_candidates.tsv  "
+    print(f"[step30g] Wrote step30g_crash_candidates.tsv "
           f"({len(crash)} crash populations)")
     if len(crash):
         print()
         print("[step30g] Crash candidates (2026 collapsed vs 2025; "
               "clearest within-pipeline H2 signal):")
         for _, r in crash.iterrows():
-            print(f"[step30g]   populationID={int(r['populationID']):>3}  "
-                  f"N_fert 2025/2026={int(r['N_fert_2025']):>4}/{int(r['N_fert_2026']):>4}  "
-                  f"ratio={r['crash_ratio']:.3f}  "
-                  f"Δdiv={r['delta_diversity']:+.1f}  "
+            print(f"[step30g] populationID={int(r['populationID']):>3} "
+                  f"N_fert 2025/2026={int(r['N_fert_2025']):>4}/{int(r['N_fert_2026']):>4} "
+                  f"ratio={r['crash_ratio']:.3f} "
+                  f"Δdiv={r['delta_diversity']:+.1f} "
                   f"Δpc={r['delta_pcompat']:+.3f}")
 
     # ---- Headlines ----
     unstable = comp[~comp["stable_across_years"]]
     print()
     print(f"[step30g] Across-year classification:")
-    print(f"[step30g]   stable (both CIs overlap)   : {len(stable)}")
-    print(f"[step30g]   unstable (one or both shift): {len(unstable)}")
-    print(f"[step30g]   crash subset of unstable    : {len(crash)}")
+    print(f"[step30g] stable (both CIs overlap) : {len(stable)}")
+    print(f"[step30g] unstable (one or both shift): {len(unstable)}")
+    print(f"[step30g] crash subset of unstable : {len(crash)}")
 
 
 if __name__ == "__main__":

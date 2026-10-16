@@ -2,7 +2,7 @@
 
 Uses Canu-amplicon adult SRK genotypes (Phase 4 Step 23) to compute
 OBSERVED per-EO P_compat under the sporophytic + empirical-zygosity
-Class I / II model (§ A.7 of the Phase 5 doc) and compare to what the
+Class I / II model (§ A.7 of the doc) and compare to what the
 finite-population P1 model predicts at the same scale.
 
 Data scope
@@ -58,24 +58,24 @@ from srk_si_model import (
 # ---------------------------------------------------------------------------
 # I/O
 # ---------------------------------------------------------------------------
-DEFAULT_TABLES  = Path("tables")
-DEFAULT_FIGURES = Path("Figures/Phase5")
+DEFAULT_TABLES = Path("tables")
+DEFAULT_FIGURES = Path("Figures/")
 DEFAULT_ALLELE_FG_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_INDIV_TSV = Path(
     "Tables/Phase4/step23_individual_allele_genotypes_with_nulls.tsv")
 DEFAULT_PRIOR_TSV = DEFAULT_TABLES / "step30_A_prediction_prior_frequencies.tsv"
 
 MIN_N_INDIV_PER_EO = 10
-N_MC_FATHERS       = 800
-N_BOOTSTRAP        = 400
-RNG_SEED           = 2032
+N_MC_FATHERS = 800
+N_BOOTSTRAP = 400
+RNG_SEED = 2032
 
 # Traffic-light colours (match § A.7 palette)
-COLOUR_FAILED      = "#c94b4b"
-COLOUR_STRUGGLING  = "#e6b325"
-COLOUR_SUSTAIN     = "#3c8f4c"
-COLOUR_PRED        = "#2b6cb0"
-COLOUR_OBS         = "#333333"
+COLOUR_FAILED = "#c94b4b"
+COLOUR_STRUGGLING = "#e6b325"
+COLOUR_SUSTAIN = "#3c8f4c"
+COLOUR_PRED = "#2b6cb0"
+COLOUR_OBS = "#333333"
 
 
 # ---------------------------------------------------------------------------
@@ -135,14 +135,14 @@ def load_individuals(tsv: Path,
             padded = np.array(raw[:4], dtype=int)
         records.append({
             "Individual": row["Individual"],
-            "EO":         str(row.get("EO_normalised", "Unassigned")),
-            "BL":         str(row.get("BL_inferred", "Unassigned")),
-            "SI_status":  row.get("SI_status", ""),
-            "fg_copies":  fg_copies,
-            "genotype":   padded,
-            "n_functional_copies":    n_functional,
-            "n_null_copies":          n_null,
-            "n_distinct_functional":  int((fg_copies > 0).sum()),
+            "EO": str(row.get("EO_normalised", "Unassigned")),
+            "BL": str(row.get("BL_inferred", "Unassigned")),
+            "SI_status": row.get("SI_status", ""),
+            "fg_copies": fg_copies,
+            "genotype": padded,
+            "n_functional_copies": n_functional,
+            "n_null_copies": n_null,
+            "n_distinct_functional": int((fg_copies > 0).sum()),
         })
     return pd.DataFrame(records)
 
@@ -196,8 +196,8 @@ def per_eo_stats(indiv_df: pd.DataFrame,
         sub_all = indiv_df[indiv_df["EO"] == eo]
         sub = sub_all[sub_all["n_functional_copies"] > 0]
         n_total = len(sub_all)
-        n_fun   = len(sub)
-        n_sc    = int((sub_all["n_functional_copies"] == 0).sum())
+        n_fun = len(sub)
+        n_sc = int((sub_all["n_functional_copies"] == 0).sum())
         if n_fun < min_n:
             continue
         genotypes = np.stack(sub["genotype"].values, axis=0)
@@ -233,22 +233,22 @@ def per_eo_stats(indiv_df: pd.DataFrame,
         p_I_obs = float(local_f_obs[class_i_mask].sum())
 
         rows.append({
-            "EO":                     eo,
-            "n_total":                n_total,
-            "n_functional_carriers":  n_fun,
-            "n_SC_fully_null":        n_sc,
-            "n_distinct_1_frac":      float(zyg_frac[1]),
-            "n_distinct_2_frac":      float(zyg_frac[2]),
-            "n_distinct_3_frac":      float(zyg_frac[3]),
-            "n_distinct_4_frac":      float(zyg_frac[4]),
-            "p_ClassI_obs":           p_I_obs,
-            "obs_pcompat_mean":       obs_mean,
-            "obs_pcompat_lo95":       obs_lo,
-            "obs_pcompat_hi95":       obs_hi,
+            "EO": eo,
+            "n_total": n_total,
+            "n_functional_carriers": n_fun,
+            "n_SC_fully_null": n_sc,
+            "n_distinct_1_frac": float(zyg_frac[1]),
+            "n_distinct_2_frac": float(zyg_frac[2]),
+            "n_distinct_3_frac": float(zyg_frac[3]),
+            "n_distinct_4_frac": float(zyg_frac[4]),
+            "p_ClassI_obs": p_I_obs,
+            "obs_pcompat_mean": obs_mean,
+            "obs_pcompat_lo95": obs_lo,
+            "obs_pcompat_hi95": obs_hi,
             "obs_pcompat_analytical": float(p_obs_anly),
-            "pred_pcompat_mean":      pred_mean,
-            "pred_pcompat_lo95":      pred_lo,
-            "pred_pcompat_hi95":      pred_hi,
+            "pred_pcompat_mean": pred_mean,
+            "pred_pcompat_lo95": pred_lo,
+            "pred_pcompat_hi95": pred_hi,
         })
     return pd.DataFrame(rows).sort_values(
         "n_functional_carriers", ascending=False).reset_index(drop=True)
@@ -372,7 +372,7 @@ def main() -> None:
     ap.add_argument("--prior-tsv", type=Path, default=DEFAULT_PRIOR_TSV)
     args = ap.parse_args()
 
-    tables_dir  = DEFAULT_TABLES;  tables_dir.mkdir(parents=True, exist_ok=True)
+    tables_dir = DEFAULT_TABLES; tables_dir.mkdir(parents=True, exist_ok=True)
     figures_dir = DEFAULT_FIGURES; figures_dir.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(RNG_SEED)
 
@@ -387,9 +387,9 @@ def main() -> None:
     # ---- Load individuals ----
     allele_to_fg = load_allele_to_fg(args.allele_fg_tsv)
     indiv_df = load_individuals(args.indiv_tsv, allele_to_fg, fg_labels)
-    n_all  = len(indiv_df)
-    n_fun  = int((indiv_df["n_functional_copies"] > 0).sum())
-    n_sc   = int((indiv_df["n_functional_copies"] == 0).sum())
+    n_all = len(indiv_df)
+    n_fun = int((indiv_df["n_functional_copies"] > 0).sum())
+    n_sc = int((indiv_df["n_functional_copies"] == 0).sum())
     print(f"[step30c] Loaded {n_all} individuals across "
           f"{indiv_df['EO'].nunique()} EOs "
           f"({n_fun} with ≥1 functional copy, {n_sc} fully null).")
@@ -413,8 +413,8 @@ def main() -> None:
 
     # Add species reference for downstream readability
     stats["species_mean_pcompat"] = species_mean
-    stats["band_failed_max"]      = bands["failed_max"]
-    stats["band_struggling_max"]  = bands["struggling_max"]
+    stats["band_failed_max"] = bands["failed_max"]
+    stats["band_struggling_max"] = bands["struggling_max"]
 
     out_tsv = tables_dir / "step30_C_pcompat_validation_at_eo.tsv"
     stats.to_csv(out_tsv, sep="\t", index=False,

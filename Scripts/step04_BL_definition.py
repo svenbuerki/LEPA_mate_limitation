@@ -1,6 +1,6 @@
 """Step 30h / Phase III — define new BL + renumber populationIDs.
 
-Phase 5 § A.4.5. Takes the Ward's-D2 cluster assignments from Phase I
+§ A.4.5. Takes the Ward's-D2 cluster assignments from Phase I
 and the landscape metrics from Phase II, applies the ordering rule
 chosen by the user, and produces:
 
@@ -11,7 +11,7 @@ chosen by the user, and produces:
   2. **Within-BL population ordering: latitude DESC (N → S).** New
      populationID = sequential across (BL, within-BL order).
 
-Then rewrites every Phase 5 population-level TSV with the new
+Then rewrites every population-level TSV with the new
 populationIDs and BL labels, preserving the old populationID (and
 old cluster id) in a crosswalk for traceability. Pure remap of
 existing output — no simulation is re-run.
@@ -57,18 +57,18 @@ BACKUP_DIR = TABLES / "_bl_renumber_backup"
 # need to remap. "cluster_k_optimal" or "BL_cluster_id" are the OLD
 # cluster labels remapped to NEW BL names.
 POP_ID_TSVS = {
-    "step29a_population_crosswalk.tsv":        "populationID",
-    "step29a_population_summary.tsv":          "populationID",
-    "step29a_slickspot_summary.tsv":           "populationID",
-    "step29a_demes_per_population_year.tsv":   "populationID",
-    "step29a_seedcleaning_priority.tsv":       "populationID",
-    "step30g_prediction_population_year.tsv":  "populationID",
-    "step30g_across_year_comparison.tsv":      "populationID",
-    "step30g_stable_candidate_pair.tsv":       "populationID",
-    "step30g_crash_candidates.tsv":            "populationID",
-    "step30g_populations_classified.tsv":      "populationID",
-    "step30h_cluster_assignments.tsv":         "populationID",
-    "step30h_landscape_per_population.tsv":    "populationID",
+    "step29a_population_crosswalk.tsv": "populationID",
+    "step29a_population_summary.tsv": "populationID",
+    "step29a_slickspot_summary.tsv": "populationID",
+    "step29a_demes_per_population_year.tsv": "populationID",
+    "step29a_seedcleaning_priority.tsv": "populationID",
+    "step30g_prediction_population_year.tsv": "populationID",
+    "step30g_across_year_comparison.tsv": "populationID",
+    "step30g_stable_candidate_pair.tsv": "populationID",
+    "step30g_crash_candidates.tsv": "populationID",
+    "step30g_populations_classified.tsv": "populationID",
+    "step30h_cluster_assignments.tsv": "populationID",
+    "step30h_landscape_per_population.tsv": "populationID",
 }
 
 
@@ -102,7 +102,7 @@ def renumber_populations(cl: pd.DataFrame,
     also adjacent on the dendrogram inside each BL. User choice
     locked 2026-10-06."""
     cluster_to_bl = dict(zip(bl_def["BL_cluster_id"], bl_def["BL"]))
-    bl_to_rank    = dict(zip(bl_def["BL"], bl_def["BL_rank"]))
+    bl_to_rank = dict(zip(bl_def["BL"], bl_def["BL_rank"]))
 
     df = cl.copy()
     df["BL"] = df["cluster_k_optimal"].map(cluster_to_bl)
@@ -145,7 +145,7 @@ def remap_population_tsvs(crosswalk: pd.DataFrame) -> None:
     that carries populationID."""
     pop_map = dict(zip(crosswalk["populationID_old"],
                         crosswalk["populationID_new"]))
-    bl_map  = dict(zip(crosswalk["populationID_old"],
+    bl_map = dict(zip(crosswalk["populationID_old"],
                         crosswalk["BL"]))
     for name, col in POP_ID_TSVS.items():
         path = TABLES / name
@@ -191,14 +191,14 @@ def rewrite_landscape_per_BL(bl_def: pd.DataFrame) -> None:
 def main() -> None:
     bl_land = pd.read_csv(TABLES / "step30h_landscape_per_BL.tsv",
                            sep="\t", encoding="utf-8-sig")
-    cl      = pd.read_csv(TABLES / "step30h_cluster_assignments.tsv",
+    cl = pd.read_csv(TABLES / "step30h_cluster_assignments.tsv",
                            sep="\t", encoding="utf-8-sig")
 
     # ---- Define BLs under the area DESC → connectivity DESC rule ----
     bl_def = define_bl(bl_land)
     print("[step30h-III] BL definition (area DESC → connectivity DESC):")
     for _, r in bl_def.iterrows():
-        print(f"  {r['BL']}  = Ward cluster {int(r['BL_cluster_id'])}  "
+        print(f" {r['BL']} = Ward cluster {int(r['BL_cluster_id'])} "
               f"({int(r['n_populations']):>2} pops, "
               f"{r['convex_hull_area_km2']:>6.1f} km², "
               f"frac≤5km = {r['frac_within_BL_pairs_le_5000m']:.2f}, "
@@ -229,10 +229,10 @@ def main() -> None:
     merged = crosswalk.sort_values("populationID_new").head(50)
     for bl in bl_def["BL"]:
         sub = merged[merged["BL"] == bl].head(5)
-        print(f"  {bl}:")
+        print(f" {bl}:")
         for _, r in sub.iterrows():
-            print(f"    P{int(r['populationID_new']):>2} "
-                  f"← old P{int(r['populationID_old']):>2}  "
+            print(f" P{int(r['populationID_new']):>2} "
+                  f"← old P{int(r['populationID_old']):>2} "
                   f"(lat {r['lat']:.4f}, lon {r['lon']:.4f})")
 
 
