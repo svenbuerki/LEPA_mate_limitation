@@ -187,7 +187,7 @@ of seedlings per mother and mothers per location:
   | Season | Populations / demes | Target mothers | In LEPA DB | Selected | Short (sum over demes) | Seeds to germinate → seedlings |
   |---|:-:|:-:|:-:|:-:|:-:|:-:|
   | 2025 | 33 / 100 | **502** | 760 | 431 | 71 | 10 713 → 6 428 |
-  | 2026 | 41 / 193 | **906** | 613 | 337 | 570 | 8 288 → 4 974 |
+  | 2026 | 41 / 193 | **909** | 613 | 337 | 572 | 8 288 → 4 974 |
 
   Most of the 2026 shortfall sits in demes with no mother record
   yet in the LEPA DB (2026 germplasm entry still in progress). Two
@@ -346,17 +346,17 @@ and BL5 do not.
 
 | Option | BL | SMALL — populationID, fertile plants, mothers in DB **(2025 + 2026)** | BIG — same | Size ratio | Pair mother total | Comment |
 |:---|:---:|:---|:---|:---:|:---:|:---|
-| **D1 ★** | BL3 | **P38 EO25-B_21** · 26 adults · **7 + 8 = 15** mothers | **P36 EO18-7+EO18-8** · 1 563 adults · **115 + 163 = 278** mothers | 60× | **293** | Highest total mother budget by a wide margin; 2026 collection roughly doubled both sides. |
+| **D1 ★** | BL3 | **P38 EO25-B_21** · 26 adults · **7 + 8 = 15** mothers | **P36 EO18-7+EO18-8** · 1 672 adults · **115 + 163 = 278** mothers | 64× | **293** | Highest total mother budget by a wide margin; 2026 collection roughly doubled both sides. |
 | D2 | BL2 | P22 EO26-3_32/33/34 + EO26_48 · 187 adults · 18 + 0 mothers | P20 EO8_27+EO8_28 · 876 adults · 37 + 137 = 174 mothers | 5× | 192 | Neither side is stable any more: SMALL is ambiguous (39 → 148 adults once the late-July EO26 events joined it, no 2026 mothers) and BIG is growth (156 → 720 adults). Smallest size contrast. |
-| D3 | BL1 | P6 EO67_39 · 22 adults · 4 + 6 = 10 mothers | P17 EO27-1_11+EO27RT_12 · 1 976 adults · 55 + 125 = 180 mothers | 90× | 190 | Biggest size contrast but SMALL only 10 mothers across both years — thinnest Part C power. |
+| D3 | BL1 | P6 EO67_39 · 22 adults · 4 + 6 = 10 mothers | P17 EO27-1_11+EO27RT_12 · 1 990 adults · 55 + 125 = 180 mothers | 90× | 190 | Biggest size contrast but SMALL only 10 mothers across both years — thinnest Part C power. |
 
 **D1 is recommended** (★). It has the largest mother budget (293
-across the pair), a sharp 60× size contrast, and both sides in
+across the pair), a sharp 64× size contrast, and both sides in
 BL3. **P38 is mate-limited** (fold 0.52 in 2026). **P36
 over-produced in 2025** (1.28) and falls short in 2026 (0.89, not
 significant). **Caveat:** P36 is classed stable because its predicted
 diversity and compatibility overlap between years, but its census is
-not constant (523 → 1 040 adults, 16 → 21 demes). No large population
+not constant (523 → 1 149 adults, 16 → 21 demes). No large population
 has a constant census and seed yield at expectation in both years;
 D1 is kept for its within-BL design and mother budget. Genotyping P36
 seed lots from both years tests for selfing in its over-producing
@@ -886,7 +886,7 @@ diversity gap is persistent, not a one-year sampling fluke.
 **Preliminary LARGE + SMALL candidate pair for the test design.**
 
 - **LARGE = populationID 17** (EO27-1 + EO27RT merged), N_fert
-  548 → 1428, predicted pollen compatibility 0.78 / 0.78,
+  548 → 1442, predicted pollen compatibility 0.78 / 0.78,
   diversity saturated at 32 / 32.
 - **SMALL = populationID 6** (EO67), N_fert 10 → 12, predicted
   pollen compatibility 0.76 / 0.75, diversity 11 / 12 (stable
@@ -1636,8 +1636,8 @@ plus the ≥ 1-per-event floor. The result is `M_frag` per event.
   431 are selected; **71 mothers short**, counted per deme (a mother
   in one deme cannot stand in for another deme's pollen pool),
   spread over 16 populations.
-- **2026 design: 906 mothers across 41 populations (193 demes).**
-  613 in the LEPA DB, 337 selected, 570 short — mostly demes with no
+- **2026 design: 909 mothers across 41 populations (193 demes).**
+  613 in the LEPA DB, 337 selected, 572 short — mostly demes with no
   mother record yet (2026 germplasm entry in progress). Two demes
   (P27 deme 2, P4 deme 2) consist only of slickspots recorded too
   late to collect seed: they are part of the model but have no
@@ -1659,7 +1659,7 @@ next field season:
 | Per-mother seedling-genotype floor | **15 seedlings/mother** (90 % allele-detection target) |
 | Field-side germination assumption | **60 %** |
 | Seeds to germinate per mother | **25** (= ceil(15 ÷ 0.60)) |
-| **Total mothers (2025: 33 populations, 100 demes)** | **502** (2026: 906) |
+| **Total mothers (2025: 33 populations, 100 demes)** | **502** (2026: 909) |
 | **Total seeds to germinate** | **502 × 25 = 12 550** |
 | **Total seedlings to genotype** | **~502 × 15 = ~7 530** |
 | Allele-detection target | 90 % probability of seeing every allele in each 50 m deme |
@@ -1682,7 +1682,7 @@ next field season:
   rule. 2025 delivers **431 mothers from the current DB → ~10 713 seeds
   to germinate → ~6 428 seedlings to genotype**, with **71 mothers
   short** (sum over demes). 2026: 337 mothers → 8 288 seeds →
-  ~4 974 seedlings, 570 short.
+  ~4 974 seedlings, 572 short.
 - **Event → component lookup**:
   [`step29c_event_to_component_50m.tsv`](tables/step29c_event_to_component_50m.tsv) —
   one row per event mapping (locationID, eventID) → 50 m component,
@@ -2133,7 +2133,7 @@ Before running Phase B across all 48 populations, we recommend a
 **two-population pilot within Bottleneck Lineage 3 (BL3)** — one
 **SMALL stable** population (**P38 = EO25-B_21**, 26 adults
 across both years, 7 + 8 = **15 mothers in DB**) paired with one
-**BIG stable** population (**P36 = EO18-7 + EO18-8**, 1 563 adults
+**BIG stable** population (**P36 = EO18-7 + EO18-8**, 1 672 adults
 across five locationIDs, 115 + 163 = **278 mothers in DB**).
 Both pass the stability test (both-year occupancy, overlapping
 95 % 2025 vs 2026 CIs on diversity and pollen compatibility,
@@ -2144,7 +2144,7 @@ summary **Next test** block for the full D1/D2/D3 option table.
 
 **Why BL3.** Across the three BLs that hold ≥ 2 stable populations
 (BL1, BL2, BL3), **BL3 holds the single largest well-stocked
-population** (P36, 1 563 adults with 278 mothers in the LEPA DB
+population** (P36, 1 672 adults with 278 mothers in the LEPA DB
 after the 2026 top-up) **and** a stable SMALL population at the
 other end of the size spectrum (P38, 26 adults). The pair-level
 mother budget of **293 mothers across 2025 + 2026** is the
@@ -2156,13 +2156,13 @@ drift-history confound.
 
 **What this specific pair tests.**
 
-- **P36 EO18-7 + EO18-8 — large stable regime** (1 563 adults
+- **P36 EO18-7 + EO18-8 — large stable regime** (1 672 adults
   spread across 5 locationIDs and several demes). The model
   predicts a sustainable population at the species mean; this
   side is the cleanest test of the model's "ample pool →
   compatible mating" prediction. **Caveat:** "stable" here means
   overlapping predicted diversity and compatibility between years;
-  the census is not constant (523 → 1 040 adults, 16 → 21 demes),
+  the census is not constant (523 → 1 149 adults, 16 → 21 demes),
   and seed yield was above expectation in 2025 (fold 1.28). No
   large population in the dataset has both a constant census and
   seed yield at expectation in both years; P36 is kept for the
