@@ -44,7 +44,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from step17_seed_sampling_per_mother import (
+from step14_seed_sampling_per_mother import (
     DEFAULT_DB, load_all_events, haversine_meters,
 )
 from srk_bl_constants import locationCode_to_bl
@@ -133,7 +133,7 @@ def connected_components(lat: np.ndarray, lon: np.ndarray,
     if n == 0:
         return []
     d = haversine_meters(lat[:, None], lon[:, None], lat[None, :], lon[None, :])
-    adj = (d > 0) & (d <= radius_m)
+    adj = (d <= radius_m) & ~np.eye(len(d), dtype=bool)  # distance 0 links co-located events; only self is excluded
     seen = np.zeros(n, bool)
     comps: list[list[int]] = []
     for start in range(n):

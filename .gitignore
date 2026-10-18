@@ -1,0 +1,21 @@
+__pycache__/
+.DS_Store
+# LEPA production DB is ESA-sensitive — never commit
+*.db
+*.sqlite
+logs/
+tables/_bl_renumber_backup/
+
+# --- ESA-sensitive outputs: precise plant / population coordinates. LOCAL ONLY. ---
+# Tables with coordinate columns (events, mothers, slickspots, population
+# and BL centroids). Maps (figures) may be published; coordinate tables may
+# not. Regenerate with ./run_pipeline.sh (needs the local LEPA database).
+tables/step28_events_spatial_neighborhood.tsv
+tables/step28_seed_sampling_per_mother.tsv
+tables/step29a_population_crosswalk.tsv
+tables/step29a_slickspot_summary.tsv
+tables/step30h_bl_definition.tsv
+tables/step30h_cluster_assignments.tsv
+tables/step30h_landscape_per_BL.tsv
+tables/step30h_landscape_per_population.tsv
+tables/step30h_populationID_crosswalk.tsv

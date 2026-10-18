@@ -2,7 +2,7 @@
 
 Single source of truth for the Bottleneck-Lineage (BL) ordering, colour
 palette, and locationCode → BL mapping used across the SRK pipeline.
-Reads the same `Tables/EO_BL_summary.csv` and `Tables/EO_group_BL_summary.csv`
+Reads the same `EO_BL_summary.csv` and `EO_group_BL_summary.csv` (from SRK_bioinformatics; see project_paths.py)
 that the R constants file consumes, so ordering and colours stay in lock-step
 with the LEPA_EO_spatial_clustering figures.
 
@@ -30,9 +30,11 @@ from pathlib import Path
 
 import pandas as pd
 
+from project_paths import EO_BL_SUMMARY_CSV, EO_GROUP_BL_SUMMARY_CSV
+
 # ---------------------------------------------------------------------------
-DEFAULT_BL_SUMMARY_CSV = Path("Tables/EO_BL_summary.csv")
-DEFAULT_EO_GROUP_BL_CSV = Path("Tables/EO_group_BL_summary.csv")
+DEFAULT_BL_SUMMARY_CSV = EO_BL_SUMMARY_CSV # external — see project_paths.py
+DEFAULT_EO_GROUP_BL_CSV = EO_GROUP_BL_SUMMARY_CSV
 
 # BL → hex colour (Set1 palette, cluster-index mapping).
 BL_COLORS: dict[str, str] = {

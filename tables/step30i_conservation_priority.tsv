@@ -1,38 +1,40 @@
-populationID	BL	population_label	conservation_priority	priority_rank	years_observed	years_sig_below	years_sig_above	fold_2025	fold_2026	n_plants_2025	n_plants_2026
-5	BL1	EO27-3_10	mate_limited	0	[2025, 2026]	[2025, 2026]	[]	0.4170279908214003	0.02329622372693673	13	7
-8	BL1	EO27_9	mate_limited	0	[2025]	[2025]	[]	0.38945409360654526		9	0
-13	BL1	EO27-1_11, EO27RT_12	mate_limited	0	[2025, 2026]	[2025]	[]	0.36826555872427225	1.1073420348424072	54	111
-16	BL2	EO8_27, EO8_28	mate_limited	0	[2025, 2026]	[2026]	[2025]	1.6770734568042132	0.5778318093693224	37	137
-29	BL3	EO24_24	mate_limited	0	[2025, 2026]	[2026]	[]	0.44188465950642464	0.20955706030555546	1	5
-32	BL3	EO18-7_15, EO18-7_16, EO18-7_17, EO18-7_19, EO18-8_18	mate_limited	0	[2025, 2026]	[2026]	[2025]	1.2341106188526032	0.8203909804465642	113	140
-34	BL3	EO25-B_21	mate_limited	0	[2025, 2026]	[2026]	[]	0.7744268687955904	0.5026596433341198	7	8
-41	BL5	EO70_26	mate_limited	0	[2025, 2026]	[2025, 2026]	[]	0.5544266044862134	0.6066635057100065	25	28
-3	BL1	EO67_39	candidate_mate_limited	1	[2025, 2026]	[]	[]	0.5114451511017152	0.5188768349918964	4	6
-11	BL1	EO27-1_37	candidate_mate_limited	1	[2025]	[]	[]	0.7950776192051552		24	0
-17	BL2	EO26-2_35	candidate_mate_limited	1	[2025]	[]	[]	0.6630009186539121		8	0
-24	BL3	EO48_7	candidate_mate_limited	1	[2025]	[]	[]	0.789163474632354		9	0
-4	BL1	EO72-2_40	insufficient_data	2	[2025]	[]	[]	0.8950872146936564		2	0
-28	BL3	EO24-1_22	insufficient_data	2	[2025]	[]	[]	0.3153827475152692		2	0
-30	BL3	EO24-2_23	insufficient_data	2	[2025]	[]	[]	0.6684173522741207		1	0
-35	BL4	EO52_3	insufficient_data	2	[2025, 2026]	[]	[]	0.9228272060841018	0.8031387804522598	18	1
-37	BL4	EO38_1	insufficient_data	2	[2026]	[]	[]		3.3143339494212136	0	2
-1	BL1	EO30-1_13	buffered	3	[2025, 2026]	[]	[2026]	0.8822936077927869	1.433897430853318	20	16
-2	BL1	EO30-2_42	buffered	3	[2026]	[]	[]		1.1443905986650387	0	34
-19	BL2	EO26-4_36	buffered	3	[2025]	[]	[]	1.2205379437850719		11	0
-21	BL2	EO26-3_32, EO26-3_33, EO26-3_34	buffered	3	[2025]	[]	[]	1.3443874582196889		18	0
-25	BL3	EO32_6	buffered	3	[2025]	[]	[]	1.131503685621298		17	0
-27	BL3	EO24-7_25	buffered	3	[2025]	[]	[]	2.4314650870732137		3	0
-31	BL3	EO18-7_17	buffered	3	[2026]	[]	[]		1.1135700089639753	0	8
-36	BL4	EO38_1	buffered	3	[2025, 2026]	[]	[2026]	1.0332656895238082	2.333877633054688	33	26
-38	BL4	EO118_4	buffered	3	[2025]	[]	[]	0.9836374743283937		12	0
-40	BL4	EO76_2	buffered	3	[2025]	[]	[]	2.352825486385172		4	0
-43	BL5	EO68-3_5	buffered	3	[2025, 2026]	[]	[]	1.2905776750287206	0.9197603340122139	21	5
-44	BL5	EO68-3_5	buffered	3	[2026]	[]	[]		1.0301742883284597	0	5
-15	BL2	EO8_29, EO8_47	buffered_surplus	4	[2025]	[]	[2025]	2.174132036704624		25	0
-18	BL2	EO26-1_30	buffered_surplus	4	[2025]	[]	[2025]	1.585063047361373		22	0
-20	BL2	EO26-3_31, EO26-3_32	buffered_surplus	4	[2025]	[]	[2025]	2.0999997984414356		47	0
-22	BL2	EO61_38	buffered_surplus	4	[2025]	[]	[2025]	1.847197939524179		54	0
-23	BL2	EO29_8	buffered_surplus	4	[2025]	[]	[2025]	1.4283414565109915		19	0
-26	BL3	EO32_6	buffered_surplus	4	[2025]	[]	[2025]	1.502358093701648		19	0
-33	BL3	EO25-A_20	buffered_surplus	4	[2025]	[]	[2025]	1.4107286225781088		29	0
-39	BL4	EO76_2	buffered_surplus	4	[2025]	[]	[2025]	2.0752214254935963		53	0
+populationID	BL	population_label	conservation_priority	priority_rank	restoration_action	years_observed	years_sig_below	years_sig_above	fold_2025	fold_2026	n_plants_2025	n_plants_2026
+1	BL1	EO_NEW2026_53	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.34580369711298753	0	7
+5	BL1	EO30-3_51	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.22725934982919746	0	16
+8	BL1	EO27-3_10	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025, 2026]	[]	0.43149422572943386	0.024101199334638616	13	7
+11	BL1	EO27_9	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025]	[2025]	[]	0.40294832262355373		9	0
+17	BL1	EO27-1_11, EO27RT_12	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025]	[]	0.3810328699479667	1.098410034122125	54	124
+34	BL3	EO24_24	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2026]	[]	0.4571398932528724	0.2167858578723174	1	5
+38	BL3	EO25-B_21	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2026]	[]	0.8011099258293197	0.5199743444384931	7	8
+45	BL5	EO70_26	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025, 2026]	[]	0.5736409914930711	0.5640662716715793	25	39
+20	BL2	EO8_27, EO8_28	switching	2	intervene; genotype seed + mothers from both years	[2025, 2026]	[2026]	[2025]	1.7350060058043173	0.5977757693198388	37	137
+3	BL1	EO30-4_52	candidate_mate_limited	3	watch; sample more mothers to confirm	[2026]	[]	[]		0.5473080361206549	0	7
+6	BL1	EO67_39	candidate_mate_limited	3	watch; sample more mothers to confirm	[2025, 2026]	[]	[]	0.5291896056768527	0.5367896972515322	4	6
+21	BL2	EO26-2_35	candidate_mate_limited	3	watch; sample more mothers to confirm	[2025]	[]	[]	0.6859972189790281		8	0
+2	BL1	EO30-1_13	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	0.9128842903692869	1.4835904072368347	20	16
+19	BL2	EO8_29, EO8_47	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.249336083546245		25	0
+24	BL2	EO26-3_31, EO26-3_32	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.1727591831892727		47	0
+25	BL2	EO26-1_30	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.6398827897810573		22	0
+27	BL2	EO61_38	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.9110163412056522		54	0
+28	BL2	EO29_8	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.4777854598074582		19	0
+31	BL3	EO32_6	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.5543239002964873		19	0
+36	BL3	EO18-7_15, EO18-7_16, EO18-7_17, EO18-7_19, EO18-8_18	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2025]	1.2767362454160802	0.8929500018822218	113	163
+37	BL3	EO25-A_20	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.4592085833332333		29	0
+40	BL4	EO38_1	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	1.0689593889848918	2.4144631905891756	33	26
+43	BL4	EO76_2	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.1467380798998184		53	0
+47	BL5	EO68-3_5	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2025]	1.3349298743226303	0.9514258480994504	21	5
+4	BL1	EO30-2_42	reproduction_intact	5	no action	[2026]	[]	[]		1.1839603007996335	0	34
+14	BL1	EO27-1_37	reproduction_intact	5	no action	[2025]	[]	[]	0.8226415131108454		24	0
+22	BL2	EO26-3_32, EO26-3_33, EO26-3_34, EO26_48	reproduction_intact	5	no action	[2025]	[]	[]	1.3909516387315826		18	0
+23	BL2	EO26-4_36, EO26_49	reproduction_intact	5	no action	[2025]	[]	[]	1.2627763489127357		11	0
+29	BL3	EO48_7	reproduction_intact	5	no action	[2025]	[]	[]	0.8165546150741042		9	0
+30	BL3	EO32_6	reproduction_intact	5	no action	[2025]	[]	[]	1.2442665331496903		19	0
+32	BL3	EO24-7_25	reproduction_intact	5	no action	[2025]	[]	[]	2.5153566194450345		3	0
+39	BL4	EO52_3	reproduction_intact	5	no action	[2025, 2026]	[]	[]	0.9546365489686153	0.8307482125317763	18	1
+42	BL4	EO118_4	reproduction_intact	5	no action	[2025]	[]	[]	1.0177213046412368		12	0
+44	BL4	EO76_2	reproduction_intact	5	no action	[2025]	[]	[]	2.4339912917208117		4	0
+48	BL5	EO68-3_5	reproduction_intact	5	no action	[2026]	[]	[]		1.065720175042802	0	5
+7	BL1	EO72-2_40	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.9261789739868898		2	0
+33	BL3	EO24-1_22	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.3262954456224264		2	0
+35	BL3	EO24-2_23	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.6915142557371592		1	0
+41	BL4	EO38_1	insufficient_data	6	sample more plants (n < 3 per year)	[2026]	[]	[]		3.428376930608004	0	2

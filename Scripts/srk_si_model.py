@@ -1,9 +1,9 @@
-"""LEPA sporophytic SI model with Class I / Class II dominance ( Part 2).
+"""LEPA sporophytic SI model with Class I / Class II dominance (Part 2 of the long doc).
 
 Used by Step 30 to compute the per-mother random-mating pollen
 compatibility `P_compat` under the biologically correct sporophytic
 model, replacing the diploid per-pollen-allele approximation used in
- Part 1's § A.6.
+Part 1's § A.6.
 
 Biological model
 ----------------
@@ -33,7 +33,7 @@ Class II dominance rule:
 Configuration
 -------------
 The Fg → Class mapping is a first-class TSV at
-`tables//srk_fg_class.tsv` — editable by hand as the biology is
+`tables/srk_fg_class.tsv` — editable by hand as the biology is
 refined. `load_class_map()` reads it into a dict.
 
 The provisional data-driven default (see the rationale column of the
