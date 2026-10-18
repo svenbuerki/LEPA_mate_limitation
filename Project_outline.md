@@ -85,8 +85,24 @@ it is how we predict SI escape.
 <span style="color:#777"><strong>Data.</strong></span> LEPA field database
 (Genetic-Rescue-DB): 2025 + 2026 occurrence records, per-plant
 crown and height, per-mother seed yield and germplasm records.
-**1 275 plants** have crown + height + seed yield and map to a
-population. SRK inputs from the SRK bioinformatics pipeline
+**1 344 plants** have crown + height + seed yield and map to a
+population.
+
+**Sampled vs recorded-only slickspots.** Most events are slickspots
+where plants were sampled (occurrences), so their seed can be cleaned
+and given a germplasmID. A few were **recorded but not sampled**: the
+crew counted the fertile plants but arrived after seed had dropped
+("plants too far gone to collect"). These plants were part of that
+season's mating pool, so they **count in the model** (census, demes,
+predictions), but they **supply no seed for experiments**:
+
+| Population | Year | Adults | In recorded-only events | Demes with no seed |
+|---|---|:-:|:-:|:-:|
+| **P27** EO61 | 2026 | 523 | 176 (34 %) — events 709, 710, 711, 713 | 1 (20 adults) |
+| **P4** EO30-3 | 2026 | 152 | 62 (41 %) — event 718 | 1 (62 adults) |
+| P11 EO27 | 2025 | 305 | 43 (14 %) — event 59 (no remark) | — |
+
+SRK inputs from the SRK bioinformatics pipeline
 (Phases 1 – 4): the species-wide frequencies of **32 functional
 SRK alleles (Fgs)**, the empirical plant zygosity distribution,
 and per-individual adult genotypes (187 adults at the three
@@ -171,10 +187,13 @@ of seedlings per mother and mothers per location:
   | Season | Populations / demes | Target mothers | In LEPA DB | Selected | Short (sum over demes) | Seeds to germinate → seedlings |
   |---|:-:|:-:|:-:|:-:|:-:|:-:|
   | 2025 | 33 / 100 | **502** | 760 | 431 | 71 | 10 713 → 6 428 |
-  | 2026 | 41 / 191 | **893** | 613 | 337 | 557 | 8 288 → 4 974 |
+  | 2026 | 41 / 193 | **906** | 613 | 337 | 570 | 8 288 → 4 974 |
 
   Most of the 2026 shortfall sits in demes with no mother record
-  yet in the LEPA DB (2026 germplasm entry still in progress).
+  yet in the LEPA DB (2026 germplasm entry still in progress). Two
+  2026 demes can never be sampled for that season — P27 (EO61) deme 2
+  and P4 (EO30-3) deme 2 — because every plant in them was recorded
+  too late to collect seed.
 
 The per-mother recipe (germplasmIDs, seeds to germinate,
 seedlings to genotype) is
@@ -189,7 +208,7 @@ the per-event field recipe is
 kept for continuity with the earlier EO-level grouping; BL1 18
 populations, BL2 10, BL3 10, BL4 6, BL5 4;
 [Figures 3](#fig-3) – [5](#fig-5)). By 2025 → 2026 trajectory:
-**15 stable, 4 crash, 4 growth, 3 ambiguous, 7 above-ground in
+**14 stable, 5 growth, 4 crash, 3 ambiguous, 7 above-ground in
 2025 only, 15 in 2026 only** ([Figures 6](#fig-6) and
 [7](#fig-7)).
 
@@ -201,12 +220,12 @@ in 2025 and 15 only in 2026.
 | Season | Populations above ground | Demes (mean per population) | Single-deme populations | Median deme size | Demes < 8 plants | Single-plant demes |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|
 | 2025 | 33 | **100** (3.0) | 13 | 23.5 adults | 30 % | 6 % |
-| 2026 | 41 | **191** (4.7) | 19 | 13 adults | 40 % | 12 % |
+| 2026 | 41 | **193** (4.7) | 18 | 14 adults | 40 % | 11 % |
 
 Below 8 plants a deme cannot carry one copy of every SRK allele in the
 species pool; a single plant has no mate within 50 m
 ([Figure 8](#fig-8)). More than half of the populations breed as
-several demes rather than one pool (2025: 20 of 33; 2026: 22 of 41).
+several demes rather than one pool (2025: 20 of 33; 2026: 23 of 41).
 
 **Genetic predictions.** SRK allele diversity
 ([Figure 9](#fig-9)) and pollen compatibility
@@ -221,7 +240,7 @@ populations.
 
 | Rank | Status | n | Populations |
 |:-:|---|:-:|---|
-| 1 | **Mate-limited** | **8** | P8, P11, P17 (EO27 cluster) · P1 (EO_NEW2026), P5 (EO30-3) (BL1) · P34, P38 (BL3) · P45 (EO70, BL5) |
+| 1 | **Mate-limited** | **8** | P8, P11, P17 (EO27 cluster) · P1 (EO_NEW2026), P4 (EO30-3) (BL1) · P34, P38 (BL3) · P45 (EO70, BL5) |
 | 2 | **Switching** (over in 2025 → under in 2026) | **1** | P20 (EO8, BL2) |
 | 3 | Candidate mate-limited | 3 | P3 (EO30-4), P6 (EO67), P21 (EO26-2) |
 | 4 | **SI-escape candidate** | **12** | P19, P24, P25, P27, P28 (BL2) · P31, P36, P37 (BL3) · P2 (BL1) · P40, P43 (BL4) · P47 (BL5) |
@@ -238,7 +257,7 @@ P24 2.17) and at P40 (2.41 in 2026) and P43 (2.15).
 
 **Mate limitation is concentrated.** The EO27 cluster (P8, P11,
 P17) and P45 EO70 are the clearest mate-limited populations. Two
-small late-season BL1 populations seen only in 2026, P5 (EO30-3,
+small late-season BL1 populations seen only in 2026, P4 (EO30-3,
 fold 0.23) and P1 (EO_NEW2026, 0.35), join them.
 P45 is also the one population where adult SRK genotypes show a
 real pollen-compatibility gap (§ 5), so the behavioural and
@@ -273,7 +292,10 @@ direct read-out of reproductive status.
 mechanism (outcrossing vs selfing) needs seed–mother genotyping,
 since selfed seedlings carry only maternal SRK alleles. 2026
 calls should be re-run once the germplasm clean-up is complete.
-The 50 m deme is a geographic upper bound on realised gene flow.
+Recorded-only slickspots (crew too late to collect seed) are modelled
+but cannot be sampled, so experiments in P27 (EO61) and P4 (EO30-3)
+can only draw mothers from part of their 2026 mating pool. The 50 m
+deme is a geographic upper bound on realised gene flow.
 
 ### 5. What's next and preliminary data
 
@@ -325,7 +347,7 @@ and BL5 do not.
 | Option | BL | SMALL — populationID, fertile plants, mothers in DB **(2025 + 2026)** | BIG — same | Size ratio | Pair mother total | Comment |
 |:---|:---:|:---|:---|:---:|:---:|:---|
 | **D1 ★** | BL3 | **P38 EO25-B_21** · 26 adults · **7 + 8 = 15** mothers | **P36 EO18-7+EO18-8** · 1 563 adults · **115 + 163 = 278** mothers | 60× | **293** | Highest total mother budget by a wide margin; 2026 collection roughly doubled both sides. |
-| D2 | BL2 | P22 EO26-3_32/33/34 + EO26_48 · 187 adults · 18 + 0 mothers | P20 EO8_27+EO8_28 · 876 adults · 37 + 137 = 174 mothers | 5× | 192 | SMALL is no longer stable across years (39 → 148 adults once the late-July EO26 events joined it) and has no 2026 mothers; smallest size contrast. |
+| D2 | BL2 | P22 EO26-3_32/33/34 + EO26_48 · 187 adults · 18 + 0 mothers | P20 EO8_27+EO8_28 · 876 adults · 37 + 137 = 174 mothers | 5× | 192 | Neither side is stable any more: SMALL is ambiguous (39 → 148 adults once the late-July EO26 events joined it, no 2026 mothers) and BIG is growth (156 → 720 adults). Smallest size contrast. |
 | D3 | BL1 | P6 EO67_39 · 22 adults · 4 + 6 = 10 mothers | P17 EO27-1_11+EO27RT_12 · 1 976 adults · 55 + 125 = 180 mothers | 90× | 190 | Biggest size contrast but SMALL only 10 mothers across both years — thinnest Part C power. |
 
 **D1 is recommended** (★). It has the largest mother budget (293
@@ -418,8 +440,8 @@ via the empirical zygosity distribution.
   events in 33 populations (100 demes), 765 mothers with seed
   records.** The 2025 + 2026 pooled scope used by the
   Population framework (§ Populations) and the across-year dynamic
-  (§ Across-year population dynamic): **48 populations, 561
-  slickspots after 10 m cross-year matching, 291 per-year demes.**
+  (§ Across-year population dynamic): **48 populations, 562
+  slickspots after 10 m cross-year matching, 293 per-year demes.**
 - **Species-wide SRK prior (P1).** The **32 functional SRK allele
   groups (Fgs)** identified across LEPA, together with their
   species-wide empirical frequencies — a 32-slot probability
@@ -638,12 +660,12 @@ not used at this stage, so raw `N_fertile` sums are the appropriate
 across-year axis.
 
 - **48 populations** across the Snake River Plain, built from
-  561 slickspots (from 716 raw events after 10 m cross-year
+  562 slickspots (from 722 raw events after 10 m cross-year
   matching) + 52 historical locationID centroids.
 - **26 populations present in both 2025 and 2026** / 7 only in
-  2025 / 15 only in 2026. 291 per-year demes (100 in 2025, 191 in
+  2025 / 15 only in 2026. 293 per-year demes (100 in 2025, 193 in
   2026).
-- **49 of 561 slickspots (8.7 %) were re-visited in both years** —
+- **52 of 562 slickspots (9.3 %) were re-visited in both years** —
   the raw signal of the annual's year-to-year above-ground
   flickering.
 
@@ -654,7 +676,7 @@ legacy locationCodes (P17 merges EO27-1 + EO27RT, the clearest case).
 <a id="fig-2"></a>
 ![Figure 2](figures/step29a_populations_overview.png)
 
-**Figure 2.** The 48 populations across the Snake River Plain — 2025 + 2026 above-ground occupancy. One dot per population centroid, size ∝ total `n_fertile` across both years, coloured by occupancy pattern: purple = present in both years (26 of 48 populations), blue = 2025 only (7), orange = 2026 only (15). 48 populations total built from 561 slickspots (10 m cross-year matching) plus historical locationID centroids; 500 m connectivity graph on the pooled point set. 8.7 % of slickspots were re-visited at the 10 m scale across both years — the raw signal of the annual's year-to-year above-ground flickering. Source: `step08_population_maps.py`.
+**Figure 2.** The 48 populations across the Snake River Plain — 2025 + 2026 above-ground occupancy. One dot per population centroid, size ∝ total `n_fertile` across both years, coloured by occupancy pattern: purple = present in both years (26 of 48 populations), blue = 2025 only (7), orange = 2026 only (15). 48 populations total built from 562 slickspots (10 m cross-year matching) plus historical locationID centroids; 500 m connectivity graph on the pooled point set. 9.3 % of slickspots were re-visited at the 10 m scale across both years — the raw signal of the annual's year-to-year above-ground flickering. Source: `step08_population_maps.py`.
 
 The two downstream sections pick up from here: § **Bottleneck
 Lineages** below groups the 48 populations into the five BLs
@@ -679,8 +701,8 @@ flags). Rows ordered by BL (BL1 → BL5) then populationID.
 | P1 | BL1 | EO_NEW2026_53 | 2026 only | 2026_only |
 | P2 | BL1 | EO30-1_13 | both years | stable |
 | P3 | BL1 | EO30-4_52 | 2026 only | 2026_only |
-| P4 | BL1 | EO30-2_42 | 2026 only | 2026_only |
-| P5 | BL1 | EO30-3_51 | 2026 only | 2026_only |
+| P4 | BL1 | EO30-3_51 | 2026 only | 2026_only |
+| P5 | BL1 | EO30-2_42 | 2026 only | 2026_only |
 | P6 | BL1 | EO67_39 | both years | **stable (SMALL)** |
 | P7 | BL1 | EO72-2_40 | 2025 only | 2025_only |
 | P8 | BL1 | EO27-3_10 | both years | crash |
@@ -695,7 +717,7 @@ flags). Rows ordered by BL (BL1 → BL5) then populationID.
 | P17 | BL1 | EO27-1_11, EO27RT_12 | both years | **stable (BIG)** |
 | P18 | BL1 | EO27_50 | 2026 only | 2026_only |
 | P19 | BL2 | EO8_29, EO8_47 | both years | growth |
-| P20 | BL2 | EO8_27, EO8_28 | both years | **stable (BIG)** |
+| P20 | BL2 | EO8_27, EO8_28 | both years | **growth (BIG)** |
 | P21 | BL2 | EO26-2_35 | 2025 only | 2025_only |
 | P22 | BL2 | EO26-3_32, EO26-3_33, EO26-3_34, EO26_48 | both years | **ambiguous (SMALL)** |
 | P23 | BL2 | EO26-4_36, EO26_49 | both years | stable |
@@ -843,8 +865,8 @@ not used in this classification). The six classes:
 | Class | Definition | n |
 |---|---|:-:|
 | **crash** | both-year; `N_fert_2026 ≤ 25 % of N_fert_2025`; Δdiversity < 0 | 4 |
-| **stable** | both-year; 95 % CIs overlap on both metrics; `N_fert_total ≥ 20` | 15 |
-| **growth** | both-year; `N_fert_2026 ≥ 4 × N_fert_2025` | 4 |
+| **stable** | both-year; 95 % CIs overlap on both metrics; `N_fert_total ≥ 20` | 14 |
+| **growth** | both-year; `N_fert_2026 ≥ 4 × N_fert_2025` | 5 |
 | **ambiguous** | both-year; none of the above | 3 |
 | **2025_only** | present in 2025, absent above-ground in 2026 | 7 |
 | **2026_only** | absent above-ground in 2025, present in 2026 | 15 |
@@ -1451,7 +1473,7 @@ real population differences. The check re-runs with every
 - **P17 EO27-1 + EO27RT (BL1)** — flagged 2025 (fold 0.38).
   BIG side of the Next-test D3 candidate — in the direction
   predicted.
-- **P5 EO30-3 (BL1)** and **P1 EO_NEW2026 (BL1)** — flagged 2026
+- **P4 EO30-3 (BL1)** and **P1 EO_NEW2026 (BL1)** — flagged 2026
   (fold 0.23 and 0.35; 16 and 7 plants). Both are late-season
   populations seen only in 2026.
 - **P34 EO24_24 (BL3)** — flagged 2026 (fold 0.22).
@@ -1614,9 +1636,12 @@ plus the ≥ 1-per-event floor. The result is `M_frag` per event.
   431 are selected; **71 mothers short**, counted per deme (a mother
   in one deme cannot stand in for another deme's pollen pool),
   spread over 16 populations.
-- **2026 design: 893 mothers across 41 populations (191 demes).**
-  613 in the LEPA DB, 337 selected, 557 short — mostly demes with no
-  mother record yet (2026 germplasm entry in progress).
+- **2026 design: 906 mothers across 41 populations (193 demes).**
+  613 in the LEPA DB, 337 selected, 570 short — mostly demes with no
+  mother record yet (2026 germplasm entry in progress). Two demes
+  (P27 deme 2, P4 deme 2) consist only of slickspots recorded too
+  late to collect seed: they are part of the model but have no
+  mothers to sample in 2026.
 
 `M_frag` per event is the authoritative field-team recipe (see
 [`step29c_sampling_frag_aware_per_event_2025.tsv`](tables/step29c_sampling_frag_aware_per_event_2025.tsv)).
@@ -1634,7 +1659,7 @@ next field season:
 | Per-mother seedling-genotype floor | **15 seedlings/mother** (90 % allele-detection target) |
 | Field-side germination assumption | **60 %** |
 | Seeds to germinate per mother | **25** (= ceil(15 ÷ 0.60)) |
-| **Total mothers (2025: 33 populations, 100 demes)** | **502** (2026: 893) |
+| **Total mothers (2025: 33 populations, 100 demes)** | **502** (2026: 906) |
 | **Total seeds to germinate** | **502 × 25 = 12 550** |
 | **Total seedlings to genotype** | **~502 × 15 = ~7 530** |
 | Allele-detection target | 90 % probability of seeing every allele in each 50 m deme |
@@ -1657,7 +1682,7 @@ next field season:
   rule. 2025 delivers **431 mothers from the current DB → ~10 713 seeds
   to germinate → ~6 428 seedlings to genotype**, with **71 mothers
   short** (sum over demes). 2026: 337 mothers → 8 288 seeds →
-  ~4 974 seedlings, 557 short.
+  ~4 974 seedlings, 570 short.
 - **Event → component lookup**:
   [`step29c_event_to_component_50m.tsv`](tables/step29c_event_to_component_50m.tsv) —
   one row per event mapping (locationID, eventID) → 50 m component,

@@ -269,13 +269,16 @@ def load_all_events(db_path: Path, year: int | None = None) -> pd.DataFrame:
                 e.eventDecimalLongitude   AS lon,
                 e.organismQuantityFertile AS n_fertile_raw
             FROM Events e
-            JOIN Occurrences o ON o.eventID = e.eventID
-            JOIN Taxonomy    t ON o.taxonID = t.taxonID
-            WHERE t.genus='Lepidium' AND t.specificEpithet='papilliferum'
-              AND e.eventDecimalLatitude  IS NOT NULL
+            WHERE e.eventDecimalLatitude  IS NOT NULL
               AND e.eventDecimalLongitude IS NOT NULL
               AND e.organismQuantityFertile IS NOT NULL
-              AND (o.provenance IS NULL OR o.provenance = 'in situ')
+              AND (EXISTS (SELECT 1 FROM Occurrences o JOIN Taxonomy t ON o.taxonID = t.taxonID
+                           WHERE o.eventID = e.eventID
+                             AND t.genus='Lepidium' AND t.specificEpithet='papilliferum'
+                             AND (o.provenance IS NULL OR o.provenance = 'in situ'))
+                   -- occupied slickspot recorded but not sampled (no occurrences):
+                   -- its fertile plants are still part of the deme
+                   OR NOT EXISTS (SELECT 1 FROM Occurrences o WHERE o.eventID = e.eventID))
             """,
             con,
         )

@@ -171,11 +171,14 @@ def load_events_by_location(db_path: Path,
                 e.organismQuantityFertile AS n_fertile
             FROM Locations l
             JOIN Events      e ON e.locationID = l.locationID
-            JOIN Occurrences o ON o.eventID    = e.eventID
-            JOIN Taxonomy    t ON o.taxonID    = t.taxonID
-            WHERE t.genus='Lepidium' AND t.specificEpithet='papilliferum'
-              AND e.organismQuantityFertile IS NOT NULL
-              AND (o.provenance IS NULL OR o.provenance = 'in situ')
+            WHERE e.organismQuantityFertile IS NOT NULL
+              AND (EXISTS (SELECT 1 FROM Occurrences o JOIN Taxonomy t ON o.taxonID = t.taxonID
+                           WHERE o.eventID = e.eventID
+                             AND t.genus='Lepidium' AND t.specificEpithet='papilliferum'
+                             AND (o.provenance IS NULL OR o.provenance = 'in situ'))
+                   -- occupied slickspot recorded but not sampled (no occurrences):
+                   -- its fertile plants are still part of the deme
+                   OR NOT EXISTS (SELECT 1 FROM Occurrences o WHERE o.eventID = e.eventID))
             GROUP BY l.locationID, e.eventID
             """,
             con,

@@ -1,6 +1,6 @@
 populationID	BL	population_label	conservation_priority	priority_rank	restoration_action	years_observed	years_sig_below	years_sig_above	fold_2025	fold_2026	n_plants_2025	n_plants_2026
 1	BL1	EO_NEW2026_53	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.34580369711298753	0	7
-5	BL1	EO30-3_51	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.22725934982919746	0	16
+4	BL1	EO30-3_51	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.22725934982919746	0	16
 8	BL1	EO27-3_10	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025, 2026]	[]	0.43149422572943386	0.024101199334638616	13	7
 11	BL1	EO27_9	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025]	[2025]	[]	0.40294832262355373		9	0
 17	BL1	EO27-1_11, EO27RT_12	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025]	[]	0.3810328699479667	1.098410034122125	54	124
@@ -23,7 +23,7 @@ populationID	BL	population_label	conservation_priority	priority_rank	restoration
 40	BL4	EO38_1	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	1.0689593889848918	2.4144631905891756	33	26
 43	BL4	EO76_2	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.1467380798998184		53	0
 47	BL5	EO68-3_5	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2025]	1.3349298743226303	0.9514258480994504	21	5
-4	BL1	EO30-2_42	reproduction_intact	5	no action	[2026]	[]	[]		1.1839603007996335	0	34
+5	BL1	EO30-2_42	reproduction_intact	5	no action	[2026]	[]	[]		1.1839603007996335	0	34
 14	BL1	EO27-1_37	reproduction_intact	5	no action	[2025]	[]	[]	0.8226415131108454		24	0
 22	BL2	EO26-3_32, EO26-3_33, EO26-3_34, EO26_48	reproduction_intact	5	no action	[2025]	[]	[]	1.3909516387315826		18	0
 23	BL2	EO26-4_36, EO26_49	reproduction_intact	5	no action	[2025]	[]	[]	1.2627763489127357		11	0

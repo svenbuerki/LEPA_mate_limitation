@@ -179,10 +179,24 @@ LEPA_PROJECTS_ROOT=/data/projects ./run_pipeline.sh   # moves all defaults at on
 > **The LEPA database holds ESA-sensitive GPS data. Never commit it or
 > copy it into this repository** (`*.db` is in `.gitignore`).
 
+Which events count: every event with coordinates and a fertile count
+that either has a *L. papilliferum* in-situ occurrence or has no
+occurrence records at all. The second case is an occupied slickspot whose
+plants were recorded but not sampled (for example "plants too far gone
+to collect"); its fertile plants are part of the deme and the census,
+but it supplies no mothers or seed. step17 therefore cannot fill a deme
+made only of such events (2026: P27 deme 2, P4 deme 2).
+
 Data problems in the DB are reported, not guessed: events with a
 non-numeric `organismQuantityFertile` are skipped by step14 with a
 warning naming them; events without usable coordinates are left out of
 every population by step01.
+
+After a pipeline run that changes populations or demes, refresh the
+database's `Populations`, `Demes`, `BottleneckLineages` tables and the
+`Events.populationID` / `demeID` / `eventYear` columns with
+`Genetic_Rescue_DB/Analyses/populations_and_demes/01_create_populations_demes_tables.py --apply`
+(it reads `step29a_event_to_deme.tsv` and the population tables).
 
 ### 5.2 Copied into `tables/` from SRK_bioinformatics
 

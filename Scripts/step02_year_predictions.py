@@ -108,8 +108,15 @@ def ci_overlap(lo1: float, hi1: float, lo2: float, hi2: float) -> bool:
     return not (hi1 < lo2 or hi2 < lo1)
 
 
+def population_year_rng(year: int, deme_sizes: list[int]) -> np.random.Generator:
+    """Independent random stream per (population, year), seeded from that
+    population-year's own data (year + sorted deme sizes). A population's
+    prediction therefore depends only on its own demes: adding events to
+    another population, or renumbering populations, cannot change it."""
+    return np.random.default_rng([RNG_SEED, int(year)] + sorted(int(s) for s in deme_sizes))
+
+
 def main() -> None:
-    rng = np.random.default_rng(RNG_SEED)
 
     # ---- Load prerequisites ----
     prior = build_p1_prior(TABLES / "step26i_L1_carrier_inventory.tsv")
@@ -129,7 +136,8 @@ def main() -> None:
     for (pop_id, yr), sub in demes.groupby(["populationID", "year"]):
         deme_sizes = sub["component_N_fertile"].astype(int).tolist()
         div, pc = simulate_population_year(
-            deme_sizes, p1_vec, class_i_mask, zygosity_probs, rng,
+            deme_sizes, p1_vec, class_i_mask, zygosity_probs,
+            population_year_rng(yr, deme_sizes),
         )
         rows.append({
             "populationID": int(pop_id),
