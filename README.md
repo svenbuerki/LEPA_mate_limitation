@@ -35,7 +35,7 @@ Three repositories together carry the LEPA SRK conservation-genomics pipeline. E
 
 **Reading of the two arrows:** the data flow between these two repos is **bidirectional** — neither side runs without the other.
 
-- **`──▶` predictions flow out of this repo.** `LEPA_mate_limitation` produces, for every one of the 43 operational populations and every year, a predicted SRK allele diversity + a predicted pollen compatibility (sporophytic Class I / Class II dominance with empirical zygosity). These predictions feed `SRK_bioinformatics` Phase 5 — the hypothesis-driven cross design + validation step at the three populations that currently carry adult SRK genotypes (P3 = EO67, P38 = EO76, P40 = EO70).
+- **`──▶` predictions flow out of this repo.** `LEPA_mate_limitation` produces, for every one of the 48 operational populations and every year, a predicted SRK allele diversity + a predicted pollen compatibility (sporophytic Class I / Class II dominance with empirical zygosity). These predictions feed `SRK_bioinformatics` Phase 5 — the hypothesis-driven cross design + validation step at the three populations that currently carry adult SRK genotypes (P6 = EO67, P43 = EO76, P45 = EO70).
 - **`◀──` empirical inputs flow back in.** `SRK_bioinformatics` Phases 1 – 4 supply the ingredients the mate-limitation models are calibrated on: the species-wide prior `P1` (32 functional Fgs + their empirical frequencies), the functional-allele definitions, the Canu-amplicon zygosity distribution, and the per-individual SI / pSI / SC status calls. Change any of those inputs and this repo's predictions move.
 
 The three repositories are intentionally **cross-linked by README reference only** — no git submodules, no DOI coupling. Each repository tracks its own publication timeline.
@@ -61,8 +61,8 @@ The three repositories are intentionally **cross-linked by README reference only
 
 1. **Spatial framework** — define the three nested units (populations · Bottleneck Lineages · operational demes) on the pooled 2025 + 2026 occurrence records.
 2. **Across-year dynamic** — classify every population by its 2025 → 2026 trajectory (crash / stable / growth / ambiguous / single-year).
-3. **Per-population predictions on all 43 populations** — predicted SRK allele diversity (per 50 m deme, unioned to the population) + predicted pollen compatibility (sporophytic Class I / Class II dominance with empirical zygosity, size-weighted mean across demes).
-4. **SRK-based validation (Part C)** — at the three populations with Phase 4 adult SRK genotypes (P3 = EO67, P40 = EO70, P38 = EO76): observed vs predicted SRK diversity + observed vs predicted pollen compatibility + hypothesis decomposition + radius sweep.
+3. **Per-population predictions on all 48 populations** — predicted SRK allele diversity (per 50 m deme, unioned to the population) + predicted pollen compatibility (sporophytic Class I / Class II dominance with empirical zygosity, size-weighted mean across demes).
+4. **SRK-based validation (Part C)** — at the three populations with Phase 4 adult SRK genotypes (P6 = EO67, P45 = EO70, P43 = EO76): observed vs predicted SRK diversity + observed vs predicted pollen compatibility + hypothesis decomposition + radius sweep.
 5. **Behavioural prediction + validation on every population** — fit a species-wide plant-size → seed-yield allometry, compare each population's observed seed yield against the species-wide expectation, bin every population as *mate-limited* (under-producing → intervention priority), *reproduction intact* (at expectation), or *SI-escape candidate* (over-producing → seed-parent genotyping priority).
 
 Scripts are numbered `step01` – `step26` in run order (renumbered 2026-10-17; old → new map in [`PIPELINE.md`](PIPELINE.md) § 7). Output TSVs and figures keep their historical `step28*` – `step30*` filename prefixes so that links from the docs and from `SRK_bioinformatics` stay stable.
@@ -72,9 +72,9 @@ Scripts are numbered `step01` – `step26` in run order (renumbered 2026-10-17; 
 ## Status
 
 - First commit: 2026-10-15. Repository seeded from the mate-limitation subset of the parent `SRK_bioinformatics` repo at commit `7e7ac29` (`6494fbc..7e7ac29` chain on `svenbuerki/SRK_bioinformatics`, pushed 2026-10-08).
-- Behavioural seed-yield test (Step 30i, Figures 12a + 12b of the compact doc) covers all 43 populations. Population-level restoration priority list (both years combined): **6 mate-limited** · **2 switching** (over → under, P16 + P31) · **4 candidate mate-limited** · **10 SI-escape candidates** · **11 reproduction intact** · **4 insufficient data**.
-- Next test queued: within-BL stable small-vs-big pair D1 = P33 (EO25-B) × P31 (EO18-7 + EO18-8), 293 mothers available in the LEPA DB across 2025 + 2026.
-- Scope: Snake River Plain populations only (43 populations). Jarbidge Foothills populations are out of scope here.
+- Behavioural seed-yield test (`step13_size_seed_yield.py`, Figures 12a + 12b of `Project_outline.md`) covers all 48 populations. Population-level restoration priority list (both years combined): **8 mate-limited** · **1 switching** (over → under, P20) · **3 candidate mate-limited** · **12 SI-escape candidates** · **11 reproduction intact** · **4 insufficient data**.
+- Next test queued: within-BL stable small-vs-big pair D1 = P38 (EO25-B) × P36 (EO18-7 + EO18-8), 293 mothers available in the LEPA DB across 2025 + 2026.
+- Scope: Snake River Plain populations only (48 populations). Jarbidge Foothills populations are out of scope here.
 
 ## License
 
