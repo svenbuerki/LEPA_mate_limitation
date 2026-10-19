@@ -13,15 +13,15 @@ every pipeline iteration once the 50 m primary radius is locked in.
 Sweeps the primary pollen-flight radius across 10, 25, 50, 75, 100, 150,
 200 m and reports at each radius:
 
-  * **Landscape / connectivity** — per-location connected_share
+  * **Landscape / connectivity** — per-population connected_share
     (fraction of adults in a multi-event pollen-flow component) and
     largest_component_share (fraction in the biggest component).
-  * **§ B.4.2 fragmentation-aware sampling** — per-location
+  * **§ B.4.2 fragmentation-aware sampling** — per-population
     M_frag_aware (mothers needed for 90 % chance to observe every
-    predicted allele), plus total across the 39 locations.
-  * **§ A.8 pollen compatibility** — per-location mean predicted
+    predicted allele), plus total across the year's populations.
+  * **§ A.8 pollen compatibility** — per-population mean predicted
     P_compat under the sporophytic + empirical LEPA zygosity model.
-  * **Traffic-light classification** — fraction of locations at
+  * **Traffic-light classification** — fraction of populations at
     P_compat mean ≥ sustainable threshold (2/3 of species mean).
 
 Purpose
@@ -32,7 +32,7 @@ primary radius.
 
 Outputs
 -------
-    tables/step30_A_radius_sensitivity_per_location.tsv
+    tables/step30_A_radius_sensitivity_per_population_<year>.tsv
     tables/step30_A_radius_sensitivity_summary.tsv
     figures/step30_A_radius_sensitivity.png/pdf
 """
@@ -63,7 +63,6 @@ TABLES = Path("tables")
 FIGURES = Path("figures")
 EVENT_TSV = TABLES / "step28_events_spatial_neighborhood.tsv"
 PRIOR_TSV = TABLES / "step26i_L1_carrier_inventory.tsv"
-LOCATIONS_TSV = TABLES / "step29_sampling_per_location.tsv"
 
 TARGET_PROB = 0.90 # § B.4.2 90 %-chance-to-see-every-allele target
 N_DRAWS_MC = 120 # simulation replicates per location
@@ -132,10 +131,13 @@ def compute_per_location(events: pd.DataFrame, m_lookup: dict,
                           prior_f: np.ndarray, class_i_mask: np.ndarray,
                           zygosity_probs: np.ndarray,
                           radius_m: float,
-                          rng: np.random.Generator) -> pd.DataFrame:
-    """One row per location at the given radius."""
+                          rng_seed: int) -> pd.DataFrame:
+    """One row per POPULATION at the given radius. Each (population,
+    radius) gets its own random stream, so a population's result does not
+    depend on the others (or on their order)."""
     rows = []
-    for loc_id, sub in events.groupby("locationID"):
+    for loc_id, sub in events.groupby("populationID"):
+        rng = np.random.default_rng([rng_seed, int(radius_m), int(loc_id)])
         sub = sub.reset_index(drop=True)
         comps = connected_components(sub, radius_m)
         n_events = len(sub)
@@ -147,7 +149,7 @@ def compute_per_location(events: pd.DataFrame, m_lookup: dict,
                          if total_nf > 0 else 0.0)
         connected_share = (float(comp_nf[comp_ne > 1].sum() / total_nf)
                            if total_nf > 0 else 0.0)
-        F_location = 1.0 - connected_share
+        F_population = 1.0 - connected_share
         n_fert_eff = int(round(total_nf * largest_share))
 
         # § B.4.2 fragmentation-aware M
@@ -167,14 +169,14 @@ def compute_per_location(events: pd.DataFrame, m_lookup: dict,
         )
 
         rows.append({
-            "locationID": int(loc_id),
+            "populationID": int(loc_id),
             "radius_m": int(radius_m),
             "n_events": n_events,
             "total_n_fertile": total_nf,
             "n_components": len(comps),
             "largest_component_share": largest_share,
             "connected_share": connected_share,
-            "F_location": F_location,
+            "F_population": F_population,
             "N_fertile_effective": n_fert_eff,
             "M_actual_in_step28": M_actual,
             "M_frag_aware": int(M_frag),
@@ -274,8 +276,8 @@ def plot_sensitivity(summaries_by_year: dict,
     axC.legend(loc="lower right", fontsize=8, frameon=True)
 
     axD.set_xlabel("Pollinator radius (m)")
-    axD.set_ylabel("Fraction of locations in 'sustainable' band")
-    axD.set_title("D. Locations at or above sustainable",
+    axD.set_ylabel("Fraction of populations in 'sustainable' band")
+    axD.set_title("D. Populations at or above sustainable",
                   fontsize=12, loc="left", weight="bold")
     axD.set_ylim(0, 1.02)
     axD.legend(loc="lower right", fontsize=8)
@@ -298,19 +300,18 @@ def _sweep_one_year(events: pd.DataFrame, m_lookup: dict,
                       rng_seed: int) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Run the pollinator-radius sweep over `RADII_M` for one year's
     event set. Returns `(per_loc, summary)`."""
-    rng = np.random.default_rng(rng_seed)
     rows_per_r = []
     for r in RADII_M:
         print(f"[sensitivity] radius {r} m …")
         rows = compute_per_location(events, m_lookup, prior_f, class_i_mask,
-                                     zygosity_probs, r, rng)
+                                     zygosity_probs, r, rng_seed)
         rows_per_r.append(rows)
     per_loc = pd.concat(rows_per_r, ignore_index=True)
     summary = (per_loc.groupby("radius_m")
-               .agg(n_locations=("locationID", "nunique"),
+               .agg(n_populations=("populationID", "nunique"),
                     connected_share_mean=("connected_share", "mean"),
                     connected_share_median=("connected_share", "median"),
-                    F_location_mean=("F_location", "mean"),
+                    F_population_mean=("F_population", "mean"),
                     n_components_median=("n_components", "median"),
                     N_fertile_effective_median=("N_fertile_effective", "median"),
                     M_frag_total=("M_frag_aware", "sum"),
@@ -359,24 +360,9 @@ def main() -> None:
           f"struggling < {bands['struggling_max']:.3f}, sustainable ≥ "
           f"{bands['struggling_max']:.3f}.")
 
-    # Per-location M lookup (static — same for both years; falls back to
-    # 5 if the step29 lookup is missing).
-    m_lookup: dict[int, int] = {}
-    if LOCATIONS_TSV.exists():
-        loc_df = pd.read_csv(LOCATIONS_TSV, sep="\t", encoding="utf-8-sig")
-        col = ("M_actual_in_step28" if "M_actual_in_step28" in loc_df.columns
-               else "M_mothers_in_db" if "M_mothers_in_db" in loc_df.columns
-               else None)
-        if col is not None:
-            m_lookup = dict(zip(loc_df["locationID"].astype(int),
-                                loc_df[col].fillna(1).astype(int)))
-
-    # locationCode lookup (for the per-location TSV)
-    loc_meta = None
-    if LOCATIONS_TSV.exists():
-        loc_meta = (pd.read_csv(LOCATIONS_TSV, sep="\t", encoding="utf-8-sig")
-                      [["locationID", "locationCode"]]
-                      .drop_duplicates())
+    # Mothers in the LEPA DB per population and year (Step 17 tables);
+    # 5 when a population has none recorded yet.
+    from srk_units import load_event_units
 
     # ---- Loop over 2025 and 2026, each year queried directly from the DB
     FIGURES.mkdir(parents=True, exist_ok=True)
@@ -391,25 +377,33 @@ def main() -> None:
             continue
         events = events.dropna(subset=["lat", "lon", "n_fertile"]).copy()
         events["n_fertile"] = events["n_fertile"].astype(int)
-        n_loc = int(events["locationID"].nunique())
+        units = load_event_units(yr)
+        events = events.merge(units[["eventID", "populationID"]], on="eventID", how="inner")
+        n_loc = int(events["populationID"].nunique())
         n_evt = len(events)
-        print(f"[sensitivity] {n_evt} events across {n_loc} locationIDs")
+        print(f"[sensitivity] {n_evt} events across {n_loc} populations")
         n_locations_by_year[yr] = n_loc
 
-        # Fallback m_lookup for locationIDs missing from the static lookup
-        local_m_lookup = dict(m_lookup)
-        for lid in events["locationID"].unique():
-            local_m_lookup.setdefault(int(lid), 5)
+        local_m_lookup: dict[int, int] = {}
+        sp = TABLES / f"step29c_sampling_per_population_{yr}.tsv"
+        if sp.exists():
+            s = pd.read_csv(sp, sep="\t")
+            local_m_lookup = {int(p): int(m) for p, m in
+                              zip(s["populationID"], s["n_mothers_available_in_DB"]) if m > 0}
+        for pid in events["populationID"].unique():
+            local_m_lookup.setdefault(int(pid), 5)
 
         per_loc, summary = _sweep_one_year(
             events, local_m_lookup, prior_f, class_i_mask, zygosity_probs,
             bands, rng_seed=2029 + yr)
         per_loc["year"] = yr
         summary["year"] = yr
-        if loc_meta is not None:
-            per_loc = per_loc.merge(loc_meta, on="locationID", how="left")
+        codes = (units.groupby(["populationID", "BL"])["locationCode"]
+                      .agg(lambda s: ", ".join(sorted(set(map(str, s)))))
+                      .rename("locationCodes").reset_index())
+        per_loc = per_loc.merge(codes, on="populationID", how="left")
 
-        out_ploc = TABLES / f"step30_A_radius_sensitivity_per_location_{yr}.tsv"
+        out_ploc = TABLES / f"step30_A_radius_sensitivity_per_population_{yr}.tsv"
         per_loc.to_csv(out_ploc, sep="\t", index=False)
         out_sum = TABLES / f"step30_A_radius_sensitivity_summary_{yr}.tsv"
         summary.to_csv(out_sum, sep="\t", index=False)

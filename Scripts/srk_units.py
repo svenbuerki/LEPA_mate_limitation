@@ -107,6 +107,40 @@ def _match_step01_deme_ids(units: pd.DataFrame) -> pd.DataFrame:
                  .reset_index(drop=True))
 
 
+def sampling_year(tables: Path = TABLES) -> int:
+    """The single field season held by the current per-year sampling
+    tables (Steps 14 – 17 are run one year at a time; 2025 last)."""
+    ev = pd.read_csv(tables / "step28_events_spatial_neighborhood.tsv", sep="\t",
+                     usecols=["event_year"])
+    years = sorted(set(ev["event_year"].dropna().astype(int)))
+    if len(years) != 1:
+        raise SystemExit(f"[srk_units] sampling tables hold years {years}; "
+                         "run Steps 14 – 17 with a single --year")
+    return years[0]
+
+
+def location_deme_inventory(year: int) -> pd.DataFrame:
+    """Demes of one year grouped by DB location — the replacement for the
+    retired `step29c_event_to_component_50m.tsv`. One row per event with
+    `component_id_50m` = deme index within its location (0-based, ordered
+    by populationID, demeID). Demes never span two locations (checked)."""
+    u = load_event_units(year)
+    if (u.groupby(["populationID", "demeID"])["locationID"].nunique() > 1).any():
+        raise SystemExit("[srk_units] a deme spans two DB locations; "
+                         "location-level inventory is undefined")
+    deme_keys = (u.drop_duplicates(["locationID", "populationID", "demeID"])
+                   .sort_values(["locationID", "populationID", "demeID"]))
+    deme_keys["component_id_50m"] = deme_keys.groupby("locationID").cumcount()
+    u = u.merge(deme_keys[["populationID", "demeID", "component_id_50m"]],
+                on=["populationID", "demeID"])
+    return (u.rename(columns={"n_fertile": "event_n_fertile",
+                              "deme_N_fertile": "component_N_fertile",
+                              "deme_n_events": "component_N_events"})
+             [["locationID", "locationCode", "eventID", "component_id_50m",
+               "event_n_fertile", "component_N_fertile", "component_N_events",
+               "populationID", "demeID"]])
+
+
 def main() -> None:
     units = load_event_units()
     units.to_csv(EVENT_TO_DEME_TSV, sep="\t", index=False)

@@ -27,23 +27,23 @@ pool, 1 = she has no reachable donor at all.
 
 Location scale (per location)
 -----------------------------
-    connected_share_50m (from step29_location_connectivity.tsv)
+    connected_share_50m (from step29_population_connectivity.tsv)
     largest_component_share_50m (from same)
 
 At the location level, fragmentation is the fraction of adults NOT in
 a multi-event pollen-flow component. We report
-    F_location = 1 − connected_share_50m
+    F_population = 1 − connected_share_50m
 plus the median event-scale F within the location, so the two scales
 are visible together.
 
 Both scales are inputs to Phase C's mate-limitation regression: the
 per-mother K_spatial_50m becomes the β₂ (fragmentation) predictor; the
-per-location F_location becomes an explicit location-level covariate.
+per-population F_population becomes an explicit population-level covariate.
 
 Outputs
 -------
     tables/step30_A_fragmentation_per_event.tsv
-    tables/step30_A_fragmentation_per_location.tsv
+    tables/step30_A_fragmentation_per_population.tsv
     figures/step30_A_fragmentation_index.png/pdf
 """
 from __future__ import annotations
@@ -64,7 +64,7 @@ from step14_seed_sampling_per_mother import (
 DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
 
-CONN_TSV = DEFAULT_TABLES / "step29_location_connectivity.tsv"
+CONN_TSV = DEFAULT_TABLES / "step29_population_connectivity.tsv"
 EVENT_TSV = DEFAULT_TABLES / "step28_events_spatial_neighborhood.tsv"
 
 R_PRIMARY = 50
@@ -79,15 +79,16 @@ N_CEILING_SPECIES = K_SPECIES_FG // PLOIDY # = 8 under tetraploid
 
 
 def build_event_table() -> pd.DataFrame:
+    from srk_units import load_event_units, sampling_year
     ev = pd.read_csv(EVENT_TSV, sep="\t", encoding="utf-8-sig")
-    conn = pd.read_csv(CONN_TSV, sep="\t", encoding="utf-8-sig")
-    loc_meta = conn[["locationID", "locationCode"]].drop_duplicates()
+    units = load_event_units(sampling_year())
+    loc_meta = units[["eventID", "populationID", "BL", "locationCode"]]
 
     K_col = f"K_spatial_{R_PRIMARY}m"
     N_col = f"N_neighbor_events_{R_PRIMARY}m"
     N_reach_col = f"N_compatible_spatial_{R_PRIMARY}m"
 
-    df = ev.merge(loc_meta, on="locationID", how="left")
+    df = ev.merge(loc_meta, on="eventID", how="inner")
     df["K_spatial_50m"] = df[K_col].astype(int) # PLOIDY-aware
     # N_reachable_50m = donor plant count in the 50 m neighbourhood
     # (excluding the mother's own N_fertile-1). This is the axis the
@@ -95,31 +96,28 @@ def build_event_table() -> pd.DataFrame:
     df["N_reachable_50m"] = df[N_reach_col].astype(int)
     df["has_neighbour_50m"] = (df[N_col].astype(int) > 0).astype(int)
     df["F_event"] = 1.0 - np.minimum(df["K_spatial_50m"], K_SPECIES_FG) / K_SPECIES_FG
-    df["BL"] = locationCode_to_bl(df["locationCode"]).values
-    df["BL"] = df["BL"].fillna("Unassigned")
     return df[[
-        "eventID", "locationID", "locationCode", "BL",
+        "eventID", "populationID", "BL", "locationID", "locationCode",
         "n_fertile", "N_reachable_50m", "K_spatial_50m",
         "has_neighbour_50m", "F_event",
-    ]].sort_values(["locationCode", "F_event"], ascending=[True, False])
+    ]].sort_values(["populationID", "F_event"], ascending=[True, False])
 
 
 def build_location_table(event_df: pd.DataFrame) -> pd.DataFrame:
     conn = pd.read_csv(CONN_TSV, sep="\t", encoding="utf-8-sig")
-    agg = (event_df.groupby("locationID")
+    agg = (event_df.groupby("populationID")
            .agg(median_K_spatial_50m=("K_spatial_50m", "median"),
                 min_K_spatial_50m=("K_spatial_50m", "min"),
                 frac_isolated_events=("has_neighbour_50m",
                                        lambda s: float((s == 0).mean())),
                 median_F_event=("F_event", "median"))
            .reset_index())
-    df = conn[["locationID", "locationCode", "n_events", "total_n_fertile",
-               "connected_share_50m", "largest_component_share_50m",
-               "n_components_50m"]].merge(agg, on="locationID", how="left")
-    df["F_location"] = 1.0 - df["connected_share_50m"]
-    df["BL"] = locationCode_to_bl(df["locationCode"]).values
-    df["BL"] = df["BL"].fillna("Unassigned")
-    return df.sort_values(["F_location", "median_F_event"],
+    df = conn[["populationID", "year", "BL", "locationCodes", "n_events",
+               "total_n_fertile", "connected_share_50m",
+               "largest_component_share_50m", "n_components_50m"]].merge(
+                   agg, on="populationID", how="left")
+    df["F_population"] = 1.0 - df["connected_share_50m"]
+    return df.sort_values(["F_population", "median_F_event"],
                           ascending=[False, False])
 
 
@@ -152,9 +150,7 @@ def plot_event_K_by_location(ev_df: pd.DataFrame, loc_df: pd.DataFrame,
     ev = ev_df.copy()
     ev["N_plot"] = np.maximum(ev["N_reachable_50m"].astype(int), 1)
 
-    bls = [b for b in BL_ORDER if b in loc_df["BL"].values]
-    if (loc_df["BL"] == "Unassigned").any():
-        bls.append("Unassigned")
+    bls = sorted(loc_df["BL"].dropna().unique(), key=lambda b: int(str(b)[2:]))
     palette = {**BL_COLORS, "Unassigned": "#8a8a8a"}
 
     heights = [max(int((loc_df["BL"] == b).sum()), 1) for b in bls]
@@ -173,7 +169,7 @@ def plot_event_K_by_location(ev_df: pd.DataFrame, loc_df: pd.DataFrame,
                     .reset_index(drop=True))
         colour = palette[bl]
         for i, r in sub_locs.iterrows():
-            vals = ev[ev["locationID"] == r["locationID"]]["N_plot"].values
+            vals = ev[ev["populationID"] == r["populationID"]]["N_plot"].values
             if len(vals) == 0:
                 continue
             ax.boxplot(
@@ -188,13 +184,13 @@ def plot_event_K_by_location(ev_df: pd.DataFrame, loc_df: pd.DataFrame,
                                 markeredgecolor="none"),
             )
             if len(vals) >= 1:
-                jitter = (np.random.default_rng(int(r["locationID"]))
+                jitter = (np.random.default_rng(int(r["populationID"]))
                           .uniform(-0.20, 0.20, size=len(vals)))
                 ax.scatter(vals, np.full(len(vals), i) + jitter,
                            s=12, color=colour, edgecolor="white",
                            linewidth=0.4, alpha=0.75, zorder=3)
         labels = [
-            f"{make_location_label(r['locationCode'], r['locationID'])}"
+            f"P{int(r['populationID'])} {r['locationCodes']}"
             f" (events = {int(r['n_events'])}, "
             f"adults = {int(r['total_n_fertile'])})"
             for _, r in sub_locs.iterrows()
@@ -225,8 +221,8 @@ def plot_event_K_by_location(ev_df: pd.DataFrame, loc_df: pd.DataFrame,
     axes[-1].set_xticks(xticks)
     axes[-1].set_xticklabels([str(x) for x in xticks])
     fig.suptitle(
-        "Event-scale pollen-donor plant count per LEPA location "
-        "(purely spatial, 50 m pollinator range, LEPA tetraploid)",
+        f"{int(loc_df['year'].iloc[0])} — event-scale pollen-donor plant count "
+        "per population (purely spatial, 50 m pollinator range, tetraploid)",
         fontsize=13, y=0.995,
     )
     fig.tight_layout(rect=[0, 0, 0.94, 0.97])
@@ -243,19 +239,19 @@ def main() -> None:
     print(f"[step30b] Wrote {out_ev} ({len(ev)} events)")
 
     loc = build_location_table(ev)
-    out_loc = DEFAULT_TABLES / "step30_A_fragmentation_per_location.tsv"
+    out_loc = DEFAULT_TABLES / "step30_A_fragmentation_per_population.tsv"
     loc.to_csv(out_loc, sep="\t", index=False)
-    print(f"[step30b] Wrote {out_loc} ({len(loc)} locations)")
+    print(f"[step30b] Wrote {out_loc} ({len(loc)} populations)")
 
     print("[step30b] Fragmentation summary (50 m primary):")
     print(f" Events with ≥ 1 neighbour within 50 m : "
           f"{int(ev['has_neighbour_50m'].sum())} / {len(ev)}")
-    print(f" Locations with F_location ≥ 0.5 : "
-          f"{int((loc['F_location'] >= 0.5).sum())} / {len(loc)}")
+    print(f" Populations with F_population ≥ 0.5 : "
+          f"{int((loc['F_population'] >= 0.5).sum())} / {len(loc)}")
     print(f" Median event-scale F_event : "
           f"{ev['F_event'].median():.3f}")
-    print(f" Median location-scale F_location : "
-          f"{loc['F_location'].median():.3f}")
+    print(f" Median population-scale F_population : "
+          f"{loc['F_population'].median():.3f}")
 
     DEFAULT_FIGURES.mkdir(parents=True, exist_ok=True)
     plot_event_K_by_location(

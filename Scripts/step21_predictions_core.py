@@ -53,8 +53,6 @@ DEFAULT_TABLES = Path("tables")
 DEFAULT_FIGURES = Path("figures")
 DEFAULT_PRIOR_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_LOCATIONS_TSV = DEFAULT_TABLES / "step29_sampling_per_location.tsv"
-DEFAULT_CONNECTIVITY_TSV = DEFAULT_TABLES / "step29_location_connectivity.tsv"
-DEFAULT_EVENT_COMPONENT_TSV = DEFAULT_TABLES / "step29c_event_to_component_50m.tsv"
 
 PRIOR_ESS = 20.0 # effective sample size of the P1 prior; small so real
                         # seed data can shift it after modest sampling.
@@ -65,6 +63,20 @@ RNG_SEED = 2030
 # ---------------------------------------------------------------------------
 # 1 — build the P1 (species-wide) prior over Fgs
 # ---------------------------------------------------------------------------
+
+def _deme_inventory_by_location() -> dict[int, list[tuple[int, int]]]:
+    """{locationID: [(deme index within location, deme N_fertile), ...]}
+    built from the current demes (srk_units) of the sampling year."""
+    from srk_units import location_deme_inventory, sampling_year
+    inv = location_deme_inventory(sampling_year())
+    comp_by_loc: dict[int, list[tuple[int, int]]] = {}
+    for r in (inv.drop_duplicates(["locationID", "component_id_50m"])
+                 .itertuples(index=False)):
+        comp_by_loc.setdefault(int(r.locationID), []).append(
+            (int(r.component_id_50m), int(r.component_N_fertile)))
+    return comp_by_loc
+
+
 def build_p1_prior(carrier_tsv: Path) -> pd.DataFrame:
     """Aggregate per-allele carrier counts to per-Fg frequency estimates.
 
@@ -166,20 +178,10 @@ def predicted_diversity_per_location(
     K_fg = freqs.shape[1]
 
     # Load component inventory from step29c (same source P_compat uses).
-    if event_component_tsv is None:
-        event_component_tsv = DEFAULT_EVENT_COMPONENT_TSV
-    comp_by_loc: dict[int, list[tuple[int, int]]] = {}
-    if Path(event_component_tsv).exists():
-        comp_df = pd.read_csv(event_component_tsv, sep="\t",
-                              encoding="utf-8-sig")
-        comp_unique = (
-            comp_df.drop_duplicates(["locationID", "component_id_50m"])
-                   [["locationID", "component_id_50m", "component_N_fertile"]]
-        )
-        for _, r in comp_unique.iterrows():
-            comp_by_loc.setdefault(int(r["locationID"]), []).append(
-                (int(r["component_id_50m"]), int(r["component_N_fertile"]))
-            )
+    # Deme inventory per location from the project units (srk_units),
+    # for the field season the sampling tables hold. (`event_component_tsv`
+    # is kept for API compatibility and ignored.)
+    comp_by_loc = _deme_inventory_by_location()
 
     loc_rows: list[dict] = []
     comp_rows: list[dict] = []
@@ -480,23 +482,10 @@ def predicted_pcompat_per_location(
     # a per-location component inventory (one row per unique
     # (locationID, component_id_50m) with component_N_fertile).
     # ------------------------------------------------------------------
-    if event_component_tsv is None:
-        event_component_tsv = DEFAULT_EVENT_COMPONENT_TSV
-    comp_by_loc: dict[int, list[tuple[int, int]]] = {}
-    if Path(event_component_tsv).exists():
-        comp_df = pd.read_csv(event_component_tsv, sep="\t",
-                              encoding="utf-8-sig")
-        comp_unique = (
-            comp_df.drop_duplicates(["locationID", "component_id_50m"])
-                   [["locationID", "component_id_50m", "component_N_fertile"]]
-        )
-        for _, r in comp_unique.iterrows():
-            comp_by_loc.setdefault(int(r["locationID"]), []).append(
-                (int(r["component_id_50m"]), int(r["component_N_fertile"]))
-            )
-    else:
-        print(f"[step30] {event_component_tsv} not found — falling back to "
-              "location-level N_fertile_effective_50m proxy.")
+    # Deme inventory per location from the project units (srk_units),
+    # for the field season the sampling tables hold. (`event_component_tsv`
+    # is kept for API compatibility and ignored.)
+    comp_by_loc = _deme_inventory_by_location()
 
     loc_rows: list[dict] = []
     comp_rows: list[dict] = []
@@ -1696,42 +1685,29 @@ def main() -> None:
     # within-location connected component at 10 m) to define the
     # effective mating N; if connectivity data are missing the fallback
     # is `total_n_fertile` (i.e. treat the location as one unit).
-    if DEFAULT_CONNECTIVITY_TSV.exists():
-        conn = pd.read_csv(DEFAULT_CONNECTIVITY_TSV, sep="\t",
-                            encoding="utf-8-sig")
-        keep = ["locationID", "n_events", "total_n_fertile"] + [
-            c for c in conn.columns
-            if c.startswith(("connected_share_", "largest_component_share_",
-                             "n_components_"))
-        ]
-        conn = conn[keep].rename(columns={
-            "n_events": "conn_n_events",
-            "total_n_fertile": "conn_total_n_fertile",
-        })
-        locations = locations.merge(conn, on="locationID", how="left")
-        # Effective mating N = adults in the largest connected component
-        # at the 50 m primary pollen-flight radius. Use step29b's OWN
-        # census (conn_total_n_fertile) as the base — the connectivity
-        # share was computed against that number, not step29's SQL
-        # census, so multiplying by step29's number produces a subtly
-        # wrong N_fert_eff. Also overwrite total_n_fertile so every
-        # downstream consumer sees the spatially-analysable census
-        # (some events may be dropped by the coord filter — those are
-        # the ~2-4 % discrepancy between step29 and step29b totals).
-        locations["total_n_fertile"] = locations["conn_total_n_fertile"].astype(int)
-        locations["N_fertile_effective_50m"] = (
-            locations["conn_total_n_fertile"].astype(float)
-            * locations["largest_component_share_50m"].fillna(1.0)
-        ).round().astype(int)
-        print(f"[step30] Woven in within-location connectivity from "
-              f"{DEFAULT_CONNECTIVITY_TSV.name} "
-              f"(mean largest-component share at 50 m = "
-              f"{locations['largest_component_share_50m'].mean():.2f}).")
-    else:
-        print(f"[step30] {DEFAULT_CONNECTIVITY_TSV} not found — "
-              "connectivity predictor unavailable. Run step28c first.")
-        locations["largest_component_share_50m"] = 1.0
-        locations["N_fertile_effective_50m"] = locations["total_n_fertile"]
+    # Connectivity from the project demes (srk_units) — no dependency on
+    # Step 16's location table. Per location: census = sum of its deme
+    # sizes; largest-deme share; effective N = adults in the largest deme.
+    from srk_units import location_deme_inventory, sampling_year
+    inv = (location_deme_inventory(sampling_year())
+             .drop_duplicates(["locationID", "component_id_50m"]))
+    conn = (inv.groupby("locationID")["component_N_fertile"]
+               .agg(conn_total_n_fertile="sum", largest_deme="max")
+               .reset_index())
+    conn["largest_component_share_50m"] = (conn["largest_deme"]
+                                           / conn["conn_total_n_fertile"])
+    locations = locations.merge(
+        conn[["locationID", "conn_total_n_fertile", "largest_component_share_50m"]],
+        on="locationID", how="left")
+    locations["total_n_fertile"] = (locations["conn_total_n_fertile"]
+                                    .fillna(locations["total_n_fertile"]).astype(int))
+    locations["largest_component_share_50m"] = locations["largest_component_share_50m"].fillna(1.0)
+    locations["N_fertile_effective_50m"] = (
+        locations["total_n_fertile"].astype(float)
+        * locations["largest_component_share_50m"]).round().astype(int)
+    print(f"[step30] Connectivity from project demes "
+          f"(mean largest-deme share = "
+          f"{locations['largest_component_share_50m'].mean():.2f}).")
 
     # ---- Prediction outputs ----
     # Per-50 m-component drift + sampling simulation; location-level

@@ -133,17 +133,17 @@ stay stable; § 7 maps them to the current step numbers.
 |---|---|---|---|
 | `step14_seed_sampling_per_mother --year Y` | Seeds per mother (15 seedlings, 90 % allele detection); 50 m spatial neighbourhood per event | EXT LEPA DB (`Events`, `Occurrences`, `Germplasm`, `Taxonomy`) | t/`step28_seed_sampling_per_mother` · `step28_events_spatial_neighborhood` · `step28_coverage_curves_by_Nfertile` · `step28_aggregation_curves_by_Nfertile` · `step28_mothers_for_full_detection_by_bin` · `step28_mothers_for_full_detection_by_location` · f/`step28_coverage_curves` |
 | `step15_event_location_sampling --year Y` | Per-mother field recipe (germplasm, seeds available) | EXT LEPA DB · t/`step28_seed_sampling_per_mother` · `step26i_L1_carrier_inventory` | t/`step29_field_team_sampling_recipe` · `step29_sampling_per_event` · `step29_sampling_per_location` · `step29_location_coverage_curves` |
-| `step16_connectivity` | Connectivity at 10 / 25 / 50 m | t/`step28_events_spatial_neighborhood` · `step29_sampling_per_location` | t/`step29_location_connectivity` |
+| `step16_connectivity` | Connectivity at 10 / 25 / 50 m **per population** (sampling year) | t/`step28_events_spatial_neighborhood` · `step29a_event_to_deme` (via `srk_units`) | t/`step29_population_connectivity` |
 | `step17_fragmentation_sampling --year Y` | **Mothers per deme**, rolled up per population; germplasmID selection | t/`step28_events_spatial_neighborhood` · `step29_field_team_sampling_recipe` · `step29a_population_crosswalk` · `step29a_demes_per_population_year` | t/`step29c_sampling_per_population_Y` · `step29c_sampling_frag_aware_per_event_Y` · `step29c_partC_germplasmID_selection_Y` · f/`step29c_sampling_per_population_Y` |
-| `step18_mating_pool_structure` | Mating-pool structure figure | t/`step29c_event_to_component_50m` ⚠ | t/`step29d_mating_pool_summary` · f/`step29d_mating_pool_structure` |
-| `step19_fragmentation_index` | Fragmentation index per event / location | t/`step28_events_spatial_neighborhood` · `step29_location_connectivity` | t/`step30_A_fragmentation_per_event` · `step30_A_fragmentation_per_location` · f/`step30_A_fragmentation_index` |
-| `step20_pollinator_radius` | 10 – 200 m pollinator-radius sweep (justifies 50 m) | EXT LEPA DB · t/`step29_sampling_per_location` · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_radius_sensitivity_summary[_2025\|_2026]` · `step30_A_radius_sensitivity_per_location_2025\|_2026` · f/`step30_A_radius_sensitivity` |
+| `step18_mating_pool_structure` | Deme structure **per population** (sampling year) | t/`step29a_event_to_deme` (via `srk_units`) | t/`step29d_mating_pool_summary` · f/`step29d_mating_pool_structure` |
+| `step19_fragmentation_index` | Fragmentation index per event / **population** | t/`step28_events_spatial_neighborhood` · `step29_population_connectivity` · `step29a_event_to_deme` | t/`step30_A_fragmentation_per_event` · `step30_A_fragmentation_per_population` · f/`step30_A_fragmentation_index` |
+| `step20_pollinator_radius` | 10 – 200 m pollinator-radius sweep **per population**, both years (justifies 50 m) | EXT LEPA DB · t/`step29a_event_to_deme` · `step29c_sampling_per_population_2025\|_2026` · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_radius_sensitivity_summary[_2025\|_2026]` · `step30_A_radius_sensitivity_per_population_2025\|_2026` · f/`step30_A_radius_sensitivity` |
 
 ### Part 4 — Location-level predictions + seed-count power (2025)
 
 | Step | Purpose | Reads | Writes |
 |---|---|---|---|
-| `step21_predictions_core --year 2025` | Drift model per 50 m component; predicted diversity + compatibility per location; species prior | t/`step29_sampling_per_location` · `step29_location_connectivity` · `step29c_event_to_component_50m` ⚠ · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_prediction_location_diversity` · `step30_A_prediction_location_pcompat` · `step30_A_prediction_component_*` · `step30_A_prediction_prior_frequencies` · `step30_A_traffic_light_bands` · `step30_A_prediction_per_mother_fecundation` · f/`step30_A_prediction_fecundation` · `step30_A_diversity_vs_pcompat` · `step30_A_diversity_unbiased_vs_sampling` |
+| `step21_predictions_core --year 2025` | Drift model per deme; predicted diversity + compatibility per **DB location** (Part C needs location level, see § 6); species prior | t/`step29_sampling_per_location` · `step29a_event_to_deme` (demes grouped by location, via `srk_units`) · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_prediction_location_diversity` · `step30_A_prediction_location_pcompat` · `step30_A_prediction_component_*` · `step30_A_prediction_prior_frequencies` · `step30_A_traffic_light_bands` · `step30_A_prediction_per_mother_fecundation` · f/`step30_A_prediction_fecundation` · `step30_A_diversity_vs_pcompat` · `step30_A_diversity_unbiased_vs_sampling` |
 | `step22_seed_justification` | Precision + regression power at 15 seedlings per mother | t/`step30_A_prediction_prior_frequencies` | t/`step28d_pcompat_precision` · `step28d_matelim_power` · f/same names |
 
 ### Part 5 — Validation against adult SRK genotypes (Part C)
@@ -222,13 +222,17 @@ changes.
 
 ## 6. Known limitations
 
-- **Steps 16, 18 – 21 still aggregate by DB location**, not by
-  population. Their mother allocation and deme structure match the
-  population demes (checked event by event for 2025 and 2026), but their
-  summaries are per location. Migration to populations is in progress.
-- **Steps 18 and 21 read `step29c_event_to_component_50m.tsv`**, a frozen
-  2025 table that step17 no longer writes. It matches the current 2025
-  demes except one co-located pair (P38, events 34 + 92).
+- **Steps 21 and 23 – 26 (Part C) work by DB location / EO on purpose.**
+  The adult SRK genotypes are recorded per EO only: the 885 genotyped
+  occurrences in the LEPA DB have no eventID, locationID or date, so no
+  adult can be placed in a population or deme. Step 21 therefore groups
+  the current demes by location (demes never span two locations). Two of
+  the three clean-overlap sites are one population (EO67 = P6, EO70 =
+  P45); **EO76 is two populations (P43 + P44)** and is compared as one
+  site. Linking genotyped occurrences to their events would allow a
+  population-level Part C.
+- All other steps work on populations and demes (`srk_units`); the
+  retired `step29c_event_to_component_50m.tsv` is no longer read.
 - **step14** labels locations from a previous step15 output when
   present (cosmetic; falls back to locationIDs on a first run).
 - **step22** simulates the original 505-mother × 39-location design

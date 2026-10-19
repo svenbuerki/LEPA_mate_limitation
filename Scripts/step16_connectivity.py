@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Step 29b — Within-location pollen connectivity.
+"""Step 16 (historical tag: Step 29b) — within-population pollen connectivity.
 
-Reads the event-level spatial frame written by Step 28
-(`step28_events_spatial_neighborhood.tsv`) and computes, for each LEPA
-location, how much of its adult breeding pool is actually connected via
-pollen flow at seven flight radii (10, 25, 50, 75, 100, 150, 200 m).
+Reads the event-level spatial frame written by Step 14
+(`step28_events_spatial_neighborhood.tsv`, one field season) and computes,
+for each POPULATION (srk_units), how much of its adult breeding pool is
+connected via pollen flow at 10, 25 and 50 m. Output:
+`tables/step29_population_connectivity.tsv`.
 The primary radius adopted downstream is **50 m** — see Step 29a
 (`step29a_pollinator_radius_sensitivity.py`) for the biological
 justification.
@@ -37,9 +38,9 @@ form mating clusters, others sit alone.
 
 Outputs
 -------
-tables/step29_location_connectivity.tsv
+tables/step29_population_connectivity.tsv
     One row per location with the metrics above at R = 10 / 25 / 50 m.
-figures/step29_location_connectivity.png
+figures/step29_population_connectivity.png
     Per-location bar chart of `connected_share_10m`, panelled by BL
     (using the project-wide BL palette / order).
 """
@@ -87,7 +88,7 @@ def _connected_components(adj: np.ndarray) -> list[list[int]]:
 def build_connectivity(spatial: pd.DataFrame,
                        radii_m: tuple[float, ...] = RADII_M) -> pd.DataFrame:
     rows = []
-    for loc_id, sub in spatial.groupby("locationID"):
+    for loc_id, sub in spatial.groupby("populationID"):
         n_ev = len(sub)
         n_fert = sub["n_fertile"].astype(int).values
         total_fert = int(n_fert.sum())
@@ -96,7 +97,7 @@ def build_connectivity(spatial: pd.DataFrame,
             lat[:, None], lon[:, None], lat[None, :], lon[None, :],
         )
         row = {
-            "locationID":       int(loc_id),
+            "populationID":     int(loc_id),
             "n_events":         n_ev,
             "total_n_fertile":  total_fert,
         }
@@ -231,51 +232,32 @@ def plot_radius_sensitivity(df: pd.DataFrame, out_png: Path, out_pdf: Path):
 
 
 def main() -> None:
+    from srk_units import load_event_units, sampling_year
     if not INPUT_SPATIAL.exists():
-        raise SystemExit(
-            f"Missing {INPUT_SPATIAL} — run step28 first.")
+        raise SystemExit(f"Missing {INPUT_SPATIAL} — run step14 first.")
     spatial = pd.read_csv(INPUT_SPATIAL, sep="\t", encoding="utf-8-sig")
+    year = sampling_year()
+    units = load_event_units(year)
+    spatial = spatial.merge(units[["eventID", "populationID"]], on="eventID", how="inner")
+    meta = (units.groupby(["populationID", "BL"])["locationCode"]
+                 .agg(lambda s: ", ".join(sorted(set(map(str, s)))))
+                 .rename("locationCodes").reset_index())
 
-    # Optional location codes (join for display purposes)
-    if INPUT_LOCATIONS.exists():
-        loc_meta = pd.read_csv(INPUT_LOCATIONS, sep="\t",
-                                encoding="utf-8-sig")
-        loc_code_map = (loc_meta.drop_duplicates("locationID")
-                        .set_index("locationID")["locationCode"].to_dict())
-    else:
-        loc_code_map = {}
-
-    df = build_connectivity(spatial)
-    df["locationCode"] = df["locationID"].map(loc_code_map).fillna(
-        df["locationID"].astype(str))
-    # tidy column order
-    df = df[
-        ["locationID", "locationCode", "n_events", "total_n_fertile"]
-        + [c for c in df.columns
-           if c.startswith(("n_components_", "largest_component_share_",
-                            "connected_share_"))]
-    ]
-    out_tsv = DEFAULT_TABLES / "step29_location_connectivity.tsv"
+    df = build_connectivity(spatial).merge(meta, on="populationID", how="left")
+    df.insert(1, "year", year)
+    df = df[["populationID", "year", "BL", "locationCodes", "n_events", "total_n_fertile"]
+            + [c for c in df.columns
+               if c.startswith(("n_components_", "largest_component_share_",
+                                "connected_share_"))]]
+    out_tsv = DEFAULT_TABLES / "step29_population_connectivity.tsv"
     df.to_csv(out_tsv, sep="\t", index=False)
-    print(f"[step29] Wrote {out_tsv}")
-
-    # High-level report
+    print(f"[step29b] Wrote {out_tsv} ({len(df)} populations, {year})")
     for R in RADII_M:
         R_i = int(round(R))
         n_fully = int((df[f"connected_share_{R_i}m"] >= 0.9).sum())
-        n_frag  = int((df[f"connected_share_{R_i}m"] <  0.5).sum())
-        print(f"[step29] R = {R_i} m: "
-              f"{n_fully}/{len(df)} locations ≥ 90 % connected · "
-              f"{n_frag}/{len(df)} locations < 50 % connected.")
-
-    DEFAULT_FIGURES.mkdir(parents=True, exist_ok=True)
-    # No figures from step29b after the 2026-09-30 declutter:
-    # - Radius-choice justification: step29a_pollinator_radius_sensitivity
-    # - Per-location connectivity share: Panel C of
-    #   step30_A_N_fertile_effective (produced by step30)
-    # - Fragmentation reinforcement: step30_A_fragmentation_index
-    # step29b now writes only the connectivity TSV; downstream scripts
-    # consume it and render the figures that need it.
+        n_frag = int((df[f"connected_share_{R_i}m"] < 0.5).sum())
+        print(f"[step29b] R = {R_i} m: {n_fully}/{len(df)} populations ≥ 90 % "
+              f"connected · {n_frag}/{len(df)} < 50 % connected.")
 
 
 if __name__ == "__main__":

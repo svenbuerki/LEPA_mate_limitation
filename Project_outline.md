@@ -548,7 +548,7 @@ drift-prone demes, not one pool of 500.
 2. **Events → 50 m demes.** Within each population × year, connect
    events whose fertile plants sit within ≤ 50 m; the connected
    components are the demes
-   (step29c_event_to_component_50m.tsv).
+   (step29a_event_to_deme.tsv).
 3. **Demes → effective deme size.**
    `component_N_fertile_c` = Σ_{events ∈ c} `n_fertile_e` — the
    plants that actually share one 50 m pollen pool and the drift
@@ -997,7 +997,7 @@ computed at this 50 m choice.
 <a id="fig-1"></a>
 ![Figure 1](figures/step30_A_radius_sensitivity.png)
 
-**Figure 1.** Pollinator-radius sensitivity sweep, **2025 and 2026 overlaid**. Four panels showing how connectivity, fragmentation-aware sampling cost, predicted pollen compatibility, and the sustainable-band fraction of locations change across radii from 10 to 200 m. 2025 draw = open circle + dashed line (39 locationIDs); 2026 draw = filled circle + solid line (32 locationIDs — fewer sites emerged above-ground in 2026). Both years agree on the key qualitative shape: connectivity (Panel A) rises steeply from 10 m, plateaus at ≥ 75 m in 2025 (~ 150 m in 2026 — the 2026 above-ground footprint is more spread out); sampling cost (Panel B) drops steeply then flattens around 75–100 m; pollen compatibility (Panel C) is **radius-independent** at ≈ 0.77 under empirical zygosity in both years; the sustainable-band fraction (Panel D) sits at ≥ 97 % at every radius in both years. **50 m** is the primary radius adopted across the pipeline — within the halictid / small-bee foraging literature range, captures ~ 40 % of the sampling-cost reduction available on the radius curve, and preserves meaningful fragmentation variation across BLs. Source: `step20_pollinator_radius.py`.
+**Figure 1.** Pollinator-radius sensitivity sweep, **2025 and 2026 overlaid**. Four panels showing how connectivity, fragmentation-aware sampling cost, predicted pollen compatibility, and the sustainable-band fraction of populations change across radii from 10 to 200 m. Each population is one unit; the radius changes only how its events split into components. 2025 draw = open circle + dashed line (33 populations); 2026 draw = filled circle + solid line (41 populations). Both years agree on the key qualitative shape: connectivity (Panel A, median population) rises steeply from 10 m, reaches 0.91 at 50 m and plateaus at ≥ 75 m in 2025 (0.75 at 50 m and ~ 150 m to plateau in 2026 — the 2026 above-ground footprint is more spread out); sampling cost (Panel B) drops steeply then flattens around 75–100 m; pollen compatibility (Panel C) is **radius-independent** at ≈ 0.77 under empirical zygosity in both years; the sustainable-band fraction (Panel D) sits at ≥ 97 % at every radius in both years. **50 m** is the primary radius adopted across the pipeline — within the halictid / small-bee foraging literature range, captures ~ 40 % of the sampling-cost reduction available on the radius curve, and preserves meaningful fragmentation variation across BLs. Source: `step20_pollinator_radius.py`.
 
 ---
 
@@ -1005,22 +1005,22 @@ computed at this 50 m choice.
 
 ### How the deme is built
 
-**Question.** Within a location, how many demes does a plant
+**Question.** Within a population, how many demes does a plant
 belong to, and how big is each one? A **50 m connected component**
 is the **deme**: the set of adult plants whose events
 are reachable from each other at the primary pollinator radius.
 Plants in the same deme share pollen; plants in different
-demes at the same location do not. The deme is the
+demes of the same population do not. The deme is the
 **drift unit** on which every Phase A prediction is built.
 
-**Approach.** For each location, build an event-level graph in which
+**Approach.** For each population and year, build an event-level graph in which
 two events are connected if any pair of their plants sits within
-≤ 50 m. Connected components of that graph are the location's
+≤ 50 m. Connected components of that graph are the population's
 demes. For each deme *c*, `component_N_fertile_c` is
 the sum of `n_fertile_e` across its events — the adult count that
 drives the per-component drift simulations in § 30.1 and § 30.2.
-Reference: `step17_fragmentation_sampling.py` writes the
-event → deme lookup (`step29c_event_to_component_50m.tsv`);
+Reference: `step07_event_to_deme.py` (via `srk_units.py`) writes the
+event → deme lookup (`step29a_event_to_deme.tsv`);
 `step18_mating_pool_structure.py` builds the display here.
 
 **Result (dataset-wide — how many demes do the 2025 populations hold?).**
@@ -1051,10 +1051,11 @@ populations** in 2025 at 50 m. The per-population breakdown:
   for the 32-allele species pool regardless of location mean.
 - **6 of 100 demes (6 %) sit at the N = 1 single-plant SI floor** —
   a single plant has nobody to mate with at the 50 m radius.
-- Pattern across BLs: BL5 tail (EO24 group) carries the small-deme
-  burden; BL4 has large, mostly fragmentation-robust locations; BL1
-  shows the widest *within-location* spread (EO8, EO26-3 split into
-  many small sub-demes).
+- Pattern across BLs: BL2 and BL3 carry the small-deme burden (11 of
+  31 and 12 of 30 demes below 8 plants); BL3 and BL1 hold the most
+  subdivided populations (P36 EO18-7/8: 16 demes; P17 EO27-1/RT: 11);
+  BL4 is mostly fragmentation-robust (1 of 11 demes below 8); the two
+  BL5 populations sampled in 2025 are one deme each.
 
 **Why this matters.** Every Phase A prediction below is built on
 this structure: the per-component SRK diversity prediction (Figure 9)
@@ -1180,19 +1181,19 @@ coverage below.
 
 **Result.**
 
-| Location | BL | N_fert_eff (50 m) | n components | M_mothers | total_seeds | Population holds | Sampling detects | Coverage |
+| Location (population) | BL | N_fert_eff (50 m) | demes | M_mothers | total_seeds | Population holds | Sampling detects | Coverage |
 |---|---|---|---|---|---|---|---|---|
-| EO24-2 (1 plant, BL5 tail) | BL5 | 1 | 1 | 1 | 1 | ~3 | ~2.6 | **87 %** |
-| EO24 (BL5 tail) | BL5 | 2 | 1 | 1 | 5 | ~4.5 | ~4.1 | **91 %** |
-| EO26-3 (fragmented BL1) | BL1 | 5 | 2 | 4 | ~70 | ~7.6 | ~7.4 | **97 %** |
-| EO27RT (fragmented BL4) | BL4 | 177 | 6 | 22 | ~1700 | ~29 | ~28.1 | **97 %** |
-| EO67 (small BL4 pilot) | BL4 | 10 | 2 | 4 | 71 | ~11 | ~10.7 | 99 % |
-| EO27-1 (large BL4 pilot) | BL4 | 116 | 2 | 33 | 2465 | ~27 | ~27 | ~100 % |
-| EO76 (largest BL3) | BL3 | 517 | 6 | 62 | 11723 | ~32 | ~32 | ~100 % |
+| EO24-2 (P35, 1 plant) | BL3 | 1 | 1 | 1 | 1 | ~3.0 | ~2.6 | **87 %** |
+| EO24 (P34) | BL3 | 2 | 1 | 1 | 5 | ~4.5 | ~4.1 | **91 %** |
+| EO26-3 (P22 / P24, fragmented) | BL2 | 5 | 2 | 4 | 20 | ~7.6 | ~7.4 | **97 %** |
+| EO27RT (P17, fragmented) | BL1 | 177 | 6 | 22 | 632 | ~28.9 | ~28.1 | **97 %** |
+| EO67 (P6, small pilot) | BL1 | 10 | 2 | 4 | 74 | ~10.8 | ~10.7 | 99 % |
+| EO27-1 (P14 + P17, large) | BL1 | 371 | 5 | 33 | 2465 | ~31.4 | ~31.3 | ~100 % |
+| EO76 (P43 + P44, largest) | BL4 | 517 | 5 | 62 | 11723 | ~31.8 | ~31.8 | ~100 % |
 
-**Every location clears the 90 % target; 6/39 now sit below 99 %
-coverage** (vs 2 under the previous single-pool model). The newly
-visible gap is the **sampling blind spot** in fragmented locations:
+**38 of 39 locations clear the 90 % target (EO24-2, a single plant,
+sits at 87 %); 7/39 sit below 99 % coverage.** The gap below 99 % is
+the **sampling blind spot** in fragmented locations:
 when drift-collapsed small components (1–5 plants) receive 0 mothers
 under proportional allocation but still carry Fgs the larger
 components do not — EO26-3 and EO27RT are the clearest examples.
@@ -1294,11 +1295,14 @@ sustainable-mean location remain visible).
 - **Species-mean P_compat = 0.78** (sustainable band by construction).
 - **Traffic-light bands** (1/3 and 2/3 of species mean): failed
   < 0.23, struggling 0.26–0.52, sustainable ≥ 0.52.
-- **BL5 tail (EO24 group)** is the primary conservation concern —
-  predicted P_compat 0.42–0.51 with wide credible intervals
-  entering the struggling band.
-- All other BLs sit in the sustainable band at the mean; the tightest
-  credible intervals belong to the largest locations (EO76, EO61).
+- **The EO24 group (P32 – P35, BL3)** is the main conservation
+  concern — predicted P_compat 0.52 – 0.69, the lowest in the
+  dataset, with credible intervals reaching into the struggling band
+  (lower bounds 0.15 – 0.48). EO24-2 (P35, one plant) sits right at
+  the sustainable threshold (0.52).
+- Every location sits in the sustainable band at the mean; the
+  tightest credible intervals belong to the largest locations
+  (EO27-1, EO32).
 
 **Connection to Figure 9.** Uses the same drift mechanism as the
 diversity figure, except drift is now modelled **per component**
@@ -1318,7 +1322,7 @@ estimator of the population-mean P_compat.
 
 ### 30.3 Do populations produce more or fewer seeds than their size predicts? Mate limitation vs SI escape across all 48 populations (Step 30i)
 
-**Why this test exists.** The SRK-based Part C validation tests (§ C.0.a – § C.0.c, below) are confined to the three clean-overlap populations (P6 = EO67, P45 = EO70, P43 = EO76) because they need adult SRK genotypes. **This step adds a behavioural check that uses no SRK data** and therefore runs on **all 48 populations NOW**, before any seed-genotyping campaign starts — a direct validation of the Phase A pollen-compatibility prediction that places § 30.3 cleanly inside the predictions pipeline rather than waiting for Part C. It rests on one hypothesis: **seed production reflects the reproductive status of the population** — under-production signals mate limitation, over-production signals SI escape.
+**Why this test exists.** The SRK-based Part C validation tests (§ C.0.a – § C.0.c, below) are confined to the three clean-overlap populations (P6 = EO67, P45 = EO70, P43 + P44 = EO76) because they need adult SRK genotypes. **This step adds a behavioural check that uses no SRK data** and therefore runs on **all 48 populations NOW**, before any seed-genotyping campaign starts — a direct validation of the Phase A pollen-compatibility prediction that places § 30.3 cleanly inside the predictions pipeline rather than waiting for Part C. It rests on one hypothesis: **seed production reflects the reproductive status of the population** — under-production signals mate limitation, over-production signals SI escape.
 
 **Approach — across-species build, then within-population test.**
 The test splits into two stages:
@@ -1632,7 +1636,7 @@ plus the ≥ 1-per-event floor. The result is `M_frag` per event.
 **Result.**
 
 - **2025 design: 502 mothers across 33 populations (100 demes,
-  235 events).** 760 mothers in the LEPA DB sit in those demes;
+  236 events).** 760 mothers in the LEPA DB sit in those demes;
   431 are selected; **71 mothers short**, counted per deme (a mother
   in one deme cannot stand in for another deme's pollen pool),
   spread over 16 populations.
@@ -1684,7 +1688,7 @@ next field season:
   short** (sum over demes). 2026: 337 mothers → 8 288 seeds →
   ~4 974 seedlings, 572 short.
 - **Event → component lookup**:
-  [`step29c_event_to_component_50m.tsv`](tables/step29c_event_to_component_50m.tsv) —
+  [`step29a_event_to_deme.tsv`](tables/step29a_event_to_deme.tsv) —
   one row per event mapping (locationID, eventID) → 50 m component,
   the single canonical source for "which events share a pollen pool?".
 
@@ -1779,7 +1783,7 @@ here; that is scheduled as future work.
 <a id="fig-15"></a>
 ![Figure 15](figures/step30_B_partC_clean_overlap.png)
 
-**Figure 15.** Part C anchor at the three clean-overlap populations — **P6 (= EO67_39)**, **P45 (= EO70_26)**, **P43 (= EO76_2)** — each 1:1 with a locationCode in 2025. Panel order follows the causal chain: diversity → pollen compatibility → per-Fg drift fingerprint. **Panel A — SRK diversity.** Predicted (x) vs observed in adults (y), one square per location with 95 % CI horizontal error bars. 1:1 diagonal + ceiling at 32 Fgs. P6 sits on the diagonal (model passes); P45 (6/32) and P43 (9/32) sit far below (large drift gap). **Panel B — pollen compatibility.** Predicted vs observed, with the traffic-light background (red = failed, amber = struggling, green = sustainable) and 1:1 diagonal. P6 and P43 close to the diagonal; P45 is the clear outlier (observed 0.53 vs predicted 0.78). **Panel C — per-Fg drift residual** `f_observed − f_P1` per location (one row each, Fgs sorted left-to-right by species-wide P1 frequency, most-common → rarest). **Green bars = Fg enriched vs P1** (drift favoured it); **red bars = Fg depleted vs P1**; **× markers = Fg absent at the location** (lost entirely). The residual pops out the drift fingerprint that the raw-frequency plot blurred — P45 shows classic FG001 drift (+21 %) + FG024 (+18 %) with 26/32 Fgs absent; P43 shows milder enrichment of FG012 / FG010; P6's small-population signature elevates the normally-rare FG018 and FG023 instead of the common Fgs — a founder-effect signature rather than classical drift. Source: `step24_partC_clean_overlap.py`.
+**Figure 15.** Part C anchor at the three clean-overlap populations — **P6 (= EO67_39)**, **P45 (= EO70_26)**, **P43 + P44 (= EO76_2)** — the three EOs with adult SRK genotypes. EO67 = P6 and EO70 = P45 are 1:1; EO76 is P43 (22 events) + P44 (1 event) in 2025 and is compared as one site, because the genotyped adults are recorded per EO, not per event. Panel order follows the causal chain: diversity → pollen compatibility → per-Fg drift fingerprint. **Panel A — SRK diversity.** Predicted (x) vs observed in adults (y), one square per location with 95 % CI horizontal error bars. 1:1 diagonal + ceiling at 32 Fgs. P6 sits on the diagonal (model passes); P45 (6/32) and P43 (9/32) sit far below (large drift gap). **Panel B — pollen compatibility.** Predicted vs observed, with the traffic-light background (red = failed, amber = struggling, green = sustainable) and 1:1 diagonal. P6 and P43 close to the diagonal; P45 is the clear outlier (observed 0.53 vs predicted 0.78). **Panel C — per-Fg drift residual** `f_observed − f_P1` per location (one row each, Fgs sorted left-to-right by species-wide P1 frequency, most-common → rarest). **Green bars = Fg enriched vs P1** (drift favoured it); **red bars = Fg depleted vs P1**; **× markers = Fg absent at the location** (lost entirely). The residual pops out the drift fingerprint that the raw-frequency plot blurred — P45 shows classic FG001 drift (+21 %) + FG024 (+18 %) with 26/32 Fgs absent; P43 shows milder enrichment of FG012 / FG010; P6's small-population signature elevates the normally-rare FG018 and FG023 instead of the common Fgs — a founder-effect signature rather than classical drift. Source: `step24_partC_clean_overlap.py`.
 
 ### C.0.b Diversity collapse → pollen compatibility: hypothesis decomposition
 
@@ -2210,8 +2214,8 @@ summary.
 | Predicted per-50 m-component diversity | [`tables/step30_A_prediction_component_diversity.tsv`](tables/step30_A_prediction_component_diversity.tsv) | Pool size, allocated mothers/seeds, coverage per component |
 | Predicted per-location P_compat | [`tables/step30_A_prediction_location_pcompat.tsv`](tables/step30_A_prediction_location_pcompat.tsv) | Sporophytic + empirical zygosity |
 | Predicted per-50 m-component P_compat | [`tables/step30_A_prediction_component_pcompat.tsv`](tables/step30_A_prediction_component_pcompat.tsv) | Exposes struggling sub-components inside a sustainable-mean location |
-| Fragmentation indices | [`tables/step30_A_fragmentation_per_event.tsv`](tables/step30_A_fragmentation_per_event.tsv), [`_per_location.tsv`](tables/step30_A_fragmentation_per_location.tsv) | Pure spatial, no allele frequencies |
-| Event → 50 m component lookup | [`tables/step29c_event_to_component_50m.tsv`](tables/step29c_event_to_component_50m.tsv) | Canonical "which events share a pollen pool?" |
+| Fragmentation indices | [`tables/step30_A_fragmentation_per_event.tsv`](tables/step30_A_fragmentation_per_event.tsv), [`_per_population.tsv`](tables/step30_A_fragmentation_per_population.tsv) | Pure spatial, no allele frequencies |
+| Event → population → deme | [`tables/step29a_event_to_deme.tsv`](tables/step29a_event_to_deme.tsv) | Canonical "which events share a pollen pool?" |
 | Field-team recipe (new field season) | [`tables/step29c_sampling_frag_aware_per_event_2025.tsv`](tables/step29c_sampling_frag_aware_per_event_2025.tsv) | `M_frag` per event, authoritative |
 | **Lab recipe for Part C — germplasmIDs to sample** | [`tables/step29c_partC_germplasmID_selection_2025.tsv`](tables/step29c_partC_germplasmID_selection_2025.tsv) | **One row per selected germplasmID already in the LEPA DB; per-50 m-component allocation + `n_seeds_to_genotype`. Drives Part C.** |
 | Background EO-scale diagnostic for split EOs (§ C.0) | [`tables/step30_C_pcompat_validation_at_eo.tsv`](tables/step30_C_pcompat_validation_at_eo.tsv) | EO18, EO25, EO27 (the three EOs whose location-scale remap is still pending); no figure |
