@@ -47,8 +47,8 @@ reads them.
 
 | Unit | Definition | Built by | Source-of-truth table |
 |---|---|---|---|
-| **Event** | One occupied slickspot in one year (DB `Events`) | LEPA DB | — |
-| **Slickspot** | Events matched across years within 10 m | step01 | `step29a_slickspot_summary.tsv` |
+| **Event** | One occupied slick spot in one year (DB `Events`) | LEPA DB | — |
+| **Slick spot** | Events matched across years within 10 m | step01 | `step29a_slickspot_summary.tsv` |
 | **Population** | Connected component at **500 m** on pooled 2025 + 2026 events + historical locationID centroids | step01, numbered in step05 | `step29a_population_crosswalk.tsv` (event → population) |
 | **Deme** | Connected component at **50 m** of one year's events inside one population (pollen pool, drift unit) | step01 | `step29a_demes_per_population_year.tsv` (sizes), `step29a_event_to_deme.tsv` (event → deme) |
 | **Bottleneck Lineage (BL)** | Ward's D2 clustering of population centroids, *k* = 5, ordered by area then connectivity | step03 – step05 | `step30h_bl_definition.tsv`, `step30h_cluster_assignments.tsv` |
@@ -87,13 +87,18 @@ Ordering rules that are easy to get wrong:
   take `--year`; step17 requires it. **2025 runs last**, because steps
   18 – 21 read the single-year `step28_*` / `step29_*` tables it leaves
   behind.
-- **step22 runs after step21** — it reads step21's
+- **step21 runs after step17 for both years** (it reads both
+  `step29c_sampling_frag_aware_per_event_{Y}` tables), and **step22
+  runs after step21** (it takes the real mothers per deme from it).
+- **step23 runs after step22** — it reads step22's
   `step30_A_prediction_prior_frequencies.tsv`.
 
 Library imports are not run-order dependencies: steps 01 – 04, 15 – 17,
-19, 20 and 26 import helpers (haversine distance, DB loaders, coupon-
-collector maths) from `step14_seed_sampling_per_mother.py`; steps 02 and
-26 import the drift model from `step21_predictions_core.py`.
+19, 20, 22 and 27 import helpers (haversine distance, DB loaders, coupon-
+collector maths) from `step14_seed_sampling_per_mother.py`; steps 02,
+21 and 27 import the drift model from `step22_predictions_core.py`;
+steps 17, 20 and 21 size demes with `srk_detection.py` (mothers for
+90 % mean Fg coverage under the empirical prior — the prediction model).
 
 ---
 
@@ -108,7 +113,7 @@ stay stable; § 7 maps them to the current step numbers.
 
 | Step | Purpose | Reads | Writes |
 |---|---|---|---|
-| `step01_populations` | Slickspots, 500 m populations, 50 m within-year demes | EXT LEPA DB (`Events`, `Occurrences`, `Locations`, `Taxonomy`) · EXT EO BL tables | t/`step29a_population_crosswalk` · `step29a_population_summary` · `step29a_slickspot_summary` · `step29a_demes_per_population_year` · `step29a_seedcleaning_priority` |
+| `step01_populations` | Slick spots, 500 m populations, 50 m within-year demes | EXT LEPA DB (`Events`, `Occurrences`, `Locations`, `Taxonomy`) · EXT EO BL tables | t/`step29a_population_crosswalk` · `step29a_population_summary` · `step29a_slickspot_summary` · `step29a_demes_per_population_year` · `step29a_seedcleaning_priority` |
 | `step02_year_predictions` | Predicted SRK diversity + pollen compatibility per population per year (drift on demes) | t/`step29a_demes_per_population_year` · t/`srk_fg_class` · t/`srk_zygosity_empirical` · t/`step26i_L1_carrier_inventory` | t/`step30g_prediction_population_year` · `step30g_across_year_comparison` · `step30g_crash_candidates` · `step30g_stable_candidate_pair` |
 | `step03_BL_clustering` | Ward's D2 clustering of population centroids, silhouette | t/`step29a_population_crosswalk` | t/`step30h_cluster_assignments` · `step30h_population_distances` · `step30h_silhouette_curve` · f/`step30h_dendrogram` · f/`step30h_silhouette_curve` |
 | `step04_BL_landscape_metrics` | Area + connectivity per cluster (BL ordering keys) | t/`step29a_*` · t/`step30h_cluster_assignments` · t/`step30h_population_distances` | t/`step30h_landscape_per_population` · `step30h_landscape_per_BL` |
@@ -138,22 +143,24 @@ stay stable; § 7 maps them to the current step numbers.
 | `step18_mating_pool_structure` | Deme structure **per population** (sampling year) | t/`step29a_event_to_deme` (via `srk_units`) | t/`step29d_mating_pool_summary` · f/`step29d_mating_pool_structure` |
 | `step19_fragmentation_index` | Fragmentation index per event / **population** | t/`step28_events_spatial_neighborhood` · `step29_population_connectivity` · `step29a_event_to_deme` | t/`step30_A_fragmentation_per_event` · `step30_A_fragmentation_per_population` · f/`step30_A_fragmentation_index` |
 | `step20_pollinator_radius` | 10 – 200 m pollinator-radius sweep **per population**, both years (justifies 50 m) | EXT LEPA DB · t/`step29a_event_to_deme` · `step29c_sampling_per_population_2025\|_2026` · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_radius_sensitivity_summary[_2025\|_2026]` · `step30_A_radius_sensitivity_per_population_2025\|_2026` · f/`step30_A_radius_sensitivity` |
+| `step21_sampling_adequacy` | Is each population sampled well enough? Real mothers per deme (Step 17 selection, empirical-prior targets) → predicted SRK Fg coverage + share of adults in unsampled demes; **undersampled** (coverage < 0.90 or any deme without a mother) populations are dropped, both years | EXT LEPA DB · t/`step29a_event_to_deme` · `step29c_sampling_frag_aware_per_event_2025\|_2026` · `step26i_L1_carrier_inventory` | t/`step30_A_sampling_adequacy_2025\|_2026` · `step30_A_sampling_adequacy_per_deme_2025\|_2026` · f/`step30_A_sampling_adequacy` |
 
 ### Part 4 — Location-level predictions + seed-count power (2025)
 
 | Step | Purpose | Reads | Writes |
 |---|---|---|---|
-| `step21_predictions_core --year 2025` | Drift model per deme; predicted diversity + compatibility per **DB location** (Part C needs location level, see § 6); species prior | t/`step29_sampling_per_location` · `step29a_event_to_deme` (demes grouped by location, via `srk_units`) · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_prediction_location_diversity` · `step30_A_prediction_location_pcompat` · `step30_A_prediction_component_*` · `step30_A_prediction_prior_frequencies` · `step30_A_traffic_light_bands` · `step30_A_prediction_per_mother_fecundation` · f/`step30_A_prediction_fecundation` · `step30_A_diversity_vs_pcompat` · `step30_A_diversity_unbiased_vs_sampling` |
-| `step22_seed_justification` | Precision + regression power at 15 seedlings per mother | t/`step30_A_prediction_prior_frequencies` | t/`step28d_pcompat_precision` · `step28d_matelim_power` · f/same names |
+| `step22_predictions_core --year 2025` | Drift model per deme; predicted diversity + compatibility per **DB location** (Part C needs location level, see § 6); species prior | t/`step29_sampling_per_location` · `step29a_event_to_deme` (demes grouped by location, via `srk_units`) · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_prediction_location_diversity` · `step30_A_prediction_location_pcompat` · `step30_A_prediction_component_*` · `step30_A_prediction_prior_frequencies` · `step30_A_traffic_light_bands` · `step30_A_prediction_per_mother_fecundation` · f/`step30_A_prediction_fecundation` · `step30_A_diversity_vs_pcompat` · `step30_A_diversity_unbiased_vs_sampling` |
+| `step23_seed_justification` | Precision + regression power at 15 seedlings per mother | t/`step30_A_prediction_prior_frequencies` | t/`step28d_pcompat_precision` · `step28d_matelim_power` · f/same names |
 
 ### Part 5 — Validation against adult SRK genotypes (Part C)
 
 | Step | Purpose | Reads | Writes |
 |---|---|---|---|
-| `step23_EO_scale_validation` | Observed vs predicted compatibility at EO scale (split EOs) | EXT Phase 4 genotypes · `srk_*` · `step26i_L1_carrier_inventory` · `step30_A_prediction_prior_frequencies` | t/`step30_C_pcompat_validation_at_eo` · f/`step30_C_pcompat_observed_vs_predicted` |
-| `step24_partC_clean_overlap` | Observed vs predicted at the three 1:1 populations (P3 EO67, P40 EO70, P38 EO76) | EXT Phase 4 genotypes · `step30_A_prediction_location_*` · `step30_A_traffic_light_bands` · prior | t/`step30_B_partC_clean_overlap_per_location` · `step30_B_partC_clean_overlap_fg_frequencies` · f/`step30_B_partC_clean_overlap` |
-| `step25_partC_hypothesis_decomposition` | Which mechanism drives the compatibility gap | EXT Phase 4 genotypes · `step30_A_prediction_location_diversity` · bands · prior | t/`step30_B_partC_hypothesis_decomposition` · f/same name |
-| `step26_radius_sweep_H1` | Can a tighter deme radius close the diversity gap? | EXT LEPA DB · t/`step30_B_partC_clean_overlap_per_location` · `step26i_L1_carrier_inventory` | t/`step30f_srk_diversity_radius_sweep` · f/same name |
+| `step24_EO_scale_validation` | Observed vs predicted compatibility at EO scale (split EOs) | EXT Phase 4 genotypes · `srk_*` · `step26i_L1_carrier_inventory` · `step30_A_prediction_prior_frequencies` | t/`step30_C_pcompat_validation_at_eo` · f/`step30_C_pcompat_observed_vs_predicted` |
+| `step25_partC_clean_overlap` | Observed vs predicted at the three 1:1 populations (P3 EO67, P40 EO70, P38 EO76) | EXT Phase 4 genotypes · `step30_A_prediction_location_*` · `step30_A_traffic_light_bands` · prior | t/`step30_B_partC_clean_overlap_per_location` · `step30_B_partC_clean_overlap_fg_frequencies` · f/`step30_B_partC_clean_overlap` |
+| `step26_partC_hypothesis_decomposition` | Which mechanism drives the compatibility gap | EXT Phase 4 genotypes · `step30_A_prediction_location_diversity` · bands · prior | t/`step30_B_partC_hypothesis_decomposition` · f/same name |
+| `step27_radius_sweep_H1` | Can a tighter deme radius close the diversity gap? | EXT LEPA DB · t/`step30_B_partC_clean_overlap_per_location` · `step26i_L1_carrier_inventory` | t/`step30f_srk_diversity_radius_sweep` · f/same name |
+| `step28_pipeline_checks` | Consistency checks; any failure stops the run: units rebuild = Step 01; BL names/order = Step 05; every table's populationID / deme / BL agrees with the units; deme targets = `srk_detection` rule; sampling tables = 2025; no legacy BL lookup or hard-coded BL order in code; every table has a writer or reader; no coordinate columns in tracked tables | all of tables/ · Scripts/ | console report (logs/step28_pipeline_checks.log) |
 
 ---
 
@@ -181,7 +188,7 @@ LEPA_PROJECTS_ROOT=/data/projects ./run_pipeline.sh   # moves all defaults at on
 
 Which events count: every event with coordinates and a fertile count
 that either has a *L. papilliferum* in-situ occurrence or has no
-occurrence records at all. The second case is an occupied slickspot whose
+occurrence records at all. The second case is an occupied slick spot whose
 plants were recorded but not sampled (for example "plants too far gone
 to collect"); its fertile plants are part of the deme and the census,
 but it supplies no mothers or seed. step17 therefore cannot fill a deme
@@ -225,7 +232,7 @@ changes.
 - **Steps 21 and 23 – 26 (Part C) work by DB location / EO on purpose.**
   The adult SRK genotypes are recorded per EO only: the 885 genotyped
   occurrences in the LEPA DB have no eventID, locationID or date, so no
-  adult can be placed in a population or deme. Step 21 therefore groups
+  adult can be placed in a population or deme. Step 22 therefore groups
   the current demes by location (demes never span two locations). Two of
   the three clean-overlap sites are one population (EO67 = P6, EO70 =
   P45); **EO76 is two populations (P43 + P44)** and is compared as one
@@ -235,7 +242,7 @@ changes.
   retired `step29c_event_to_component_50m.tsv` is no longer read.
 - **step14** labels locations from a previous step15 output when
   present (cosmetic; falls back to locationIDs on a first run).
-- **step22** simulates the original 505-mother × 39-location design
+- **step23** simulates the original 505-mother × 39-location design
   (hard-coded); power at the current 502-mother design is equivalent.
 
 ---
@@ -267,9 +274,9 @@ filenames keep the historical tags.
 | step18_mating_pool_structure | step08 | step29d |
 | step19_fragmentation_index | step13 | step30_A |
 | step20_pollinator_radius | step09 | step30_A |
-| step21_predictions_core | step19 | step30_A / step30_B |
-| step22_seed_justification | step18 | step28d |
-| step23_EO_scale_validation | step21 | step30_C |
-| step24_partC_clean_overlap | step22 | step30_B |
-| step25_partC_hypothesis_decomposition | step23 | step30_B |
-| step26_radius_sweep_H1 | step24 | step30f |
+| step22_predictions_core | step19 | step30_A / step30_B |
+| step23_seed_justification | step18 | step28d |
+| step24_EO_scale_validation | step21 | step30_C |
+| step25_partC_clean_overlap | step22 | step30_B |
+| step26_partC_hypothesis_decomposition | step23 | step30_B |
+| step27_radius_sweep_H1 | step24 | step30f |

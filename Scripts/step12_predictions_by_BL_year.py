@@ -24,14 +24,14 @@ import pandas as pd
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 
-from srk_bl_constants import BL_COLORS, make_location_label
+from srk_bl_constants import BL_COLORS, BL_ORDER, make_location_label
 
 TABLES = Path("tables")
 FIGURES = Path("figures")
 
 # BL_ORDER for the NEW population-based BL framework = BL1 → BL5
 # (area DESC → connectivity DESC rule, locked in step30h Phase III).
-NEW_BL_ORDER = ["BL1", "BL2", "BL3", "BL4", "BL5"]
+NEW_BL_ORDER = BL_ORDER  # Step 05 BL_rank order (srk_bl_constants)
 
 # Traffic-light thresholds — same as step30_A_prediction_fecundation
 T_FAILED_HI = 0.259

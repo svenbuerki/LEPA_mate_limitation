@@ -94,7 +94,7 @@ from srk_si_model import (
     load_zygosity_dist,
     p_compat_sporophytic_empirical,
 )
-from step23_EO_scale_validation import (
+from step24_EO_scale_validation import (
     load_allele_to_fg,
     load_individuals,
     compute_local_f,

@@ -17,8 +17,9 @@ Sweeps the primary pollen-flight radius across 10, 25, 50, 75, 100, 150,
     (fraction of adults in a multi-event pollen-flow component) and
     largest_component_share (fraction in the biggest component).
   * **§ B.4.2 fragmentation-aware sampling** — per-population
-    M_frag_aware (mothers needed for 90 % chance to observe every
-    predicted allele), plus total across the year's populations.
+    M_frag_aware (mothers needed per deme for 90 % mean SRK Fg
+    coverage under the empirical prior, `srk_detection.py`), plus total
+    across the year's populations.
   * **§ A.8 pollen compatibility** — per-population mean predicted
     P_compat under the sporophytic + empirical LEPA zygosity model.
   * **Traffic-light classification** — fraction of populations at
@@ -50,6 +51,7 @@ from step14_seed_sampling_per_mother import (
     mothers_for_full_detection, n_for_miss_probability,
     load_all_events, DEFAULT_DB,
 )
+from srk_detection import mothers_for_coverage
 from srk_si_model import (
     load_class_map, build_class_i_mask,
     load_zygosity_dist, sample_genotypes_empirical,
@@ -155,9 +157,7 @@ def compute_per_location(events: pd.DataFrame, m_lookup: dict,
         # § B.4.2 fragmentation-aware M
         M_frag = 0
         for nf_c, ne_c in zip(comp_nf, comp_ne):
-            K_c = min(K_pool(int(nf_c)), K_SPECIES_FG)
-            M_pat = (1 if K_c <= 1
-                     else mothers_for_full_detection(K_c, TARGET_PROB))
+            M_pat = mothers_for_coverage(int(nf_c)) if nf_c > 0 else 1
             M_c = max(M_pat, int(ne_c))
             M_frag += M_c
 

@@ -51,7 +51,7 @@ import matplotlib.pyplot as plt
 from step14_seed_sampling_per_mother import (
     DEFAULT_DB, load_all_events, haversine_meters, PLOIDY,
 )
-from step21_predictions_core import build_p1_prior
+from step22_predictions_core import build_p1_prior
 
 TABLES = Path("tables")
 FIGURES = Path("figures")

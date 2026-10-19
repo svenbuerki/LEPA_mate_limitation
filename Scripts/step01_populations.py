@@ -47,7 +47,7 @@ import pandas as pd
 from step14_seed_sampling_per_mother import (
     DEFAULT_DB, load_all_events, haversine_meters,
 )
-from srk_bl_constants import locationCode_to_bl
+from srk_bl_constants import legacy_locationCode_to_bl
 
 # ---- Tunables ----
 SLICKSPOT_BUFFER_M = 10.0 # cross-year slickspot match radius
@@ -373,7 +373,7 @@ def main() -> None:
     cw = events_ss.copy()
     cw["populationID"] = cw["slickspotID"].map(slickspot_to_pop).astype("Int64")
     cw["locationCode"] = cw["locationID"].map(locid_to_loccode)
-    cw["BL"] = locationCode_to_bl(cw["locationCode"]).values
+    cw["BL"] = legacy_locationCode_to_bl(cw["locationCode"]).values  # placeholder; Step 05 sets the BLs
     cw = cw[[
         "populationID", "slickspotID", "event_year", "eventID",
         "locationID", "locationCode", "BL", "lat", "lon", "n_fertile",

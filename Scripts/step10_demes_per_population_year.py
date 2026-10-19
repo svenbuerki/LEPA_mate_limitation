@@ -39,12 +39,12 @@ import numpy as np
 import pandas as pd
 from matplotlib.lines import Line2D
 
-from srk_bl_constants import BL_COLORS
+from srk_bl_constants import BL_COLORS, BL_ORDER
 
 TABLES = Path("tables")
 FIGURES = Path("figures")
 
-NEW_BL_ORDER = ["BL1", "BL2", "BL3", "BL4", "BL5"]
+NEW_BL_ORDER = BL_ORDER  # Step 05 BL_rank order (srk_bl_constants)
 Y_OFFSET = 0.14 # vertical half-offset between year strips
 
 REF_SI_FLOOR = 1

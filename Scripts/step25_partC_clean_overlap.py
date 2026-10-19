@@ -66,7 +66,7 @@ from srk_si_model import (
 
 # step30c already has the per-individual loader and the local-f /
 # bootstrap helpers; reuse them to keep the model identical.
-from step23_EO_scale_validation import (
+from step24_EO_scale_validation import (
     load_allele_to_fg,
     load_individuals,
     compute_local_f,

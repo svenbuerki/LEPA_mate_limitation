@@ -67,14 +67,14 @@ from sklearn.model_selection import KFold
 from statsmodels.stats.multitest import fdrcorrection
 
 from project_paths import LEPA_DB
-from srk_bl_constants import BL_COLORS
+from srk_bl_constants import BL_COLORS, BL_ORDER
 
 TABLES = Path("tables")
 FIGURES = Path("figures")
 
 DB_PATH = LEPA_DB # external — see project_paths.py
 
-NEW_BL_ORDER = ["BL1", "BL2", "BL3", "BL4", "BL5"]
+NEW_BL_ORDER = BL_ORDER  # Step 05 BL_rank order (srk_bl_constants)
 CANDIDATES = {
     "height": "logy ~ logh",
     "crown": "logy ~ logc",
@@ -654,6 +654,74 @@ def plot_forest(res: pd.DataFrame, df: pd.DataFrame,
 # ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Seed yield vs the genetic predictions (Step 02)
+# ---------------------------------------------------------------------------
+PRED_TSV = TABLES / "step30g_prediction_population_year.tsv"
+MIN_PLANTS_COMPARE = 3
+
+
+def compare_with_predictions(res: pd.DataFrame) -> pd.DataFrame:
+    """Do populations predicted to have fewer compatible mates (lower
+    P_compat) or fewer SRK alleles produce fewer seeds for their size?
+    One row per population-year with ≥ MIN_PLANTS_COMPARE plants:
+    fold of expectation next to the Step 02 predictions. Spearman
+    correlations across population-years (and per year) are printed
+    and written as `step30i_seed_yield_vs_predictions_tests.tsv`."""
+    pred = pd.read_csv(PRED_TSV, sep="\t")
+    m = (res[res["n_plants"] >= MIN_PLANTS_COMPARE]
+         [["populationID", "year", "BL", "n_plants", "fold_of_expectation",
+           "conservation_bucket"]]
+         .merge(pred[["populationID", "year", "N_fertile_total", "n_demes",
+                      "pred_srk_diversity_mean", "pred_pcompat_mean"]],
+                on=["populationID", "year"], how="inner"))
+    m["log10_fold"] = np.log10(m["fold_of_expectation"])
+    tests = []
+    for scope, sub in [("both years", m)] + [(str(y), g) for y, g in m.groupby("year")]:
+        for x in ("pred_pcompat_mean", "pred_srk_diversity_mean",
+                  "N_fertile_total"):
+            rho, p = stats.spearmanr(sub[x], sub["log10_fold"])
+            tests.append(dict(scope=scope, predictor=x, n=len(sub),
+                              spearman_rho=rho, p_value=p))
+    tests = pd.DataFrame(tests)
+    tests.to_csv(TABLES / "step30i_seed_yield_vs_predictions_tests.tsv",
+                 sep="\t", index=False)
+    print("[step30i] Seed yield vs predictions (Spearman, log10 fold):")
+    print(tests.round(3).to_string(index=False))
+    return m
+
+
+def plot_seed_yield_vs_predictions(m: pd.DataFrame, out_png: Path,
+                                   out_pdf: Path) -> None:
+    """Fold of expectation vs predicted P_compat (A) and predicted SRK
+    diversity (B); 2025 open, 2026 filled, BL colours."""
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
+    for ax, x, xl in ((axes[0], "pred_pcompat_mean", "Predicted pollen compatibility"),
+                      (axes[1], "pred_srk_diversity_mean", "Predicted number of SRK alleles")):
+        for _, r in m.iterrows():
+            c = BL_COLORS.get(r["BL"], "#555")
+            ax.plot(r[x], r["fold_of_expectation"], "o", ms=6, mec=c,
+                    mfc="white" if r["year"] == 2025 else c)
+            ax.annotate(f"P{int(r['populationID'])}", (r[x], r["fold_of_expectation"]),
+                        fontsize=6, xytext=(3, 2), textcoords="offset points")
+        ax.axhline(1, ls=":", c="#444")
+        ax.set_yscale("log")
+        ax.set_xlabel(xl)
+        ax.spines[["top", "right"]].set_visible(False)
+    axes[0].set_ylabel("Seed yield relative to plant-size expectation (×)")
+    axes[0].set_title("A. Seed yield vs predicted pollen compatibility", loc="left", weight="bold")
+    axes[1].set_title("B. Seed yield vs predicted SRK diversity", loc="left", weight="bold")
+    handles = [plt.Line2D([], [], marker="o", ls="", mec=BL_COLORS[b], mfc=BL_COLORS[b], label=b)
+               for b in NEW_BL_ORDER if b in BL_COLORS]
+    handles += [plt.Line2D([], [], marker="o", ls="", mec="#555", mfc="white", label="2025"),
+                plt.Line2D([], [], marker="o", ls="", mec="#555", mfc="#555", label="2026")]
+    axes[1].legend(handles=handles, fontsize=7, loc="lower right")
+    fig.tight_layout()
+    fig.savefig(out_png, dpi=200, bbox_inches="tight")
+    fig.savefig(out_pdf, bbox_inches="tight")
+    plt.close(fig)
+
+
 def main() -> None:
     print("[step30i] Loading occurrences from LEPA DB …")
     occ = load_occurrences()
@@ -773,6 +841,13 @@ def main() -> None:
     plot_forest(res, merged,
                 FIGURES / "step30i_size_seed_population.png",
                 FIGURES / "step30i_size_seed_population.pdf")
+    # Seed yield vs the genetic predictions
+    cmp_ = compare_with_predictions(res)
+    cmp_.to_csv(TABLES / "step30i_seed_yield_vs_predictions.tsv",
+                sep="\t", index=False)
+    plot_seed_yield_vs_predictions(
+        cmp_, FIGURES / "step30i_seed_yield_vs_predictions.png",
+        FIGURES / "step30i_seed_yield_vs_predictions.pdf")
 
 
 if __name__ == "__main__":

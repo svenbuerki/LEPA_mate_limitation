@@ -77,6 +77,41 @@ def _deme_inventory_by_location() -> dict[int, list[tuple[int, int]]]:
     return comp_by_loc
 
 
+def _location_bl(codes: pd.Series) -> np.ndarray:
+    """Current BL (Step 05, via the populations) of each locationCode —
+    every location sits in a single BL."""
+    from srk_units import load_event_units
+    bl = (load_event_units().drop_duplicates("locationCode")
+              .set_index("locationCode")["BL"])
+    return codes.map(bl).to_numpy()
+
+
+def _selected_mothers_by_location() -> dict[int, dict[int, tuple[int, int]]]:
+    """{locationID: {deme index within location: (mothers selected,
+    seedlings to genotype)}} — the real mothers per deme chosen by
+    Step 21 (`step30_A_sampling_adequacy_per_deme_{Y}.tsv`, capacity
+    scenario). Empty if Step 21 has not run."""
+    from srk_units import location_deme_inventory, sampling_year
+    yr = sampling_year()
+    path = DEFAULT_TABLES / f"step30_A_sampling_adequacy_per_deme_{yr}.tsv"
+    if not path.exists():
+        print(f"[step22] WARNING: {path} missing — run Step 21 first; "
+              "falling back to a size-proportional split of mothers.")
+        return {}
+    sel = pd.read_csv(path, sep="\t")
+    inv = (location_deme_inventory(yr)
+             .drop_duplicates(["locationID", "component_id_50m"])
+             .merge(sel[["populationID", "demeID", "M_selected_capacity",
+                         "seedlings_capacity"]],
+                    on=["populationID", "demeID"], how="left")
+             .fillna({"M_selected_capacity": 0, "seedlings_capacity": 0}))
+    out: dict[int, dict[int, tuple[int, int]]] = {}
+    for r in inv.itertuples(index=False):
+        out.setdefault(int(r.locationID), {})[int(r.component_id_50m)] = (
+            int(r.M_selected_capacity), int(r.seedlings_capacity))
+    return out
+
+
 def build_p1_prior(carrier_tsv: Path) -> pd.DataFrame:
     """Aggregate per-allele carrier counts to per-Fg frequency estimates.
 
@@ -154,9 +189,9 @@ def predicted_diversity_per_location(
          size = |union of component Fg sets|.
 
       3. **Location-local coverage** (per-component sampling, unioned).
-         Distribute the location's mothers and seeds across components
-         proportional to `component_N_fertile_c` (largest-remainder
-         integer allocation). For each component: `A_delivered_c =
+         Each component gets the mothers and genotyped seedlings Step 21
+         actually selected in that deme (falls back to a split
+         proportional to `component_N_fertile_c` if Step 21 is missing). For each component: `A_delivered_c =
          PLOIDY · M_c + PATERNAL_ALLELES_PER_SEED · seeds_c` allele
          draws, record which Fgs this stochastic sample hits. Location
          detected = |union of component detected sets|; coverage =
@@ -182,6 +217,7 @@ def predicted_diversity_per_location(
     # for the field season the sampling tables hold. (`event_component_tsv`
     # is kept for API compatibility and ignored.)
     comp_by_loc = _deme_inventory_by_location()
+    selected_by_loc = _selected_mothers_by_location()
 
     loc_rows: list[dict] = []
     comp_rows: list[dict] = []
@@ -222,8 +258,16 @@ def predicted_diversity_per_location(
         # proportional to component_N_fertile (largest remainder keeps
         # the per-component integer total consistent with the whole-
         # location M_used and total_seeds).
-        M_c_each = _largest_remainder(comp_sizes, M_used)
-        seeds_c_each = _largest_remainder(comp_sizes, total_seeds)
+        sel = selected_by_loc.get(loc_id)
+        if sel:
+            # Real mothers and genotyped seedlings per deme (Step 21).
+            M_c_each = np.array([sel.get(cid, (0, 0))[0] for cid, _ in comps])
+            seeds_c_each = np.array([sel.get(cid, (0, 0))[1] for cid, _ in comps])
+            M_used = int(M_c_each.sum())
+            total_seeds = int(seeds_c_each.sum())
+        else:
+            M_c_each = _largest_remainder(comp_sizes, M_used)
+            seeds_c_each = _largest_remainder(comp_sizes, total_seeds)
 
         # Design A_delivered per component (unused in the prediction,
         # kept as a per-component column for reference).
@@ -970,8 +1014,8 @@ def plot_diversity_unbiased_vs_sampling(pred: pd.DataFrame,
     and the coverage ratio.
 
     Layout matches every other per-location figure: rows =
-    Bottleneck Lineages in canonical BL_ORDER (BL4 → BL5 → BL3 → BL1
-    → BL2, top-to-bottom); columns = Panel A / B / C. Row heights
+    Bottleneck Lineages in BL_ORDER (BL1 → BL2 → BL3 → BL4
+    → BL5, top-to-bottom); columns = Panel A / B / C. Row heights
     ∝ number of locations per BL. Within each BL row, locations are
     sorted by unbiased pool size (ascending, small → large).
 
@@ -992,7 +1036,7 @@ def plot_diversity_unbiased_vs_sampling(pred: pd.DataFrame,
 
     K_species = len(prior)
     df = pred.copy()
-    df["BL"] = locationCode_to_bl(df["locationCode"]).values
+    df["BL"] = _location_bl(df["locationCode"])
     df["BL"] = df["BL"].fillna("Unassigned")
     m_col = "M_mothers_in_db" if "M_mothers_in_db" in df.columns \
         else "M_achievable_location"
@@ -1164,7 +1208,7 @@ def plot_prediction_fecundation(pcompat_per_loc: pd.DataFrame,
     from srk_bl_constants import BL_COLORS, BL_ORDER, locationCode_to_bl, location_label_series
 
     df = pcompat_per_loc.copy()
-    df["BL"] = locationCode_to_bl(df["locationCode"]).values
+    df["BL"] = _location_bl(df["locationCode"])
     df["BL"] = df["BL"].fillna("Unassigned")
 
     bls = [b for b in BL_ORDER if b in df["BL"].values]
@@ -1304,7 +1348,7 @@ def plot_diversity_vs_pcompat(pred_div: pd.DataFrame,
                  "M_mothers_in_db"]],
         on="locationID", how="inner", suffixes=("", "_pc"),
     )
-    m["BL"] = locationCode_to_bl(m["locationCode"]).values
+    m["BL"] = _location_bl(m["locationCode"])
     m["BL"] = m["BL"].fillna("Unassigned")
 
     fig, ax = plt.subplots(figsize=(10.0, 7.0))

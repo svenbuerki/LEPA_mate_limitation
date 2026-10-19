@@ -49,7 +49,7 @@ The three repositories are intentionally **cross-linked by README reference only
 - **`SRK_mate_limitation_references.bib`** — citations for the metapopulation + Wright-neighbourhood + sporophytic-SI literature the pipeline leans on.
 - **`PIPELINE.md`** — how to run the pipeline (`./run_pipeline.sh`), the run order, what every step reads and writes, where outputs are saved, and the files it needs from other repositories (LEPA database, SRK_bioinformatics).
 - **`run_pipeline.sh`** — runs all 26 steps in dependency order.
-- **`Scripts/`** — the 26 numbered pipeline steps (`step01_populations.py` through `step26_radius_sweep_H1.py`, numbered in run order) plus shared helpers (`srk_units.py` populations + demes, `project_paths.py` external inputs, `srk_bl_constants.py`, `srk_si_model.py`).
+- **`Scripts/`** — the 26 numbered pipeline steps (`step01_populations.py` through `step27_radius_sweep_H1.py`, numbered in run order) plus shared helpers (`srk_units.py` populations + demes, `project_paths.py` external inputs, `srk_bl_constants.py`, `srk_si_model.py`).
 - **`tables/`** — all output TSV outputs: population crosswalk, trend-class classification, deme structure, radius-sensitivity sweep, predictions per (population, year), size-seed strata, conservation-priority list, and the Part C validation TSVs.
 - **`figures/`** — all PNG + PDF outputs: 17 figures covering the populations overview, BL clustering + dendrogram, trend-class dynamic, deme-size distribution, SRK diversity + pollen-compatibility predictions, SI model schematic, Part C clean-overlap anchor, hypothesis decomposition, radius-sweep H1 test, size-seed calibration, and the per-population conservation-priority forest plot.
 
@@ -65,7 +65,7 @@ The three repositories are intentionally **cross-linked by README reference only
 4. **SRK-based validation (Part C)** — at the three populations with Phase 4 adult SRK genotypes (P6 = EO67, P45 = EO70, P43 + P44 = EO76; Part C stays at EO level because genotyped adults carry no eventID): observed vs predicted SRK diversity + observed vs predicted pollen compatibility + hypothesis decomposition + radius sweep.
 5. **Behavioural prediction + validation on every population** — fit a species-wide plant-size → seed-yield allometry, compare each population's observed seed yield against the species-wide expectation, bin every population as *mate-limited* (under-producing → intervention priority), *reproduction intact* (at expectation), or *SI-escape candidate* (over-producing → seed-parent genotyping priority).
 
-Scripts are numbered `step01` – `step26` in run order (renumbered 2026-10-17; old → new map in [`PIPELINE.md`](PIPELINE.md) § 7). Output TSVs and figures keep their historical `step28*` – `step30*` filename prefixes so that links from the docs and from `SRK_bioinformatics` stay stable.
+Scripts are numbered `step01` – `step27` in run order (renumbered 2026-10-17, step21 inserted 2026-10-19; old → new map in [`PIPELINE.md`](PIPELINE.md) § 7). Output TSVs and figures keep their historical `step28*` – `step30*` filename prefixes so that links from the docs and from `SRK_bioinformatics` stay stable.
 
 ---
 

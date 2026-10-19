@@ -31,7 +31,7 @@ import numpy as np
 import pandas as pd
 
 from step14_seed_sampling_per_mother import PLOIDY
-from step21_predictions_core import build_p1_prior
+from step22_predictions_core import build_p1_prior
 from srk_si_model import (
     load_class_map, build_class_i_mask, load_zygosity_dist,
     sample_genotypes_empirical, p_compat_sporophytic_empirical,

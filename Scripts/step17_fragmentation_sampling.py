@@ -4,9 +4,11 @@
 Uses the **50 m primary pollen-flight radius** (see
 `step29a_pollinator_radius_sensitivity.py` for the biological
 justification) to group each location's events into connected
-components, then allocates mothers per COMPONENT (not per whole
-location) using the same coupon-collector 90 %-probability-of-full-
-detection rule as § B.4.1. Within each component, mothers are
+components (demes), then allocates mothers per deme (not per whole
+location): the smallest M whose 15 seedlings per mother detect 90 % of
+the deme's SRK Fgs on average, under the empirical species prior with
+drift (`srk_detection.py` — the same model as the SRK predictions;
+replaced the uniform-frequency coupon-collector rule on 2026-10-19). Within each component, mothers are
 distributed proportional to N_fertile, subject to a maternal-
 genotype floor of ≥ 1 mother per event.
 
@@ -63,6 +65,7 @@ from step14_seed_sampling_per_mother import (
 )
 from srk_bl_constants import BL_COLORS, BL_ORDER, base_eo
 from srk_units import load_event_units
+from srk_detection import mothers_for_coverage
 
 # Field → lab yield assumption used for Part C sampling design.
 # Approximate LEPA germination rate under greenhouse conditions.
@@ -111,15 +114,15 @@ def connected_components_50m(sub: pd.DataFrame) -> list[list[int]]:
 def allocate_component(comp_subset: pd.DataFrame,
                         target_prob: float = TARGET_PROB
                         ) -> pd.DataFrame:
-    """Compute component K, coupon-collector M, then distribute across
-    events proportional to N_fertile with a floor of ≥ 1 per event and
-    a cap at each event's N_fertile."""
+    """Mothers the deme needs for 90 % mean Fg coverage under the
+    empirical species prior (`srk_detection.mothers_for_coverage`, the
+    model the SRK predictions use), then distribute across events
+    proportional to N_fertile with a floor of ≥ 1 per event and a cap
+    at each event's N_fertile."""
     N_c = int(comp_subset["n_fertile"].sum())
     n_events_c = len(comp_subset)
-    K_c_raw = K_pool(N_c) # PLOIDY * (N_c - 1) under tetraploid
-    K_c = min(K_c_raw, K_SPECIES_FG)
-    M_paternal = (1 if K_c <= 1
-                  else mothers_for_full_detection(K_c, target_prob))
+    K_c = min(K_pool(N_c), K_SPECIES_FG) # reported only
+    M_paternal = mothers_for_coverage(N_c) if N_c > 0 else 1
     M_c_final = max(M_paternal, n_events_c)
 
     events_out = comp_subset.copy().reset_index(drop=True)
@@ -399,7 +402,7 @@ def select_germplasm_for_partC(per_event_df: pd.DataFrame,
 
 def plot_comparison(loc_df: pd.DataFrame, out_png: Path, out_pdf: Path,
                     year: int):
-    bls = [b for b in BL_ORDER if b in loc_df["BL"].values]
+    bls = [b for b in sorted(loc_df["BL"].dropna().unique()) if b in loc_df["BL"].values]
     if (loc_df["BL"] == "Unassigned").any():
         bls.append("Unassigned")
     palette = {**BL_COLORS, "Unassigned": "#8a8a8a"}
@@ -467,7 +470,7 @@ def plot_comparison(loc_df: pd.DataFrame, out_png: Path, out_pdf: Path,
         Patch(facecolor="#555555", alpha=0.35, edgecolor="#333",
               label="Mothers already in the LEPA DB (light bar, on top)"),
         Patch(facecolor="#555555", alpha=0.9, edgecolor="#333",
-              label="Mothers needed by § B.4.2 target (solid bar, below)"),
+              label="Mothers needed — 90 % SRK coverage per deme (solid bar, below)"),
     ]
     xmax = float(max(loc_df["M_target"].max(),
                      loc_df["n_mothers_available_in_DB"].max()))

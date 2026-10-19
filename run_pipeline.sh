@@ -58,17 +58,23 @@ if [[ "$PART" == all || "$PART" == sampling ]]; then
   run step18_mating_pool_structure
   run step19_fragmentation_index
   run step20_pollinator_radius
+  run step21_sampling_adequacy      # both years; drops undersampled populations
 fi
 
 if [[ "$PART" == all || "$PART" == validation ]]; then
   # Part 4 — location-level predictions + seed-count power (2025)
-  run step21_predictions_core --year 2025
-  run step22_seed_justification     # reads step21's prior frequencies
+  run step22_predictions_core --year 2025
+  run step23_seed_justification     # reads step22's prior frequencies
   # Part 5 — validation against adult SRK genotypes (Part C)
-  run step23_EO_scale_validation
-  run step24_partC_clean_overlap
-  run step25_partC_hypothesis_decomposition
-  run step26_radius_sweep_H1
+  run step24_EO_scale_validation
+  run step25_partC_clean_overlap
+  run step26_partC_hypothesis_decomposition
+  run step27_radius_sweep_H1
+fi
+
+# Consistency checks — units, BLs, IDs, targets, code, tables (fails the run)
+if [[ "$PART" == all ]]; then
+  run step28_pipeline_checks
 fi
 
 echo "✔ done (logs in logs/)"

@@ -9,10 +9,10 @@ with the LEPA_EO_spatial_clustering figures.
 Public API
 ----------
 BL_COLORS dict {BLn: hex colour} — Set1 cluster-index mapping.
-BL_ORDER list of BLn strings, area-then-connectivity DESC.
+BL_ORDER list of BLn strings — the population BLs, BL1 → BL5.
 load_eo_to_bl(...) map {EOcode: BL} from EO_group_BL_summary.csv
-locationCode_to_bl(...) map {locationCode: BL} — locationCode → base EO → BL
-                        (locationCodes like "EO18-7" map to "EO18" → its BL).
+locationCode_to_bl(...) map {locationCode: BL} — the current population
+                        BL (Step 05) via tables/step29a_event_to_deme.tsv.
 make_location_label(...) str — `{locationCode}_{locationID}` single-site
                         display label. Project-wide convention adopted
                         2026-10-03: every per-location row across every
@@ -58,10 +58,11 @@ def load_bl_order(path: Path = DEFAULT_BL_SUMMARY_CSV) -> list[str]:
     return df["BL"].tolist()
 
 
-try:
-    BL_ORDER = load_bl_order()
-except FileNotFoundError:
-    BL_ORDER = ["BL4", "BL5", "BL3", "BL1", "BL2"] # documented default
+# BL_ORDER — the project's population-based BLs (Step 05 numbering,
+# BL1 → BL5). Assigned below, after load_population_bl_order(). The
+# legacy EO-level order (BL4, BL5, BL3, BL1, BL2 from EO_BL_summary.csv)
+# is `legacy_bl_order()` and is not used for display any more.
+legacy_bl_order = load_bl_order
 
 
 # ---------------------------------------------------------------------------
@@ -110,15 +111,35 @@ def base_eo(location_code: str) -> str:
     return f"EO{n:02d}" if n < 10 else f"EO{n}"
 
 
-def locationCode_to_bl(location_codes,
-                       eo_to_bl: dict[str, str] | None = None
-                       ) -> pd.Series:
-    """Vectorised map locationCode → BL using base_eo() + eo_to_bl."""
+def legacy_locationCode_to_bl(location_codes,
+                              eo_to_bl: dict[str, str] | None = None
+                              ) -> pd.Series:
+    """LEGACY EO-level BL (SRK_bioinformatics EO_group_BL_summary.csv).
+    Its BL numbers do NOT match the project's population BLs. Only Step 01
+    uses it, as a placeholder before Steps 03 – 05 define the BLs."""
     if eo_to_bl is None:
         eo_to_bl = load_eo_to_bl()
     codes = pd.Series(location_codes, dtype=str).reset_index(drop=True)
     bases = codes.map(base_eo)
     return bases.map(eo_to_bl)
+
+
+EVENT_TO_DEME_TSV = Path("tables/step29a_event_to_deme.tsv")
+
+
+def locationCode_to_bl(location_codes) -> pd.Series:
+    """Vectorised map locationCode → the project's current BL (Step 05,
+    via `tables/step29a_event_to_deme.tsv`). Every location sits in a
+    single BL. Codes not in the table map to NaN."""
+    if not EVENT_TO_DEME_TSV.exists():
+        raise SystemExit(f"[srk_bl_constants] {EVENT_TO_DEME_TSV} missing — "
+                         "run Steps 01 – 07 first")
+    u = pd.read_csv(EVENT_TO_DEME_TSV, sep="\t", usecols=["locationCode", "BL"])
+    if (u.groupby("locationCode")["BL"].nunique() > 1).any():
+        raise SystemExit("[srk_bl_constants] a locationCode spans two BLs")
+    m = u.drop_duplicates("locationCode").set_index("locationCode")["BL"]
+    codes = pd.Series(location_codes, dtype=str).reset_index(drop=True)
+    return codes.map(m)
 
 
 def make_location_label(location_code: str, location_id: int | str) -> str:
@@ -159,14 +180,10 @@ def location_label_series(df: pd.DataFrame,
 # built in step30h_* on the 44 populations defined by step29a (500 m
 # connectivity on pooled 2025+2026 events + historical centroids).
 #
-# Transition status (2026-10-06): both frameworks coexist in the code
-# base.
-# - locationCode_to_bl() — OLD EO-based BL (via Tables/EO_*_summary.csv)
-# - populationID_to_bl() — NEW population-based BL (via
-# tables/step30h_populationID_crosswalk.tsv)
-# New scripts (step30h_*, step30g_* post-remap) use the new
-# BL. Legacy per-locationCode figures (step30, step30c-e) still use
-# the EO-based mapping; migrate those scripts individually as needed.
+# Migration completed 2026-10-19: BL_ORDER and locationCode_to_bl() now
+# give the population-based BLs everywhere. The EO-based mapping
+# survives only as legacy_locationCode_to_bl() / legacy_bl_order()
+# (Step 01 placeholder).
 #
 # BL_COLORS stay the same 5-colour Set1 palette (BL names BL1..BL5
 # are reused with new meanings). The new BL_ORDER is read from
@@ -207,3 +224,6 @@ def populationID_to_bl(
     cw = pd.read_csv(crosswalk_path, sep="\t", encoding="utf-8-sig")
     m = cw.set_index("populationID_new")["BL"].to_dict()
     return pd.Series(population_ids, dtype="Int64").map(m)
+
+
+BL_ORDER = load_population_bl_order()
