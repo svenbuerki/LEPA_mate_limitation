@@ -19,3 +19,7 @@ tables/step30h_cluster_assignments.tsv
 tables/step30h_landscape_per_BL.tsv
 tables/step30h_landscape_per_population.tsv
 tables/step30h_populationID_crosswalk.tsv
+
+# Per-BL maps with EO / population / deme detail — kept local (Sven, 2026-10-20)
+figures/step30h_BL_map_*.png
+figures/step30h_BL_maps.pdf
