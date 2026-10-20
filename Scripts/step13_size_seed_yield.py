@@ -777,11 +777,33 @@ def main() -> None:
     r0 = year_check.iloc[0]
     print(f"[step30i] Year-effect check (within populations): "
           f"fold {r0.fold:.2f}, p = {r0.p_value:.2g}"
-          + ("  — WARNING: significant; consider a year term"
-             if r0.p_value < 0.05 else "  — not significant; pooled curve OK"))
+          + ("  — significant: statuses that change under the year offset "
+             "are flagged year-sensitive" if r0.p_value < 0.05
+             else "  — not significant; pooled curve OK"))
 
     # ---- STAGE 3 — per-population test ----
     res = per_population_year_test(merged)
+
+    # Year sensitivity (decided 2026-10-20): repeat the test with the
+    # within-population year effect as a fixed offset on 2026 (curve
+    # refitted on logy − offset), so a year-wide shift in seed set cannot
+    # by itself make a population mate-limited or SI-escape. Only
+    # statuses that agree under both curves are ranked; the others are
+    # flagged year-sensitive.
+    yr_off = float(ym.params[yk])
+    is26 = (merged["year"] == 2026).astype(float)
+    adj = merged.assign(logy_adj=merged["logy"] - yr_off * is26)
+    gm_adj = smf.ols(best_formula.replace("logy", "logy_adj", 1), adj).fit()
+    adj["expected"] = gm_adj.fittedvalues + yr_off * is26
+    adj["resid"] = adj["logy"] - adj["expected"]
+    res_adj = per_population_year_test(adj.drop(columns="logy_adj"))
+    res = res.merge(
+        res_adj[["populationID", "year", "fold_of_expectation", "q_ttest",
+                 "conservation_bucket"]]
+        .rename(columns={"fold_of_expectation": "fold_year_adjusted",
+                         "q_ttest": "q_year_adjusted",
+                         "conservation_bucket": "bucket_year_adjusted"}),
+        on=["populationID", "year"], how="left")
     # BL ordering + populationID within-BL ordering for display
     res["_bl_rank"] = res["BL"].map(
         {b: i for i, b in enumerate(NEW_BL_ORDER)}).fillna(99).astype(int)
@@ -819,9 +841,21 @@ def main() -> None:
     # bucket across years → one row per populationID). This is the
     # one-shot "which populations to prioritize" answer.
     prio = summarise_per_population(res)
+    prio_adj = summarise_per_population(res_adj).set_index("populationID")
+    prio["priority_year_adjusted"] = prio["populationID"].map(
+        prio_adj["conservation_priority"])
+    prio["year_sensitive"] = (prio["conservation_priority"]
+                              != prio["priority_year_adjusted"])
+    prio["robust_priority"] = np.where(prio["year_sensitive"], "year_sensitive",
+                                       prio["conservation_priority"])
     out_prio = TABLES / "step30i_conservation_priority.tsv"
     prio.to_csv(out_prio, sep="\t", index=False)
     print(f"[step30i] Conservation priority (per population) → {out_prio}")
+    print(f"[step30i] Year-adjusted (within-population offset, fold "
+          f"{10 ** yr_off:.2f} in 2026): "
+          f"{prio['priority_year_adjusted'].value_counts().to_dict()}")
+    print(f"[step30i] Robust (same under both): "
+          f"{prio['robust_priority'].value_counts().to_dict()}")
     print(f"[step30i] Priority counts:")
     for bucket in ("mate_limited", "switching", "candidate_mate_limited",
                      "si_escape_candidate", "reproduction_intact",

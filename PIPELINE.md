@@ -130,7 +130,7 @@ stay stable; § 7 maps them to the current step numbers.
 
 | Step | Purpose | Reads | Writes |
 |---|---|---|---|
-| `step13_size_seed_yield` | Species-wide size → seed-yield curve (both years pooled); per population-year test; within-population year check; population-level restoration status | EXT LEPA DB (view `vOccurrenceTraits`) · t/`step29a_population_crosswalk` · `step30g_populations_classified` | t/`step30i_conservation_priority` (restoration priority list) · `step30i_size_seed_population_strata` · `step30i_size_seed_cv_rmse` · `step30i_year_effect_check` · f/`step30i_species_calibration` · `step30i_size_seed_population` |
+| `step13_size_seed_yield` | Species-wide size → seed-yield curve (both years pooled); per population-year test; within-population year check — the test is repeated with that year effect as an offset on 2026, and statuses that differ are flagged `year_sensitive` (`robust_priority`); population-level restoration status; seed yield vs predicted compatibility / diversity | EXT LEPA DB (view `vOccurrenceTraits`) · t/`step29a_population_crosswalk` · `step30g_populations_classified` | t/`step30i_conservation_priority` (restoration priority list) · `step30i_size_seed_population_strata` · `step30i_size_seed_cv_rmse` · `step30i_year_effect_check` · f/`step30i_species_calibration` · `step30i_size_seed_population` · `step30i_seed_yield_vs_predictions[_tests]` · f/`step30i_seed_yield_vs_predictions` |
 
 ### Part 3 — Sampling design (per field season)
 
