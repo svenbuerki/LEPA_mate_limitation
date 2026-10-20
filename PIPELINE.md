@@ -36,7 +36,10 @@ script's default (`/Users/sven/anaconda3/bin/python`).
 `step30h_landscape_per_BL`, `step30h_landscape_per_population`,
 `step30h_populationID_crosswalk`). The pipeline writes them, but they are in
 `.gitignore` because they give the locations of an ESA-listed plant. Never
-force-add them. Figures, including maps, may be published.
+force-add them. Figures, including maps, may be published — except the
+detailed per-BL maps from step09 (`step30h_BL_map_BL1…5.png`,
+`step30h_BL_maps.pdf`: EO hulls, population polygons and demes at
+slick-spot resolution), which are also gitignored and kept local.
 
 ---
 

@@ -880,6 +880,14 @@ populations, red, central-W group, including the drift-collapsed
 EO24 group), BL4 (5 populations, orange, NW group), BL5 (3
 populations, green, far-W, most compact). Source: `step09_BL_overview_map.py`.
 
+**Detailed maps per Bottleneck Lineage (local only).** The same step
+draws one map per BL: element occurrences as convex hulls, populations
+as polygons, and one zoom panel per population with its 50 m demes in
+each season (2025 dashed, 2026 solid). They show slick-spot positions
+in detail, so they are kept off the public repository: running
+`./run_pipeline.sh` writes them to `figures/step30h_BL_map_BL1…5.png`
+and `figures/step30h_BL_maps.pdf` on the local machine.
+
 ---
 
 ## Across-year population dynamic (Step 30g)
