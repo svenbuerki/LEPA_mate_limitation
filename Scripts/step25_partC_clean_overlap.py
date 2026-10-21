@@ -295,6 +295,26 @@ def per_fg_frequencies(indiv_df: pd.DataFrame,
     return pd.DataFrame(rows)
 
 
+def _place_labels(ax, xs, ys, labels, hi, min_gap_frac=0.05):
+    """Label points without overlap: labels are spread vertically to a
+    minimum gap and joined to their point by a thin leader line; points
+    in the right third are labelled to the left."""
+    order = np.argsort(ys)
+    ty = np.array(ys, dtype=float)[order]
+    gap = min_gap_frac * hi
+    for i in range(1, len(ty)):
+        ty[i] = max(ty[i], ty[i - 1] + gap)
+    for k, i in enumerate(order):
+        x, y = xs[i], ys[i]
+        right = x > 0.65 * hi
+        tx = x - 0.12 * hi if right else x + 0.06 * hi
+        ax.annotate(labels[i], xy=(x, y), xytext=(tx, ty[k]),
+                    fontsize=9, va="center", ha="right" if right else "left",
+                    arrowprops=dict(arrowstyle="-", color="#777777", lw=0.6,
+                                    shrinkA=0, shrinkB=4),
+                    zorder=3)
+
+
 def draw_figure(stats: pd.DataFrame,
                 freqs: pd.DataFrame,
                 bands: dict,
@@ -348,17 +368,9 @@ def draw_figure(stats: pd.DataFrame,
                             - r["pred_phase5_distinct_Fgs"]]],
                      fmt="s", color=COLOUR_OBS, ecolor="#999999",
                      elinewidth=1.0, capsize=3, markersize=8, zorder=2)
-        label = eo_label(r["locationCode"])
-        if r["pred_phase5_distinct_Fgs"] > 0.65 * hiA:
-            axA.annotate(
-                label + " ",
-                xy=(r["pred_phase5_distinct_Fgs"], r["obs_distinct_Fgs"]),
-                fontsize=9, va="center", ha="right")
-        else:
-            axA.annotate(
-                " " + label,
-                xy=(r["pred_phase5_distinct_Fgs"], r["obs_distinct_Fgs"]),
-                fontsize=9, va="center", ha="left")
+    _place_labels(axA, stats["pred_phase5_distinct_Fgs"].to_numpy(),
+                  stats["obs_distinct_Fgs"].to_numpy(dtype=float),
+                  [eo_label(c) for c in stats["locationCode"]], hiA)
     axA.set_xlim(0, hiA); axA.set_ylim(0, hiA)
     axA.set_xlabel("Predicted number of distinct SRK alleles",
                    fontsize=10)
@@ -397,19 +409,9 @@ def draw_figure(stats: pd.DataFrame,
                            [r["obs_pcompat_hi95"] - r["obs_pcompat_mean"]]],
                      fmt="o", color=COLOUR_OBS, ecolor="#999999",
                      elinewidth=1.0, capsize=3, markersize=8, zorder=2)
-        # Flip label to the left of the dot when the dot sits in the
-        # right third of the axis, otherwise it clips.
-        label = eo_label(r["locationCode"])
-        if r["pred_phase5_pcompat_mean"] > 0.65 * hiB:
-            axB.annotate(
-                label + " ",
-                xy=(r["pred_phase5_pcompat_mean"], r["obs_pcompat_mean"]),
-                fontsize=9, va="center", ha="right")
-        else:
-            axB.annotate(
-                " " + label,
-                xy=(r["pred_phase5_pcompat_mean"], r["obs_pcompat_mean"]),
-                fontsize=9, va="center", ha="left")
+    _place_labels(axB, stats["pred_phase5_pcompat_mean"].to_numpy(),
+                  stats["obs_pcompat_mean"].to_numpy(),
+                  [eo_label(c) for c in stats["locationCode"]], hiB)
     axB.set_xlim(0, hiB); axB.set_ylim(0, hiB)
     axB.set_xlabel(
         "Predicted pollen compatibility under random mating",

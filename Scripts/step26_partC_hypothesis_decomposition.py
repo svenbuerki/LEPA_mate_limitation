@@ -120,10 +120,9 @@ CLEAN_OVERLAP_EOS = ["EO67", "EO70", "EO76"]
 # 2026-10-06). Keeps figures aligned with the per-population
 # naming used across the compact doc.
 def eo_label(eo: str) -> str:
-    """'P6 (EO67)' style, from the current populations
-    (srk_units.eo_population_label)."""
-    pops = eo_population_label(eo)
-    return f"{pops} ({eo})" if pops else eo
+    """'P6 (EO67)' / 'P34 (EO18)' style — same labels as Step 25."""
+    import step25_partC_clean_overlap as s25
+    return s25.eo_label(eo)
 
 N_MC_FATHERS = 800
 N_BOOTSTRAP = 400
@@ -296,7 +295,7 @@ def draw_figure(stats: pd.DataFrame,
     n_loc = len(stats)
     n_scen = len(scen_labels)
 
-    fig, ax = plt.subplots(figsize=(12.0, 5.5))
+    fig, ax = plt.subplots(figsize=(max(12.0, 4.0 * n_loc), 5.5))
 
     # Traffic-light background bands (horizontal strips, pollen
     # compatibility is on the y-axis)
@@ -414,6 +413,15 @@ def main() -> None:
     }
     pred_div = pd.read_csv(DEFAULT_PRED_DIVERSITY, sep="\t",
                              encoding="utf-8-sig")
+
+    # Same sites as Step 25: the three EO sites plus the populations of
+    # the split EOs with enough genotyped plants (srk_genotype_units).
+    from step25_partC_clean_overlap import (DEFAULT_PRED_PCOMPAT,
+                                            add_population_sites)
+    pred_pc = pd.read_csv(DEFAULT_PRED_PCOMPAT, sep="\t", encoding="utf-8-sig")
+    indiv_df, _, pred_div, pop_sites = add_population_sites(
+        indiv_df, pred_pc, pred_div)
+    eos = eos + pop_sites
 
     stats = per_eo_decomposition(indiv_df, prior, class_i_mask,
                                    zyg_species, rng, eos,

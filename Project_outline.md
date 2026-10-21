@@ -235,19 +235,21 @@ EO25 cannot be split between its two populations and stays out.
 
 - **SRK allele diversity is far below the prediction everywhere**:
   5 – 9 alleles observed against 11 – 32 predicted. A radius sweep at
-  P42 and P40 ([Figure 17](#fig-17)) shows the gap stays flat down to
+  EO70 (P42) and EO76 (P40 + P41) ([Figure 17](#fig-17)) shows the gap stays flat down to
   10 m, so it is not a deme that is too wide: **local demes have
   drifted further than one draw from the species-wide frequencies
   assumes**.
 - **Pollen compatibility follows the prediction at P6** (0.70 /
   0.72) **and EO76** (0.72 / 0.78), **falls below it at P42** (0.53 vs
   0.78), **P34** (0.67 vs 0.78) **and P13** (0.44 vs 0.78), and is
-  **above it at P16** (0.84 vs 0.78). The gaps come from a few common
-  alleles (FG024 at P42; FG001 and FG002 at P13), and P16's excess
-  from rare alleles at raised frequency: **the spread of allele
-  frequencies within each dominance class, not the raw allele count,
-  drives compatibility** ([Figure 16](#fig-16)). P13 and P16 rest on
-  12 and 15 plants (7 mothers each) and are indicative.
+  **above it at P16** (0.84 vs 0.78; 0.77 with P16's own, unusually
+  multi-allele zygosity). The decomposition ([Figure 16](#fig-16))
+  finds three different causes: one dominant allele within a class at
+  P42 (FG024), the loss of almost all Class I alleles at P13 (4 % of
+  its SRK copies), and genotype zygosity at P16. **Which alleles are
+  lost and how they combine in plants, not the raw allele count,
+  drives compatibility.** P13 and P16 rest on 12 and 15 plants (7
+  mothers each) and are indicative.
 - **Agreement with seed yield**: P42 is mate-limited in both years
   (robust to the year offset) — a compatibility gap and a seed
   shortfall in the same population. P40 over-produced in 2025 with
@@ -364,8 +366,8 @@ species-mean compatibility; across all populations seed yield follows
 predicted compatibility only weakly (ρ = 0.38). The
 genotyped sites point to the reason: local demes have lost far more
 SRK alleles than one draw from the species-wide frequencies
-predicts, and at P42 that loss has skewed the allele frequencies
-enough to cut compatibility. Drift has acted longer, or on smaller
+predicts, and at P42, P34 and P13 that loss has skewed the allele
+frequencies or the class balance enough to cut compatibility. Drift has acted longer, or on smaller
 effective sizes, than our model assumes. Not every shortfall need be
 genetic, though — pollinators, resources, inbreeding depression and
 flowering time can also depress seed set. Seed–mother genotyping
@@ -1949,13 +1951,19 @@ P13 (EO27, 12), P16 (EO27, 15). In total **246 genotyped plants**.
   separate) with 7 of 32 alleles: the same pattern as EO70, milder.
   P34 is the big side of the D1 model pair.
 - **P13 (EO27)** — the largest shortfall of all (0.44 vs 0.78), with
-  only 5 alleles and FG001 (0.56) and FG002 (0.27) dominating; P13 is
-  mate-limited-candidate territory in the seed-yield test only under
-  the year offset (year-sensitive, § 30.3). Few plants (12, from 7
-  mothers): treat as indicative.
-- **P16 (EO27)** — compatibility **above** the prediction (0.84 vs
-  0.78): its 8 alleles are evenly spread, with rare alleles (FG005,
-  FG017) at 0.10 each. Few plants (15, from 7 mothers): indicative.
+  only 5 alleles and FG001 (0.56) and FG002 (0.27) dominating: only
+  4 % of its SRK copies are Class I, so almost every plant expresses
+  Class II (a class-balance collapse, § C.0.b). In the seed-yield test
+  P13 is intact with the pooled curve and a candidate with the year
+  offset (year-sensitive, § 30.3). Few plants (12, from 7 mothers):
+  treat as indicative.
+- **P16 (EO27)** — compatibility **above** the prediction here (0.84
+  vs 0.78): its 8 alleles are evenly spread, with rare alleles (FG005,
+  FG017) at 0.10 each. This comparison draws fathers with the
+  species-wide zygosity; with P16's own zygosity (53 % of plants
+  express ≥ 3 identities) compatibility falls to 0.77, below the
+  species-wide value (§ C.0.b). Few plants (15, from 7 mothers):
+  indicative.
 
 Across all six sites the allele count is far below the prediction
 (5 – 9 observed against 11 – 32 predicted), while compatibility follows
@@ -1977,11 +1985,13 @@ explains why the allele count alone does not set compatibility.
 
 **Why this analysis exists.** Panel A of § C.0.a (SRK diversity
 predicted vs observed) exposed a disconnect that pollen
-compatibility alone would have hidden: P42 and P40 both lose
-~23 of their predicted alleles, but observed pollen compatibility
-drops by 0.24 at P42 and barely 0.03 at P40. P6, with just 7
-alleles against a predicted 10.8, lands at 0.70 — in the
-sustainable band. **Without the diversity trigger from § C.0.a we
+compatibility alone would have hidden: EO70 (P42) and EO76 (P40 +
+P41) both lose ~23 of their predicted alleles, but observed pollen
+compatibility drops by 0.24 at P42 and barely 0.03 at EO76. P6, with
+just 7 alleles against a predicted 10.8, lands at 0.70 — in the
+sustainable band. The split-EO populations added on 2026-10-21
+(P34, P13, P16) lose 24 – 27 alleles each and still respond in three
+different ways. The decomposition runs on all six sites. **Without the diversity trigger from § C.0.a we
 would not have known there was a mechanism question to ask.**
 
 **Three competing hypotheses can produce different pollen-
@@ -2045,13 +2055,23 @@ is **buffering** the location.
   buffering the location — observed state on that axis is more
   favourable than species-wide.
 
-#### Walk-through — the three clean-overlap locations
+#### Walk-through — the six genotyped sites
 
 | Location | Alleles obs / pred | Pollen compatibility obs → species-wide pred | Within-class spread | Class I / II balance | Zygosity composition |
 |---|---|---|---:|---:|---:|
 | **EO67 (P6)** | 7 / 10.8 (-3.8) | 0.70 → 0.76 | **+100 %** | −7 % | −13 % |
 | **EO70 (P42)** | 6 / 28.3 (-22.3) | 0.54 → 0.70 | **+88 %** | −3 % | −6 % |
 | **EO76 (P40 + P41)** | 9 / 31.8 (-22.8) | 0.75 → 0.77 | **+206 %** | +1 % | **−115 %** |
+| **P34 (EO18)** | 7 / 31.8 (-24.8) | 0.73 → 0.74 | +172 % | +228 % | **−472 %** |
+| **P13 (EO27)** | 5 / 31.5 (-26.5) | 0.36 → 0.69 | +4 % | **+118 %** | +21 % |
+| **P16 (EO27)** | 8 / 31.9 (-23.9) | 0.77 → 0.86 | +46 % | +4 % | **+80 %** |
+
+Percentages are shares of each site's gap (species-wide − observed)
+closed by that single swap; for P34 the gap is only 0.01, so its
+percentages are large but the effects are small. The "observed"
+values here use each site's own father zygosity; Figure 15 uses the
+species-wide zygosity for fathers, which is why P16 sits above its
+prediction there (0.84) and below it here (0.77).
 
 - **P42 — classical drift collapse.** FG024 absorbs 35 % of the
   pool, FG001 another 62 %; four other alleles sit under 1 %.
@@ -2084,6 +2104,28 @@ is **buffering** the location.
   overshoots the species-wide prediction (within-class diversity
   at P40 is actually better-spread than drift-only P1 would
   deliver).
+- **P34 (EO18) — almost no gap here.** With its own zygosity P34's
+  compatibility (0.73) matches the species-wide value (0.74):
+  within-class spread and class balance would each raise it a
+  little, and its own zygosity buffers it (swapping to the
+  species-wide zygosity would lower it to 0.68, yellow bar). Its
+  shortfall in Figure 15 comes from the comparison with the
+  population-level prediction (0.78).
+- **P13 (EO27) — a class-balance collapse.** Only 4 % of P13's SRK
+  copies are Class I (35 % species-wide): FG001 and FG002 dominate
+  and almost every plant expresses Class II, so most crosses are
+  between plants that share a dominant Class II allele. Restoring
+  the species-wide class balance lifts compatibility from 0.36 to
+  0.75 — the whole gap (red bar). This is a different failure from
+  P42's within-class monoculture. 12 plants from 7 mothers:
+  indicative.
+- **P16 (EO27) — zygosity, not allele loss.** 53 % of P16's plants
+  express three or more distinct alleles (about 2 % species-wide).
+  Fathers that express more identities match more mothers, so the
+  site's own zygosity pulls compatibility down to 0.77; with
+  species-wide zygosity it reaches 0.84 (yellow bar). Many of these
+  plants are seedlings, whose genotypes combine two parents. 15
+  plants from 7 mothers: indicative.
 
 #### Methodological take-home
 
@@ -2165,7 +2207,7 @@ pollen-compatibility response.
 <a id="fig-16"></a>
 ![Figure 16](figures/step30_B_partC_hypothesis_decomposition.png)
 
-**Figure 16.** Competing-hypothesis decomposition of per-location pollen compatibility. Triggered by the SRK diversity discrepancies in § C.0.a. For each clean-overlap population — P6 (= EO67), P42 (= EO70), P40 + P41 (= EO76) — the figure shows five pollen-compatibility values from the same simulation (sporophytic Class I / II + empirical zygosity, 800 candidate fathers per mother, observed mother genotypes held fixed), each differing in which part of the father-drawing distribution is swapped to the species-wide reference. **Black — Observed:** fathers drawn from observed local allele frequencies and observed local zygosity. **Blue — Swap within-class spread:** keep observed Class I and Class II total masses, but reshape the within-class spread to match the P1 pattern (isolates the "drift monoculture" channel). **Red — Swap Class I / II balance:** keep within-class shape observed, rescale the two class totals to the species-wide values (isolates between-class rescue). **Yellow — Swap zygosity:** keep observed allele frequencies, swap father zygosity to species-wide 66/32/2 % (isolates the per-mother expressed-set channel). **Green — prediction:** everything swapped to species-wide. Error bars = bootstrap 95 % CI (400 mother resamples). Traffic-light bands shaded in the background; dashed grey line = species-wide pollen compatibility 0.78. **Reading rules:** a blue/red/yellow bar jumping toward green means that factor caused the gap; staying next to black means it was not involved; dropping below black means it is **buffering** the location (observed state on that axis is better than species-wide). **P42** — blue dominates (within-class drift monoculture, FG024 at 35 % of pool); red and yellow neutral. **P6** — small deficit, blue explains it; zygosity slightly buffering. **P40** — small deficit despite collapsing from 32 to 9 alleles; yellow drops below black, meaning zygosity (76 % homozygous mothers) is actively buffering the location, and blue overshoots green because the specific within-class spread at P40 is better than drift-only P1 would deliver. Source: `step26_partC_hypothesis_decomposition.py`.
+**Figure 16.** Competing-hypothesis decomposition of pollen compatibility at the six genotyped sites — P6 (= EO67), P42 (= EO70), P40 + P41 (= EO76), P34 (EO18), P13 and P16 (EO27). For each site the figure shows five pollen-compatibility values from the same simulation (sporophytic Class I / II + empirical zygosity, 800 candidate fathers per mother, observed mother genotypes held fixed), each differing in which part of the father-drawing distribution is swapped to the species-wide reference. **Green — predicted:** everything species-wide. **Grey — observed:** fathers drawn from the site's allele frequencies and zygosity. **Blue — swap within-class spread:** keep the observed Class I and Class II totals, reshape the spread within each class to the species-wide pattern (the "drift monoculture" channel). **Red — swap Class I / II balance:** keep the within-class shape, rescale the two class totals to species-wide (between-class rescue). **Yellow — swap zygosity:** keep the allele frequencies, swap father zygosity to species-wide 66 / 32 / 2 % (the expressed-set channel). Star = the swap that moves compatibility furthest, the dominant explanation of the gap. Error bars = bootstrap 95 % interval (400 mother resamples). Traffic-light bands in the background; dashed grey line = species-wide pollen compatibility 0.78. **Reading rules:** a coloured bar rising toward green means that factor causes the gap; staying next to grey means it is not involved; dropping below grey means it is **buffering** the site. **P42** — within-class monoculture (FG024 at 35 % of the pool). **P6** — small deficit, within-class spread explains it. **EO76** — small deficit despite 9 of 32 alleles; its zygosity buffers it. **P34** — almost no gap; zygosity buffering. **P13** — class balance: only 4 % of its SRK copies are Class I, and restoring the species-wide balance closes the whole gap. **P16** — zygosity: 53 % of its plants express ≥ 3 identities, which lowers compatibility. P13 and P16 rest on 12 and 15 plants. Source: `step26_partC_hypothesis_decomposition.py`.
 
 **Note — why P1 is empirical, not uniform.** A uniform-frequency P1
 (Dirichlet(α = 1) over 32 Fgs, equivalent to the P0 "uninformative"
@@ -2185,12 +2227,15 @@ would not reflect how LEPA actually enters the modelling frame).
 ### C.0.c Hypothesis test — can the diversity gap be closed by tightening the deme radius?
 
 **Why this test exists.** Figure 15 shows the diversity prediction
-over-estimates the observed SRK allele count by ~20 alleles at every
-clean-overlap location (predicted 11 / 28 / 32 vs observed 7 / 6 / 9).
-§ C.0.b above decomposes *why pollen compatibility nevertheless
-tracks observation*; here we ask whether the diversity gap at P42
-and P40 could be an artefact of the operational deme being too
-wide at 50 m. Two competing scenarios:
+over-estimates the observed SRK allele count at every genotyped site
+(predicted 11 – 32 vs observed 5 – 9). § C.0.b above decomposes *why
+pollen compatibility nevertheless tracks observation* at some sites
+and not others; here we ask whether the diversity gap at EO70 (P42)
+and EO76 (P40 + P41) could be an artefact of the operational deme
+being too wide at 50 m. The sweep re-partitions each location's
+slick spots, so it runs on these two EO sites (P6 is invariant
+across radii); the split-EO populations P34, P13 and P16 are not
+swept. Two competing scenarios:
 
 - **H1 — the 50 m operational deme is too wide.** Realised gene
   flow is tighter; a smaller radius should partition each location
@@ -2217,12 +2262,12 @@ campaign is designed to measure them).
 invariant across every tested radius (2 demes everywhere). The
 sweep is non-informative there, and P6's observed count is
 inside the 95 % CI of the prediction already — no gap to
-explain. The figure restricts to **P42** and **P40**, which do
-show meaningful fragmentation across the sweep (P42: 1 → 3 demes;
-P40: 5 → 17 demes as radius tightens).
+explain. The figure restricts to **EO70 (P42)** and **EO76 (P40 +
+P41)**, which do show meaningful fragmentation across the sweep (EO70:
+1 → 3 demes; EO76: 4 → 16 demes as radius tightens).
 
-**Result — H1 is rejected within the P1 drift assumption at P42
-and P40** ([Figure 17](#fig-17)).
+**Result — H1 is rejected within the P1 drift assumption at EO70
+and EO76** ([Figure 17](#fig-17)).
 
 | Location | Observed | Predicted at r = 10 m | at 50 m | at 150 m | Deme count 10 m / 50 m / 150 m |
 |---|:---:|:---:|:---:|:---:|:---:|
