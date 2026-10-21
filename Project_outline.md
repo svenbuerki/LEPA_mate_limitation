@@ -64,7 +64,7 @@ evidence on every population. **Genetic**: a drift model predicts
 how many SRK alleles each deme holds and how often its plants are
 compatible. **Behavioural**: observed seed yield is compared with
 what plant size predicts; it needs no genotype, so it runs on all
-populations now. Adult SRK genotypes at three populations give a
+populations now. SRK genotypes at six sites give a
 first check of the genetic predictions, and seed–mother genotyping
 in model populations will test them.
 
@@ -74,7 +74,8 @@ and height, per-mother seed yield and germplasm records (**1 441
 plants** with crown, height and seed yield). From the SRK
 bioinformatics pipeline: the species-wide frequencies of **32
 functional SRK alleles**, the empirical plant zygosity
-distribution, and adult genotypes at three populations (§ 5).
+distribution, and the genotypes of 246 plants (grown from wild seed or
+sampled in the wild) at six sites (§ 5).
 
 ### 2. Breeding units — Bottleneck Lineages, populations and demes
 
@@ -221,32 +222,39 @@ does not predict where mate limitation occurs. Seed yield is the
 direct read-out of reproductive status, and the populations where
 the two disagree are the first targets for genotyping (§ 5, § 8).
 
-### 5. Preliminary results — the three genotyped populations
+### 5. Preliminary results — the genotyped populations
 
-Three sites already have adult SRK genotypes: **EO67 = P6, EO70 =
-P42 and EO76 = P40 + P41** (187 adults; § C.0.a,
-[Figure 15](#fig-15)). The genotyped adults are recorded per EO, not
-per slick spot, so this comparison stays at the EO level; EO76 is
-compared as one site.
+SRK genotypes exist for plants grown from wild seed (and some wild
+leaf tissue) at six EOs. Each plant is placed in a population through
+its seed lot (wild mother → her slick spot), its sample location or
+its tissue position. That gives **six sites, 246 plants** (§ C.0.a,
+[Figure 15](#fig-15)): three EO sites — **EO67 = P6, EO70 = P42,
+EO76 = P40 + P41** (compared as one site) — and three populations of
+the split EOs with ≥ 10 plants — **P34 (EO18), P13 and P16 (EO27)**.
+EO25 cannot be split between its two populations and stays out.
 
 - **SRK allele diversity is far below the prediction everywhere**:
-  observed 7 / 6 / 9 alleles against predicted 11 / 28 / 32 (P6 /
-  P42 / P40 + P41). A radius sweep at P42 and P40
-  ([Figure 17](#fig-17)) shows the gap stays flat down to 10 m, so it
-  is not a deme that is too wide: **local demes have drifted further
-  than one draw from the species-wide frequencies assumes**.
-- **Pollen compatibility tracks the prediction despite that loss**
-  at P6 (observed 0.70 / predicted 0.72) and EO76 (0.72 / 0.78).
-  Only **P42** shows a real gap (0.53 vs 0.78), driven by one common
-  allele (FG024 at 0.35 locally vs 0.18 species-wide). The
-  decomposition ([Figure 16](#fig-16)) shows that **the spread of
-  allele frequencies within each dominance class, not the raw
-  allele count, drives compatibility**.
+  5 – 9 alleles observed against 11 – 32 predicted. A radius sweep at
+  P42 and P40 ([Figure 17](#fig-17)) shows the gap stays flat down to
+  10 m, so it is not a deme that is too wide: **local demes have
+  drifted further than one draw from the species-wide frequencies
+  assumes**.
+- **Pollen compatibility follows the prediction at P6** (0.70 /
+  0.72) **and EO76** (0.72 / 0.78), **falls below it at P42** (0.53 vs
+  0.78), **P34** (0.67 vs 0.78) **and P13** (0.44 vs 0.78), and is
+  **above it at P16** (0.84 vs 0.78). The gaps come from a few common
+  alleles (FG024 at P42; FG001 and FG002 at P13), and P16's excess
+  from rare alleles at raised frequency: **the spread of allele
+  frequencies within each dominance class, not the raw allele count,
+  drives compatibility** ([Figure 16](#fig-16)). P13 and P16 rest on
+  12 and 15 plants (7 mothers each) and are indicative.
 - **Agreement with seed yield**: P42 is mate-limited in both years
-  (robust to the year offset) — the one site where the genotypes show
-  a compatibility gap. P40 over-produced in 2025 with only 9 of 32
-  alleles before it dropped to 23 plants in 2026, consistent with
-  selfing in a pool short of compatible mates.
+  (robust to the year offset) — a compatibility gap and a seed
+  shortfall in the same population. P40 over-produced in 2025 with
+  only 9 of 32 alleles before it dropped to 23 plants in 2026,
+  consistent with selfing in a pool short of compatible mates.
+  Genotyped seedlings are counted as independent plants; siblings of
+  one mother are not yet corrected for.
 
 ### 6. Sampling design — justification and capacity
 
@@ -380,7 +388,7 @@ generation time is about 6.5 years. Two consequences follow:
 
 - **Across years the bank slows allele loss** — a population keeps
   alleles that are absent above ground in any one year (the storage
-  effect). The low diversity of the genotyped adults must then come
+  effect). The low diversity of the genotyped plants must then come
   from past drift in the local bank, not from one bad year.
 - **Within a year the mating pool is a small, changing draw** from
   the bank, so census, compatibility and seed set can swing between
@@ -1355,7 +1363,7 @@ estimator of the population-mean P_compat.
 
 ### 30.3 Do populations produce more or fewer seeds than their size predicts? Mate limitation vs SI escape across all 44 populations (Step 30i)
 
-**Why this test exists.** The SRK-based Part C validation tests (§ C.0.a – § C.0.c, below) are confined to the three clean-overlap populations (P6 = EO67, P42 = EO70, P40 + P41 = EO76) because they need adult SRK genotypes. **This step adds a behavioural check that uses no SRK data** and therefore runs on **all 44 populations NOW**, before any seed-genotyping campaign starts — a direct validation of the Phase A pollen-compatibility prediction that places § 30.3 cleanly inside the predictions pipeline rather than waiting for Part C. It rests on one hypothesis: **seed production reflects the reproductive status of the population** — under-production signals mate limitation, over-production signals SI escape.
+**Why this test exists.** The SRK-based Part C validation tests (§ C.0.a – § C.0.c, below) are confined to the six genotyped sites (EO67 = P6, EO70 = P42, EO76 = P40 + P41, and P34, P13, P16 of EO18 / EO27) because they need SRK genotypes. **This step adds a behavioural check that uses no SRK data** and therefore runs on **all 44 populations NOW**, before any seed-genotyping campaign starts — a direct validation of the Phase A pollen-compatibility prediction that places § 30.3 cleanly inside the predictions pipeline rather than waiting for Part C. It rests on one hypothesis: **seed production reflects the reproductive status of the population** — under-production signals mate limitation, over-production signals SI escape.
 
 **Approach — across-species build, then within-population test.**
 The test splits into two stages:
@@ -1851,94 +1859,119 @@ next field season:
 
 ## Step 30 Part C § C.0 — Empirical validation of the pollen-compatibility model
 
-The primary Part C validation runs at **location scale**
-on the three clean-overlap populations **P6 (= EO67), P42 (= EO70), P40 + P41 (= EO76)** (§ C.0.a and § C.0.b below). The
-other three EOs with Phase 4 SRK genotypes — **EO18, EO25, EO27** —
-are split under the 500 m rule and cannot yet be remapped to
-locationCodes. Their observed-vs-predicted pollen compatibility is
-reported here at EO scale as a background diagnostic, no figure.
+**The genotyped plants.** The SRK genotypes come from plants grown ex
+situ from wild-collected seed, plus some leaf tissue sampled from wild
+plants (2023). In the LEPA database they are placeholder occurrences
+(no event, location or date yet), so each plant is placed in a
+population through the genotyping sample records
+(`srk_genotype_units.py`): its seed lot → wild mother → her 2025 slick
+spot, else the sample's location, else the tissue-bank position
+(nearest slick spot within 500 m).
 
-**Current numbers for the three split EOs** (from `step24_EO_scale_validation.py`,
-observed fathers from local f vs predicted from species-wide P1,
-same observed mothers for both):
+The validation runs on two kinds of site:
 
-| EO | adults | Observed pollen compatibility (95 % CI) | Predicted (95 % CI) |
+- **Three EO sites** — EO67 (= P6), EO70 (= P42) and EO76 (= P40 +
+  P41), compared at location scale (§ C.0.a, § C.0.b, § C.0.c).
+- **Three populations of the split EOs** (added 2026-10-21) — every
+  population of EO18 and EO27 with ≥ 10 placed plants: **P34 (EO18)**,
+  **P13 and P16 (EO27)**, compared with their 2025 population-level
+  prediction (§ C.0.a). P8 (5 plants) and P10 (4) of EO27 have too few.
+  **EO25** stays out: its plants carry no seed-lot or location link, so
+  they cannot be split between P35 (EO25-A) and P36 (EO25-B).
+
+Seedlings of the same wild mother are counted as independent plants
+(no family correction), as for the three EO sites.
+
+**Background — the split EOs as whole EOs** (from
+`step24_EO_scale_validation.py`, observed fathers from local allele
+frequencies vs predicted from the species-wide prior, same observed
+mothers for both):
+
+| EO | plants | Observed pollen compatibility (95 % CI) | Predicted (95 % CI) |
 |---|---:|---|---|
 | EO27 | 61 | 0.77 (0.73–0.80) | 0.80 (0.77–0.84) |
 | EO25 | 51 | 0.77 (0.74–0.80) | 0.80 (0.77–0.84) |
 | EO18 | 39 | 0.69 (0.64–0.74) | 0.75 (0.71–0.79) |
 
-EO27 and EO25 pass at EO scale; EO18 shows a mild drift signal
-with overlapping CIs. The three clean-overlap populations **P6 (= EO67), P42 (= EO70), P40 + P41 (= EO76)** are reported at the population scale in § C.0.a — see the
-embedded figure below.
+Pooled over the whole EO, EO27 and EO25 pass and EO18 shows a mild
+shortfall. Split into populations (§ C.0.a), EO27 is not homogeneous:
+P13 falls far below the prediction and P16 sits above it.
 
-**Caveat.** P1 was built from these same individuals, so species-mean
-alignment is guaranteed; what this tests is **robustness to per-EO
-drift**, not absolute calibration.
+**Caveat.** The species-wide prior was built from these same plants,
+so species-mean alignment is guaranteed; what this tests is
+**robustness to local drift**, not absolute calibration.
 
-### C.0.a — Part C anchor at the clean-overlap populations P6, P42, P40
+### C.0.a — Part C anchor: observed vs predicted at the genotyped sites
 
-**Question.** Three of the six § C.0 EOs are **1:1 with a 
-locationCode** — no 500 m within-EO split — so their adult SRK
-genotypes can be used **directly** as a Part C validation anchor at
-the location scale, no event-level remap required. Does the
- **per-population** prediction reproduce what we see at the
-population scale?
+**Question.** Does the prediction reproduce the SRK diversity and
+pollen compatibility observed in the genotyped plants of each site?
 
-**The clean overlap set.** P6 (= P6, 37 adults), P42 (= P42, 74), P40 (= P40, 76) =
-**187 adults**. The other three § C.0 EOs (EO18, EO25, EO27) are
-split under the 500 m rule and need an `Individual → germplasmID →
-eventID → locationCode` join before their 151 adults can be used
-here; that is scheduled as future work.
+**The sites.** EO sites: EO67 (P6, 37 plants), EO70 (P42, 74), EO76
+(P40 + P41, 76). Populations of the split EOs: P34 (EO18, 32 plants),
+P13 (EO27, 12), P16 (EO27, 15). In total **246 genotyped plants**.
 
-**Approach.** For each clean-overlap location, run `step25_partC_clean_overlap.py`:
-1. Observed per-mother P_compat under sporophytic Class I / II +
-   empirical zygosity, with fathers drawn from **observed local Fg
-   frequencies** (not P1).
-2. Observed distinct Fgs = size of the Fg set recovered from the
-   adult genotypes.
-3. **No-drift upper bound on distinct Fgs** at the adult sample size:
-   `E[distinct Fgs | 4·n_adults draws from P1]`. If this upper bound
-   is near the species ceiling (which it is for all three locations:
-   19.2 at n=37, 24.0 at n=74, 24.0 at n=76), any large gap down to
-   the observed count isolates **drift**, not sampling.
-4. Compare observed to the per-population prediction
-   (`step30_A_prediction_location_pcompat.tsv` for P_compat,
-   `step30_A_prediction_location_diversity.tsv` for the component-
-   unioned pool size).
+**Approach.** For each site, run `step25_partC_clean_overlap.py`:
+1. Observed per-plant pollen compatibility under sporophytic Class I /
+   II dominance + empirical zygosity, with fathers drawn from the
+   **observed local allele frequencies** (not the species prior).
+2. Observed number of distinct SRK alleles in the genotyped plants.
+3. **No-drift upper bound** at the same sample size:
+   `E[distinct alleles | 4·n plants drawn from the species prior]`.
+   A large gap below it isolates **drift**, not sampling.
+4. Compare with the prediction — location-level for the EO sites
+   (`step30_A_prediction_location_pcompat.tsv`,
+   `_diversity.tsv`), population-level for 2025 for the split-EO
+   populations (`step30g_prediction_population_year.tsv`).
 
 **Result.**
 
-| Location | Adults | Observed P_compat (95 % CI) | pred P_compat (95 % CI) | Observed Fgs | No-drift upper bound | pred Fgs (95 % CI) |
+| Site | Plants | Observed pollen compatibility (95 % CI) | Predicted (95 % CI) | Observed alleles | No-drift upper bound | Predicted alleles (95 % CI) |
 |---|---:|---|---|---:|---:|---|
 | **EO67 (P6)** | 37 | 0.697 (0.660–0.737) | 0.723 (0.612–0.803) | **7** of 32 | 19.2 | 10.9 (8.0–15.0) |
 | **EO70 (P42)** | 74 | **0.532** (0.510–0.559) | **0.778** (0.744–0.812) | **6** of 32 | 23.8 | 28.4 (25.0–31.0) |
 | **EO76 (P40 + P41)** | 76 | 0.722 (0.694–0.753) | 0.775 (0.750–0.798) | **9** of 32 | 24.0 | 31.8 (31.0–32.0) |
+| **P34 (EO18)** | 32 | **0.671** (0.613–0.722) | **0.777** (0.736–0.820) | **7** of 32 | 18.2 | 31.8 (31.0–32.0) |
+| **P13 (EO27)** | 12 | **0.436** (0.310–0.577) | **0.778** (0.735–0.821) | **5** of 32 | 11.8 | 31.5 (30.0–32.0) |
+| **P16 (EO27)** | 15 | 0.843 (0.816–0.871) | 0.775 (0.735–0.811) | **8** of 32 | 13.2 | 31.9 (31.0–32.0) |
 
-- **P6** — observed and predicted CIs overlap on P_compat;
-  observed Fg count sits inside the CI → **model passes** at
-  this small BL4 location.
-- **P42** — observed P_compat 0.24 units BELOW prediction
-  (CIs do not overlap); observed Fg diversity 6/32 vs predicted
-  28/32 vs no-drift upper bound 24. **Massive drift collapse at a
-  large location** — a genuine biological signal, confirming the
-  § C.0 EO-scale finding at the location scale.
-- **P40** — observed P_compat marginally below prediction; observed
-  Fg diversity 9/32 vs predicted 32/32 vs no-drift upper bound 24.
-  **Severe diversity collapse at the single largest LEPA site** —
-  the P_compat model still holds up because Class II (6 Fgs,
-  including FG001 at 41 %) dominates and makes most mothers
-  compatible even with limited diversity.
+- **EO67 (P6)** — observed and predicted intervals overlap on pollen
+  compatibility, and the observed allele count sits inside the
+  predicted interval: **the model passes** at this small BL1 site.
+- **EO70 (P42)** — observed compatibility 0.25 below the prediction
+  (intervals do not overlap); 6 of 32 alleles against 28 predicted and
+  a no-drift bound of 24: **massive drift collapse in a large
+  population**.
+- **EO76 (P40 + P41)** — compatibility marginally below the
+  prediction; 9 of 32 alleles against 32 predicted: **severe diversity
+  collapse**, yet compatibility holds because FG001 (Class II, 41 %
+  species-wide) makes most plants compatible even with few alleles.
+- **P34 (EO18)** — compatibility below the prediction (intervals just
+  separate) with 7 of 32 alleles: the same pattern as EO70, milder.
+  P34 is the big side of the D1 model pair.
+- **P13 (EO27)** — the largest shortfall of all (0.44 vs 0.78), with
+  only 5 alleles and FG001 (0.56) and FG002 (0.27) dominating; P13 is
+  mate-limited-candidate territory in the seed-yield test only under
+  the year offset (year-sensitive, § 30.3). Few plants (12, from 7
+  mothers): treat as indicative.
+- **P16 (EO27)** — compatibility **above** the prediction (0.84 vs
+  0.78): its 8 alleles are evenly spread, with rare alleles (FG005,
+  FG017) at 0.10 each. Few plants (15, from 7 mothers): indicative.
+
+Across all six sites the allele count is far below the prediction
+(5 – 9 observed against 11 – 32 predicted), while compatibility follows
+the prediction at two sites (P6, EO76), falls below it at three
+(EO70, P34, P13) and exceeds it at one (P16) — the decomposition in § C.0.b
+explains why the allele count alone does not set compatibility.
 
 **Outputs.**
-- [`step30_B_partC_clean_overlap_per_location.tsv`](tables/step30_B_partC_clean_overlap_per_location.tsv) — one row per clean location: observed vs predicted P_compat and SRK diversity.
-- [`step30_B_partC_clean_overlap_fg_frequencies.tsv`](tables/step30_B_partC_clean_overlap_fg_frequencies.tsv) — long form, one row per (location, Fg) with observed f and P1 f.
-- [`step30_B_partC_clean_overlap.png`](figures/step30_B_partC_clean_overlap.png) — three-panel figure (P_compat scatter, Fg count comparison, Fg frequency spectrum).
+- [`step30_B_partC_clean_overlap_per_location.tsv`](tables/step30_B_partC_clean_overlap_per_location.tsv) — one row per site (`unit` = EO or population; `prediction_source` names the prediction used).
+- [`step30_B_partC_clean_overlap_fg_frequencies.tsv`](tables/step30_B_partC_clean_overlap_fg_frequencies.tsv) — long form, one row per (site, allele) with observed and species-wide frequency.
+- [`step30_B_partC_clean_overlap.png`](figures/step30_B_partC_clean_overlap.png) — three-panel figure.
 
 <a id="fig-15"></a>
 ![Figure 15](figures/step30_B_partC_clean_overlap.png)
 
-**Figure 15.** Part C anchor at the three clean-overlap populations — **P6 (= EO67_39)**, **P42 (= EO70_26)**, **P40 + P41 (= EO76_2)** — the three EOs with adult SRK genotypes. EO67 = P6 and EO70 = P42 are 1:1; EO76 is P40 (22 events) + P41 (1 event) in 2025 and is compared as one site, because the genotyped adults are recorded per EO, not per event. Panel order follows the causal chain: diversity → pollen compatibility → per-Fg drift fingerprint. **Panel A — SRK diversity.** Predicted (x) vs observed in adults (y), one square per location with 95 % CI horizontal error bars. 1:1 diagonal + ceiling at 32 Fgs. P6 sits on the diagonal (model passes); P42 (6/32) and P40 (9/32) sit far below (large drift gap). **Panel B — pollen compatibility.** Predicted vs observed, with the traffic-light background (red = failed, amber = struggling, green = sustainable) and 1:1 diagonal. P6 and P40 close to the diagonal; P42 is the clear outlier (observed 0.53 vs predicted 0.78). **Panel C — per-Fg drift residual** `f_observed − f_P1` per location (one row each, Fgs sorted left-to-right by species-wide P1 frequency, most-common → rarest). **Green bars = Fg enriched vs P1** (drift favoured it); **red bars = Fg depleted vs P1**; **× markers = Fg absent at the location** (lost entirely). The residual pops out the drift fingerprint that the raw-frequency plot blurred — P42 shows classic FG001 drift (+21 %) + FG024 (+18 %) with 26/32 Fgs absent; P40 shows milder enrichment of FG012 / FG010; P6's small-population signature elevates the normally-rare FG018 and FG023 instead of the common Fgs — a founder-effect signature rather than classical drift. Source: `step25_partC_clean_overlap.py`.
+**Figure 15.** Part C anchor at the six SRK-genotyped sites — three EO sites (**P6 = EO67**, **P42 = EO70**, **P40 + P41 = EO76**, the last compared as one site) and three populations of the split EOs (**P34 of EO18**, **P13 and P16 of EO27**). Panel order follows the causal chain: diversity → pollen compatibility → per-allele drift fingerprint. **Panel A — SRK diversity.** Predicted (x) vs observed in the genotyped plants (y), one square per site with 95 % interval error bars; 1:1 diagonal and ceiling at 32 alleles. Only P6 sits near the diagonal; every other site sits far below it. **Panel B — pollen compatibility.** Predicted vs observed, with the traffic-light background (red = failed, amber = struggling, green = sustainable) and 1:1 diagonal. P6, P40 + P41 and P34 lie close to the diagonal or just below; P42 and P13 are clear outliers below, P16 above. **Panel C — per-allele drift residual** (observed − species-wide frequency) per site, alleles sorted by species-wide frequency (most common → rarest). **Green = enriched**, **red = depleted**, **× = absent** at the site. P42 shows FG001 (+21 %) and FG024 (+18 %) with 26 of 32 alleles absent; P13 is dominated by FG001 and FG002; P16 carries several normally rare alleles at raised frequency; P6's small-population signature raises the rare FG018 and FG023 — a founder effect rather than classical drift. Source: `step25_partC_clean_overlap.py`.
 
 ### C.0.b Diversity collapse → pollen compatibility: hypothesis decomposition
 
@@ -2378,7 +2411,7 @@ summary.
 | Seed yield vs predictions | [`tables/step30i_seed_yield_vs_predictions.tsv`](tables/step30i_seed_yield_vs_predictions.tsv) + [`_tests.tsv`](tables/step30i_seed_yield_vs_predictions_tests.tsv) | Fold of expectation next to predicted compatibility and diversity; Spearman tests |
 | **Lab recipe for Part C — germplasmIDs to sample** | [`tables/step29c_partC_germplasmID_selection_2025.tsv`](tables/step29c_partC_germplasmID_selection_2025.tsv) | **One row per selected germplasmID already in the LEPA DB; per-50 m-component allocation + `n_seeds_to_genotype`. Drives Part C.** |
 | Background EO-scale diagnostic for split EOs (§ C.0) | [`tables/step30_C_pcompat_validation_at_eo.tsv`](tables/step30_C_pcompat_validation_at_eo.tsv) | EO18, EO25, EO27 (the three EOs whose location-scale remap is still pending); no figure |
-| **Part C anchor at location scale (§ C.0.a)** | [`tables/step30_B_partC_clean_overlap_per_location.tsv`](tables/step30_B_partC_clean_overlap_per_location.tsv) + [`_fg_frequencies.tsv`](tables/step30_B_partC_clean_overlap_fg_frequencies.tsv) | **Clean-overlap sites EO67 (= P6), EO70 (= P42), EO76 (= P40 + P41) — 187 adults ready to feed Part C now; observed vs pred P_compat + SRK diversity + no-drift upper bound** |
+| **Part C anchor at location scale (§ C.0.a)** | [`tables/step30_B_partC_clean_overlap_per_location.tsv`](tables/step30_B_partC_clean_overlap_per_location.tsv) + [`_fg_frequencies.tsv`](tables/step30_B_partC_clean_overlap_fg_frequencies.tsv) | **Six genotyped sites — EO67 (= P6), EO70 (= P42), EO76 (= P40 + P41) and P34 (EO18), P13, P16 (EO27); 246 plants; observed vs predicted pollen compatibility + SRK diversity + no-drift upper bound** |
 | **Hypothesis decomposition (§ C.0.b)** | [`tables/step30_B_partC_hypothesis_decomposition.tsv`](tables/step30_B_partC_hypothesis_decomposition.tsv) | **Decomposes the pollen-compatibility deviation at each clean-overlap location into within-class spread / Class I-II balance / zygosity contributions; triggered by the SRK diversity gap** |
 
 **Key figures** (ordered by appearance in this doc).

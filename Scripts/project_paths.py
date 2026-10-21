@@ -4,7 +4,7 @@ All pipeline OUTPUTS go to `tables/` and `figures/` inside this repo (scripts
 use paths relative to the repo root, so run them from there:
 `python Scripts/stepNN_*.py`).
 
-The three external inputs below are documented in PIPELINE.md (§ 5).
+The external inputs below are documented in PIPELINE.md (§ 5).
 Each can be overridden with an environment variable, e.g.
 
     LEPA_DB=/path/to/LEPA_SQL.db python Scripts/step13_size_seed_yield.py
@@ -32,3 +32,14 @@ PHASE4_INDIV_GENOTYPES_TSV = (
     SRK_TABLES / "Phase4/step23_individual_allele_genotypes_with_nulls.tsv")
 EO_BL_SUMMARY_CSV = SRK_TABLES / "EO_BL_summary.csv"
 EO_GROUP_BL_SUMMARY_CSV = SRK_TABLES / "EO_group_BL_summary.csv"
+
+# 3. Genotyping sample records (which wild plant / seed lot each genotyped
+#    sample came from). Sequencing sample sheet from SRK_bioinformatics;
+#    master sequencing sheet and tissue bank from the LEPA field-protocol
+#    folder (the tissue bank holds plant coordinates — local only).
+SAMPLING_METADATA_CSV = SRK_TABLES / "sampling_metadata.csv"
+GENOTYPING_DIR = Path(os.environ.get(
+    "LEPA_GENOTYPING_DIR",
+    PROJECTS_ROOT / "LEPA_fieldwork_protocol/SQL_DB/MolecularBanks_Sequencing"))
+MASTER_SEQUENCING_XLSX = GENOTYPING_DIR / "Master sheet Sequencing_Occurrence .xlsx"
+TISSUE_BANK_XLSX = GENOTYPING_DIR / "Tissue_bank.xlsx"

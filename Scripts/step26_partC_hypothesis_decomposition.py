@@ -77,6 +77,8 @@ CLI
 """
 from __future__ import annotations
 
+from srk_units import eo_population_label
+
 import argparse
 from pathlib import Path
 from typing import List
@@ -117,18 +119,11 @@ CLEAN_OVERLAP_EOS = ["EO67", "EO70", "EO76"]
 # EO → populationID mapping (post step30h renumber,
 # 2026-10-06). Keeps figures aligned with the per-population
 # naming used across the compact doc.
-EO_TO_POP = {
-    "EO67": "P3",
-    "EO70": "P41",
-    "EO76": "P39",
-}
-
-
 def eo_label(eo: str) -> str:
-    """'P3 (EO67)' style — fall back to the EO code alone if the
-    EO isn't in the clean-overlap mapping."""
-    pop = EO_TO_POP.get(eo)
-    return f"{pop} ({eo})" if pop else eo
+    """'P6 (EO67)' style, from the current populations
+    (srk_units.eo_population_label)."""
+    pops = eo_population_label(eo)
+    return f"{pops} ({eo})" if pops else eo
 
 N_MC_FATHERS = 800
 N_BOOTSTRAP = 400

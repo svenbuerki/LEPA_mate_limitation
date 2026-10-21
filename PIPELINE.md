@@ -160,7 +160,7 @@ stay stable; § 7 maps them to the current step numbers.
 | Step | Purpose | Reads | Writes |
 |---|---|---|---|
 | `step24_EO_scale_validation` | Observed vs predicted compatibility at EO scale (split EOs) | EXT Phase 4 genotypes · `srk_*` · `step26i_L1_carrier_inventory` · `step30_A_prediction_prior_frequencies` | t/`step30_C_pcompat_validation_at_eo` · f/`step30_C_pcompat_observed_vs_predicted` |
-| `step25_partC_clean_overlap` | Observed vs predicted at the three 1:1 populations (P3 EO67, P40 EO70, P38 EO76) | EXT Phase 4 genotypes · `step30_A_prediction_location_*` · `step30_A_traffic_light_bands` · prior | t/`step30_B_partC_clean_overlap_per_location` · `step30_B_partC_clean_overlap_fg_frequencies` · f/`step30_B_partC_clean_overlap` |
+| `step25_partC_clean_overlap` | Observed vs predicted SRK diversity and pollen compatibility at the genotyped sites: EO67 (P6), EO70 (P42), EO76 (P40 + P41) as EOs, plus every population of EO18 / EO27 with ≥ 10 genotyped plants (P34, P13, P16) | EXT Phase 4 genotypes · EXT genotyping sample records (via `srk_genotype_units`) · `step30_A_prediction_location_*` · `step30g_prediction_population_year` · `step30_A_traffic_light_bands` · prior | t/`step30_B_partC_clean_overlap_per_location` · `step30_B_partC_clean_overlap_fg_frequencies` · f/`step30_B_partC_clean_overlap` |
 | `step26_partC_hypothesis_decomposition` | Which mechanism drives the compatibility gap | EXT Phase 4 genotypes · `step30_A_prediction_location_diversity` · bands · prior | t/`step30_B_partC_hypothesis_decomposition` · f/same name |
 | `step27_radius_sweep_H1` | Can a tighter deme radius close the diversity gap? | EXT LEPA DB · t/`step30_B_partC_clean_overlap_per_location` · `step26i_L1_carrier_inventory` | t/`step30f_srk_diversity_radius_sweep` · f/same name |
 | `step28_pipeline_checks` | Consistency checks; any failure stops the run: units rebuild = Step 01; BL names/order = Step 05; every table's populationID / deme / BL agrees with the units; deme targets = `srk_detection` rule; sampling tables = 2025; no legacy BL lookup or hard-coded BL order in code; every table has a writer or reader; no coordinate columns in tracked tables | all of tables/ · Scripts/ | console report (logs/step28_pipeline_checks.log) |
@@ -182,9 +182,10 @@ LEPA_PROJECTS_ROOT=/data/projects ./run_pipeline.sh   # moves all defaults at on
 
 | Input | Project / repository | Default path (under `/Users/sven/Documents/Current_projects/`) | Override | What is used | Steps |
 |---|---|---|---|---|---|
-| **LEPA production database** `LEPA_SQL.db` | [Genetic-Rescue-DB](https://github.com/svenbuerki/Genetic-Rescue-DB) (local `LEPA_fieldwork_protocol/`) | `LEPA_fieldwork_protocol/SQL_DB/LEPA_SQL.db` | `LEPA_DB` | `Events` (coordinates, `organismQuantityFertile`), `Occurrences`, `Locations`, `Taxonomy`, `Germplasm` (seed estimates), view `vOccurrenceTraits` (crown, height, seed yield) | 01, 13, 14, 15, 20, 26 |
-| **Phase 4 per-individual SRK genotypes** `step23_individual_allele_genotypes_with_nulls.tsv` | [SRK_bioinformatics](https://github.com/svenbuerki/SRK_bioinformatics) | `SRK_bioinformatics/SRK_bioinformatics_GitHub/tables/Phase4/` | `SRK_TABLES` | Adult SRK alleles at EO67 / EO70 / EO76 and the split EOs | 23, 24, 25 |
-| **EO-level BL tables** `EO_BL_summary.csv`, `EO_group_BL_summary.csv` | SRK_bioinformatics (originally `LEPA_EO_spatial_clustering`) | `SRK_bioinformatics/SRK_bioinformatics_GitHub/tables/` | `SRK_TABLES` | Legacy EO → BL lookup and BL colour order (`srk_bl_constants.py`); not used for the population-level BLs | most steps (via `srk_bl_constants`) |
+| **LEPA production database** `LEPA_SQL.db` | [Genetic-Rescue-DB](https://github.com/svenbuerki/Genetic-Rescue-DB) (local `LEPA_fieldwork_protocol/`) | `LEPA_fieldwork_protocol/SQL_DB/LEPA_SQL.db` | `LEPA_DB` | `Events` (coordinates, `organismQuantityFertile`), `Occurrences`, `Locations`, `Taxonomy`, `Germplasm` (seed estimates), view `vOccurrenceTraits` (crown, height, seed yield) | 01, 13, 14, 15, 20, 21, 22, 25, 27 |
+| **Phase 4 per-individual SRK genotypes** `step23_individual_allele_genotypes_with_nulls.tsv` | [SRK_bioinformatics](https://github.com/svenbuerki/SRK_bioinformatics) | `SRK_bioinformatics/SRK_bioinformatics_GitHub/tables/Phase4/` | `SRK_TABLES` | SRK alleles of every genotyped plant (grown from wild seed or sampled in the wild), with its EO | 24, 25, 26 |
+| **EO-level BL tables** `EO_BL_summary.csv`, `EO_group_BL_summary.csv` | SRK_bioinformatics (originally `LEPA_EO_spatial_clustering`) | `SRK_bioinformatics/SRK_bioinformatics_GitHub/tables/` | `SRK_TABLES` | Legacy EO → BL lookup (`srk_bl_constants.legacy_locationCode_to_bl`); placeholder only, before Step 05 sets the BLs | 01 |
+| **Genotyping sample records** `sampling_metadata.csv` (SRK_bioinformatics) · `Master sheet Sequencing_Occurrence .xlsx`, `Tissue_bank.xlsx` (`LEPA_fieldwork_protocol/SQL_DB/MolecularBanks_Sequencing/`) | SRK_bioinformatics · Genetic-Rescue-DB (local) | see project | `SRK_TABLES`, `LEPA_GENOTYPING_DIR` | Which wild plant or seed lot each genotyped sample came from: sample → occurrence; occurrence → seed lot (germplasmID) and locationID; tissue-bank plant coordinates (**read in memory only, never written**). Used by `srk_genotype_units.py` to place genotyped plants in populations | 25 |
 
 > **The LEPA database holds ESA-sensitive GPS data. Never commit it or
 > copy it into this repository** (`*.db` is in `.gitignore`).
@@ -195,7 +196,7 @@ occurrence records at all. The second case is an occupied slick spot whose
 plants were recorded but not sampled (for example "plants too far gone
 to collect"); its fertile plants are part of the deme and the census,
 but it supplies no mothers or seed. step17 therefore cannot fill a deme
-made only of such events (2026: P27 deme 2, P4 deme 2).
+made only of such events (2026: P25 deme 2, P4 deme 2).
 
 Data problems in the DB are reported, not guessed: events with a
 non-numeric `organismQuantityFertile` are skipped by step14 with a
@@ -215,9 +216,9 @@ into `tables/` and re-run from step02.
 
 | File | Content | Upstream source | Steps |
 |---|---|---|---|
-| `srk_fg_class.tsv` | Class I / Class II assignment of the 32 functional SRK alleles (Fgs) | SRK_bioinformatics Phase 5 cross design | 02, 20, 21, 23 – 25 |
-| `srk_zygosity_empirical.tsv` | Empirical tetraploid zygosity distribution | SRK_bioinformatics (Canu-amplicon genotypes) | 02, 20, 21, 23 – 25 |
-| `step26i_L1_carrier_inventory.tsv` | Allele → functional-allele map (species-wide prior P1) | SRK_bioinformatics step26i | 02, 15, 20, 21, 23 – 26 |
+| `srk_fg_class.tsv` | Class I / Class II assignment of the 32 functional SRK alleles (Fgs) | SRK_bioinformatics Phase 5 cross design | 02, 20, 22, 24 – 26 |
+| `srk_zygosity_empirical.tsv` | Empirical tetraploid zygosity distribution | SRK_bioinformatics (Canu-amplicon genotypes) | 02, 20, 22, 24 – 26 |
+| `step26i_L1_carrier_inventory.tsv` | Allele → functional-allele map (species-wide prior P1) | SRK_bioinformatics step26i | 02, 15, 17 + 21 + 28 (via `srk_detection`), 20, 22, 24 – 27 |
 
 ### 5.3 What other projects read from here
 
@@ -232,15 +233,21 @@ changes.
 
 ## 6. Known limitations
 
-- **Steps 21 and 23 – 26 (Part C) work by DB location / EO on purpose.**
-  The adult SRK genotypes are recorded per EO only: the 885 genotyped
-  occurrences in the LEPA DB have no eventID, locationID or date, so no
-  adult can be placed in a population or deme. Step 22 therefore groups
-  the current demes by location (demes never span two locations). Two of
-  the three clean-overlap sites are one population (EO67 = P6, EO70 =
-  P45); **EO76 is two populations (P43 + P44)** and is compared as one
-  site. Linking genotyped occurrences to their events would allow a
-  population-level Part C.
+- **Part C (steps 22, 24 – 27) works by DB location / EO for its three
+  original sites.** In the LEPA DB the genotyped plants are placeholder
+  occurrences ("field metadata pending": no event, location or date).
+  Two of those sites are one population (EO67 = P6, EO70 = P42); **EO76
+  is two populations (P40 + P41)** and is compared as one site.
+- **EO18 and EO27 enter Part C at population level** (step25, added
+  2026-10-21). `srk_genotype_units.py` places each genotyped plant through
+  the genotyping sample records: seed lot → wild mother → event, else
+  the sample's locationID, else the tissue-bank coordinates (nearest
+  event within 500 m). Populations with ≥ 10 genotyped plants are
+  compared with their 2025 population-level prediction: P34 (EO18),
+  P13 and P16 (EO27); P8 and P10 (EO27) have too few. EO25 cannot be
+  split between P35 and P36 (no seed-lot or location link) and EO67's
+  plants have no seed-lot link. Seedlings of one mother are counted as
+  independent plants (no family correction, decided 2026-10-21).
 - All other steps work on populations and demes (`srk_units`); the
   retired `step29c_event_to_component_50m.tsv` is no longer read.
 - **step14** labels locations from a previous step15 output when

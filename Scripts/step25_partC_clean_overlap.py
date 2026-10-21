@@ -40,9 +40,15 @@ Caveats
   * P1 was built from these same individuals, so the species-mean
     comparison is overlapping — the honest test is per-location
     frequency skew (same caveat as step30c).
-  * The three split EOs (EO18, EO25, EO27) are deliberately excluded
-    here; they need an Individual -> germplasmID -> eventID remap
-    before their adults can be used at the location scale.
+  * Split EOs (added 2026-10-21): genotyped plants of EO18 and EO27
+    are placed in populations (`srk_genotype_units`: seed lot → wild
+    mother → event, else location, else tissue coordinates) and every
+    population with ≥ MIN_PLANTS_PER_POPULATION genotyped plants gets a
+    row, compared with its population-level 2025 prediction (Step 02;
+    the seed is from 2025). EO25 cannot be split between its two
+    populations and stays out.
+  * Genotyped plants are grown ex situ from wild seed; seedlings of one
+    mother are counted as independent plants (no family correction).
 """
 from __future__ import annotations
 
@@ -55,6 +61,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from project_paths import PHASE4_INDIV_GENOTYPES_TSV
+from srk_genotype_units import genotyped_plant_populations
+from srk_units import eo_population_label
 from matplotlib.patches import Rectangle
 
 from srk_si_model import (
@@ -80,6 +88,7 @@ DEFAULT_ALLELE_FG_TSV = DEFAULT_TABLES / "step26i_L1_carrier_inventory.tsv"
 DEFAULT_INDIV_TSV = PHASE4_INDIV_GENOTYPES_TSV # external — see project_paths.py
 DEFAULT_PRED_PCOMPAT = DEFAULT_TABLES / "step30_A_prediction_location_pcompat.tsv"
 DEFAULT_PRED_DIVERSITY = DEFAULT_TABLES / "step30_A_prediction_location_diversity.tsv"
+DEFAULT_PRED_POPULATION = DEFAULT_TABLES / "step30g_prediction_population_year.tsv"
 DEFAULT_BANDS_TSV = DEFAULT_TABLES / "step30_A_traffic_light_bands.tsv"
 
 # EO <-> locationCode is 1:1 for these three.
@@ -91,20 +100,63 @@ CLEAN_OVERLAP_EOS = ["EO67", "EO70", "EO76"]
 # now display both the populationID and the legacy EO code
 # so a reader can cross-reference against the per-population figures
 # upstream in the compact doc.
-EO_TO_POP = {
-    "EO67": "P3",
-    "EO70": "P41",
-    "EO76": "P39",
-}
+SPLIT_EOS = ["EO18", "EO27"]
+MIN_PLANTS_PER_POPULATION = 10
+SITE_EO: Dict[str, str] = {}     # population site label -> its EO
 
 
-def eo_label(eo: str) -> str:
-    """Display label combining the populationID with the
-    legacy EO code — e.g. 'P3 (EO67)'. If an EO is not in the
-    mapping (e.g. a split EO like EO18 would be), fall back to the
-    EO code alone."""
-    pop = EO_TO_POP.get(eo)
-    return f"{pop} ({eo})" if pop else eo
+def eo_label(site: str) -> str:
+    """Display label: 'P6 (EO67)', 'P40 + P41 (EO76)' for EO sites
+    (current populations, `srk_units.eo_population_label`), 'P34 (EO18)'
+    for population sites."""
+    if site in SITE_EO:
+        return f"{site} ({SITE_EO[site]})"
+    pops = eo_population_label(site)
+    return f"{pops} ({site})" if pops else site
+
+
+def add_population_sites(indiv_df: pd.DataFrame, pred_pcompat: pd.DataFrame,
+                         pred_diversity: pd.DataFrame):
+    """Populations of the split EOs with enough genotyped plants: their
+    plants are added to `indiv_df` under the site label ('P34', ...),
+    and their 2025 population-level predictions are appended to the two
+    prediction tables in the same layout as the location rows."""
+    plants = genotyped_plant_populations()
+    plants = plants[plants["EO"].isin(SPLIT_EOS) & plants["populationID"].notna()]
+    fun = indiv_df[indiv_df["n_functional_copies"] > 0][["Individual"]]
+    counts = (plants.merge(fun, on="Individual")
+                    .groupby(["EO", "populationID"]).size())
+    pred = pd.read_csv(DEFAULT_PRED_POPULATION, sep="\t")
+    pred = pred[pred["year"] == 2025].set_index("populationID")
+    sites, extra_ind, pc_rows, div_rows = [], [], [], []
+    for (eo, pop), n in counts.items():
+        pop = int(pop)
+        if n < MIN_PLANTS_PER_POPULATION or pop not in pred.index:
+            print(f"[step30d] P{pop} ({eo}): {n} genotyped plants — below "
+                  f"{MIN_PLANTS_PER_POPULATION} or no 2025 prediction; left out")
+            continue
+        site = f"P{pop}"
+        SITE_EO[site] = eo
+        sites.append(site)
+        ids = plants.loc[plants["populationID"] == pop, "Individual"]
+        extra_ind.append(indiv_df[indiv_df["Individual"].isin(ids)].assign(EO=site))
+        r = pred.loc[pop]
+        pc_rows.append(dict(locationCode=site, locationID=-pop,
+                            n_components_50m=int(r["n_demes"]),
+                            N_fertile_effective=int(r["N_fertile_total"]),
+                            predicted_P_compat_mean=r["pred_pcompat_mean"],
+                            predicted_P_compat_lo=r["pred_pcompat_lo95"],
+                            predicted_P_compat_hi=r["pred_pcompat_hi95"]))
+        div_rows.append(dict(locationCode=site,
+                             predicted_local_pool_size_mean=r["pred_srk_diversity_mean"],
+                             predicted_local_pool_size_lo=r["pred_srk_diversity_lo95"],
+                             predicted_local_pool_size_hi=r["pred_srk_diversity_hi95"]))
+        print(f"[step30d] {site} ({eo}): {n} genotyped plants — added")
+    if extra_ind:
+        indiv_df = pd.concat([indiv_df] + extra_ind, ignore_index=True)
+        pred_pcompat = pd.concat([pred_pcompat, pd.DataFrame(pc_rows)], ignore_index=True)
+        pred_diversity = pd.concat([pred_diversity, pd.DataFrame(div_rows)], ignore_index=True)
+    return indiv_df, pred_pcompat, pred_diversity, sites
 
 N_MC_FATHERS = 800
 N_BOOTSTRAP = 400
@@ -266,7 +318,7 @@ def draw_figure(stats: pd.DataFrame,
                         ["Fg"].astype(str).tolist())
     fg_pos = {fg: i for i, fg in enumerate(prior_order)}
 
-    fig = plt.figure(figsize=(13.5, 8.5))
+    fig = plt.figure(figsize=(13.5, 8.5 + 0.9 * max(len(stats) - 3, 0)))
     gs = fig.add_gridspec(
         2, 2,
         height_ratios=[1.0, 1.15],
@@ -419,7 +471,7 @@ def draw_figure(stats: pd.DataFrame,
         obs_fgs = int(stats.set_index("locationCode").loc[loc,
                                                            "obs_distinct_Fgs"])
         ax_i.text(0.995, 0.90,
-                   f"{eo_label(loc)} (n={n_fun} adults, "
+                   f"{eo_label(loc)} (n={n_fun} plants, "
                    f"{obs_fgs}/{n_fg} alleles present)",
                    transform=ax_i.transAxes,
                    fontsize=10, ha="right", va="top", fontweight="bold")
@@ -445,9 +497,10 @@ def draw_figure(stats: pd.DataFrame,
         fontsize=11, loc="left")
 
     fig.suptitle(
-        "Part C — Clean-overlap populations (P3 = EO67, P41 = EO70, "
-        "P39 = EO76) | adult SRK genotypes | species-mean "
-        f"pollen compatibility = {bands['species_mean']:.3f}",
+        "Part C — SRK-genotyped sites: "
+        + ", ".join(eo_label(s) for s in stats["locationCode"])
+        + "\nplants grown from wild seed or sampled in the wild | "
+        f"species-mean pollen compatibility = {bands['species_mean']:.3f}",
         fontsize=12, y=0.995,
     )
     fig.subplots_adjust(left=0.09, right=0.98, top=0.94, bottom=0.08)
@@ -487,10 +540,22 @@ def main() -> None:
         "struggling_max": float(bands_df["struggling_max"].iloc[0]),
     }
 
+    indiv_df, pred_pcompat, pred_diversity, pop_sites = add_population_sites(
+        indiv_df, pred_pcompat, pred_diversity)
+    sites = eos + pop_sites
     stats = per_location_stats(indiv_df, prior, class_i_mask,
                                 zygosity_probs, pred_pcompat,
-                                pred_diversity, rng, eos)
-    freqs = per_fg_frequencies(indiv_df, prior, eos)
+                                pred_diversity, rng, sites)
+    stats["unit"] = np.where(stats["locationCode"].isin(pop_sites),
+                             "population", "EO (location)")
+    stats["EO"] = stats["locationCode"].map(lambda s: SITE_EO.get(s, s))
+    stats["populations"] = stats["locationCode"].map(
+        lambda s: s if s in SITE_EO else eo_population_label(s))
+    stats["prediction_source"] = np.where(
+        stats["unit"] == "population",
+        "population-level 2025 (step30g_prediction_population_year)",
+        "location-level (step30_A_prediction_location_*)")
+    freqs = per_fg_frequencies(indiv_df, prior, sites)
     DEFAULT_TABLES.mkdir(parents=True, exist_ok=True)
     DEFAULT_FIGURES.mkdir(parents=True, exist_ok=True)
 

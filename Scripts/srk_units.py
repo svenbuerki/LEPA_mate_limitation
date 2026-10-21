@@ -141,6 +141,17 @@ def location_deme_inventory(year: int) -> pd.DataFrame:
                "populationID", "demeID"]])
 
 
+def eo_population_label(eo: str, year: int = 2025) -> str:
+    """Current population(s) of an EO's locations in one season, e.g.
+    'P6' for EO67 or 'P40 + P41' for EO76. Empty if the EO has no event
+    that year."""
+    u = load_event_units(year)
+    codes = u["locationCode"].astype(str)
+    sub = u[(codes == eo) | codes.str.startswith(eo + "-")
+            | codes.str.match(rf"^{eo}[A-Z]")]
+    return " + ".join(f"P{p}" for p in sorted(sub["populationID"].unique()))
+
+
 def main() -> None:
     units = load_event_units()
     units.to_csv(EVENT_TO_DEME_TSV, sep="\t", index=False)
