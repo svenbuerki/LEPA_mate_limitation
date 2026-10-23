@@ -194,7 +194,7 @@ empirical zygosity**, averaged over demes weighted by size
 
 | Rank | Status | n | Populations |
 |:-:|---|:-:|---|
-| 1 | **Mate-limited** | **6** | P1 (EO_NEW2026), P4 (EO30-3), P8, P10 (EO27 cluster) (BL1) · P32 (EO24, BL3) · P42 (EO70, BL5) |
+| 1 | **Mate-limited** | **6** | P1 (EO112, new to our sampling in 2026), P4 (EO30-3), P8, P10 (EO27 cluster) (BL1) · P32 (EO24, BL3) · P42 (EO70, BL5) |
 | 2 | **Switching** (over in 2025 → under in 2026) | **1** | P19 (EO8, BL2) |
 | 3 | Candidate mate-limited | 3 | P3 (EO30-4), P6 (EO67) (BL1) · P20 (EO26-2, BL2) |
 | 4 | **SI-escape candidate** | **7** | P2 (BL1) · P18, P23, P24, P25 (BL2) · P37, P40 (BL4) |
@@ -228,14 +228,14 @@ SRK genotypes exist for plants grown from wild seed (and some wild
 leaf tissue) at six EOs. Each plant is placed in a population through
 its seed lot (wild mother → her slick spot), its sample location or
 its tissue position. That gives **six sites, 246 plants** (§ C.0.a,
-[Figure 15](#fig-15)): three EO sites — **EO67 = P6, EO70 = P42,
+[Figure 13](#fig-13)): three EO sites — **EO67 = P6, EO70 = P42,
 EO76 = P40 + P41** (compared as one site) — and three populations of
 the split EOs with ≥ 10 plants — **P34 (EO18), P13 and P16 (EO27)**.
 EO25 cannot be split between its two populations and stays out.
 
 - **SRK allele diversity is far below the prediction everywhere**:
   5 – 9 alleles observed against 11 – 32 predicted. A radius sweep at
-  EO70 (P42) and EO76 (P40 + P41) ([Figure 17](#fig-17)) shows the gap stays flat down to
+  EO70 (P42) and EO76 (P40 + P41) ([Figure 15](#fig-15)) shows the gap stays flat down to
   10 m, so it is not a deme that is too wide: **local demes have
   drifted further than one draw from the species-wide frequencies
   assumes**.
@@ -243,7 +243,7 @@ EO25 cannot be split between its two populations and stays out.
   0.72) **and EO76** (0.72 / 0.78), **falls below it at P42** (0.53 vs
   0.78), **P34** (0.67 vs 0.78) **and P13** (0.44 vs 0.78), and is
   **above it at P16** (0.84 vs 0.78; 0.77 with P16's own, unusually
-  multi-allele zygosity). The decomposition ([Figure 16](#fig-16))
+  multi-allele zygosity). The decomposition ([Figure 14](#fig-14))
   finds three different causes: one dominant allele within a class at
   P42 (FG024), the loss of almost all Class I alleles at P13 (4 % of
   its SRK copies), and genotype zygosity at P16. **Which alleles are
@@ -258,60 +258,20 @@ EO25 cannot be split between its two populations and stays out.
   Genotyped seedlings are counted as independent plants; siblings of
   one mother are not yet corrected for.
 
-### 6. Sampling design — justification and capacity
+### 6. Sampling design
 
-Testing the predictions needs seed–mother genotyping: each seedling
-carries 2 paternal SRK alleles sampled from its mother's pollen pool.
-
-- **Seedlings per mother: 15.** 15 seedlings give a 90 % chance of
-  detecting every SRK allele in the mother's local pollen pool, and
-  returns flatten beyond 15 ([Figure 13](#fig-13)). At 15 seedlings
-  the mate-limitation regression has 99.6 % power for a medium
-  effect ([Figure 14](#fig-14)). Seeds germinate at ≈ 60 %, so the
-  protocol germinates **25 seeds per mother**.
-- **Mothers per deme.** The fewest mothers whose seedlings detect, on
-  average, **90 % of the deme's SRK alleles**, using the same drift
-  model and species-wide frequencies as the predictions (rare
-  alleles included), plus **at least one mother per slick spot**
-  (an isolated slick spot's private alleles cannot be recovered
-  elsewhere). Large demes need many more mothers than small ones:
-  2 mothers for 10 plants, 8 for 50, 13 for 100, 20 for 200 and
-  22 – 25 above 400. The earlier rule, which treated all 32 alleles
-  as equally common, asked for about 6 mothers in every deme of 10
-  or more plants: too many for small demes, and only 66 – 77 % of the
-  alleles detected in demes of 100 plants or more.
-- **Totals per season** ([Figure 14b](#fig-14b)):
-
-  | Season | Populations / demes | Mothers needed | Mothers sampled (in DB) | Seed cleaned | Mothers usable | Short (counted per deme) | Seeds to germinate → seedlings |
-  |---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-  | 2025 | 33 / 99 | **695** | 765 | 765 | 549 | 146 | 13 625 → 8 176 |
-  | 2026 | 37 / 189 | **1 110** | 1 581 | 705 | 1 029 | 81 | ~25 700 → 15 339 |
-
-  2026 counts every sampled mother; 876 of them still await seed
-  cleaning, and the 2026 seedling count assumes their lots deliver
-  the design 15 seedlings each. A mother in one deme cannot stand in
-  for another deme's pollen pool, so shortfalls are counted per
-  deme.
-- **Is each population sampled well enough?** For every population
-  and season we predict what the mothers we actually hold would
-  detect ([Figure 14c](#fig-14c)). A population is **undersampled,
-  and left out of that season's experiment**, if its seedlings would
-  detect less than 90 % of its SRK alleles, or if **any of its demes
-  has no sampled mother** — the population is represented only when
-  every deme is sampled, since an unsampled deme is missing from every
-  population estimate:
-
-  | Season | Sampled well enough | Undersampled (left out) |
-  |---|:-:|---|
-  | 2025 | **24 of 33** | P2 (EO30-1), P8 (EO27), P10 (EO27-3), P13 (EO27-1) (BL1) · P26 (EO29, BL2) · P27 (EO48), P28, P29 (EO32) (BL3) · P41 (EO76, BL4) |
-  | 2026 | **29 of 37** | P2 (EO30-1), P4 (EO30-3), P10 (EO27-3), P13, P15 (EO27-1) (BL1) · P25 (EO61), P26 (EO29) (BL2) · P40 (EO76, BL4) |
-
-  In 2025 every one of the 99 demes has at least one sampled mother;
-  in 2026, 187 of 189 do. The two exceptions are the recorded-only
-  demes of P4 (62 plants) and P25 (20 plants). The other undersampled
-  populations hold fewer mothers in some deme than that deme needs. Two mate-limited populations, **P10
-  (both years) and P8 (2025)**, are among them, so their genetic
-  test needs more mothers.
+Testing the predictions needs seed–mother genotyping (each seedling
+carries 2 paternal SRK alleles from its mother's pollen pool). The
+sampling design and the check that our material can test the
+predictions are in a dedicated document, [`Sampling_design.md`](Sampling_design.md). In short, a
+**two-step plan recovers 90 % of each population's predicted SRK
+diversity**: (1) within each deme, enough mothers (25 seeds → 15
+seedlings each) to detect 90 % of the deme's SRK alleles, sized to the
+deme, with at least one mother per slick spot; (2) across the
+population, demes at least 100 m apart are added until 90 % of the
+population's SRK alleles are recovered with the fewest mothers. With
+the material we hold, 24 of 33 populations (2025) and 29 of 37 (2026)
+are sampled well enough.
 
 ### 7. Proposed model populations
 
@@ -331,8 +291,7 @@ well enough in both seasons (§ 6).
 
 **D1 is recommended** (★). It has a sharp 64× size contrast, both
 sides in BL3, and both sides sampled well enough in both years
-(P34 is 11 mothers short across some 2025 demes but its seedlings
-would still detect 98 % of its SRK alleles). With the pooled curve
+([`Sampling_design.md`](Sampling_design.md) § 3). With the pooled curve
 **P36 is mate-limited** (fold 0.52 in 2026) and **P34 over-produced
 in 2025** (1.28; 0.91 in 2026, not significant), the contrast D1 is
 built on. Both calls are **year-sensitive**: with the 2026 year offset
@@ -343,18 +302,14 @@ plants, 16 → 21 demes); no large population has both a constant
 census and seed yield at expectation in both years. D2's big side, P19, is the one
 switching population and the natural follow-up.
 
-**Sampling cost of D1** (25 seeds germinated → 15 seedlings per
-mother): P36 needs 4 mothers per season and P34 85 (2025) and 134
-(2026); the design selects 4 + 4 and 74 + 131 mothers from the
-sampled lots — **213 mothers, ~3 180 seedlings**. A first round on
-P36 plus one season of P34 keeps the cost **below 1 300
-seedlings**.
+**D1 sampling plan.** Selecting spatially separated demes (Step 2 of
+the sampling design) recovers about 90 % of each D1 population's SRK
+alleles with **93 mothers over the two years** (2 310 seeds to
+germinate, ≈ 1 390 seedlings); the selected demes and the germplasmIDs
+to pull are in [`Sampling_design.md`](Sampling_design.md) § 4.
 
 Full `populationID → locationCode` map in
-[step30g_populations_classified.tsv](tables/step30g_populations_classified.tsv);
-per-mother recipe (germplasmIDs, per-deme allocation, seeds to
-germinate and seedlings to genotype) in
-[step29c_partC_germplasmID_selection_2025.tsv](tables/step29c_partC_germplasmID_selection_2025.tsv).
+[step30g_populations_classified.tsv](tables/step30g_populations_classified.tsv).
 
 ### 8. Discussion and next steps
 
@@ -606,8 +561,8 @@ drift-prone demes, not one pool of 500.
 4. **Effective deme → SRK diversity.** For each deme,
    draw `4 × component_N_fertile_c` alleles from P1 → the deme's
    present Fgs. Population pool size = |union of per-deme Fg sets|.
-   Sampling is simulated per deme too (mothers and seeds
-   distributed proportional to deme size).
+   How well our sampling recovers this pool is covered in
+   [`Sampling_design.md`](Sampling_design.md).
 5. **Effective deme → pollen compatibility.** For each deme,
    sample mothers from its local frequencies under the empirical
    LEPA zygosity and compute sporophytic Class I / II P_compat per
@@ -748,7 +703,7 @@ flags). Rows ordered by BL (BL1 → BL5) then populationID.
 
 | populationID | BL | locationCode(s) + locationID(s) | occupancy | trend class |
 |:-:|:-:|---|:-:|:-:|
-| P1 | BL1 | EO_NEW2026_53 | 2026 only | 2026_only |
+| P1 | BL1 | EO112_53 | 2026 only | 2026_only |
 | P2 | BL1 | EO30-1_13 | both years | stable |
 | P3 | BL1 | EO30-4_52 | 2026 only | 2026_only |
 | P4 | BL1 | EO30-3_51 | 2026 only | 2026_only |
@@ -1037,13 +992,13 @@ radius, build a within-location graph in which two events are
 connected if any pair of their plants sits within that radius, and
 record (i) the fraction of adults in a multi-event pollen-flow
 component (connectivity), (ii) the fragmentation-aware sampling
-cost (§ Sampling design), and (iii) the predicted random-mating
+cost ([`Sampling_design.md`](Sampling_design.md)), and (iii) the predicted random-mating
 pollen compatibility under the sporophytic Class I/II model.
 
 **Result.** **50 m is chosen on pollinator biology** (halictid /
 small-bee foraging range), not on cost. The sweep shows how much the
 design depends on that choice. At 50 m the design (mothers for 90 %
-SRK allele detection per deme, § Sampling design) needs **695 mothers
+SRK allele detection per deme, [`Sampling_design.md`](Sampling_design.md)) needs **695 mothers
 in 2025 (1 110 in 2026)**, 24 % (32 %) fewer than at 10 m. Assuming a
 radius beyond 75 m would change it little (650 → 573 in 2025). If the
 true radius is only 25 m, the 50 m design is **11 % short** (785 vs
@@ -1124,7 +1079,7 @@ simulates each deme independently and unions the Fg sets at
 the location level; the per-component pollen compatibility prediction
 (Figure 11) runs the sporophytic simulation per deme and reports a
 size-weighted mean per location; the fragmentation-aware sampling
-allocation (§ Sampling design) assigns mothers per deme, with the
+allocation ([`Sampling_design.md`](Sampling_design.md)) assigns mothers per deme, with the
 ≥ 1-mother-per-event floor layered on top. The per-deme view is
 the fastest way to anticipate which populations will stand out in
 Figures 9 and 11.
@@ -1164,26 +1119,14 @@ Data: [`step29a_demes_per_population_year.tsv`](tables/step29a_demes_per_populat
 
 ## Step 30 Phase A — Per-population predictions
 
-### 30.1 Predicted SRK diversity per population — unbiased truth vs sampling
+### 30.1 Predicted SRK diversity per population
 
-**Two questions, kept strictly separate.** SRK diversity at a
-location has two very different meanings and the pipeline predicts
-both. This section uses the **existing LEPA dataset** — actual
-mothers × actual seeds/mother in the DB. The prospective design
-question ("how many mothers × how many seeds do we NEED for a new
-location?") is answered in Steps 28 – 29.
-
-1. **What the population actually holds at this location** (unbiased truth) —
-   how many SRK alleles are physically present. Driven **per mating
-   pool** by `component_N_fertile`, then unioned to the
-   location level. This is the drift output of the causal chain and
-   the raw material on which the pollen-compatibility prediction
-   (§ 30.2) operates.
-2. **What our sampling will recover** (sampling-inferred) — expected
-   detection given `A_delivered = 4·M_mothers + 2·total_seeds` at each
-   location. **Every seed's 2 paternal alleles are direct samples of
-   the local pollen donor pool** — the seed genotyping is a
-   pollen-pool characterisation experiment.
+**Question.** How many SRK alleles does each population physically
+hold under drift? Driven **per deme** by its fertile plants, then
+unioned to the population, this is the drift output of the causal chain
+and the raw material on which the pollen-compatibility prediction
+(§ 30.2) operates. Whether our sampling can recover these alleles is
+covered in [`Sampling_design.md`](Sampling_design.md) § 3.
 
 **Approach — how the simulation works, step by step.**
 
@@ -1195,8 +1138,8 @@ the 20+ rare Fgs each fill under 2 %. Those shares are the
 263-individual inventory. Each LEPA location only gets a limited
 handful of draws from that bag, so small locations are almost
 guaranteed to miss the rare colours by chance — that is **genetic
-drift**. The prediction turns this intuition into numbers in five
-steps, run for every 50 m component inside every location:
+drift**. The prediction turns this intuition into numbers in three
+steps, run for every 50 m deme:
 
 1. **Build the component's local pool (drift step).** For a
    component with `component_N_fertile_c` fertile plants, draw
@@ -1212,38 +1155,10 @@ steps, run for every 50 m component inside every location:
    sets|. That is why diversity is unioned (set operation), not
    averaged (continuous-rate operation).
 
-3. **Simulate the sampling (what we will actually see).** Each deme
-   gets the mothers we actually hold there, selected as in the
-   sampling design (≥ 1 per slick spot, then the best-seeded up to the
-   deme's target), each with the seedlings her seed lot can deliver
-   (at most 15). That gives `4·M_c + 2·seedlings_c` allele draws (4
-   maternal alleles per mother + 2 paternal alleles per seedling).
-   Draw them from the deme's own `f_local_c` and record which colours
-   were hit — these are the alleles **detected in that deme**.
-
-4. **Union detected across components, divide by union present.**
-   Location detected = |union of per-component detected sets|.
-   Location coverage = detected / pool size, on this replicate.
-
-5. **Repeat 1 000 times, report mean and 95 % credible interval.**
-   Each replicate uses an independent random draw from P1 at step 1
-   and an independent sampling draw at step 3; the 2.5 % and 97.5 %
-   percentiles across replicates give the credible interval seen as
-   error bars in Figure 9.
-
-Why the per-deme view matters: a drift-collapsed small deme with
-no mother contributes its alleles to the population's "present"
-count at step 2 but nothing to the "detected" count at step 4 — the
-sampling blind spot. Earlier versions split each location's mothers
-across demes in proportion to deme size and counted every seed as
-genotyped; both hid that blind spot.
-
-**Result.** With the mothers we hold, **24 of 33 populations in
-2025 and 29 of 37 in 2026** are predicted to have ≥ 90 % of their
-SRK alleles detected with every deme sampled; the others are undersampled and left out of that
-season's experiment (§ Sampling design, [Figure 14c](#fig-14c)). For
-the three genotyped sites (Part C, per EO): EO67 96 %, EO70 91 % and
-EO76 94 % of the predicted alleles would be detected.
+3. **Repeat 1 000 times, report mean and 95 % credible interval.**
+   Each replicate uses an independent draw from P1; the 2.5 % and
+   97.5 % percentiles across replicates give the credible interval
+   seen as error bars in Figure 9.
 
 <a id="fig-9"></a>
 ![Figure 9](figures/step30h_pred_diversity.png)
@@ -1525,7 +1440,7 @@ would read the 2025-only BL2 over-producers as a "good 2025" (fold
   population where the SRK test flagged a gap. Independent
   corroboration without any SRK data.
 - **P8 EO27 (BL1)** — flagged 2025 (fold 0.44).
-- **P4 EO30-3 (BL1)** and **P1 EO_NEW2026 (BL1)** — flagged 2026
+- **P4 EO30-3 (BL1)** and **P1 EO112 (BL1)** — flagged 2026
   (fold 0.23 and 0.34; 16 and 7 plants). Both are late-season
   populations seen only in 2026.
 - **P32 EO24 (BL3)** — flagged 2026 (fold 0.22, 5 plants).
@@ -1637,225 +1552,15 @@ Source: `step13_size_seed_yield.py`. Data:
 
 ---
 
-## Sampling design — the answer to "how many mothers × how many seeds?"
+## Sampling design
 
-Now that fragmentation, drift and mate limitation are on the table,
-the sampling design falls out of the causal chain. Every choice below
-is derived from a quantity that has already been established, not
-proposed independently.
-
-### How many seeds per mother?
-
-**Question.** How many seeds must we genotype from each mother to
-characterise her local pollen environment well enough to test the
-mate-limitation prediction in § C.1?
-
-**Approach — tetraploid per-mother allele-detection floor.** Each seed
-contributes 2 paternal SRK alleles under tetraploid sporophytic
-inheritance. Treating pollen pickup as sampling with replacement from
-the local pollen pool, the probability of missing any one of K local
-paternal Fgs after 2·n seed alleles is `(1 − 1/K)^(2n)`. Setting
-`(1 − 1/K)^(2n) = 0.10` gives the seeds needed for a 90 % chance to
-see every Fg. **This saturates at n = 15 seeds/mother** — the point
-where the return per additional seed is negligible.
-
-<a id="fig-13"></a>
-![Figure 13](figures/step28_coverage_curves.png)
-
-**Figure 13.** Step 28 SRK allele detection under tetraploid LEPA (4 SRK copies per plant; 2 paternal alleles per seed), on the absolute-allele scale with the local pool capped at the species-wide ceiling of 32 Fgs. Shaded bands = 95 % simulation CI. **Panel A — per mother.** x = seeds genotyped, one curve per event-size bin (each seed contributes 2 paternal allele draws); the **vertical red line at 15 seeds** marks the per-mother operational cap under tetraploid. One mother's 15 seeds cannot saturate a 32-allele pool at large event sizes — this is the allele-detection limit for a single sampler, not undersampling. **Panel B — aggregation across mothers at a location.** x = number of mothers sampled (15 seeds each = 34 allele draws per mother: 4 maternal + 2 × 15 = 30 paternal). At the 5-mother benchmark (green dotted line, 75 cumulative seeds), **every event size reaches its local ceiling** — 4 of 4, 12 of 12, 27.9 of 28, 31.9 of 32, 31.9 of 32, 31.9 of 32. Panel B is continuous in M so any real location can read its own coverage off the correct curve. **This is the proof that seed-genotyping at 15 seeds/mother × 5+ mothers/location recovers the local SRK pool well enough to test the Phase A predictions.** Source: `step14_seed_sampling_per_mother.py`. Data: [`step28_coverage_curves_by_Nfertile.tsv`](tables/step28_coverage_curves_by_Nfertile.tsv), [`step28_aggregation_curves_by_Nfertile.tsv`](tables/step28_aggregation_curves_by_Nfertile.tsv).
-
-**Field → lab correction — 60 % germination rate.** Part C
-genotypes **seedlings**, not seeds (user-confirmed design,
-2026-10-03). LEPA seeds germinate at **≈ 60 %** under greenhouse
-conditions, so to end up with the target of 15 genotyped seedlings
-per mother the field protocol must germinate `ceil(15 ÷ 0.60) = 25`
-seeds per mother. The totals become:
-
-- **Collect / germinate (2025 design):** 695 mothers × 25 seeds = **17 375 seeds**.
-- **Expected after germination:** ~15 seedlings/mother × 695 = **~10 425 seedlings**.
-- **Genotype:** up to 15 seedlings per mother → **~10 425 seedling genotypes**.
-
-The 90 % allele-detection guarantee still holds — 15 is a floor on
-*seedling* genotypes delivered to the lab, not on seeds extracted in
-the field. The field-team recipe in
-[`step29c_partC_germplasmID_selection_2025.tsv`](tables/step29c_partC_germplasmID_selection_2025.tsv)
-now carries both `n_seeds_to_germinate` and `n_seedlings_to_genotype`.
-
-**Does 15 seedlings give enough Part C testing power?**
-The 90 % allele-detection target justifies 15 as the floor. Two
-additional simulations confirm it also passes the regression
-thresholds:
-
-- **Per-mother P_compat precision** — observed P_compat has binomial
-  SE `√(p·(1−p) / n_seeds)`. Drops from ~0.28 at 3 seeds to
-  ~0.12 at 15 (visible plateau); marginal gains beyond.
-- **§ C.1 mate-limitation regression power** — full-pipeline
-  simulation of 505 mothers × 39 locations. At n_seeds = 15:
-  **99.6 % power** for a medium effect (β₁ = 100 seeds per unit
-  P_compat), **69 % for a small effect (β₁ = 50, below the 80 %
-  target)**. Errors-in-variables attenuation of β̂₁ is ~0.42 — real
-  but doesn't prevent detection at realistic effect sizes.
-
-15 seeds is comfortably enough for medium-to-large mate-limitation
-signals. The marginal power at small effect sizes comes from the same
-25-mother / 6-location shortage the mother-count section flags —
-the 2026 top-up addresses both.
-
-<a id="fig-14"></a>
-![Figure 14](figures/step28d_matelim_power.png)
-
-**Figure 14.** Statistical justification for the 15-seedlings-per-mother operational floor — two complementary simulations. **Left panel — per-mother P_compat precision.** Observed P_compat has binomial SE `√(p · (1 − p) / n_seeds)`; four curves plot SE vs seeds genotyped for four true P_compat values (0.3 / 0.5 / 0.7 / 0.9). The precision gain per additional seed is steep at low seed counts (SE drops from ~0.28 at 3 seeds to ~0.12 at 15 seeds) and **visibly plateaus around 15** — marginal gains beyond are negligible for the regression. **Right panel — § C.1 mate-limitation regression power** from a full-pipeline simulation of 505 mothers × 39 locations with per-mother P_compat drawn from the prediction. Four curves for four β₁ effect sizes (50 / 100 / 200 / 400 seeds per unit P_compat). At `n_seeds = 15`: **99.6 % power for medium effect (β₁ = 100)**; 69 % for the small effect (β₁ = 50, below the 80 % target). Errors-in-variables attenuation of β̂₁ is ~ 0.42 — real but doesn't prevent detection at realistic effect sizes. **Together with Figure 13, these two simulations are the proof that the Part C seed-genotyping protocol (15 seedlings per mother, with the field-side correction to 25 seeds at 60 % germination) has enough statistical power to test the Phase A per-population predictions.** Source: `step14_seed_sampling_per_mother.py`. Companion precision-only figure: [`step28d_pcompat_precision.png`](figures/step28d_pcompat_precision.png).
-
-### How many mothers per deme?
-
-**Question.** How many mothers must we sample in each deme for their
-seedlings to reveal the SRK alleles the deme holds?
-
-**Approach.** The same model as the predictions (§ 30.1). A deme of
-*N* fertile plants holds 4·*N* SRK alleles drawn from the
-species-wide frequencies (drift: rare alleles are often absent). *M*
-mothers with 15 seedlings each sample 34·*M* alleles from that pool
-(4 maternal + 2 paternal per seedling). The target is the smallest
-*M* whose seedlings detect, on average over 2 000 simulated pools,
-**90 % of the SRK alleles present in the deme**. On top of that,
-**at least one mother per slick spot**: an isolated slick spot's
-private alleles cannot be recovered from any other slick spot. The
-earlier rule treated all 32 alleles as equally common; it asked for
-about 6 mothers in every deme of 10 or more plants, too many for
-small demes and too few for large ones, where rare alleles need more
-draws:
-
-| Deme size (fertile plants) | 10 | 20 | 50 | 100 | 200 | 420 | 1 000 |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Mothers (species-wide frequencies, current) | 2 | 4 | 8 | 13 | 20 | 25 | 23 |
-| Mothers (all alleles equally common, earlier) | 6 | 6 | 6 | 6 | 6 | 6 | 6 |
-| Alleles detected with the earlier 6 mothers | 100 % | 97 % | 86 % | 77 % | 70 % | 66 % | 66 % |
-
-**Result.**
-
-- **2025: 695 mothers needed across 33 populations (99 demes, 237
-  slick spots).** 765 mothers have seed in the LEPA DB; 549 can be
-  used, and **146 are short**, counted per deme (a mother in one deme
-  cannot stand in for another deme's pollen pool), in 13 populations
-  ([Figure 14b](#fig-14b)).
-- **2026: 1 110 mothers needed across 37 populations (189 demes).**
-  1 581 mothers were sampled; 705 have cleaned seed so far. Counting
-  every sampled mother, 1 029 can be used and 81 are short; counting
-  only cleaned seed, 510 and 600. Two demes (P25 deme 2, P4 deme 2)
-  consist only of slick spots recorded too late to collect seed:
-  they are part of the model but have no mothers to sample in 2026.
-
-<a id="fig-14b"></a>
-![Figure 14b](figures/step29c_sampling_per_population_2025.png)
-
-**Figure 14b.** Do we hold the mothers the design asks for? 2025, one
-bar pair per population, grouped by Bottleneck Lineage (BL1 → BL5).
-**Solid bar** = mothers needed (sum over the population's demes);
-**light bar** = mothers with seed in the LEPA DB. "Short by *n*"
-counts the shortfall deme by deme, so a population can hold more
-mothers than it needs in total and still be short in one deme (P34,
-P23). The 2026 version is
-[`step29c_sampling_per_population_2026.png`](figures/step29c_sampling_per_population_2026.png).
-Source: `step17_fragmentation_sampling.py`. Data:
-[`step29c_sampling_per_population_2025.tsv`](tables/step29c_sampling_per_population_2025.tsv).
-
-### Is each population sampled well enough?
-
-**Question.** With the mothers we actually hold, will the seedlings
-represent the population, or is it undersampled — and so must be left
-out of the experiment for that season?
-
-**Approach.** For each population and season, select the mothers in
-each deme as the design does and predict, with the same model, (A)
-the share of the population's SRK alleles their seedlings would
-detect and (B) whether every deme has at least one sampled mother.
-The target is a representation of the population built deme by deme:
-an unsampled deme is missing from every population estimate (the
-allele union and the size-weighted compatibility), so it biases the
-estimate towards the sampled demes. **A population is undersampled
-if (A) < 90 % or any deme is unsampled** (B, reported as the share of
-fertile plants in unsampled demes). For 2026 every sampled
-mother counts (uncleaned lots assumed to deliver 15 seedlings); a
-second column counts only cleaned seed.
-
-**Result.**
-
-- **2025: 24 of 33 populations sampled well enough.** Undersampled:
-  P2, P8, P10, P13 (BL1), P26 (BL2), P27, P28, P29 (BL3), P41 (BL4).
-- **2026: 29 of 37.** Undersampled: P2, P4, P10, P13, P15 (BL1), P25,
-  P26 (BL2), P40 (BL4).
-- **Every deme is sampled** in 2025 (100 of 100) and in 2026 except
-  the two recorded-only demes (P4 deme 2, 62 plants; P25 deme 2, 20
-  plants), where the crew arrived after seed had dropped.
-- The other undersampled populations hold mothers in every deme but
-  too few in at least one; most are large single-deme or few-deme
-  populations where the deme target exceeds the mothers collected (P26 EO29: 25 needed, 22
-  held). Two mate-limited populations are among them — **P10 (both
-  years) and P8 (2025)** — so their genetic test needs more mothers.
-- All six model-pair populations (§ Recommended field pilot) and
-  P6 and P42 of Part C are sampled well enough in both seasons; P41
-  (2025) and P40 (2026) at EO76 are not.
-- Counting only seed cleaned so far, 20 populations of 2026 have no
-  usable mother yet — the cleaning backlog, not a field gap.
-
-<a id="fig-14c"></a>
-![Figure 14c](figures/step30_A_sampling_adequacy.png)
-
-**Figure 14c.** Is each population sampled well enough? One row per
-population, grouped by Bottleneck Lineage; open circle = 2025, filled
-= 2026; red = undersampled. **Panel A** — predicted share of the
-population's SRK alleles that its sampled mothers' seedlings would
-detect (bars = 95 % interval over simulated deme pools; dotted line =
-90 %). **Panel B** — share of fertile plants in demes with no sampled
-mother (any value above 0 = undersampled). **Panel C** — mothers sampled (circle),
-mothers needed (|) and mothers with cleaned seed so far (×).
-Source: `step21_sampling_adequacy.py`. Data:
-[`step30_A_sampling_adequacy_2025.tsv`](tables/step30_A_sampling_adequacy_2025.tsv),
-[`_2026`](tables/step30_A_sampling_adequacy_2026.tsv), per deme:
-[`step30_A_sampling_adequacy_per_deme_2025.tsv`](tables/step30_A_sampling_adequacy_per_deme_2025.tsv).
-
-### The locked recipe
-
-With mother count and seed count fixed, the design is frozen for the
-next field season:
-
-| Quantity | Value |
-|---|---|
-| Primary pollinator radius | **50 m** |
-| Drift unit | **50 m deme** = 50 m connected component of events; `component_N_fertile` adults per deme |
-| Mother allocation | Per 50 m deme: 90 % of its SRK alleles detected (species-wide frequencies) + ≥ 1 per slick spot |
-| Per-mother seedling-genotype floor | **15 seedlings/mother** (90 % allele-detection target) |
-| Field-side germination assumption | **60 %** |
-| Seeds to germinate per mother | **25** (= ceil(15 ÷ 0.60)) |
-| **Total mothers (2025: 33 populations, 99 demes)** | **695** (2026: 1 110) |
-| **Total seeds to germinate** | **695 × 25 = 17 375** |
-| **Total seedlings to genotype** | **~695 × 15 = ~10 425** |
-| Allele-detection target | 90 % of the SRK alleles present in each 50 m deme, on average |
-| Undersampled populations | Left out for that season (< 90 % of alleles detected, or any deme with no sampled mother) |
-
-**Three authoritative files:**
-
-- **Field-team recipe** (for a new field season):
-  [`step29c_sampling_frag_aware_per_event_2025.tsv`](tables/step29c_sampling_frag_aware_per_event_2025.tsv) —
-  one row per event, `M_frag` = number of mothers to sample there.
-- **Lab recipe for Part C** (draws specific mothers from the DB):
-  [`step29c_partC_germplasmID_selection_2025.tsv`](tables/step29c_partC_germplasmID_selection_2025.tsv) —
-  one row per selected `germplasmID` already in the LEPA DB, sorted
-  `EOID → locationID → component → germplasmID`. Columns include
-  `n_seeds_to_germinate` = min(25, seeds_available),
-  `n_seedlings_expected` = round(n_seeds_to_germinate × 0.60),
-  `n_seedlings_to_genotype` = min(15, n_seedlings_expected).
-  Selection is **per 50 m deme**: mothers within a pool share
-  pollen so coverage travels freely within a pool; only the ≥ 1-
-  mother-per-event maternal-genotype floor is a strict per-event
-  rule. 2025 delivers **549 mothers from the current DB → 13 625 seeds
-  to germinate → ~8 176 seedlings to genotype**, with **146 mothers
-  short** (sum over demes). 2026 (cleaned seed so far): 510 mothers →
-  12 597 seeds → ~7 560 seedlings, 600 short.
-- **Event → component lookup**:
-  [`step29a_event_to_deme.tsv`](tables/step29a_event_to_deme.tsv) —
-  one row per event mapping (locationID, eventID) → 50 m component,
-  the single canonical source for "which events share a pollen pool?".
+How many seeds per mother, how many mothers per deme, which demes to
+sample, and whether the material we already hold can test the
+predictions are covered in [`Sampling_design.md`](Sampling_design.md): seedlings per mother and statistical
+power (§ 1), mothers per deme (§ 2, Step 1), the sampling check per
+population (§ 3), the selection of spatially separated demes for the
+model populations (§ 4, Step 2) and the locked recipe with the lab
+files (§ 5).
 
 ---
 
@@ -1976,10 +1681,10 @@ explains why the allele count alone does not set compatibility.
 - [`step30_B_partC_clean_overlap_fg_frequencies.tsv`](tables/step30_B_partC_clean_overlap_fg_frequencies.tsv) — long form, one row per (site, allele) with observed and species-wide frequency.
 - [`step30_B_partC_clean_overlap.png`](figures/step30_B_partC_clean_overlap.png) — three-panel figure.
 
-<a id="fig-15"></a>
-![Figure 15](figures/step30_B_partC_clean_overlap.png)
+<a id="fig-13"></a>
+![Figure 13](figures/step30_B_partC_clean_overlap.png)
 
-**Figure 15.** Part C anchor at the six SRK-genotyped sites — three EO sites (**P6 = EO67**, **P42 = EO70**, **P40 + P41 = EO76**, the last compared as one site) and three populations of the split EOs (**P34 of EO18**, **P13 and P16 of EO27**). Panel order follows the causal chain: diversity → pollen compatibility → per-allele drift fingerprint. **Panel A — SRK diversity.** Predicted (x) vs observed in the genotyped plants (y), one square per site with 95 % interval error bars; 1:1 diagonal and ceiling at 32 alleles. Only P6 sits near the diagonal; every other site sits far below it. **Panel B — pollen compatibility.** Predicted vs observed, with the traffic-light background (red = failed, amber = struggling, green = sustainable) and 1:1 diagonal. P6, P40 + P41 and P34 lie close to the diagonal or just below; P42 and P13 are clear outliers below, P16 above. **Panel C — per-allele drift residual** (observed − species-wide frequency) per site, alleles sorted by species-wide frequency (most common → rarest). **Green = enriched**, **red = depleted**, **× = absent** at the site. P42 shows FG001 (+21 %) and FG024 (+18 %) with 26 of 32 alleles absent; P13 is dominated by FG001 and FG002; P16 carries several normally rare alleles at raised frequency; P6's small-population signature raises the rare FG018 and FG023 — a founder effect rather than classical drift. Source: `step25_partC_clean_overlap.py`.
+**Figure 13.** Part C anchor at the six SRK-genotyped sites — three EO sites (**P6 = EO67**, **P42 = EO70**, **P40 + P41 = EO76**, the last compared as one site) and three populations of the split EOs (**P34 of EO18**, **P13 and P16 of EO27**). Panel order follows the causal chain: diversity → pollen compatibility → per-allele drift fingerprint. **Panel A — SRK diversity.** Predicted (x) vs observed in the genotyped plants (y), one square per site with 95 % interval error bars; 1:1 diagonal and ceiling at 32 alleles. Only P6 sits near the diagonal; every other site sits far below it. **Panel B — pollen compatibility.** Predicted vs observed, with the traffic-light background (red = failed, amber = struggling, green = sustainable) and 1:1 diagonal. P6, P40 + P41 and P34 lie close to the diagonal or just below; P42 and P13 are clear outliers below, P16 above. **Panel C — per-allele drift residual** (observed − species-wide frequency) per site, alleles sorted by species-wide frequency (most common → rarest). **Green = enriched**, **red = depleted**, **× = absent** at the site. P42 shows FG001 (+21 %) and FG024 (+18 %) with 26 of 32 alleles absent; P13 is dominated by FG001 and FG002; P16 carries several normally rare alleles at raised frequency; P6's small-population signature raises the rare FG018 and FG023 — a founder effect rather than classical drift. Source: `step25_partC_clean_overlap.py`.
 
 ### C.0.b Diversity collapse → pollen compatibility: hypothesis decomposition
 
@@ -2069,7 +1774,7 @@ is **buffering** the location.
 Percentages are shares of each site's gap (species-wide − observed)
 closed by that single swap; for P34 the gap is only 0.01, so its
 percentages are large but the effects are small. The "observed"
-values here use each site's own father zygosity; Figure 15 uses the
+values here use each site's own father zygosity; Figure 13 uses the
 species-wide zygosity for fathers, which is why P16 sits above its
 prediction there (0.84) and below it here (0.77).
 
@@ -2109,7 +1814,7 @@ prediction there (0.84) and below it here (0.77).
   within-class spread and class balance would each raise it a
   little, and its own zygosity buffers it (swapping to the
   species-wide zygosity would lower it to 0.68, yellow bar). Its
-  shortfall in Figure 15 comes from the comparison with the
+  shortfall in Figure 13 comes from the comparison with the
   population-level prediction (0.78).
 - **P13 (EO27) — a class-balance collapse.** Only 4 % of P13's SRK
   copies are Class I (35 % species-wide): FG001 and FG002 dominate
@@ -2168,7 +1873,7 @@ loss:
    At P40, 76 % of mothers are homozygous: a homozygous mother
    expresses a single Fg at her stigma, which pollen fathers can
    more easily avoid matching than a heterozygous mother's larger
-   expressed set. The yellow bar at P40 in Figure 16 **drops below
+   expressed set. The yellow bar at P40 in Figure 14 **drops below
    the observed black bar** — the quantitative signature of this
    mechanism.
 
@@ -2204,10 +1909,10 @@ pollen-compatibility response.
 - [`step30_B_partC_hypothesis_decomposition.png`](figures/step30_B_partC_hypothesis_decomposition.png)
   — grouped bar chart per location (see caption below).
 
-<a id="fig-16"></a>
-![Figure 16](figures/step30_B_partC_hypothesis_decomposition.png)
+<a id="fig-14"></a>
+![Figure 14](figures/step30_B_partC_hypothesis_decomposition.png)
 
-**Figure 16.** Competing-hypothesis decomposition of pollen compatibility at the six genotyped sites — P6 (= EO67), P42 (= EO70), P40 + P41 (= EO76), P34 (EO18), P13 and P16 (EO27). For each site the figure shows five pollen-compatibility values from the same simulation (sporophytic Class I / II + empirical zygosity, 800 candidate fathers per mother, observed mother genotypes held fixed), each differing in which part of the father-drawing distribution is swapped to the species-wide reference. **Green — predicted:** everything species-wide. **Grey — observed:** fathers drawn from the site's allele frequencies and zygosity. **Blue — swap within-class spread:** keep the observed Class I and Class II totals, reshape the spread within each class to the species-wide pattern (the "drift monoculture" channel). **Red — swap Class I / II balance:** keep the within-class shape, rescale the two class totals to species-wide (between-class rescue). **Yellow — swap zygosity:** keep the allele frequencies, swap father zygosity to species-wide 66 / 32 / 2 % (the expressed-set channel). Star = the swap that moves compatibility furthest, the dominant explanation of the gap. Error bars = bootstrap 95 % interval (400 mother resamples). Traffic-light bands in the background; dashed grey line = species-wide pollen compatibility 0.78. **Reading rules:** a coloured bar rising toward green means that factor causes the gap; staying next to grey means it is not involved; dropping below grey means it is **buffering** the site. **P42** — within-class monoculture (FG024 at 35 % of the pool). **P6** — small deficit, within-class spread explains it. **EO76** — small deficit despite 9 of 32 alleles; its zygosity buffers it. **P34** — almost no gap; zygosity buffering. **P13** — class balance: only 4 % of its SRK copies are Class I, and restoring the species-wide balance closes the whole gap. **P16** — zygosity: 53 % of its plants express ≥ 3 identities, which lowers compatibility. P13 and P16 rest on 12 and 15 plants. Source: `step26_partC_hypothesis_decomposition.py`.
+**Figure 14.** Competing-hypothesis decomposition of pollen compatibility at the six genotyped sites — P6 (= EO67), P42 (= EO70), P40 + P41 (= EO76), P34 (EO18), P13 and P16 (EO27). For each site the figure shows five pollen-compatibility values from the same simulation (sporophytic Class I / II + empirical zygosity, 800 candidate fathers per mother, observed mother genotypes held fixed), each differing in which part of the father-drawing distribution is swapped to the species-wide reference. **Green — predicted:** everything species-wide. **Grey — observed:** fathers drawn from the site's allele frequencies and zygosity. **Blue — swap within-class spread:** keep the observed Class I and Class II totals, reshape the spread within each class to the species-wide pattern (the "drift monoculture" channel). **Red — swap Class I / II balance:** keep the within-class shape, rescale the two class totals to species-wide (between-class rescue). **Yellow — swap zygosity:** keep the allele frequencies, swap father zygosity to species-wide 66 / 32 / 2 % (the expressed-set channel). Star = the swap that moves compatibility furthest, the dominant explanation of the gap. Error bars = bootstrap 95 % interval (400 mother resamples). Traffic-light bands in the background; dashed grey line = species-wide pollen compatibility 0.78. **Reading rules:** a coloured bar rising toward green means that factor causes the gap; staying next to grey means it is not involved; dropping below grey means it is **buffering** the site. **P42** — within-class monoculture (FG024 at 35 % of the pool). **P6** — small deficit, within-class spread explains it. **EO76** — small deficit despite 9 of 32 alleles; its zygosity buffers it. **P34** — almost no gap; zygosity buffering. **P13** — class balance: only 4 % of its SRK copies are Class I, and restoring the species-wide balance closes the whole gap. **P16** — zygosity: 53 % of its plants express ≥ 3 identities, which lowers compatibility. P13 and P16 rest on 12 and 15 plants. Source: `step26_partC_hypothesis_decomposition.py`.
 
 **Note — why P1 is empirical, not uniform.** A uniform-frequency P1
 (Dirichlet(α = 1) over 32 Fgs, equivalent to the P0 "uninformative"
@@ -2226,7 +1931,7 @@ would not reflect how LEPA actually enters the modelling frame).
 
 ### C.0.c Hypothesis test — can the diversity gap be closed by tightening the deme radius?
 
-**Why this test exists.** Figure 15 shows the diversity prediction
+**Why this test exists.** Figure 13 shows the diversity prediction
 over-estimates the observed SRK allele count at every genotyped site
 (predicted 11 – 32 vs observed 5 – 9). § C.0.b above decomposes *why
 pollen compatibility nevertheless tracks observation* at some sites
@@ -2267,7 +1972,7 @@ P41)**, which do show meaningful fragmentation across the sweep (EO70:
 1 → 3 demes; EO76: 4 → 16 demes as radius tightens).
 
 **Result — H1 is rejected within the P1 drift assumption at EO70
-and EO76** ([Figure 17](#fig-17)).
+and EO76** ([Figure 15](#fig-15)).
 
 | Location | Observed | Predicted at r = 10 m | at 50 m | at 150 m | Deme count 10 m / 50 m / 150 m |
 |---|:---:|:---:|:---:|:---:|:---:|
@@ -2332,10 +2037,10 @@ will measure).
    fragmentation — would waste sampling on sub-demes that do not
    exist.
 
-<a id="fig-17"></a>
-![Figure 17](figures/step30f_srk_diversity_radius_sweep.png)
+<a id="fig-15"></a>
+![Figure 15](figures/step30f_srk_diversity_radius_sweep.png)
 
-**Figure 17.** SRK diversity gap (y = predicted − observed distinct SRK alleles) vs pollinator radius at **EO70 (P42)** and **EO76 (P40 + P41)**. x = radius used to rebuild the deme partition (10 → 150 m, log scale). Lines + 95 % CI bands = per-location per-radius simulation (2000 replicates per combination). Right-side labels show the gap at the largest radius; parenthetical observed counts come from the Phase 4 adult SRK genotypes (a single measurement, not a sweep output — shown as labels, not horizontal lines). Zero line = perfect match. Vertical dotted line at 50 m marks the current operational deme. H1 (deme too wide) would predict the gap to shrink toward zero as radius tightens; it stays flat at +22 and +23 across all radii, including the 10 m extreme that fragments P42 into 3 demes and EO76 into 16 — rejecting H1 within the P1 drift assumption. P6 (= EO67) is omitted (deme partition invariant across the sweep, test non-informative). Source: `step27_radius_sweep_H1.py`.
+**Figure 15.** SRK diversity gap (y = predicted − observed distinct SRK alleles) vs pollinator radius at **EO70 (P42)** and **EO76 (P40 + P41)**. x = radius used to rebuild the deme partition (10 → 150 m, log scale). Lines + 95 % CI bands = per-location per-radius simulation (2000 replicates per combination). Right-side labels show the gap at the largest radius; parenthetical observed counts come from the Phase 4 adult SRK genotypes (a single measurement, not a sweep output — shown as labels, not horizontal lines). Zero line = perfect match. Vertical dotted line at 50 m marks the current operational deme. H1 (deme too wide) would predict the gap to shrink toward zero as radius tightens; it stays flat at +22 and +23 across all radii, including the 10 m extreme that fragments P42 into 3 demes and EO76 into 16 — rejecting H1 within the P1 drift assumption. P6 (= EO67) is omitted (deme partition invariant across the sweep, test non-informative). Source: `step27_radius_sweep_H1.py`.
 
 
 ## Phase B — Closing the causal chain with seed data
@@ -2411,25 +2116,10 @@ drift-history confound.
   compatibility at P36 than P34, and the observed seed-set data
   track that gap, the within-BL small-vs-big signal is confirmed.
 
-**Mother-plant feasibility (LEPA DB, Wild germplasm, 2025 + 2026).**
-
-| Side | populationID | Location(s) | 2025 mothers | 2026 mothers | **Total** |
-|---|---|---|---:|---:|---:|
-| SMALL | P36 | EO25-B (locationID 21) | 7 | 8 | **15** |
-| BIG | P34 | EO18-7 + EO18-8 (locationIDs 15, 16, 17, 18, 19) | 115 | 221 | **336** |
-| **Pair** | | | **122** | **229** | **351** |
-
-**Pilot cost (upper bound).** If all 351 mothers were genotyped
-at 15 seedlings each: 351 × 25 seeds = **~8 775 seeds to
-germinate** → ~5 265 seedlings to genotype (at 60 % germination).
-The design itself needs far fewer (4 + 4 and 85 + 134 mothers; § 7
-of the Executive summary).
-A more targeted subset — say 15 SMALL mothers × 15 seedlings and
-30 – 60 BIG mothers × 15 seedlings — brings the cost well below
-2 000 seedlings. Exact per-mother allocation per deme is in
-[`step29c_partC_germplasmID_selection_2025.tsv`](tables/step29c_partC_germplasmID_selection_2025.tsv)
-(germplasmIDs to pull, per-deme allocation, 60 % germination
-correction baked in).
+**Sampling the pair.** P36 holds 15 mothers with seed across the two
+years and P34 336. The two-step design samples 8 of P36's and 85 of
+P34's, in the demes chosen to recover 90 % of each population's SRK
+alleles — 93 mothers, ≈ 1 390 seedlings; see [`Sampling_design.md`](Sampling_design.md) § 4.
 
 **Pair evaluations and stable-population inventory**:
 [`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv)
@@ -2451,10 +2141,8 @@ summary.
 | Predicted per-50 m-component P_compat | [`tables/step30_A_prediction_component_pcompat.tsv`](tables/step30_A_prediction_component_pcompat.tsv) | Exposes struggling sub-components inside a sustainable-mean location |
 | Fragmentation indices | [`tables/step30_A_fragmentation_per_event.tsv`](tables/step30_A_fragmentation_per_event.tsv), [`_per_population.tsv`](tables/step30_A_fragmentation_per_population.tsv) | Pure spatial, no allele frequencies |
 | Event → population → deme | [`tables/step29a_event_to_deme.tsv`](tables/step29a_event_to_deme.tsv) | Canonical "which events share a pollen pool?" |
-| Field-team recipe (new field season) | [`tables/step29c_sampling_frag_aware_per_event_2025.tsv`](tables/step29c_sampling_frag_aware_per_event_2025.tsv) | `M_frag` per event, authoritative |
-| **Sampling check — which populations are sampled well enough** | [`tables/step30_A_sampling_adequacy_2025.tsv`](tables/step30_A_sampling_adequacy_2025.tsv), [`_2026`](tables/step30_A_sampling_adequacy_2026.tsv) | Predicted allele detection + unsampled share per population; `include_in_experiment` |
+| **Sampling design, sampling check and lab lists** | [`Sampling_design.md`](Sampling_design.md) | Two-step plan; germplasmIDs per deme for the model populations |
 | Seed yield vs predictions | [`tables/step30i_seed_yield_vs_predictions.tsv`](tables/step30i_seed_yield_vs_predictions.tsv) + [`_tests.tsv`](tables/step30i_seed_yield_vs_predictions_tests.tsv) | Fold of expectation next to predicted compatibility and diversity; Spearman tests |
-| **Lab recipe for Part C — germplasmIDs to sample** | [`tables/step29c_partC_germplasmID_selection_2025.tsv`](tables/step29c_partC_germplasmID_selection_2025.tsv) | **One row per selected germplasmID already in the LEPA DB; per-50 m-component allocation + `n_seeds_to_genotype`. Drives Part C.** |
 | Background EO-scale diagnostic for split EOs (§ C.0) | [`tables/step30_C_pcompat_validation_at_eo.tsv`](tables/step30_C_pcompat_validation_at_eo.tsv) | EO18, EO25, EO27 (the three EOs whose location-scale remap is still pending); no figure |
 | **Part C anchor at location scale (§ C.0.a)** | [`tables/step30_B_partC_clean_overlap_per_location.tsv`](tables/step30_B_partC_clean_overlap_per_location.tsv) + [`_fg_frequencies.tsv`](tables/step30_B_partC_clean_overlap_fg_frequencies.tsv) | **Six genotyped sites — EO67 (= P6), EO70 (= P42), EO76 (= P40 + P41) and P34 (EO18), P13, P16 (EO27); 246 plants; observed vs predicted pollen compatibility + SRK diversity + no-drift upper bound** |
 | **Hypothesis decomposition (§ C.0.b)** | [`tables/step30_B_partC_hypothesis_decomposition.tsv`](tables/step30_B_partC_hypothesis_decomposition.tsv) | **Decomposes the pollen-compatibility deviation at each clean-overlap location into within-class spread / Class I-II balance / zygosity contributions; triggered by the SRK diversity gap** |
@@ -2475,13 +2163,9 @@ summary.
 - **Figure 12a** — [`step30i_species_calibration.png`](figures/step30i_species_calibration.png) — § 30.3 across-species build: calibration scatter (observed vs expected per plant, coloured by BL) + predictor-selection CV table + expectation-model summary.
 - **Figure 12b** — [`step30i_size_seed_population.png`](figures/step30i_size_seed_population.png) — § 30.3 within-population test: observed seed yield per population vs size expectation, 2025 (open) vs 2026 (filled), all 44 populations with ≥ 2 plants; **red halo** = FDR-sig below (mate-limited), **green halo** = FDR-sig above (buffered surplus) for that (population, year). Priority list in [`step30i_conservation_priority.tsv`](tables/step30i_conservation_priority.tsv) (one row per populationID; one restoration status built from both years, ranked by `priority_rank`).
 - **Figure 12c** — [`step30i_seed_yield_vs_predictions.png`](figures/step30i_seed_yield_vs_predictions.png) — seed yield against predicted pollen compatibility and SRK diversity.
-- **Figure 13** — [`step28_coverage_curves.png`](figures/step28_coverage_curves.png) — § B.3 Step 28 SRK allele detection curves under tetraploid LEPA; per-mother + aggregation-across-mothers panels. The proof that 15 seeds per mother × 5+ mothers per location recovers the local SRK pool well enough to test Phase A predictions.
-- **Figure 14** — [`step28d_matelim_power.png`](figures/step28d_matelim_power.png) — § B.3.1 two-panel justification for the 15-seedlings-per-mother floor: per-mother pollen-compatibility precision (left) + § C.1 mate-limitation regression power (right).
-- **Figure 14b** — [`step29c_sampling_per_population_2025.png`](figures/step29c_sampling_per_population_2025.png) — mothers needed vs held per population (2026 version alongside).
-- **Figure 14c** — [`step30_A_sampling_adequacy.png`](figures/step30_A_sampling_adequacy.png) — which populations are sampled well enough, both seasons.
-- **Figure 15** — [`step30_B_partC_clean_overlap.png`](figures/step30_B_partC_clean_overlap.png) — § C.0.a Part C anchor at P6 (EO67) / P42 (EO70) / P40 (EO76) (SRK diversity + pollen compatibility + per-allele drift residual).
-- **Figure 16** — [`step30_B_partC_hypothesis_decomposition.png`](figures/step30_B_partC_hypothesis_decomposition.png) — § C.0.b competing-hypothesis decomposition.
-- **Figure 17** — [`step30f_srk_diversity_radius_sweep.png`](figures/step30f_srk_diversity_radius_sweep.png) — § C.0.c SRK-diversity radius sweep (deme-size vs residual-drift test).
+- **Figure 13** — [`step30_B_partC_clean_overlap.png`](figures/step30_B_partC_clean_overlap.png) — § C.0.a Part C anchor at P6 (EO67) / P42 (EO70) / P40 (EO76) (SRK diversity + pollen compatibility + per-allele drift residual).
+- **Figure 14** — [`step30_B_partC_hypothesis_decomposition.png`](figures/step30_B_partC_hypothesis_decomposition.png) — § C.0.b competing-hypothesis decomposition.
+- **Figure 15** — [`step30f_srk_diversity_radius_sweep.png`](figures/step30f_srk_diversity_radius_sweep.png) — § C.0.c SRK-diversity radius sweep (deme-size vs residual-drift test).
 - Candidate-population zoom panels — [`step29a_candidate_populations_zoom.png`](figures/step29a_candidate_populations_zoom.png) + [`step29a_crash_populations_zoom.png`](figures/step29a_crash_populations_zoom.png) (supporting plots for the LARGE + SMALL + crash candidates).
 
 ---

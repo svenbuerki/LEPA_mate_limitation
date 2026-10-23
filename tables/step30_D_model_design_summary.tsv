@@ -1,0 +1,5 @@
+pair	role	populationID	year	rule	demes	unfit_demes	fit_demes	mothers_all_fit	coverage_all_fit	selected_demes	mothers_selected	coverage_selected_mean	coverage_selected_p05	seeds_to_germinate	seedlings_expected
+D1	small	36	2025	all fit demes (small population)	2	0	2	4	0.974	2	4	0.974	0.954	100	60
+D1	small	36	2026	all fit demes (small population)	2	0	2	4	0.945	2	4	0.945	0.925	100	60
+D1	big	34	2025	greedy, ≥ 100 m apart	16	4	12	58	0.95	7	40	0.91	0.847	1000	600
+D1	big	34	2026	greedy, ≥ 100 m apart	21	2	19	125	0.998	7	45	0.923	0.864	1125	675

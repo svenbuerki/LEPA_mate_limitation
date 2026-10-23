@@ -1,9 +1,9 @@
 populationID	BL	demeID	EOID	locationCode	locationID	germplasmID	occurrenceID	eventID	seeds_available	seedlings_target	n_seeds_to_germinate	n_seedlings_expected	n_seedlings_to_genotype	n_seeds_to_genotype	deme_M_target	deme_n_available_in_DB	deme_gap	selection_reason	selection_priority_within_deme	event_M_frag
-1	BL1	1		EO_NEW2026	53	1147	3866	724	436	15	25	15	15	15	5	7	0	floor	1	5
-1	BL1	1		EO_NEW2026	53	1149	3868	724	378	15	25	15	15	15	5	7	0	top_seeds	2	5
-1	BL1	1		EO_NEW2026	53	1150	3869	724	120	15	25	15	15	15	5	7	0	top_seeds	4	5
-1	BL1	1		EO_NEW2026	53	1151	3870	724	115	15	25	15	15	15	5	7	0	top_seeds	5	5
-1	BL1	1		EO_NEW2026	53	1152	3871	724	206	15	25	15	15	15	5	7	0	top_seeds	3	5
+1	BL1	1	EO112	EO112	53	1147	3866	724	436	15	25	15	15	15	5	7	0	floor	1	5
+1	BL1	1	EO112	EO112	53	1149	3868	724	378	15	25	15	15	15	5	7	0	top_seeds	2	5
+1	BL1	1	EO112	EO112	53	1150	3869	724	120	15	25	15	15	15	5	7	0	top_seeds	4	5
+1	BL1	1	EO112	EO112	53	1151	3870	724	115	15	25	15	15	15	5	7	0	top_seeds	5	5
+1	BL1	1	EO112	EO112	53	1152	3871	724	206	15	25	15	15	15	5	7	0	top_seeds	3	5
 2	BL1	1	EO30	EO30-1	13	1329	3006	432	245	15	25	15	15	15	18	16	2	top_seeds	8	7
 2	BL1	1	EO30	EO30-1	13	1330	3007	432	408	15	25	15	15	15	18	16	2	floor	2	7
 2	BL1	1	EO30	EO30-1	13	1331	3008	432	52	15	25	15	15	15	18	16	2	top_seeds	16	7

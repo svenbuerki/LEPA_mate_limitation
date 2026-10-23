@@ -32,7 +32,7 @@ populationID	population_label	trend_class	locationCodes	locationIDs	occupancy	n_
 30	EO24-7_25	2025_only	EO24-7	25	2025_only	1	0	3	0	3	1	0	1	0					BL3	42	False	0.0					
 31	EO24-1_22	2025_only	EO24-1	22	2025_only	1	0	2	0	2	1	0	1	0					BL3	44	False	0.0					
 41	EO76_2	2025_only	EO76	2	2025_only	1	0	72	0	72	1	0	1	0					BL4	27	False	0.0					
-1	EO_NEW2026_53	2026_only	EO_NEW2026	53	2026_only	0	1	0	27	27	1	0	0	1					BL1	35	False						
+1	EO112_53	2026_only	EO112	53	2026_only	0	1	0	27	27	1	0	0	1					BL1	35	False						
 3	EO30-4_52	2026_only	EO30-4	52	2026_only	0	2	0	27	27	2	0	0	1					BL1	34	False						
 4	EO30-3_51	2026_only	EO30-3	51	2026_only	0	6	0	152	152	5	0	0	4					BL1	20	False						
 5	EO30-2_42	2026_only	EO30-2	42	2026_only	0	9	0	138	138	8	0	0	4					BL1	21	False						

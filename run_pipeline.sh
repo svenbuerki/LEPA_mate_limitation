@@ -5,6 +5,8 @@
 # Usage (from the repository root):
 #   ./run_pipeline.sh                 # all parts
 #   ./run_pipeline.sh units           # Part 1 only (populations, demes, BLs)
+#   ./run_pipeline.sh design          # model-population sampling plan only
+#   ./run_pipeline.sh talkmaps        # presentation maps only (R)
 #   PYTHON=/path/to/python ./run_pipeline.sh
 #
 # External inputs are set in Scripts/project_paths.py (override with the
@@ -72,9 +74,25 @@ if [[ "$PART" == all || "$PART" == validation ]]; then
   run step27_radius_sweep_H1
 fi
 
+# Model-population sampling plan (deme selection + germplasm pick list)
+if [[ "$PART" == all || "$PART" == design ]]; then
+  run step28_model_population_design
+  echo "▶ step28_model_population_design_map (R)"
+  Rscript Scripts/step28_model_population_design_map.R > logs/step28_model_population_design_map.log 2>&1 \
+    || { echo "✖ step28_model_population_design_map failed — see logs/step28_model_population_design_map.log"; exit 1; }
+fi
+
 # Consistency checks — units, BLs, IDs, targets, code, tables (fails the run)
 if [[ "$PART" == all ]]; then
-  run step28_pipeline_checks
+  run step29_pipeline_checks
+fi
+
+# Presentation maps on the topographic background (R; downloads elevation
+# tiles once, cached in map_cache/). Outputs stay local.
+if [[ "$PART" == all || "$PART" == talkmaps ]]; then
+  echo "▶ step30_talk_maps (R)"
+  Rscript Scripts/step30_talk_maps.R > logs/step30_talk_maps.log 2>&1 \
+    || { echo "✖ step30_talk_maps failed — see logs/step30_talk_maps.log"; exit 1; }
 fi
 
 echo "✔ done (logs in logs/)"

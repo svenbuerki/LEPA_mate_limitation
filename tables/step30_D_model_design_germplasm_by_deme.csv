@@ -1,0 +1,94 @@
+pair,role,population,year,demeID,germplasmID,occurrenceID,status,seeds_available,seeds_to_germinate,seedlings_expected,reason
+D1,big,P34,2025,2,338,329,germinate,3110,25,15,one per slick spot (random)
+D1,big,P34,2025,2,342,311,germinate,907,25,15,one per slick spot (random)
+D1,big,P34,2025,2,363,322,germinate,466,25,15,random among the deme's other mothers
+D1,big,P34,2025,2,367,326,germinate,1501,25,15,one per slick spot (random)
+D1,big,P34,2025,2,368,327,germinate,872,25,15,random among the deme's other mothers
+D1,big,P34,2025,2,369,328,germinate,571,25,15,random among the deme's other mothers
+D1,big,P34,2025,2,382,316,germinate,379,25,15,random among the deme's other mothers
+D1,big,P34,2025,2,383,317,germinate,689,25,15,one per slick spot (random)
+D1,big,P34,2025,2,384,318,germinate,114,25,15,random among the deme's other mothers
+D1,big,P34,2025,2,385,319,germinate,958,25,15,random among the deme's other mothers
+D1,big,P34,2025,2,386,320,germinate,1220,25,15,random among the deme's other mothers
+D1,big,P34,2025,4,352,331,germinate,708,25,15,random among the deme's other mothers
+D1,big,P34,2025,4,353,332,germinate,639,25,15,one per slick spot (random)
+D1,big,P34,2025,4,356,335,germinate,1229,25,15,random among the deme's other mothers
+D1,big,P34,2025,6,326,362,germinate,111,25,15,random among the deme's other mothers
+D1,big,P34,2025,6,327,363,germinate,156,25,15,one per slick spot (random)
+D1,big,P34,2025,6,328,358,germinate,151,25,15,random among the deme's other mothers
+D1,big,P34,2025,6,330,360,germinate,207,25,15,one per slick spot (random)
+D1,big,P34,2025,6,331,355,germinate,255,25,15,one per slick spot (random)
+D1,big,P34,2025,6,332,356,germinate,175,25,15,random among the deme's other mothers
+D1,big,P34,2025,6,333,357,germinate,123,25,15,random among the deme's other mothers
+D1,big,P34,2025,6,334,364,germinate,375,25,15,one per slick spot (random)
+D1,big,P34,2025,8,286,374,germinate,726,25,15,random among the deme's other mothers
+D1,big,P34,2025,8,288,376,germinate,255,25,15,one per slick spot (random)
+D1,big,P34,2025,8,313,371,germinate,778,25,15,one per slick spot (random)
+D1,big,P34,2025,11,239,279,germinate,575,25,15,random among the deme's other mothers
+D1,big,P34,2025,11,240,280,germinate,205,25,15,random among the deme's other mothers
+D1,big,P34,2025,11,241,281,germinate,548,25,15,one per slick spot (random)
+D1,big,P34,2025,11,242,286,germinate,589,25,15,one per slick spot (random)
+D1,big,P34,2025,11,245,282,germinate,523,25,15,random among the deme's other mothers
+D1,big,P34,2025,11,246,283,germinate,457,25,15,random among the deme's other mothers
+D1,big,P34,2025,11,247,284,germinate,311,25,15,random among the deme's other mothers
+D1,big,P34,2025,11,248,285,germinate,189,25,15,one per slick spot (random)
+D1,big,P34,2025,14,307,394,germinate,590,25,15,one per slick spot (random)
+D1,big,P34,2025,14,309,396,germinate,328,25,15,random among the deme's other mothers
+D1,big,P34,2025,14,311,392,germinate,180,25,15,one per slick spot (random)
+D1,big,P34,2025,14,319,389,germinate,213,25,15,random among the deme's other mothers
+D1,big,P34,2025,14,320,390,germinate,265,25,15,one per slick spot (random)
+D1,big,P34,2025,14,321,391,germinate,201,25,15,random among the deme's other mothers
+D1,big,P34,2025,15,302,397,germinate,40,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1373,2498,germinate,2398,25,15,random among the deme's other mothers
+D1,big,P34,2026,2,1374,2499,germinate,1032,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1377,2507,germinate,10,10,6,one per slick spot (random); lot < 25 seeds
+D1,big,P34,2026,2,1476,2488,germinate,169,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1477,2489,germinate,447,25,15,random among the deme's other mothers
+D1,big,P34,2026,2,1484,2501,germinate,1252,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1485,2483,germinate,426,25,15,random among the deme's other mothers
+D1,big,P34,2026,2,1486,2484,germinate,70,25,15,random among the deme's other mothers
+D1,big,P34,2026,2,1487,2485,germinate,527,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1494,2493,germinate,171,25,15,random among the deme's other mothers
+D1,big,P34,2026,2,1495,2494,germinate,299,25,15,random among the deme's other mothers
+D1,big,P34,2026,2,1496,2495,germinate,1391,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1498,2497,germinate,317,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1499,2500,germinate,1554,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1506,2487,germinate,66,25,15,one per slick spot (random)
+D1,big,P34,2026,6,1381,2511,germinate,1576,25,15,random among the deme's other mothers
+D1,big,P34,2026,6,1384,2512,germinate,766,25,15,random among the deme's other mothers
+D1,big,P34,2026,6,1386,2513,germinate,36,25,15,one per slick spot (random)
+D1,big,P34,2026,10,,2525,clean seed first,,25,15,one per slick spot (random); seed not cleaned yet
+D1,big,P34,2026,10,,2530,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,10,,2532,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,10,,2523,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,10,,2528,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,10,,2531,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,11,1710,2579,germinate,595,25,15,one per slick spot (random)
+D1,big,P34,2026,12,,2586,clean seed first,,25,15,one per slick spot (random); seed not cleaned yet
+D1,big,P34,2026,12,,2583,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,12,,2585,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,12,,2584,clean seed first,,25,15,random among the deme's other mothers; seed not cleaned yet
+D1,big,P34,2026,12,1723,2581,germinate,783,25,15,one per slick spot (random)
+D1,big,P34,2026,12,1724,2582,germinate,566,25,15,one per slick spot (random)
+D1,big,P34,2026,14,1688,2589,germinate,296,25,15,random among the deme's other mothers
+D1,big,P34,2026,14,1689,2590,germinate,208,25,15,random among the deme's other mothers
+D1,big,P34,2026,14,1690,2591,germinate,209,25,15,random among the deme's other mothers
+D1,big,P34,2026,14,1691,2592,germinate,377,25,15,one per slick spot (random)
+D1,big,P34,2026,14,1692,2593,germinate,162,25,15,random among the deme's other mothers
+D1,big,P34,2026,18,1546,2612,germinate,323,25,15,one per slick spot (random)
+D1,big,P34,2026,18,1549,2615,germinate,147,25,15,random among the deme's other mothers
+D1,big,P34,2026,18,1550,2616,germinate,397,25,15,one per slick spot (random)
+D1,big,P34,2026,18,1552,2618,germinate,472,25,15,one per slick spot (random)
+D1,big,P34,2026,18,1555,2621,germinate,111,25,15,one per slick spot (random)
+D1,big,P34,2026,18,1558,2624,germinate,225,25,15,one per slick spot (random)
+D1,big,P34,2026,18,1561,2627,germinate,334,25,15,random among the deme's other mothers
+D1,big,P34,2026,18,1562,2628,germinate,597,25,15,one per slick spot (random)
+D1,big,P34,2026,18,1568,2633,germinate,32,25,15,one per slick spot (random)
+D1,small,P36,2025,1,389,430,germinate,335,25,15,one per slick spot (random)
+D1,small,P36,2025,2,387,434,germinate,807,25,15,one per slick spot (random)
+D1,small,P36,2025,2,392,433,germinate,2640,25,15,one per slick spot (random)
+D1,small,P36,2025,2,393,435,germinate,78,25,15,one per slick spot (random)
+D1,small,P36,2026,1,1308,2755,germinate,652,25,15,random among the deme's other mothers
+D1,small,P36,2026,1,1310,2757,germinate,201,25,15,one per slick spot (random)
+D1,small,P36,2026,1,1315,2754,germinate,333,25,15,one per slick spot (random)
+D1,small,P36,2026,2,1314,2761,germinate,132,25,15,one per slick spot (random)

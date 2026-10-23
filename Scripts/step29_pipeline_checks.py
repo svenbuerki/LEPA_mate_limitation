@@ -1,4 +1,4 @@
-"""step28_pipeline_checks.py — consistency checks run at the end of the
+"""step29_pipeline_checks.py — consistency checks run at the end of the
 pipeline. Any FAIL stops `run_pipeline.sh` with exit code 1.
 
 Everything downstream rests on the units of Steps 01 – 05 (populations,
@@ -131,7 +131,7 @@ def main() -> None:
     legacy = [n for n, t in src.items()
               if "legacy_locationCode_to_bl(" in t
               and n not in ("srk_bl_constants.py", "step01_populations.py",
-                            "step28_pipeline_checks.py")]
+                            "step29_pipeline_checks.py")]
     check("code: legacy EO-level BL lookup used only by Step 01", not legacy, str(legacy))
     hard = [n for n, t in src.items()
             if re.search(r'\[\s*"BL\d"\s*,\s*"BL\d"\s*,\s*"BL\d"', t)
@@ -168,8 +168,8 @@ def main() -> None:
     n_fail = sum(r[0] == "FAIL" for r in results)
     for status, name, detail in results:
         if status != "PASS" or name.startswith(("units", "BL order", "targets", "year", "code", "tables")):
-            print(f"[step28] {status:4}  {name}" + (f" — {detail}" if detail and status != "PASS" else ""))
-    print(f"[step28] {len(results)} checks: "
+            print(f"[step29] {status:4}  {name}" + (f" — {detail}" if detail and status != "PASS" else ""))
+    print(f"[step29] {len(results)} checks: "
           f"{sum(r[0] == 'PASS' for r in results)} pass, "
           f"{sum(r[0] == 'WARN' for r in results)} warn, {n_fail} fail")
     if n_fail:

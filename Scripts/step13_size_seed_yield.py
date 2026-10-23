@@ -337,7 +337,7 @@ def plot_species_calibration(df: pd.DataFrame, gm,
     species-wide allometric expectation. One dot per plant, coloured
     by its population's BL. **This is the 'across-species' half of
     the test** — the species-wide curve that every per-population
-    row in Figure 17b is measured against."""
+    row of the per-population test is measured against."""
     fig, (axL, axR) = plt.subplots(1, 2, figsize=(14.0, 7.0),
                                      gridspec_kw={"width_ratios": [3.0, 2.0]})
 
@@ -478,13 +478,13 @@ def plot_species_calibration(df: pd.DataFrame, gm,
               fontsize=9.5, va="top", ha="left", family="monospace")
     # Footer
     axR.text(0.02, 0.03,
-              "Every row of Figure 17b is measured against this expectation.",
+              "Every population in the per-population test is measured against this expectation.",
               transform=axR.transAxes, fontsize=8.5, va="bottom", ha="left",
               color="#333", style="italic")
 
     fig.suptitle(
-        "§ C.0.d · Species-wide size → seed-yield expectation "
-        "(across-species build; the per-population test is Figure 17b)",
+        "Species-wide plant-size → seed-yield expectation "
+        "(the yardstick for the per-population seed-yield test)",
         fontsize=12.5, y=0.995,
     )
     fig.tight_layout(rect=[0, 0, 1, 0.955])
@@ -865,13 +865,13 @@ def main() -> None:
             print(f" {bucket:<28} {n}")
 
     FIGURES.mkdir(parents=True, exist_ok=True)
-    # Figure 17a — species-wide calibration (across-species evidence)
+    # Species-wide calibration figure (across-species evidence)
     plot_species_calibration(
         merged, gm, best, cv_table,
         FIGURES / "step30i_species_calibration.png",
         FIGURES / "step30i_species_calibration.pdf",
     )
-    # Figure 17b — per-population forest (within-population test)
+    # Per-population forest figure (within-population test)
     plot_forest(res, merged,
                 FIGURES / "step30i_size_seed_population.png",
                 FIGURES / "step30i_size_seed_population.pdf")

@@ -44,7 +44,8 @@ The three repositories are intentionally **cross-linked by README reference only
 
 ## What's in here
 
-- **`Project_outline.md`** — the compact colleague-facing summary (**start here**). Executive summary + Methodology + Result + interpretation (organised as 5 topic blocks: *Populations · Demes · SRK allele diversity · Pollen compatibility · Seed yield*) + Next test + conservation-priority classifier.
+- **`Project_outline.md`** — the colleague-facing main document (**start here**): breeding units, predictions of SRK allele diversity and pollen compatibility, the seed-yield test and restoration priority list, the genotyped populations, model populations and discussion.
+- **`Sampling_design.md`** — the sampling design: a two-step plan to recover 90 % of each population's predicted SRK diversity (mothers per deme, then spatially separated demes across the population), the check that our material can test the predictions, and the lab lists of germplasm to germinate.
 - **`archive/Sampling_and_prediction.md`** — the earlier long technical reference doc (formulas, output schemas, § A.5 – § C.6 derivations). **Archived 2026-10-17 and no longer maintained**; `Project_outline.md` takes precedence where they differ.
 - **`SRK_mate_limitation_references.bib`** — citations for the metapopulation + Wright-neighbourhood + sporophytic-SI literature the pipeline leans on.
 - **`PIPELINE.md`** — how to run the pipeline (`./run_pipeline.sh`), the run order, what every step reads and writes, where outputs are saved, and the files it needs from other repositories (LEPA database, SRK_bioinformatics).
@@ -72,7 +73,7 @@ Scripts are numbered `step01` – `step27` in run order (renumbered 2026-10-17, 
 ## Status
 
 - First commit: 2026-10-15. Repository seeded from the mate-limitation subset of the parent `SRK_bioinformatics` repo at commit `7e7ac29` (`6494fbc..7e7ac29` chain on `svenbuerki/SRK_bioinformatics`, pushed 2026-10-08).
-- Behavioural seed-yield test (`step13_size_seed_yield.py`, Figures 12a + 12b of `Project_outline.md`) covers all 44 populations. Population-level restoration priority list (both years combined): **8 mate-limited** · **1 switching** (over → under, P19) · **3 candidate mate-limited** · **12 SI-escape candidates** · **11 reproduction intact** · **4 insufficient data**.
+- Behavioural seed-yield test (`step13_size_seed_yield.py`, Figures 12a + 12b of `Project_outline.md`) covers all 44 populations. Population-level restoration priority list (both years combined, calls that hold with and without the 2026 year effect): **6 mate-limited** · **1 switching** (over → under, P19) · **3 candidate mate-limited** · **7 SI-escape candidates** · **8 at expectation** · **9 year-sensitive** · **3 insufficient data**.
 - Next test queued: within-BL stable small-vs-big pair D1 = P36 (EO25-B) × P34 (EO18-7 + EO18-8), 351 mothers with cleaned seed in the LEPA DB across 2025 + 2026.
 - Scope: Snake River Plain populations only (44 populations). Jarbidge Foothills populations are out of scope here.
 

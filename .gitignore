@@ -23,3 +23,12 @@ tables/step30h_populationID_crosswalk.tsv
 # Per-BL maps with EO / population / deme detail — kept local (Sven, 2026-10-20)
 figures/step30h_BL_map_*.png
 figures/step30h_BL_maps.pdf
+
+# Presentation maps (step29_talk_maps.R) — kept local until ready
+talk_figures/
+
+# Shared map cache (elevation tiles, river) and the model-design deme maps
+# (slick-spot resolution) — local only
+map_cache/
+figures/step30_D_model_design_demes_P*.png
+figures/step30_D_model_design_demes_P*.pdf

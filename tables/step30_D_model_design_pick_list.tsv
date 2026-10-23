@@ -1,0 +1,94 @@
+pair	role	populationID	year	demeID	eventID	occurrenceID	germplasmID	status	seeds_available	seeds_to_germinate	seedlings_expected	reason
+D1	small	36	2025	1	117	430	389	germinate	335	25	15	one per slick spot (random)
+D1	small	36	2025	2	120	435	393	germinate	78	25	15	one per slick spot (random)
+D1	small	36	2025	2	118	433	392	germinate	2640	25	15	one per slick spot (random)
+D1	small	36	2025	2	119	434	387	germinate	807	25	15	one per slick spot (random)
+D1	small	36	2026	1	367	2754	1315	germinate	333	25	15	one per slick spot (random)
+D1	small	36	2026	1	368	2757	1310	germinate	201	25	15	one per slick spot (random)
+D1	small	36	2026	1	368	2755	1308	germinate	652	25	15	random among the deme's other mothers
+D1	small	36	2026	2	369	2761	1314	germinate	132	25	15	one per slick spot (random)
+D1	big	34	2025	15	132	397	302	germinate	40	25	15	one per slick spot (random)
+D1	big	34	2025	8	103	376	288	germinate	255	25	15	one per slick spot (random)
+D1	big	34	2025	8	102	371	313	germinate	778	25	15	one per slick spot (random)
+D1	big	34	2025	8	103	374	286	germinate	726	25	15	random among the deme's other mothers
+D1	big	34	2025	4	70	332	353	germinate	639	25	15	one per slick spot (random)
+D1	big	34	2025	4	70	335	356	germinate	1229	25	15	random among the deme's other mothers
+D1	big	34	2025	4	70	331	352	germinate	708	25	15	random among the deme's other mothers
+D1	big	34	2025	14	131	394	307	germinate	590	25	15	one per slick spot (random)
+D1	big	34	2025	14	129	390	320	germinate	265	25	15	one per slick spot (random)
+D1	big	34	2025	14	130	392	311	germinate	180	25	15	one per slick spot (random)
+D1	big	34	2025	14	131	396	309	germinate	328	25	15	random among the deme's other mothers
+D1	big	34	2025	14	129	389	319	germinate	213	25	15	random among the deme's other mothers
+D1	big	34	2025	14	129	391	321	germinate	201	25	15	random among the deme's other mothers
+D1	big	34	2025	6	98	363	327	germinate	156	25	15	one per slick spot (random)
+D1	big	34	2025	6	97	360	330	germinate	207	25	15	one per slick spot (random)
+D1	big	34	2025	6	96	355	331	germinate	255	25	15	one per slick spot (random)
+D1	big	34	2025	6	99	364	334	germinate	375	25	15	one per slick spot (random)
+D1	big	34	2025	6	98	362	326	germinate	111	25	15	random among the deme's other mothers
+D1	big	34	2025	6	97	358	328	germinate	151	25	15	random among the deme's other mothers
+D1	big	34	2025	6	96	356	332	germinate	175	25	15	random among the deme's other mothers
+D1	big	34	2025	6	96	357	333	germinate	123	25	15	random among the deme's other mothers
+D1	big	34	2025	2	66	317	383	germinate	689	25	15	one per slick spot (random)
+D1	big	34	2025	2	67	326	367	germinate	1501	25	15	one per slick spot (random)
+D1	big	34	2025	2	65	311	342	germinate	907	25	15	one per slick spot (random)
+D1	big	34	2025	2	69	329	338	germinate	3110	25	15	one per slick spot (random)
+D1	big	34	2025	2	66	320	386	germinate	1220	25	15	random among the deme's other mothers
+D1	big	34	2025	2	66	319	385	germinate	958	25	15	random among the deme's other mothers
+D1	big	34	2025	2	66	316	382	germinate	379	25	15	random among the deme's other mothers
+D1	big	34	2025	2	67	328	369	germinate	571	25	15	random among the deme's other mothers
+D1	big	34	2025	2	66	318	384	germinate	114	25	15	random among the deme's other mothers
+D1	big	34	2025	2	67	327	368	germinate	872	25	15	random among the deme's other mothers
+D1	big	34	2025	2	67	322	363	germinate	466	25	15	random among the deme's other mothers
+D1	big	34	2025	11	122	281	241	germinate	548	25	15	one per slick spot (random)
+D1	big	34	2025	11	123	285	248	germinate	189	25	15	one per slick spot (random)
+D1	big	34	2025	11	124	286	242	germinate	589	25	15	one per slick spot (random)
+D1	big	34	2025	11	122	279	239	germinate	575	25	15	random among the deme's other mothers
+D1	big	34	2025	11	123	283	246	germinate	457	25	15	random among the deme's other mothers
+D1	big	34	2025	11	122	280	240	germinate	205	25	15	random among the deme's other mothers
+D1	big	34	2025	11	123	282	245	germinate	523	25	15	random among the deme's other mothers
+D1	big	34	2025	11	123	284	247	germinate	311	25	15	random among the deme's other mothers
+D1	big	34	2026	11	320	2579	1710	germinate	595	25	15	one per slick spot (random)
+D1	big	34	2026	6	300	2513	1386	germinate	36	25	15	one per slick spot (random)
+D1	big	34	2026	6	300	2512	1384	germinate	766	25	15	random among the deme's other mothers
+D1	big	34	2026	6	300	2511	1381	germinate	1576	25	15	random among the deme's other mothers
+D1	big	34	2026	14	325	2592	1691	germinate	377	25	15	one per slick spot (random)
+D1	big	34	2026	14	325	2591	1690	germinate	209	25	15	random among the deme's other mothers
+D1	big	34	2026	14	325	2593	1692	germinate	162	25	15	random among the deme's other mothers
+D1	big	34	2026	14	325	2589	1688	germinate	296	25	15	random among the deme's other mothers
+D1	big	34	2026	14	325	2590	1689	germinate	208	25	15	random among the deme's other mothers
+D1	big	34	2026	10	304	2525		clean seed first		25	15	one per slick spot (random); seed not cleaned yet
+D1	big	34	2026	10	304	2530		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	10	304	2532		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	10	304	2523		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	10	304	2528		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	10	304	2531		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	18	338	2628	1562	germinate	597	25	15	one per slick spot (random)
+D1	big	34	2026	18	340	2633	1568	germinate	32	25	15	one per slick spot (random)
+D1	big	34	2026	18	334	2616	1550	germinate	397	25	15	one per slick spot (random)
+D1	big	34	2026	18	335	2618	1552	germinate	472	25	15	one per slick spot (random)
+D1	big	34	2026	18	336	2621	1555	germinate	111	25	15	one per slick spot (random)
+D1	big	34	2026	18	337	2624	1558	germinate	225	25	15	one per slick spot (random)
+D1	big	34	2026	18	333	2612	1546	germinate	323	25	15	one per slick spot (random)
+D1	big	34	2026	18	338	2627	1561	germinate	334	25	15	random among the deme's other mothers
+D1	big	34	2026	18	334	2615	1549	germinate	147	25	15	random among the deme's other mothers
+D1	big	34	2026	12	322	2582	1724	germinate	566	25	15	one per slick spot (random)
+D1	big	34	2026	12	321	2581	1723	germinate	783	25	15	one per slick spot (random)
+D1	big	34	2026	12	323	2586		clean seed first		25	15	one per slick spot (random); seed not cleaned yet
+D1	big	34	2026	12	323	2583		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	12	323	2585		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	12	323	2584		clean seed first		25	15	random among the deme's other mothers; seed not cleaned yet
+D1	big	34	2026	2	291	2495	1496	germinate	1391	25	15	one per slick spot (random)
+D1	big	34	2026	2	294	2500	1499	germinate	1554	25	15	one per slick spot (random)
+D1	big	34	2026	2	292	2497	1498	germinate	317	25	15	one per slick spot (random)
+D1	big	34	2026	2	288	2485	1487	germinate	527	25	15	one per slick spot (random)
+D1	big	34	2026	2	289	2487	1506	germinate	66	25	15	one per slick spot (random)
+D1	big	34	2026	2	290	2488	1476	germinate	169	25	15	one per slick spot (random)
+D1	big	34	2026	2	293	2499	1374	germinate	1032	25	15	one per slick spot (random)
+D1	big	34	2026	2	295	2501	1484	germinate	1252	25	15	one per slick spot (random)
+D1	big	34	2026	2	297	2507	1377	germinate	10	10	6	one per slick spot (random); lot < 25 seeds
+D1	big	34	2026	2	288	2484	1486	germinate	70	25	15	random among the deme's other mothers
+D1	big	34	2026	2	291	2494	1495	germinate	299	25	15	random among the deme's other mothers
+D1	big	34	2026	2	290	2489	1477	germinate	447	25	15	random among the deme's other mothers
+D1	big	34	2026	2	288	2483	1485	germinate	426	25	15	random among the deme's other mothers
+D1	big	34	2026	2	291	2493	1494	germinate	171	25	15	random among the deme's other mothers
+D1	big	34	2026	2	293	2498	1373	germinate	2398	25	15	random among the deme's other mothers
