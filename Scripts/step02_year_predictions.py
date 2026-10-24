@@ -32,6 +32,7 @@ import pandas as pd
 
 from step14_seed_sampling_per_mother import PLOIDY
 from step22_predictions_core import build_p1_prior
+from srk_detection import deme_allele_counts
 from srk_si_model import (
     load_class_map, build_class_i_mask, load_zygosity_dist,
     sample_genotypes_empirical, p_compat_sporophytic_empirical,
@@ -70,8 +71,9 @@ def simulate_population_year(deme_sizes: list[int],
     """Return (diversity_counts, pcompat_means) each of length
     N_REPLICATES.
 
-    Diversity per replicate: for each deme of size N draw PLOIDY*N
-    alleles from P1, record present Fgs; union across demes.
+    Diversity per replicate: for each deme of size N simulate its plants
+    (`srk_detection.deme_allele_counts`: tetraploid, empirical zygosity,
+    P1 frequencies), record present Fgs; union across demes.
     P_compat per replicate: build the local Fg frequency vector as
     the union-weighted mean of the per-deme local frequencies, then
     run p_compat_sporophytic_empirical on N_MOTHERS mothers from that
@@ -83,12 +85,11 @@ def simulate_population_year(deme_sizes: list[int],
         present = np.zeros(K, dtype=bool)
         local_counts = np.zeros(K, dtype=int)
         for size in deme_sizes:
-            n_alleles = PLOIDY * int(size)
-            if n_alleles <= 0:
+            if int(size) <= 0:
                 continue
-            draws = rng.choice(K, size=n_alleles, replace=True, p=p1_vec)
-            present[draws] = True
-            np.add.at(local_counts, draws, 1)
+            counts = deme_allele_counts(int(size), rng, p1_vec)
+            present |= counts > 0
+            local_counts += counts
         diversity[i] = int(present.sum())
         if local_counts.sum() == 0:
             pcompat[i] = np.nan

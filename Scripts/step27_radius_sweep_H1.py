@@ -25,8 +25,9 @@ For each (EO, radius) combination:
   1. Build the connectivity graph on the 2025 LEPA events belonging
      to that location, with an edge wherever two events sit within
      `radius_m` metres (haversine). Connected components = demes.
-  2. For each deme c: draw `PLOIDY * component_N_fertile_c` alleles
-     from P1 (point-estimate frequency vector), union the resulting
+  2. For each deme c: simulate its plants (`srk_detection.
+     deme_allele_counts`: tetraploid, empirical zygosity, P1 point-
+     estimate frequencies), union the resulting
      Fg sets across demes to get the per-replicate location pool
      size. Repeat `N_REPLICATES` times for a 95 % CI.
   3. Compare predicted mean + CI against the observed count
@@ -54,6 +55,7 @@ from step14_seed_sampling_per_mother import (
     DEFAULT_DB, load_all_events, haversine_meters, PLOIDY,
 )
 from step22_predictions_core import build_p1_prior
+from srk_detection import deme_allele_counts
 
 TABLES = Path("tables")
 FIGURES = Path("figures")
@@ -120,18 +122,17 @@ def simulate_location_pool(comp_sizes: list[int],
                             p1_vec: np.ndarray,
                             rng: np.random.Generator,
                             n_reps: int) -> np.ndarray:
-    """Per replicate: for each deme, draw PLOIDY * size alleles from P1
-    and record its set of present Fgs; location pool = union across
-    demes. Returns an array of n_reps distinct-Fg counts."""
+    """Per replicate: for each deme, simulate its plants (empirical
+    zygosity, P1 frequencies) and record its set of present Fgs;
+    location pool = union across demes. Returns an array of n_reps
+    distinct-Fg counts."""
     K = len(p1_vec)
     counts = np.zeros(n_reps, dtype=int)
     for i in range(n_reps):
         present = np.zeros(K, bool)
         for size in comp_sizes:
-            n_alleles = PLOIDY * int(size)
-            if n_alleles > 0:
-                draws = rng.choice(K, size=n_alleles, replace=True, p=p1_vec)
-                present[draws] = True
+            if int(size) > 0:
+                present |= deme_allele_counts(int(size), rng, p1_vec) > 0
         counts[i] = int(present.sum())
     return counts
 

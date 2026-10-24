@@ -41,8 +41,9 @@ def _haversine(lat1, lon1, lat2, lon2):
 
 def genotyped_plant_populations() -> pd.DataFrame:
     """One row per genotyped plant: Individual, EO, populationID (NaN if
-    unplaced) and `placed_by` (seed lot / location / coordinates /
-    unplaced)."""
+    unplaced), `placed_by` (seed lot / location / coordinates /
+    unplaced), and the seed lot (germplasmID) and occurrenceID it came
+    from — seedlings sharing a seed lot are siblings of one wild mother."""
     geno = pd.read_csv(PHASE4_INDIV_GENOTYPES_TSV, sep="\t",
                        encoding="utf-8-sig", usecols=["Individual", "EO_normalised"])
     meta = pd.read_csv(SAMPLING_METADATA_CSV, encoding="utf-8-sig",
@@ -101,5 +102,5 @@ def genotyped_plant_populations() -> pd.DataFrame:
         [x["pop_seed_lot"].notna(), x["pop_location"].notna(),
          x["pop_coordinates"].notna()],
         ["seed lot", "location", "coordinates"], "unplaced")
-    return (x[["Individual", "EO", "populationID", "placed_by"]]
+    return (x[["Individual", "EO", "populationID", "placed_by", "germplasmID", "OccurrenceID"]]
               .drop_duplicates("Individual").reset_index(drop=True))

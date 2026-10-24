@@ -51,7 +51,7 @@ from step14_seed_sampling_per_mother import (
     mothers_for_full_detection, n_for_miss_probability,
     load_all_events, DEFAULT_DB,
 )
-from srk_detection import mothers_for_coverage
+from srk_detection import deme_allele_counts, mothers_for_coverage
 from srk_si_model import (
     load_class_map, build_class_i_mask,
     load_zygosity_dist, sample_genotypes_empirical,
@@ -116,8 +116,7 @@ def location_pcompat_mean(N_fertile: int, M: int,
     pool_size = PLOIDY * N_fertile
     replicate_means = []
     for _ in range(N_DRAWS_MC):
-        local_alleles = rng.choice(K_fg, size=pool_size, p=prior_f)
-        local_f = np.bincount(local_alleles, minlength=K_fg) / pool_size
+        local_f = deme_allele_counts(N_fertile, rng, prior_f) / pool_size
         if not (local_f > 0).any():
             continue
         mothers = sample_genotypes_empirical(M, local_f, zygosity_probs, rng)

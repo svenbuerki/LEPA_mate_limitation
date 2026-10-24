@@ -147,14 +147,19 @@ empirical zygosity**, averaged over demes weighted by size
 <span style="color:#777"><strong>Results.</strong></span>
 
 - **SRK allele diversity** tracks deme size. The median population
-  is predicted to hold 26 of the 32 species-wide alleles in 2025
-  (27 in 2026), from 3 in a single-plant population to all 32 in the
-  largest. 9 populations in 2025 and 6 in 2026 are predicted to
-  hold fewer than half (16).
+  is predicted to hold 19 of the 32 species-wide alleles in 2025
+  (21 in 2026), from 1 – 2 in a single-plant population to 29 – 32 in
+  the largest. 13 populations in 2025 and 15 in 2026 are predicted to
+  hold fewer than half (16). Each deme is simulated plant by plant
+  with the observed zygosity — two thirds of LEPA plants carry a
+  single SRK allele in all four copies — which lowers these numbers
+  against an earlier version that drew each plant's four copies
+  independently (median 26 – 27).
 - **Pollen compatibility barely varies**: median 0.78 in both years
-  (species mean 0.78), range 0.52 – 0.78 in 2025 and 0.65 – 0.78 in
-  2026. Only the single-plant P33 (EO24-2) sits at the edge of the
-  struggling band (< 0.52). Three mechanisms buffer compatibility
+  (species mean 0.78). Only populations of 1 – 3 plants fall into the
+  struggling band (0.26 – 0.52) or below: P31 (EO24-1), P32 (EO24) and
+  P33 (EO24-2, one plant, 0.09) in 2025 and P33 in 2026, with P30
+  (EO24-7) and P38 (EO52) at its edge (0.52). Three mechanisms buffer compatibility
   against allele loss — Class I dominance (26 of 32 alleles), the
   species' current class imbalance, and tetraploid homozygosity — so
   the model predicts a shortfall only in the smallest demes.
@@ -207,18 +212,16 @@ The most severe shortfall is P10 EO27-3 (fold 0.44 in 2025, 0.02 in
 and at P37 (2.47 in 2026) and P40 (2.22).
 
 <span style="color:#777"><strong>Results — seed yield vs the predictions.</strong></span>
-Populations predicted to have fewer compatible mates produce fewer
-seeds for their size: **seed yield rises with predicted pollen
-compatibility** (ρ = 0.38, p = 0.01, 45 population-years; ρ = 0.39
-with the year offset, so not a year artefact). The signal comes from
-2026 (ρ = 0.67, p = 0.005, 16 population-years; 2025 ρ = 0.26,
-n.s.). Predicted SRK diversity and census alone do not correlate
-(ρ = 0.16, p ≈ 0.28). The model therefore ranks populations in the
-right direction, but its predicted range is narrow (0.69 – 0.78)
-and **the mate-limited populations sit at the species mean**
-(0.76 – 0.78; median 161 fertile plants; P8, P10, P42): the drift
-model, which draws each deme once from the species-wide frequencies,
-does not predict where mate limitation occurs. Seed yield is the
+**Seed yield does not track predicted pollen compatibility** (ρ = 0.17,
+p = 0.27, 45 population-years; 2026 alone ρ = 0.45, p = 0.08; 2025
+ρ = 0.09, n.s.). Predicted SRK diversity and census do not correlate
+either (ρ = 0.17). An earlier version of the drift model, which drew
+each plant's four allele copies independently, gave ρ = 0.38
+(p = 0.01); simulating plants with the observed zygosity removed that
+signal. **The mate-limited populations sit at the species mean**
+(0.72 – 0.79; P8, P10, P42 at 0.77 – 0.79): the drift model, which
+draws each deme once from the species-wide frequencies, does not
+predict where mate limitation occurs. Seed yield is the
 direct read-out of reproductive status, and the populations where
 the two disagree are the first targets for genotyping (§ 5, § 8).
 
@@ -233,16 +236,18 @@ EO76 = P40 + P41** (compared as one site) — and three populations of
 the split EOs with ≥ 10 plants — **P34 (EO18), P13 and P16 (EO27)**.
 EO25 cannot be split between its two populations and stays out.
 
-- **SRK allele diversity is far below the prediction everywhere**:
-  5 – 9 alleles observed against 11 – 32 predicted. A radius sweep at
+- **SRK allele diversity is far below the prediction at five of the
+  six sites**: 5 – 9 alleles observed against 22 – 29 predicted; only
+  the small P6 matches (7 observed, 6.5 predicted). A radius sweep at
   EO70 (P42) and EO76 (P40 + P41) ([Figure 15](#fig-15)) shows the gap stays flat down to
   10 m, so it is not a deme that is too wide: **local demes have
   drifted further than one draw from the species-wide frequencies
   assumes**.
-- **Pollen compatibility follows the prediction at P6** (0.70 /
-  0.72) **and EO76** (0.72 / 0.78), **falls below it at P42** (0.53 vs
-  0.78), **P34** (0.67 vs 0.78) **and P13** (0.44 vs 0.78), and is
-  **above it at P16** (0.84 vs 0.78; 0.77 with P16's own, unusually
+- **Pollen compatibility follows the prediction at P6** (0.70
+  observed, 0.62 predicted, within its wide interval 0.39 – 0.74)
+  **and EO76** (0.72 / 0.78), **falls below it at P42** (0.53 vs
+  0.78), **P34** (0.67 vs 0.79) **and P13** (0.44 vs 0.79), and is
+  **above it at P16** (0.84 vs 0.79; 0.77 with P16's own, unusually
   multi-allele zygosity). The decomposition ([Figure 14](#fig-14))
   finds three different causes: one dominant allele within a class at
   P42 (FG024), the loss of almost all Class I alleles at P13 (4 % of
@@ -270,7 +275,7 @@ seedlings each) to detect 90 % of the deme's SRK alleles, sized to the
 deme, with at least one mother per slick spot; (2) across the
 population, demes at least 100 m apart are added until 90 % of the
 population's SRK alleles are recovered with the fewest mothers. With
-the material we hold, 24 of 33 populations (2025) and 29 of 37 (2026)
+the material we hold, 27 of 33 populations (2025) and 32 of 37 (2026)
 are sampled well enough.
 
 ### 7. Proposed model populations
@@ -283,11 +288,11 @@ signal, not shared drift history. BL1, BL2 and BL3 each hold a
 candidate pair; BL4 and BL5 do not. All six populations are sampled
 well enough in both seasons (§ 6).
 
-| Option | BL | Small — fertile plants (2025 + 2026), mothers sampled (2025 + 2026) | Big — same | Size ratio | Mothers needed (2025 + 2026) | Comment |
+| Option | BL | Small — fertile plants (2025 + 2026), mothers sampled (2025 + 2026) | Big — same | Size ratio | Mothers needed, every deme (2025 + 2026) | Comment |
 |:---|:---:|:---|:---|:---:|:---:|:---|
-| **D1 ★** | BL3 | **P36 EO25-B** · 26 plants · **7 + 8** mothers | **P34 EO18-7 + EO18-8** · 1 673 plants · **115 + 239** mothers | 64× | **4 + 4 / 85 + 134** | Largest mother pool; both sides sampled well enough in both years. |
-| D2 | BL2 | P21 EO26-3 + EO26 · 191 plants · 18 + 52 mothers | P19 EO8 · 876 plants · 37 + 178 mothers | 5× | 11 + 33 / 31 + 119 | Neither side is stable (P21 ambiguous, P19 growth); smallest size contrast. |
-| D3 | BL1 | P6 EO67 · 22 plants · 4 + 6 mothers | P16 EO27-1 + EO27RT · 1 991 plants · 55 + 251 mothers | 90× | 3 + 3 / 83 + 198 | Biggest size contrast and both sides stable, but the small side has only 10 mothers. |
+| **D1 ★** | BL3 | **P36 EO25-B** · 26 plants · **7 + 8** mothers | **P34 EO18-7 + EO18-8** · 1 673 plants · **115 + 239** mothers | 64× | **4 + 3 / 59 + 98** | Largest mother pool; both sides sampled well enough in both years. |
+| D2 | BL2 | P21 EO26-3 + EO26 · 191 plants · 18 + 52 mothers | P19 EO8 · 876 plants · 37 + 178 mothers | 5× | 9 + 28 / 22 + 90 | Neither side is stable (P21 ambiguous, P19 growth); smallest size contrast. |
+| D3 | BL1 | P6 EO67 · 22 plants · 4 + 6 mothers | P16 EO27-1 + EO27RT · 1 991 plants · 55 + 251 mothers | 90× | 2 + 2 / 53 + 136 | Biggest size contrast and both sides stable, but the small side has only 10 mothers. |
 
 **D1 is recommended** (★). It has a sharp 64× size contrast, both
 sides in BL3, and both sides sampled well enough in both years
@@ -302,11 +307,20 @@ plants, 16 → 21 demes); no large population has both a constant
 census and seed yield at expectation in both years. D2's big side, P19, is the one
 switching population and the natural follow-up.
 
+**What D1 is for.** D1's first job is **SRK diversity**: measuring
+how many alleles a small and a big population of the same lineage
+actually hold, deme by deme, to calibrate the drift model (§ 8). With
+91 mothers it is too small to test mate limitation mother by mother on
+its own; that test needs mothers from many populations
+([`Sampling_design.md`](Sampling_design.md) § 1).
+
 **D1 sampling plan.** Selecting spatially separated demes (Step 2 of
 the sampling design) recovers about 90 % of each D1 population's SRK
-alleles with **93 mothers over the two years** (2 310 seeds to
-germinate, ≈ 1 390 seedlings); the selected demes and the germplasmIDs
-to pull are in [`Sampling_design.md`](Sampling_design.md) § 4.
+alleles with **91 mothers over the two years** (2 260 seeds to
+germinate, ≈ 1 360 seedlings), all with cleaned seed. In 2025 P34's
+largest deme holds fewer mothers than its target and is used with the 9
+it holds, the one adjustment to the plan; the selected demes and the
+germplasmIDs to pull are in [`Sampling_design.md`](Sampling_design.md) § 4.
 
 Full `populationID → locationCode` map in
 [step30g_populations_classified.tsv](tables/step30g_populations_classified.tsv).
@@ -317,8 +331,8 @@ Full `populationID → locationCode` map in
 model expects it.** The EO27 cluster (P8, P10; P16 year-sensitive),
 P42 EO70, P32 EO24 and two small late-season BL1 populations (P4, P1)
 under-produce seed, yet most are large and predicted at the
-species-mean compatibility; across all populations seed yield follows
-predicted compatibility only weakly (ρ = 0.38). The
+species-mean compatibility; across all populations seed yield does
+not follow predicted compatibility (ρ = 0.17, n.s.). The
 genotyped sites point to the reason: local demes have lost far more
 SRK alleles than one draw from the species-wide frequencies
 predicts, and at P42, P34 and P13 that loss has skewed the allele
@@ -374,13 +388,25 @@ vary with weather.
    expected similarity of a population's SRK frequencies between
    years, and whether seed-bank turnover alone can produce swings
    like P19's.
-3. Genotype seedlings and their mothers in the model populations
-   (§ 7) to measure compatibility and the selfing rate directly;
-   compare 2025 and 2026 lots to test the seed-bank predictions.
-4. Collect more mothers in the undersampled populations, starting
+3. **Calibrate the drift model.** Real populations hold far fewer SRK
+   alleles than draws from the species-wide frequencies predict (§ 5),
+   and predicted compatibility does not track seed yield (§ 4). Fit how
+   far demes have drifted — an effective size well below the census,
+   or allele frequencies per Bottleneck Lineage instead of species-wide
+   — to the genotyped sites, then re-predict every population.
+4. Genotype seedlings and their mothers in the model populations
+   (§ 7): their SRK diversity, measured in a small and a big
+   population of the same lineage, is the data the calibration needs;
+   they also measure compatibility and the selfing rate directly, and
+   2025 vs 2026 lots test the seed-bank predictions.
+5. Collect more mothers in the undersampled populations, starting
    with the mate-limited P10 and P8.
-5. Extend seed–mother genotyping to the SI-escape candidates,
-   starting with BL2.
+6. Extend seed–mother genotyping to the SI-escape candidates,
+   starting with BL2. Testing mate limitation mother by mother needs
+   many mothers: D1's 91 detect a strong effect (half the compatible
+   mates → 50 % less seed) only 38 % of the time, while the ~1 060
+   mothers held across every population sampled well enough detect a
+   30 % effect 79 % of the time ([`Sampling_design.md`](Sampling_design.md) § 1).
 
 ---
 
@@ -897,10 +923,10 @@ diversity gap is persistent, not a one-year sampling fluke.
 **Preliminary LARGE + SMALL candidate pair for the test design.**
 
 - **LARGE = populationID 16** (EO27-1 + EO27RT merged), N_fert
-  549 → 1442, predicted pollen compatibility 0.78 / 0.78,
-  diversity saturated at 32 / 32.
+  549 → 1442, predicted pollen compatibility 0.79 / 0.79,
+  diversity 29 / 32.
 - **SMALL = populationID 6** (EO67), N_fert 10 → 12, predicted
-  pollen compatibility 0.76 / 0.75, diversity 11 / 12 (stable
+  pollen compatibility 0.71 / 0.71, diversity 7 / 7 (stable
   at a tiny scale).
 
 <a id="fig-6"></a>
@@ -998,11 +1024,11 @@ pollen compatibility under the sporophytic Class I/II model.
 **Result.** **50 m is chosen on pollinator biology** (halictid /
 small-bee foraging range), not on cost. The sweep shows how much the
 design depends on that choice. At 50 m the design (mothers for 90 %
-SRK allele detection per deme, [`Sampling_design.md`](Sampling_design.md)) needs **695 mothers
-in 2025 (1 110 in 2026)**, 24 % (32 %) fewer than at 10 m. Assuming a
-radius beyond 75 m would change it little (650 → 573 in 2025). If the
-true radius is only 25 m, the 50 m design is **11 % short** (785 vs
-695 mothers in 2025). Predicted pollen compatibility
+SRK allele detection per deme, [`Sampling_design.md`](Sampling_design.md)) needs **492 mothers
+in 2025 (827 in 2026)**, 19 % (27 %) fewer than at 10 m. Assuming a
+radius beyond 75 m would change it little (467 → 433 in 2025). If the
+true radius is only 25 m, the 50 m design is **11 % short** (544 vs
+492 mothers in 2025). Predicted pollen compatibility
 does not depend on the radius (§ 30.2). Connectivity plateaus at
 ≥ 75 m, so 50 m still keeps meaningful fragmentation variation across
 populations and Bottleneck Lineages.
@@ -1254,11 +1280,12 @@ sustainable-mean location remain visible).
 - **Traffic-light bands** (1/3 and 2/3 of species mean): failed
   < 0.23, struggling 0.26–0.52, sustainable ≥ 0.52.
 - **The EO24 group (P30 – P33, BL3)** is the main conservation
-  concern — predicted P_compat 0.52 – 0.69, the lowest in the
-  dataset, with credible intervals reaching into the struggling band
-  (lower bounds 0.15 – 0.48). EO24-2 (P33, one plant) sits right at
-  the sustainable threshold (0.52).
-- Every location sits in the sustainable band at the mean; the
+  concern — predicted pollen compatibility 0.13 – 0.51 at locations of
+  1 – 3 plants, the lowest in the dataset (EO24-2, one plant: 0.13;
+  EO24 and EO24-1: 0.37 – 0.39; EO24-7: 0.51), with credible intervals
+  reaching down to 0. The smallest EO26-3 location (5 plants) follows
+  at 0.49.
+- Every other location sits in the sustainable band at the mean; the
   tightest credible intervals belong to the largest locations
   (EO27-1, EO32).
 
@@ -1519,18 +1546,18 @@ correlation (Spearman) between the fold of expectation (Figure 12b)
 and the predicted pollen compatibility, predicted SRK allele
 diversity and fertile-plant census.
 
-**Result.** Seed yield rises with predicted pollen compatibility
-(ρ = 0.38, p = 0.01; ρ = 0.39, p = 0.009 with the 2026 year offset, so
-the year effect does not drive it). The signal comes from 2026
-(ρ = 0.67, p = 0.005, 16 population-years); in 2025 it is weak
-(ρ = 0.26, p = 0.18). Predicted SRK diversity (ρ = 0.16, p = 0.28)
-and census (ρ = 0.17, p = 0.28) do not correlate
+**Result.** Seed yield does not track predicted pollen compatibility
+(ρ = 0.17, p = 0.27, 45 population-years). The only hint is in 2026
+(ρ = 0.45, p = 0.08, 16 population-years); in 2025 there is none
+(ρ = 0.09, p = 0.64). Predicted SRK diversity (ρ = 0.17, p = 0.27)
+and census (ρ = 0.17, p = 0.28) do not correlate either
 ([`step30i_seed_yield_vs_predictions_tests.tsv`](tables/step30i_seed_yield_vs_predictions_tests.tsv)).
-The model thus ranks populations in the right direction, but
-predicted compatibility spans only 0.69 – 0.78 across the tested
-population-years and **the mate-limited populations sit at the
-species mean** (P8, P10, P42: 0.76 – 0.78; median 161 fertile
-plants). The drift model does not predict where mate limitation
+An earlier version of the drift model, which drew each plant's four
+SRK copies independently, gave ρ = 0.38 (p = 0.01); simulating plants
+with the observed zygosity (2026-10-23) removed it. Predicted
+compatibility spans 0.52 – 0.79 across the tested population-years,
+and **the mate-limited populations sit at the species mean** (P8,
+P10, P42: 0.77 – 0.79). The drift model does not predict where mate limitation
 occurs. The genotyped sites (§ C.0.a) suggest why: local demes have
 lost far more SRK alleles than one draw from the species-wide
 frequencies predicts. Seed yield is therefore the direct read-out of
@@ -1634,28 +1661,28 @@ P13 (EO27, 12), P16 (EO27, 15). In total **246 genotyped plants**.
 
 | Site | Plants | Observed pollen compatibility (95 % CI) | Predicted (95 % CI) | Observed alleles | No-drift upper bound | Predicted alleles (95 % CI) |
 |---|---:|---|---|---:|---:|---|
-| **EO67 (P6)** | 37 | 0.697 (0.660–0.737) | 0.723 (0.612–0.803) | **7** of 32 | 19.2 | 10.9 (8.0–15.0) |
-| **EO70 (P42)** | 74 | **0.532** (0.510–0.559) | **0.778** (0.744–0.812) | **6** of 32 | 23.8 | 28.4 (25.0–31.0) |
-| **EO76 (P40 + P41)** | 76 | 0.722 (0.694–0.753) | 0.775 (0.750–0.798) | **9** of 32 | 24.0 | 31.8 (31.0–32.0) |
-| **P34 (EO18)** | 32 | **0.671** (0.613–0.722) | **0.777** (0.736–0.820) | **7** of 32 | 18.2 | 31.8 (31.0–32.0) |
-| **P13 (EO27)** | 12 | **0.436** (0.310–0.577) | **0.778** (0.735–0.821) | **5** of 32 | 11.8 | 31.5 (30.0–32.0) |
-| **P16 (EO27)** | 15 | 0.843 (0.816–0.871) | 0.775 (0.735–0.811) | **8** of 32 | 13.2 | 31.9 (31.0–32.0) |
+| **EO67 (P6)** | 37 | 0.697 (0.660–0.737) | 0.62 (0.39–0.74) | **7** of 32 | 19.2 | 6.5 (4.0–10.0) |
+| **EO70 (P42)** | 74 | **0.532** (0.510–0.559) | **0.78** (0.74–0.83) | **6** of 32 | 23.8 | 22.5 (18.0–27.0) |
+| **EO76 (P40 + P41)** | 76 | 0.722 (0.694–0.753) | 0.78 (0.75–0.81) | **9** of 32 | 24.0 | 29.4 (27.0–32.0) |
+| **P34 (EO18)** | 32 | **0.671** (0.613–0.722) | **0.79** (0.75–0.83) | **7** of 32 | 18.2 | 29.2 (26.0–31.3) |
+| **P13 (EO27)** | 12 | **0.436** (0.310–0.577) | **0.79** (0.74–0.84) | **5** of 32 | 11.8 | 27.8 (24.0–31.0) |
+| **P16 (EO27)** | 15 | 0.843 (0.816–0.871) | 0.79 (0.74–0.83) | **8** of 32 | 13.2 | 29.4 (26.0–32.0) |
 
 - **EO67 (P6)** — observed and predicted intervals overlap on pollen
   compatibility, and the observed allele count sits inside the
   predicted interval: **the model passes** at this small BL1 site.
 - **EO70 (P42)** — observed compatibility 0.25 below the prediction
-  (intervals do not overlap); 6 of 32 alleles against 28 predicted and
+  (intervals do not overlap); 6 of 32 alleles against 23 predicted and
   a no-drift bound of 24: **massive drift collapse in a large
   population**.
 - **EO76 (P40 + P41)** — compatibility marginally below the
-  prediction; 9 of 32 alleles against 32 predicted: **severe diversity
+  prediction; 9 of 32 alleles against 29 predicted: **severe diversity
   collapse**, yet compatibility holds because FG001 (Class II, 41 %
   species-wide) makes most plants compatible even with few alleles.
 - **P34 (EO18)** — compatibility below the prediction (intervals just
   separate) with 7 of 32 alleles: the same pattern as EO70, milder.
   P34 is the big side of the D1 model pair.
-- **P13 (EO27)** — the largest shortfall of all (0.44 vs 0.78), with
+- **P13 (EO27)** — the largest shortfall of all (0.44 vs 0.79), with
   only 5 alleles and FG001 (0.56) and FG002 (0.27) dominating: only
   4 % of its SRK copies are Class I, so almost every plant expresses
   Class II (a class-balance collapse, § C.0.b). In the seed-yield test
@@ -1663,15 +1690,15 @@ P13 (EO27, 12), P16 (EO27, 15). In total **246 genotyped plants**.
   offset (year-sensitive, § 30.3). Few plants (12, from 7 mothers):
   treat as indicative.
 - **P16 (EO27)** — compatibility **above** the prediction here (0.84
-  vs 0.78): its 8 alleles are evenly spread, with rare alleles (FG005,
+  vs 0.79): its 8 alleles are evenly spread, with rare alleles (FG005,
   FG017) at 0.10 each. This comparison draws fathers with the
   species-wide zygosity; with P16's own zygosity (53 % of plants
   express ≥ 3 identities) compatibility falls to 0.77, below the
   species-wide value (§ C.0.b). Few plants (15, from 7 mothers):
   indicative.
 
-Across all six sites the allele count is far below the prediction
-(5 – 9 observed against 11 – 32 predicted), while compatibility follows
+At five of the six sites the allele count is far below the prediction
+(5 – 9 observed against 22 – 29 predicted; P6 matches), while compatibility follows
 the prediction at two sites (P6, EO76), falls below it at three
 (EO70, P34, P13) and exceeds it at one (P16) — the decomposition in § C.0.b
 explains why the allele count alone does not set compatibility.
@@ -1691,11 +1718,11 @@ explains why the allele count alone does not set compatibility.
 **Why this analysis exists.** Panel A of § C.0.a (SRK diversity
 predicted vs observed) exposed a disconnect that pollen
 compatibility alone would have hidden: EO70 (P42) and EO76 (P40 +
-P41) both lose ~23 of their predicted alleles, but observed pollen
+P41) lose 17 and 20 of their predicted alleles, but observed pollen
 compatibility drops by 0.24 at P42 and barely 0.03 at EO76. P6, with
-just 7 alleles against a predicted 10.8, lands at 0.70 — in the
+7 alleles against a predicted 6.5, lands at 0.70 — in the
 sustainable band. The split-EO populations added on 2026-10-21
-(P34, P13, P16) lose 24 – 27 alleles each and still respond in three
+(P34, P13, P16) lose 21 – 23 alleles each and still respond in three
 different ways. The decomposition runs on all six sites. **Without the diversity trigger from § C.0.a we
 would not have known there was a mechanism question to ask.**
 
@@ -1764,12 +1791,12 @@ is **buffering** the location.
 
 | Location | Alleles obs / pred | Pollen compatibility obs → species-wide pred | Within-class spread | Class I / II balance | Zygosity composition |
 |---|---|---|---:|---:|---:|
-| **EO67 (P6)** | 7 / 10.8 (-3.8) | 0.70 → 0.76 | **+100 %** | −7 % | −13 % |
-| **EO70 (P42)** | 6 / 28.3 (-22.3) | 0.54 → 0.70 | **+88 %** | −3 % | −6 % |
-| **EO76 (P40 + P41)** | 9 / 31.8 (-22.8) | 0.75 → 0.77 | **+206 %** | +1 % | **−115 %** |
-| **P34 (EO18)** | 7 / 31.8 (-24.8) | 0.73 → 0.74 | +172 % | +228 % | **−472 %** |
-| **P13 (EO27)** | 5 / 31.5 (-26.5) | 0.36 → 0.69 | +4 % | **+118 %** | +21 % |
-| **P16 (EO27)** | 8 / 31.9 (-23.9) | 0.77 → 0.86 | +46 % | +4 % | **+80 %** |
+| **EO67 (P6)** | 7 / 6.5 (+0.5) | 0.70 → 0.76 | **+100 %** | −7 % | −13 % |
+| **EO70 (P42)** | 6 / 22.5 (−16.5) | 0.54 → 0.70 | **+88 %** | −3 % | −6 % |
+| **EO76 (P40 + P41)** | 9 / 29.4 (−20.4) | 0.75 → 0.77 | **+206 %** | +1 % | **−115 %** |
+| **P34 (EO18)** | 7 / 29.2 (−22.2) | 0.73 → 0.74 | +172 % | +228 % | **−472 %** |
+| **P13 (EO27)** | 5 / 27.8 (−22.8) | 0.36 → 0.69 | +4 % | **+118 %** | +21 % |
+| **P16 (EO27)** | 8 / 29.4 (−21.4) | 0.77 → 0.86 | +46 % | +4 % | **+80 %** |
 
 Percentages are shares of each site's gap (species-wide − observed)
 closed by that single swap; for P34 the gap is only 0.01, so its
@@ -1933,7 +1960,7 @@ would not reflect how LEPA actually enters the modelling frame).
 
 **Why this test exists.** Figure 13 shows the diversity prediction
 over-estimates the observed SRK allele count at every genotyped site
-(predicted 11 – 32 vs observed 5 – 9). § C.0.b above decomposes *why
+(predicted 22 – 29 vs observed 5 – 9 at five of the six sites). § C.0.b above decomposes *why
 pollen compatibility nevertheless tracks observation* at some sites
 and not others; here we ask whether the diversity gap at EO70 (P42)
 and EO76 (P40 + P41) could be an artefact of the operational deme
@@ -1976,13 +2003,13 @@ and EO76** ([Figure 15](#fig-15)).
 
 | Location | Observed | Predicted at r = 10 m | at 50 m | at 150 m | Deme count 10 m / 50 m / 150 m |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **EO70 (P42)** | 6 | 28.3 [25, 31] | 28.3 [25, 31] | 28.4 [25, 31] | 3 / 1 / 1 |
-| **EO76 (P40 + P41)** | 9 | 31.8 [31, 32] | 31.8 [31, 32] | 31.8 [31, 32] | 16 / 4 / 4 |
+| **EO70 (P42)** | 6 | 22.5 [19, 27] | 22.6 [19, 26] | 22.5 [19, 26] | 3 / 1 / 1 |
+| **EO76 (P40 + P41)** | 9 | 29.4 [26, 32] | 29.4 [27, 32] | 29.4 [26, 32] | 16 / 4 / 4 |
 
 The prediction **does not move** across the sweep: even fragmenting
 EO76 into 16 small demes at 10 m, or P42 into 3 demes at 10 m,
-leaves the union-of-per-deme pools at essentially the same 28–32
-Fgs. The ~22-allele gap at P42 and ~23-allele gap at P40 do not
+leaves the union-of-per-deme pools at essentially the same 22 – 29
+Fgs. The ~17-allele gap at P42 and ~20-allele gap at P40 do not
 close. Full table at
 [`step30f_srk_diversity_radius_sweep.tsv`](tables/step30f_srk_diversity_radius_sweep.tsv).
 
@@ -2117,9 +2144,9 @@ drift-history confound.
   track that gap, the within-BL small-vs-big signal is confirmed.
 
 **Sampling the pair.** P36 holds 15 mothers with seed across the two
-years and P34 336. The two-step design samples 8 of P36's and 85 of
+years and P34 336. The two-step design samples 7 of P36's and 84 of
 P34's, in the demes chosen to recover 90 % of each population's SRK
-alleles — 93 mothers, ≈ 1 390 seedlings; see [`Sampling_design.md`](Sampling_design.md) § 4.
+alleles — 91 mothers, ≈ 1 360 seedlings; see [`Sampling_design.md`](Sampling_design.md) § 4.
 
 **Pair evaluations and stable-population inventory**:
 [`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv)

@@ -66,7 +66,6 @@ fi
 if [[ "$PART" == all || "$PART" == validation ]]; then
   # Part 4 — location-level predictions + seed-count power (2025)
   run step22_predictions_core --year 2025
-  run step23_seed_justification     # reads step22's prior frequencies
   # Part 5 — validation against adult SRK genotypes (Part C)
   run step24_EO_scale_validation
   run step25_partC_clean_overlap
@@ -80,6 +79,7 @@ if [[ "$PART" == all || "$PART" == design ]]; then
   echo "▶ step28_model_population_design_map (R)"
   Rscript Scripts/step28_model_population_design_map.R > logs/step28_model_population_design_map.log 2>&1 \
     || { echo "✖ step28_model_population_design_map failed — see logs/step28_model_population_design_map.log"; exit 1; }
+  run step23_power_analysis          # needs step13, step21 and step28 tables
 fi
 
 # Consistency checks — units, BLs, IDs, targets, code, tables (fails the run)

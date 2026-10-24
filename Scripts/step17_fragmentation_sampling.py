@@ -7,8 +7,9 @@ justification) to group each location's events into connected
 components (demes), then allocates mothers per deme (not per whole
 location): the smallest M whose 15 seedlings per mother detect 90 % of
 the deme's SRK Fgs on average, under the empirical species prior with
-drift (`srk_detection.py` — the same model as the SRK predictions;
-replaced the uniform-frequency coupon-collector rule on 2026-10-19). Within each component, mothers are
+drift, tetraploid empirical zygosity and sporophytic Class I / II SI
+(`srk_detection.py`; replaced the uniform-frequency coupon-collector
+rule on 2026-10-19 and the independent-copy model on 2026-10-23). Within each component, mothers are
 distributed proportional to N_fertile, subject to a maternal-
 genotype floor of ≥ 1 mother per event.
 
@@ -115,8 +116,8 @@ def allocate_component(comp_subset: pd.DataFrame,
                         target_prob: float = TARGET_PROB
                         ) -> pd.DataFrame:
     """Mothers the deme needs for 90 % mean Fg coverage under the
-    empirical species prior (`srk_detection.mothers_for_coverage`, the
-    model the SRK predictions use), then distribute across events
+    empirical species prior with zygosity and SI
+    (`srk_detection.mothers_for_coverage`), then distribute across events
     proportional to N_fertile with a floor of ≥ 1 per event and a cap
     at each event's N_fertile."""
     N_c = int(comp_subset["n_fertile"].sum())

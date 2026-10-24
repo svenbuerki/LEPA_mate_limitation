@@ -36,12 +36,11 @@ The Fg → Class mapping is a first-class TSV at
 `tables/srk_fg_class.tsv` — editable by hand as the biology is
 refined. `load_class_map()` reads it into a dict.
 
-The provisional data-driven default (see the rationale column of the
-TSV) puts Fgs with ≥ 2 sub-alleles in Class I (FG001–FG006, together
-~65 % of P1 frequency) and single-allele Fgs in Class II (~35 %).
-FG024 is flagged as REVIEW because it is single-allele but 18 % of the
-species — the assignment may need manual reclassification once the SI
-literature check is done.
+The current assignment (see the rationale column of the TSV) has
+26 Class I Fgs (~35 % of P1 frequency) and 6 Class II Fgs, FG001–FG006
+(~65 %) — small, conserved multi-allele clusters swapped from the
+provisional Class I. Edit the
+TSV, not this text, when the classification changes.
 
 Analytical formulas
 -------------------

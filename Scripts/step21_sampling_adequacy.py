@@ -6,13 +6,14 @@ in each deme, select them the way Step 17 does (≥ 1 per event, then the
 best-seeded up to the deme's `M_frag` target) and ask two questions:
 
 1. **Coverage** — what fraction of the population's SRK allele classes
-   (Fgs) would our seedlings detect? Each deme's pool is drawn from the
-   species prior (4 alleles × adults, drift); the deme's selected mothers
-   deliver 4 maternal alleles each + 2 paternal alleles per genotyped
-   seedling. Population present / detected = union across demes — the
-   model of `srk_detection.py` that also sets the design targets, and
-   the drift model of the SRK predictions (Step 22). 2 000 pools →
-   mean and 95 % interval.
+   (Fgs) would our seedlings detect? Each deme is simulated plant by
+   plant (`srk_detection.py`: tetraploid with the empirical zygosity,
+   alleles from the species prior); the deme's selected mothers show
+   their own alleles plus 2 paternal alleles per genotyped seedling,
+   fathers being compatible plants under sporophytic Class I / II SI.
+   Population present / detected = union across demes — the model that
+   also sets the design targets. 1 000 simulated populations → mean and
+   95 % interval.
 2. **Representation** — is **every deme** sampled (≥ 1 selected
    mother)? A deme with no mother is missing from every
    population-level estimate (the Fg union and the size-weighted
@@ -48,9 +49,8 @@ import pandas as pd
 from project_paths import LEPA_DB
 from srk_bl_constants import BL_COLORS
 from srk_units import load_event_units
-from step14_seed_sampling_per_mother import PLOIDY, PATERNAL_ALLELES_PER_SEED
 from step17_fragmentation_sampling import GERMINATION_RATE
-from srk_detection import N_POOLS, _pool_freqs, species_prior
+from srk_detection import N_POOLS, deme_detection, popcount
 
 TABLES = Path("tables")
 FIGURES = Path("figures")
@@ -145,27 +145,26 @@ def deme_table(year: int, mothers: pd.DataFrame) -> pd.DataFrame:
 
 def simulate_population(demes: pd.DataFrame, scen: str,
                         rng: np.random.Generator) -> dict:
-    """Fg present (union of deme pools) and expected Fgs detected (union
-    of what the selected mothers + seedlings recover), over the deme
-    pools of `srk_detection` — the exact model the design targets come
-    from, so a deme that meets its target scores what the design
-    promised. Each deme's pools are shuffled so demes are independent.
-    Given the pools, detection is exact: P(Fg j detected) = 1 − Π_d
-    (1 − p_dj)^A_d. Intervals reflect drift (pool) uncertainty."""
-    present = np.zeros((N_POOLS, len(species_prior())), dtype=bool)
-    miss = np.ones(present.shape)
+    """Fgs present (union of the demes' adults) and Fgs detected (union
+    of what the selected mothers + seedlings recover) over simulated
+    populations of `srk_detection` — the exact model the design targets
+    come from, so a deme that meets its target scores what the design
+    promised. Demes are simulated independently; each deme's mothers
+    get its mean seedlings per mother. Intervals reflect drift and
+    sampling uncertainty."""
+    present = np.zeros(N_POOLS, np.uint64)
+    detected = np.zeros(N_POOLS, np.uint64)
     for _, d in demes.iterrows():
         N = int(d["deme_N_fertile"])
         if N == 0:
             continue
-        p, _ = _pool_freqs(N)
-        p = p[rng.permutation(N_POOLS)]
-        present |= p > 0
-        A = (PLOIDY * int(d[f"M_selected_{scen}"])
-             + PATERNAL_ALLELES_PER_SEED * int(d[f"seedlings_{scen}"]))
-        miss *= (1.0 - p) ** A
-    n_present = present.sum(axis=1)
-    n_detected = (1.0 - miss).sum(axis=1)
+        M = int(d[f"M_selected_{scen}"])
+        s = int(round(d[f"seedlings_{scen}"] / M)) if M else 0
+        p, det = deme_detection(N, M, N_POOLS, rng, seedlings=max(s, 1))
+        present |= p
+        detected |= det
+    n_present = popcount(present)
+    n_detected = popcount(detected)
     cov = np.divide(n_detected, n_present, out=np.zeros(N_POOLS),
                     where=n_present > 0)
 

@@ -47,6 +47,7 @@ import matplotlib.pyplot as plt
 
 # ---------------------------------------------------------------------------
 from project_paths import LEPA_DB
+from srk_detection import deme_allele_counts, deme_detection, popcount
 
 DEFAULT_DB = LEPA_DB # external — see project_paths.py
 DEFAULT_TABLES = Path("tables")
@@ -289,40 +290,29 @@ def predicted_diversity_per_location(
         loc_detected = np.empty(n_local_replicates)
         loc_coverages = np.empty(n_local_replicates)
 
-        for k in range(n_local_replicates):
-            present_at_loc = np.zeros(K_fg, dtype=bool)
-            detected_at_loc = np.zeros(K_fg, dtype=bool)
-            for c_idx, (comp_id, N_c) in enumerate(comps):
-                pool_size_alleles = PLOIDY * max(int(N_c), 1)
-                local = rng.choice(K_fg, size=pool_size_alleles, p=f_mean)
-                counts = np.bincount(local, minlength=K_fg)
-                present_c = counts > 0
-                pool_size_c = int(present_c.sum())
-                A_c = int(A_actual_each[c_idx])
-                if A_c > 0 and counts.sum() > 0:
-                    f_local = counts / counts.sum()
-                    sampled = rng.choice(K_fg, size=A_c, p=f_local)
-                    detected_c = np.zeros(K_fg, dtype=bool)
-                    detected_c[np.unique(sampled)] = True
-                    # (sampled Fgs are necessarily in present_c)
-                else:
-                    detected_c = np.zeros(K_fg, dtype=bool)
-
-                present_at_loc |= present_c
-                detected_at_loc |= detected_c
-
-                comp_pool_mat[c_idx, k] = pool_size_c
-                comp_detected_mat[c_idx, k] = int(detected_c.sum())
-                comp_coverage_mat[c_idx, k] = (
-                    detected_c.sum() / pool_size_c if pool_size_c > 0 else 0.0
-                )
-
-            loc_pool_sizes[k] = int(present_at_loc.sum())
-            loc_detected[k] = int(detected_at_loc.sum())
-            loc_coverages[k] = (
-                detected_at_loc.sum() / present_at_loc.sum()
-                if present_at_loc.any() else 0.0
-            )
+        # Each deme simulated plant by plant (`srk_detection`: empirical
+        # zygosity, compatible fathers); its real mothers and their mean
+        # seedlings detect what their families reveal.
+        present_at_loc = np.zeros(n_local_replicates, np.uint64)
+        detected_at_loc = np.zeros(n_local_replicates, np.uint64)
+        for c_idx, (comp_id, N_c) in enumerate(comps):
+            M_c = int(M_c_each[c_idx])
+            s_c = int(round(seeds_c_each[c_idx] / M_c)) if M_c else 0
+            p_c, d_c = deme_detection(max(int(N_c), 1), M_c, n_local_replicates,
+                                      rng, seedlings=max(s_c, 1))
+            present_at_loc |= p_c
+            detected_at_loc |= d_c
+            pool_c = popcount(p_c)
+            det_c = popcount(d_c)
+            comp_pool_mat[c_idx] = pool_c
+            comp_detected_mat[c_idx] = det_c
+            comp_coverage_mat[c_idx] = np.divide(det_c, pool_c, out=np.zeros(len(pool_c)),
+                                                 where=pool_c > 0)
+        loc_pool_sizes[:] = popcount(present_at_loc)
+        loc_detected[:] = popcount(detected_at_loc)
+        loc_coverages[:] = np.divide(loc_detected, loc_pool_sizes,
+                                     out=np.zeros(n_local_replicates),
+                                     where=loc_pool_sizes > 0)
 
         # Emit per-component rows
         for c_idx, (comp_id, N_c) in enumerate(comps):
@@ -569,8 +559,7 @@ def predicted_pcompat_per_location(
         for c_idx, (comp_id, N_c) in enumerate(comps):
             pool_size = PLOIDY * max(N_c, 1)
             for k in range(n_draws):
-                local_alleles = rng.choice(K_fg, size=pool_size, p=f_mean)
-                local_f = (np.bincount(local_alleles, minlength=K_fg)
+                local_f = (deme_allele_counts(max(N_c, 1), rng, f_mean)
                            / pool_size)
                 if not (local_f > 0).any():
                     comp_mean_mat[c_idx, k] = 0.0

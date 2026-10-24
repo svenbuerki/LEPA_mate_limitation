@@ -93,15 +93,18 @@ Ordering rules that are easy to get wrong:
 - **step21 runs after step17 for both years** (it reads both
   `step29c_sampling_frag_aware_per_event_{Y}` tables), and **step22
   runs after step21** (it takes the real mothers per deme from it).
-- **step23 runs after step22** — it reads step22's
-  `step30_A_prediction_prior_frequencies.tsv`.
 
 Library imports are not run-order dependencies: steps 01 – 04, 15 – 17,
 19, 20, 22 and 27 import helpers (haversine distance, DB loaders, coupon-
 collector maths) from `step14_seed_sampling_per_mother.py`; steps 02,
 21 and 27 import the drift model from `step22_predictions_core.py`;
-steps 17, 20 and 21 size demes with `srk_detection.py` (mothers for
-90 % mean Fg coverage under the empirical prior — the prediction model).
+steps 17, 20, 21, 22, 23 and 28 size and simulate demes with
+`srk_detection.py` (plant-by-plant: tetraploid with the empirical
+zygosity, empirical prior, fathers compatible under sporophytic Class I /
+II SI; mothers for 90 % mean Fg coverage; coverage curves cached in
+`cache/`, gitignored). The predictions (steps 02, 20, 22, 27) draw deme
+drift through the same `srk_detection.deme_allele_counts` (plants with
+the empirical zygosity, not 4·N independent copies; 2026-10-23).
 
 ---
 
@@ -153,7 +156,6 @@ stay stable; § 7 maps them to the current step numbers.
 | Step | Purpose | Reads | Writes |
 |---|---|---|---|
 | `step22_predictions_core --year 2025` | Drift model per deme; predicted diversity + compatibility per **DB location** (Part C needs location level, see § 6); species prior | t/`step29_sampling_per_location` · `step29a_event_to_deme` (demes grouped by location, via `srk_units`) · `srk_*` · `step26i_L1_carrier_inventory` | t/`step30_A_prediction_location_diversity` · `step30_A_prediction_location_pcompat` · `step30_A_prediction_component_*` · `step30_A_prediction_prior_frequencies` · `step30_A_traffic_light_bands` · `step30_A_prediction_per_mother_fecundation` · f/`step30_A_prediction_fecundation` · `step30_A_diversity_vs_pcompat` · `step30_A_diversity_unbiased_vs_sampling` |
-| `step23_seed_justification` | Precision + regression power at 15 seedlings per mother | t/`step30_A_prediction_prior_frequencies` | t/`step28d_pcompat_precision` · `step28d_matelim_power` · f/same names |
 
 ### Part 5 — Validation against adult SRK genotypes (Part C)
 
@@ -163,7 +165,8 @@ stay stable; § 7 maps them to the current step numbers.
 | `step25_partC_clean_overlap` | Observed vs predicted SRK diversity and pollen compatibility at the genotyped sites: EO67 (P6), EO70 (P42), EO76 (P40 + P41) as EOs, plus every population of EO18 / EO27 with ≥ 10 genotyped plants (P34, P13, P16) | EXT Phase 4 genotypes · EXT genotyping sample records (via `srk_genotype_units`) · `step30_A_prediction_location_*` · `step30g_prediction_population_year` · `step30_A_traffic_light_bands` · prior | t/`step30_B_partC_clean_overlap_per_location` · `step30_B_partC_clean_overlap_fg_frequencies` · f/`step30_B_partC_clean_overlap` |
 | `step26_partC_hypothesis_decomposition` | Which mechanism drives the compatibility gap, at the same six sites as step25 (three EO sites + P34, P13, P16) | EXT Phase 4 genotypes · `step30_A_prediction_location_diversity` · bands · prior | t/`step30_B_partC_hypothesis_decomposition` · f/same name |
 | `step27_radius_sweep_H1` | Can a tighter deme radius close the diversity gap? (EO70 and EO76; re-partitions a location's events) | EXT LEPA DB · t/`step30_B_partC_clean_overlap_per_location` · `step26i_L1_carrier_inventory` | t/`step30f_srk_diversity_radius_sweep` · f/same name |
-| `step28_model_population_design` (`./run_pipeline.sh design`) | Deme-level sampling plan for the model populations (default D1 = P36 + P34; `--pairs D1,D2,D3`): drops unfit demes (single plant, or fewer usable mothers than the deme target), selects demes ≥ 100 m apart by expected new SRK alleles per mother until 90 % of the population's alleles are expected to be detected (chosen on one set of simulated pools, judged on 20 independent sets; stability over 20 reruns); small populations (≤ 10 mothers) take all fit demes; picks mothers per deme at random among cleaned lots with ≥ 25 seeds (one per slick spot, then the rest; smaller and uncleaned lots only as fallback; reproducible seed) | t/`step30_A_sampling_adequacy_per_deme_2025\|_2026` · `step29a_event_to_deme` · `step29a_population_crosswalk` (distances, in memory) · EXT LEPA DB (occurrences, germplasm) | t/`step30_D_model_design_demes` · `step30_D_model_design_summary` · `step30_D_model_design_pick_list` · **`step30_D_model_design_lab_sheet.tsv`** (lab sheet keyed on occurrenceID) · `step30_D_model_design_germplasm_by_deme.csv` · f/`step30_D_model_design_curves`; maps of the selected demes from `step28_model_population_design_map.R` (R): f/`step30_D_model_design_demes_P*` (**local only, gitignored**) |
+| `step28_model_population_design` (`./run_pipeline.sh design`) | Deme-level sampling plan for the model populations (default D1 = P36 + P34; `--pairs D1,D2,D3`): drops unfit demes (single plant, or fewer usable mothers than the deme target), selects demes ≥ 100 m apart by expected new SRK alleles per mother until 90 % of the population's alleles are expected to be detected, run from every possible first deme and keeping the plan with the fewest mothers (chosen on one set of simulated populations, judged on 20 independent sets; stability over 20 reruns; random deme order as baseline); if that plan falls short, demes dropped only for too few mothers are re-admitted with all their mothers (both plans reported); small populations (≤ 10 mothers) take all fit demes; picks mothers per deme at random among cleaned lots with ≥ 25 seeds (one per slick spot, then the rest; smaller and uncleaned lots only as fallback; reproducible seed) | t/`step30_A_sampling_adequacy_per_deme_2025\|_2026` · `step29a_event_to_deme` · `step29a_population_crosswalk` (distances, in memory) · EXT LEPA DB (occurrences, germplasm) | t/`step30_D_model_design_demes` · `step30_D_model_design_summary` · `step30_D_model_design_pick_list` · **`step30_D_model_design_lab_sheet.tsv`** (lab sheet keyed on occurrenceID) · `step30_D_model_design_germplasm_by_deme.csv` · f/`step30_D_model_design_curves` · f/`step30_D_model_design_simulations` · f/`step30_D_model_design_demes_schematic_P*` (metres from an arbitrary origin, no coordinates); maps of the selected demes from `step28_model_population_design_map.R` (R): f/`step30_D_model_design_demes_P*` (**local only, gitignored**) |
+| `step23_power_analysis` (`./run_pipeline.sh design`, after step28) | Power to detect mate limitation (seed yield vs each mother's compatibility within populations, and between population means) by simulation: demes plant by plant (`srk_detection`), effect = less seed at half the usual compatibility (10 – 50 %), noise from Step 13 (plant residual SD, between-population SD); designs: D1 plan, plan + every adult of the selected demes genotyped, every fit D1 deme, every population sampled well enough and random subsets of its mothers | t/`step30_D_model_design_demes` · `step30_A_sampling_adequacy_2025\|_2026` (+ `_per_deme_`) · `step30i_size_seed_population_strata` | t/`step23_power` · f/`step23_power` |
 | `step29_pipeline_checks` | Consistency checks; any failure stops the run: units rebuild = Step 01; BL names/order = Step 05; every table's populationID / deme / BL agrees with the units; deme targets = `srk_detection` rule; sampling tables = 2025; no legacy BL lookup or hard-coded BL order in code; every table has a writer or reader; no coordinate columns in tracked tables | all of tables/ · Scripts/ | console report (logs/step29_pipeline_checks.log) |
 | `step30_talk_maps.R` (R; `./run_pipeline.sh talkmaps`) | Presentation maps for talks on the LEPA_EO_spatial_clustering topographic background (elevation from AWS Terrain Tiles via `elevatr`, Snake River from Natural Earth, four cities): BL fragmentation network, EO map sized by two-year average flowering plants, one map per BL with population polygons and EO convex hulls | t/`step29a_population_crosswalk` · `step29a_event_to_deme` · `step30g_populations_classified` · internet (elevation tiles, cached in `map_cache/`; shared setup `srk_map_background.R`) | `talk_figures/` (**local only, gitignored**) |
 
@@ -254,8 +257,11 @@ changes.
   retired `step29c_event_to_component_50m.tsv` is no longer read.
 - **step14** labels locations from a previous step15 output when
   present (cosmetic; falls back to locationIDs on a first run).
-- **step23** simulates the original 505-mother × 39-location design
-  (hard-coded); power at the current 502-mother design is equivalent.
+- **step23** (`step23_power_analysis`) runs in the design part, after
+  step28: it reads step13, step21 and step28 tables. It replaced the
+  earlier seedlings-per-mother power analysis on 2026-10-23 (that one
+  treated seedlings as compatible-or-not draws, which cannot be
+  observed under SI).
 
 ---
 
@@ -287,7 +293,6 @@ filenames keep the historical tags.
 | step19_fragmentation_index | step13 | step30_A |
 | step20_pollinator_radius | step09 | step30_A |
 | step22_predictions_core | step19 | step30_A / step30_B |
-| step23_seed_justification | step18 | step28d |
 | step24_EO_scale_validation | step21 | step30_C |
 | step25_partC_clean_overlap | step22 | step30_B |
 | step26_partC_hypothesis_decomposition | step23 | step30_B |

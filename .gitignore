@@ -32,3 +32,6 @@ talk_figures/
 map_cache/
 figures/step30_D_model_design_demes_P*.png
 figures/step30_D_model_design_demes_P*.pdf
+
+# srk_detection coverage-curve cache (rebuilt automatically)
+cache/

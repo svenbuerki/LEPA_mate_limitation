@@ -41,9 +41,9 @@ if (file.exists(design_f)) {
                    ifelse(dh$fit == "True" | dh$fit == TRUE, "Fit, not selected", "Unfit"))
       lab <- cbind(st_drop_geometry(dh), st_coordinates(st_point_on_surface(dh)))
       lab <- lab[lab$status == "Selected", ]
-      lab$label <- sprintf("d%d · %d", lab$demeID, lab$mother_target)
+      lab$label <- sprintf("d%d · %d%s", lab$demeID, lab$mothers_used, ifelse(lab$admitted_with_fewer_mothers %in% c("True", TRUE), "*", ""))
       lab$kind <- "pop"
-      n_sel <- sum(dh$status == "Selected"); m_sel <- sum(dh$mother_target[dh$status == "Selected"])
+      n_sel <- sum(dh$status == "Selected"); m_sel <- sum(dh$mothers_used[dh$status == "Selected"])
       ggplot() + base_layers(dem, bb, show_dem_legend = FALSE) +
         geom_sf(data = dh, aes(fill = status, linetype = status), color = "grey15",
                 linewidth = 0.4, alpha = 0.85) +
