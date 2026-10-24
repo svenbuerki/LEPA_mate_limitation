@@ -1,4 +1,11 @@
 occurrenceID	germplasmID	BL	population	EO	locationCode	year	demeID	eventID_slick_spot	pair	role	status	seeds_available	seeds_to_germinate	seedlings_expected	selected_because
+430	389	BL3	P36	EO25	EO25-B	2025	1	117	D1	small	germinate	335	25	15	one per slick spot (random)
+433	392	BL3	P36	EO25	EO25-B	2025	2	118	D1	small	germinate	2640	25	15	one per slick spot (random)
+434	387	BL3	P36	EO25	EO25-B	2025	2	119	D1	small	germinate	807	25	15	one per slick spot (random)
+435	393	BL3	P36	EO25	EO25-B	2025	2	120	D1	small	germinate	78	25	15	one per slick spot (random)
+2754	1315	BL3	P36	EO25	EO25-B	2026	1	367	D1	small	germinate	333	25	15	one per slick spot (random)
+2757	1310	BL3	P36	EO25	EO25-B	2026	1	368	D1	small	germinate	201	25	15	one per slick spot (random)
+2761	1314	BL3	P36	EO25	EO25-B	2026	2	369	D1	small	germinate	132	25	15	one per slick spot (random)
 311	342	BL3	P34	EO18	EO18-7	2025	2	65	D1	big	germinate	907	25	15	one per slick spot (random)
 316	382	BL3	P34	EO18	EO18-7	2025	2	66	D1	big	germinate	379	25	15	random among the deme's other mothers
 317	383	BL3	P34	EO18	EO18-7	2025	2	66	D1	big	germinate	689	25	15	one per slick spot (random)
@@ -83,10 +90,3 @@ occurrenceID	germplasmID	BL	population	EO	locationCode	year	demeID	eventID_slick
 2649	1518	BL3	P34	EO18	EO18-8	2026	20	344	D1	big	germinate	836	25	15	random among the deme's other mothers
 2653	1512	BL3	P34	EO18	EO18-8	2026	20	345	D1	big	germinate	637	25	15	one per slick spot (random)
 2654	1513	BL3	P34	EO18	EO18-8	2026	20	345	D1	big	germinate	395	25	15	random among the deme's other mothers
-430	389	BL3	P36	EO25	EO25-B	2025	1	117	D1	small	germinate	335	25	15	one per slick spot (random)
-433	392	BL3	P36	EO25	EO25-B	2025	2	118	D1	small	germinate	2640	25	15	one per slick spot (random)
-434	387	BL3	P36	EO25	EO25-B	2025	2	119	D1	small	germinate	807	25	15	one per slick spot (random)
-435	393	BL3	P36	EO25	EO25-B	2025	2	120	D1	small	germinate	78	25	15	one per slick spot (random)
-2754	1315	BL3	P36	EO25	EO25-B	2026	1	367	D1	small	germinate	333	25	15	one per slick spot (random)
-2757	1310	BL3	P36	EO25	EO25-B	2026	1	368	D1	small	germinate	201	25	15	one per slick spot (random)
-2761	1314	BL3	P36	EO25	EO25-B	2026	2	369	D1	small	germinate	132	25	15	one per slick spot (random)

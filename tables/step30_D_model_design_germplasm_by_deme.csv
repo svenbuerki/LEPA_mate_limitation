@@ -1,4 +1,11 @@
 pair,role,population,year,demeID,germplasmID,occurrenceID,status,seeds_available,seeds_to_germinate,seedlings_expected,reason
+D1,small,P36,2025,1,389,430,germinate,335,25,15,one per slick spot (random)
+D1,small,P36,2025,2,387,434,germinate,807,25,15,one per slick spot (random)
+D1,small,P36,2025,2,392,433,germinate,2640,25,15,one per slick spot (random)
+D1,small,P36,2025,2,393,435,germinate,78,25,15,one per slick spot (random)
+D1,small,P36,2026,1,1310,2757,germinate,201,25,15,one per slick spot (random)
+D1,small,P36,2026,1,1315,2754,germinate,333,25,15,one per slick spot (random)
+D1,small,P36,2026,2,1314,2761,germinate,132,25,15,one per slick spot (random)
 D1,big,P34,2025,2,338,329,germinate,3110,25,15,one per slick spot (random)
 D1,big,P34,2025,2,342,311,germinate,907,25,15,one per slick spot (random)
 D1,big,P34,2025,2,367,326,germinate,1501,25,15,one per slick spot (random)
@@ -83,10 +90,3 @@ D1,big,P34,2026,20,1572,2643,germinate,49,25,15,random among the deme's other mo
 D1,big,P34,2026,20,1573,2634,germinate,111,25,15,random among the deme's other mothers
 D1,big,P34,2026,20,1574,2635,germinate,143,25,15,random among the deme's other mothers
 D1,big,P34,2026,20,1576,2637,germinate,757,25,15,one per slick spot (random)
-D1,small,P36,2025,1,389,430,germinate,335,25,15,one per slick spot (random)
-D1,small,P36,2025,2,387,434,germinate,807,25,15,one per slick spot (random)
-D1,small,P36,2025,2,392,433,germinate,2640,25,15,one per slick spot (random)
-D1,small,P36,2025,2,393,435,germinate,78,25,15,one per slick spot (random)
-D1,small,P36,2026,1,1310,2757,germinate,201,25,15,one per slick spot (random)
-D1,small,P36,2026,1,1315,2754,germinate,333,25,15,one per slick spot (random)
-D1,small,P36,2026,2,1314,2761,germinate,132,25,15,one per slick spot (random)

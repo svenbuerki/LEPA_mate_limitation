@@ -340,11 +340,14 @@ def plot_schematic_map(pop: int, demes: pd.DataFrame, out: Path) -> None:
     ev["y"] = (ev["lat"] - ev["lat"].mean()) * 110_540
     ev["x"] -= ev["x"].min(); ev["y"] -= ev["y"].min()   # arbitrary origin
     col = BL_COLORS.get(ev["BL"].iat[0], "#555")
+    from matplotlib.colors import to_rgb
+    label_col = tuple(0.55 * c for c in to_rgb(col))   # darker shade of the fill
     years = sorted(ev["event_year"].unique())
     span = max(np.ptp(ev["x"]), np.ptp(ev["y"]), 200) + 120
     fig, axes = plt.subplots(1, len(years), figsize=(7.5 * len(years), 7.5))
     axes = np.atleast_1d(axes)
     a = np.linspace(0, 2 * np.pi, 24, endpoint=False)
+    grey_labels = []          # placed last, away from the sampled labels
     for ax, yr in zip(axes, years):
         e = ev[ev["event_year"] == yr]
         dy = demes[(demes["populationID"] == pop) & (demes["year"] == yr)].set_index("demeID")
@@ -358,11 +361,12 @@ def plot_schematic_map(pop: int, demes: pd.DataFrame, out: Path) -> None:
                 ax.fill(ring[:, 0], ring[:, 1], color=col, alpha=0.55, zorder=2)
                 ax.plot(ring[:, 0], ring[:, 1], color="black", lw=0.6, zorder=3)
                 ax.annotate(f"d{dm} · {int(r['mothers_used'])}{'*' if r['admitted_with_fewer_mothers'] else ''}", (ring[:, 0].max(), ring[:, 1].max()),
-                            fontsize=8, weight="bold", zorder=5,
-                            bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="#666", lw=0.4))
+                            fontsize=8, weight="bold", color=label_col, zorder=5,
+                            bbox=dict(boxstyle="round,pad=0.15", fc="white", ec=label_col, lw=0.6))
             elif r["fit"]:
                 ax.fill(ring[:, 0], ring[:, 1], color="#BBBBBB", alpha=0.7, zorder=2)
                 ax.plot(ring[:, 0], ring[:, 1], color="#555", lw=0.5, zorder=3)
+                grey_labels.append((ax, f"d{dm}", ring))
             else:
                 ax.plot(ring[:, 0], ring[:, 1], color="#555", lw=0.8, ls="--", zorder=3)
             ax.scatter(g["x"], g["y"], s=6 + 4 * np.sqrt(g["n_fertile"]), color="black",
@@ -374,10 +378,10 @@ def plot_schematic_map(pop: int, demes: pd.DataFrame, out: Path) -> None:
         bar = 100 if span < 1500 else 500
         ax.plot([0, bar], [-35, -35], color="black", lw=3)
         ax.text(bar / 2, -25, f"{bar} m", ha="center", va="bottom", fontsize=8)
-        ax.set_title(f"{yr} — {n_sel} demes selected, {m_sel} mothers", loc="left", weight="bold")
-    handles = [plt.Rectangle((0, 0), 1, 1, color=col, alpha=0.55, label="selected (deme · mothers)"),
-               plt.Rectangle((0, 0), 1, 1, color="#BBBBBB", label="fit, not selected"),
-               plt.Line2D([], [], color="#555", ls="--", label="unfit"),
+        ax.set_title(f"{yr} — {n_sel} demes sampled, {m_sel} mothers", loc="left", weight="bold")
+    handles = [plt.Rectangle((0, 0), 1, 1, color=col, alpha=0.55, label="sampled (deme · mothers)"),
+               plt.Rectangle((0, 0), 1, 1, color="#BBBBBB", label="not sampled (deme)"),
+               plt.Line2D([], [], color="#555", ls="--", label="single plant, left out"),
                plt.Line2D([], [], ls="", label="* fewer mothers held than target (all used)"),
                plt.Line2D([], [], marker="o", ls="", color="black", ms=4,
                           label="slick spot (size ∝ fertile plants)")]
@@ -385,6 +389,29 @@ def plot_schematic_map(pop: int, demes: pd.DataFrame, out: Path) -> None:
     fig.suptitle(f"P{pop} — demes per year (positions in metres from an arbitrary origin; "
                  "no geographic coordinates)", fontsize=12, weight="bold", color=col, y=1.03)
     fig.tight_layout()
+    # grey labels: first corner of the deme (bottom-left, top-left,
+    # bottom-right, top-right) whose label overlaps no label drawn so far
+    fig.canvas.draw()
+    rend = fig.canvas.get_renderer()
+    taken = {ax: [t_.get_window_extent(rend).expanded(1.05, 1.15) for t_ in ax.texts]
+             for ax in axes}
+    for ax, lab, ring in grey_labels:
+        x0, x1 = ring[:, 0].min(), ring[:, 0].max()
+        y0, y1 = ring[:, 1].min(), ring[:, 1].max()
+        cands = [((x0, y0), "right", "top"), ((x0, y1), "right", "bottom"),
+                 ((x1, y0), "left", "top"), ((x1, y1), "left", "bottom")]
+        for (xy, ha, va) in cands:
+            txt = ax.annotate(lab, xy, fontsize=7, color="#888888", style="italic",
+                              ha=ha, va=va, zorder=5)
+            bb = txt.get_window_extent(rend)
+            if not any(bb.overlaps(o) for o in taken[ax]):
+                break
+            txt.remove()
+        else:
+            txt = ax.annotate(lab, cands[0][0], fontsize=7, color="#888888", style="italic",
+                              ha="right", va="top", zorder=5)
+            bb = txt.get_window_extent(rend)
+        taken[ax].append(bb.expanded(1.05, 1.15))
     for ext in ("png", "pdf"):
         fig.savefig(f"{out}.{ext}", dpi=200, bbox_inches="tight")
     plt.close(fig)
@@ -538,7 +565,11 @@ def main() -> None:
     summary.to_csv(TABLES / "step30_D_model_design_summary.tsv", sep="\t", index=False)
     picks.to_csv(TABLES / "step30_D_model_design_pick_list.tsv", sep="\t", index=False)
     # Lab list: the germplasmIDs to pull, per deme (CSV for the seed lab)
-    lab = picks.sort_values(["pair", "role", "year", "demeID", "status", "germplasmID"])
+    # small population first, then big — the order used in every document
+    role_order = {"small": 0, "big": 1}
+    lab = (picks.assign(_r=picks["role"].map(role_order))
+                .sort_values(["pair", "_r", "year", "demeID", "status", "germplasmID"])
+                .drop(columns="_r"))
     lab = lab.assign(population=lambda x: "P" + x["populationID"].astype(str))[
         ["pair", "role", "population", "year", "demeID", "germplasmID", "occurrenceID",
          "status", "seeds_available", "seeds_to_germinate", "seedlings_expected", "reason"]]
@@ -554,8 +585,9 @@ def main() -> None:
          "demeID", "eventID", "pair", "role", "status", "seeds_available",
          "seeds_to_germinate", "seedlings_expected", "reason"]]
     sheet = sheet.rename(columns={"eventID": "eventID_slick_spot", "reason": "selected_because"})
-    sheet = sheet.sort_values(["BL", "population", "year", "demeID", "eventID_slick_spot",
-                               "occurrenceID"])
+    sheet = (sheet.assign(_r=sheet["role"].map(role_order))
+                  .sort_values(["BL", "_r", "year", "demeID", "eventID_slick_spot", "occurrenceID"])
+                  .drop(columns="_r"))
     sheet.to_csv(TABLES / "step30_D_model_design_lab_sheet.tsv", sep="\t", index=False)
     print(summary.to_string(index=False))
     print(f"[step28] pick list: {len(picks)} mothers "

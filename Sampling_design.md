@@ -133,10 +133,10 @@ separately keeps that change visible.
 **The result:** **91 mothers, 2 260 seeds, about 1 356 seedlings**
 over the two seasons, all from cleaned seed lots ready to germinate
 (§ 4.6).
-- Maps of the sampled demes: **[Figure 2](#fig-2)** (P34,
-  [`figures/step30_D_model_design_demes_schematic_P34.png`](figures/step30_D_model_design_demes_schematic_P34.png))
-  and **[Figure 3](#fig-3)** (P36,
-  [`figures/step30_D_model_design_demes_schematic_P36.png`](figures/step30_D_model_design_demes_schematic_P36.png)).
+- Maps of the sampled demes: **[Figure 2](#fig-2)** (P36, small,
+  [`figures/step30_D_model_design_demes_schematic_P36.png`](figures/step30_D_model_design_demes_schematic_P36.png))
+  and **[Figure 3](#fig-3)** (P34, big,
+  [`figures/step30_D_model_design_demes_schematic_P34.png`](figures/step30_D_model_design_demes_schematic_P34.png)).
 - The list of mothers for the lab:
   **[`tables/step30_D_model_design_lab_sheet.tsv`](tables/step30_D_model_design_lab_sheet.tsv)**
   (§ 4.7).
@@ -176,7 +176,7 @@ a single fertile plant is left out: it has no mate in its deme.
 
 ### 4.2 Choosing demes across the population
 
-Sampling every deme of P34 and P36 would take 158 mothers. Instead,
+Sampling every deme of P36 and P34 would take 158 mothers. Instead,
 demes are added one at a time, the one adding the most new SRK alleles
 per mother first, until the selected demes are expected to recover 90 %
 of the whole population's alleles. Sampled demes must be **at least
@@ -209,7 +209,7 @@ sampled less intensively overall (22 mothers collected per 100 plants in
 ### 4.5 Does the plan recover the SRK diversity? — simulations
 
 The plan was tested on simulated populations built from the real deme
-sizes of P34 and P36 ([Figure 1](#fig-1)):
+sizes of P36 and P34 ([Figure 1](#fig-1)):
 
 - **Each sampled deme recovers most of its alleles** (Figure 1 B): the
   alleles its mothers' seedlings reveal (red) sit close to the alleles
@@ -241,29 +241,29 @@ sizes of P34 and P36 ([Figure 1](#fig-1)):
 | | 2026 | 4 of 20 | 45 | 1 110 → ~666 | 90.3 % |
 | **Total** | | | **91** | **2 260 → ~1 356** | |
 
-- **Sampled demes** (deme · mothers). P34 2025: 2 · 8, 3 · 6, 4 · 2,
-  5 · 9 (the adjusted deme, § 4.4), 8 · 2, 10 · 1, 12 · 4, 13 · 3,
-  14 · 4. P34 2026: 2 · 9, 3 · 5, 9 · 17, 20 · 14. P36: demes 1 and 2 in
-  both seasons.
+- **Sampled demes** (deme · mothers). P36: demes 1 and 2 in both
+  seasons. P34 2025: 2 · 8, 3 · 6, 4 · 2, 5 · 9 (the adjusted deme,
+  § 4.4), 8 · 2, 10 · 1, 12 · 4, 13 · 3, 14 · 4. P34 2026: 2 · 9, 3 · 5,
+  9 · 17, 20 · 14.
 - The sampled demes hold 76 % (2025) and 54 % (2026) of P34's fertile
   plants and span the population from north-west to south.
 - **All 91 mothers have cleaned seed ready to germinate.** One P34 2026
   lot holds 10 seeds and is germinated in full.
 
 <a id="fig-2"></a>
-![Figure 2 — P34](figures/step30_D_model_design_demes_schematic_P34.png)
+![Figure 2 — P36](figures/step30_D_model_design_demes_schematic_P36.png)
 
-**Figure 2.** P34 demes, 2025 (left) and 2026 (right). Coloured = sampled (label: deme · mothers; * = the 2025 deme sampled with fewer mothers than its target, § 4.4); grey = not sampled; dashed = a single-plant deme, left out. Black dots = slick spots, sized by fertile plants. Positions are in metres from an arbitrary origin, north up; the map carries no geographic coordinates. File: [`figures/step30_D_model_design_demes_schematic_P34.png`](figures/step30_D_model_design_demes_schematic_P34.png) ([PDF](figures/step30_D_model_design_demes_schematic_P34.pdf)).
+**Figure 2.** P36 (small) demes, 2025 (left) and 2026 (right). Coloured = sampled (label: deme · mothers); grey = not sampled (label: deme); dashed = a single-plant deme, left out. Black dots = slick spots, sized by fertile plants. Positions are in metres from an arbitrary origin, north up; the map carries no geographic coordinates. Both demes are sampled in both seasons. File: [`figures/step30_D_model_design_demes_schematic_P36.png`](figures/step30_D_model_design_demes_schematic_P36.png) ([PDF](figures/step30_D_model_design_demes_schematic_P36.pdf)).
 
 <a id="fig-3"></a>
-![Figure 3 — P36](figures/step30_D_model_design_demes_schematic_P36.png)
+![Figure 3 — P34](figures/step30_D_model_design_demes_schematic_P34.png)
 
-**Figure 3.** P36 demes, 2025 (left) and 2026 (right); same conventions as Figure 2. Both demes are sampled in both seasons. File: [`figures/step30_D_model_design_demes_schematic_P36.png`](figures/step30_D_model_design_demes_schematic_P36.png) ([PDF](figures/step30_D_model_design_demes_schematic_P36.pdf)).
+**Figure 3.** P34 (big) demes, 2025 (left) and 2026 (right); same conventions as Figure 2; * = the 2025 deme sampled with fewer mothers than its target (§ 4.4). File: [`figures/step30_D_model_design_demes_schematic_P34.png`](figures/step30_D_model_design_demes_schematic_P34.png) ([PDF](figures/step30_D_model_design_demes_schematic_P34.pdf)).
 
 ### 4.7 The lab sheet
 
 **[`tables/step30_D_model_design_lab_sheet.tsv`](tables/step30_D_model_design_lab_sheet.tsv)**
-— one row per mother (91 rows), sorted by BL, population, season, deme
+— one row per mother (91 rows), sorted by population (small P36 first, then big P34), season, deme
 and slick spot. It is keyed on **occurrenceID** (the wild mother), so it
 works even where a germplasmID is still missing.
 
@@ -291,7 +291,7 @@ deme.
   — the same mothers listed by germplasmID, deme by deme (for pulling
   seed lots).
 - [`tables/step30_D_model_design_demes.tsv`](tables/step30_D_model_design_demes.tsv)
-  — every deme of P34 and P36: plants, mothers needed and held, whether
+  — every deme of P36 and P34: plants, mothers needed and held, whether
   sampled.
 - [`tables/step30_D_model_design_summary.tsv`](tables/step30_D_model_design_summary.tsv)
   — the totals of § 4.6.
@@ -316,7 +316,7 @@ diversity can be measured this way.
 
 **Next: sampling for pollen compatibility.** The D1 genotypes will also
 let us check the project's predictions of pollen compatibility — how
-many plants each plant can mate with — at P34 and P36. Testing whether
+many plants each plant can mate with — at P36 and P34. Testing whether
 plants with fewer compatible mates set less seed (mate limitation) is a
 different question with different needs: a first simulation suggests it
 takes many more mothers than D1, drawn across populations
