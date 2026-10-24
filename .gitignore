@@ -27,9 +27,7 @@ figures/step30h_BL_maps.pdf
 # Presentation maps (step29_talk_maps.R) — kept local until ready
 # talk / seed-bulking figures are tracked, except every BL map (kept local)
 figures_seed_bulking/BL[0-9]_populations_EO_map.*
-figures_seed_bulking/BL_fragmentation_network_map.*
 figures_seed_bulking/EO_sampling_map_BL.*
-figures_seed_bulking/population_EO_map_BL.*
 
 # Shared map cache (elevation tiles, river) and the model-design deme maps
 # (slick-spot resolution) — local only

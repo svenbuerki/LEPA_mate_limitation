@@ -27,6 +27,7 @@ Figures (talk style, no BL colours) → figures_seed_bulking/ (local):
   seed_by_size_plants        every plant, seeds vs crown size; band between
                              half and twice the seed its size predicts in
                              the type colours (magenta / teal / gold)
+  population_seed_yield_frame  the same frame without data (animation step 1)
   population_seed_yield      seed yield for size per population and season,
                              coloured by type
   plant_size_examples        2026 field photos of a small, a medium and a
@@ -136,9 +137,9 @@ def seed_by_size(m: pd.DataFrame, name: str, bands: bool = True) -> None:
     ax.plot(10 ** xs, hi, color=TYPE_COLORS["Over-producing"], lw=3, zorder=3, alpha=show)
     ax.plot(10 ** xs, lo, color=TYPE_COLORS["Mate-limited"], lw=3, zorder=3, alpha=show)
     mid = 10 ** (b0 + b1 * xs[-1])
-    for y, lab, tp in ((hi[-1], "more seed than\nsize predicts (×2)", "Over-producing"),
+    for y, lab, tp in ((hi[-1], "↑ over-producing\n(more seed, ×2)", "Over-producing"),
                        (mid, "as expected", "Reproductively intact"),
-                       (lo[-1], "less seed than\nsize predicts (÷2)", "Mate-limited")):
+                       (lo[-1], "↓ mate-limited\n(less seed, ÷2)", "Mate-limited")):
         ax.text(10 ** xs[-1] * 1.04, y, lab, va="center", ha="left", fontsize=14,
                 weight="bold", color=TYPE_COLORS[tp], alpha=show)
     ax.set_xscale("log"); ax.set_yscale("log")
@@ -155,9 +156,13 @@ def seed_by_size(m: pd.DataFrame, name: str, bands: bool = True) -> None:
     plt.close(fig)
 
 
-def population_seed_yield(pops: pd.DataFrame) -> None:
+def population_seed_yield(pops: pd.DataFrame, data: bool = True,
+                          name: str = "population_seed_yield") -> None:
     """Fold of expectation per season for the two-season populations,
-    ordered within type; one-season populations as one light-grey row."""
+    ordered within type; one-season populations as one light-grey row.
+    data=False draws the same frame with the data invisible (axes, labels,
+    lines and legend kept), for a slide animation."""
+    show = 1.0 if data else 0.0
     two = pops[pops["two_seasons"]].copy()
     two["keyf"] = np.exp((np.log(two["fold_adj_2025"]) + np.log(two["fold_adj_2026"])) / 2)
     two = two.sort_values(["type", "keyf"], ascending=[False, True])
@@ -168,13 +173,14 @@ def population_seed_yield(pops: pd.DataFrame) -> None:
         c = TYPE_COLORS[r["type"]]
         dy = {2025: 0.13, 2026: -0.13}          # seasons slightly apart so both stay visible
         ax.plot([r["fold_adj_2025"], r["fold_adj_2026"]], [y + dy[2025], y + dy[2026]],
-                color=c, lw=2, alpha=0.7)
+                color=c, lw=2, alpha=0.7 * show)
         for yr, mk in ((2025, "o"), (2026, "s")):
             sig = pd.notna(r[f"q_{yr}"]) and r[f"q_{yr}"] < ALPHA
             ax.scatter(r[f"fold_adj_{yr}"], y + dy[yr], s=130, marker=mk,
-                       facecolors=c if sig else "white", edgecolors=c, linewidths=2.2, zorder=3)
+                       facecolors=c if sig else "white", edgecolors=c, linewidths=2.2, zorder=3,
+                       alpha=show)
     f1 = pd.concat([one["fold_adj_2025"], one["fold_adj_2026"]]).dropna()
-    ax.scatter(f1, np.zeros(len(f1)), s=45, color=TYPE_COLORS[ONE_SEASON], zorder=2)
+    ax.scatter(f1, np.zeros(len(f1)), s=45, color=TYPE_COLORS[ONE_SEASON], zorder=2, alpha=show)
     labels = [ONE_SEASON + f" ({len(one)})"] + [
         f"P{r['populationID']} ({r['locationCodes'].split(',')[0].strip()})" for _, r in two.iterrows()]
     ax.set_yticks(range(n + 1)); ax.set_yticklabels(labels, fontsize=13)
@@ -205,7 +211,7 @@ def population_seed_yield(pops: pd.DataFrame) -> None:
     ax.spines[["top", "right"]].set_visible(False)
     fig.tight_layout()
     for ext in ("png", "pdf"):
-        fig.savefig(OUT / f"population_seed_yield.{ext}", dpi=220, bbox_inches="tight")
+        fig.savefig(OUT / f"{name}.{ext}", dpi=220, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -471,6 +477,7 @@ def main() -> None:
     seed_by_size(m, "seed_by_size_plants")
     seed_by_size(m, "seed_by_size_points", bands=False)       # animation step 1
     population_seed_yield(pops)
+    population_seed_yield(pops, data=False, name="population_seed_yield_frame")   # animation step 1
     filter_funnel(pops)
     genetic_example(pops)
     print(seed_available(pops).to_string(index=False))

@@ -165,6 +165,27 @@ def main() -> None:
     check("tables: no coordinate columns in git-tracked tables", not with_coords,
           ", ".join(with_coords))
 
+    # Documents: every relative link points to a file in the repository, so
+    # nothing renders broken on GitHub (local-only figures must not be linked)
+    all_tracked = set(subprocess.run(["git", "ls-files"], capture_output=True,
+                                     text=True).stdout.split())
+    broken = []
+    for md in [p for p in all_tracked if p.endswith(".md")]:
+        base = Path(md).parent
+        for m in re.finditer(r"\]\(([^)#\s]+)\)", Path(md).read_text(encoding="utf-8")):
+            link = m.group(1)
+            if link.startswith(("http", "mailto:")):
+                continue
+            q = str(Path(base, link)).replace("\\", "/")
+            q = str(Path(q).resolve().relative_to(Path.cwd().resolve())) if Path(q).exists() else q
+            if q not in all_tracked and not any(x.startswith(q.rstrip("/") + "/") for x in all_tracked):
+                broken.append(f"{md} → {link}")
+    live = [b for b in broken if not b.startswith("archive/")]
+    old = [b for b in broken if b.startswith("archive/")]
+    check("docs: every link points to a file in the repository", not live, "; ".join(live))
+    check("docs: archived documents (not maintained) — dead links", not old,
+          f"{len(old)} dead links in archive/", warn=True)
+
     n_fail = sum(r[0] == "FAIL" for r in results)
     for status, name, detail in results:
         if status != "PASS" or name.startswith(("units", "BL order", "targets", "year", "code", "tables")):
