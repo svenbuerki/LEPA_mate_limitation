@@ -66,7 +66,7 @@ biological limit on reproduction. Our research shows that:
 <a id="fig-3"></a>
 ![Figure 3](figures_seed_bulking/population_EO_map_BL.png)
 
-**Figure 3.** Every population at its real extent, coloured by BL, with EO outlines; inset: population size per BL. The more detailed maps — one per BL, and the EO map coloured by BL — are kept locally (`./run_pipeline.sh talkmaps`).
+**Figure 3.** Every population at its real extent, coloured by BL, with EO outlines; inset: population size per BL. The EO map coloured by BL is [`EO_sampling_map_BL.png`](figures_seed_bulking/EO_sampling_map_BL.png); the fine-scale maps, one per BL, are kept locally (`./run_pipeline.sh talkmaps`).
 
 ---
 
