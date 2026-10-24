@@ -18,12 +18,12 @@
 #      spots, buffered 25 m) and each EO as a dashed convex hull (buffered
 #      50 m), on the same background zoomed to the BL.
 #
-# Outputs go to talk_figures/ (kept local: gitignored). Background and data
+# Outputs go to figures_seed_bulking/ (kept local: gitignored). Background and data
 # setup are shared with the project maps (srk_map_background.R).
 #
 # Run from the repository root:  Rscript Scripts/step30_talk_maps.R
 
-OUT <- "talk_figures"
+OUT <- "figures_seed_bulking"
 source("Scripts/srk_map_background.R")
 
 # ---------------------------------------------------------------- 1. BL network

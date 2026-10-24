@@ -7,6 +7,7 @@
 #   ./run_pipeline.sh units           # Part 1 only (populations, demes, BLs)
 #   ./run_pipeline.sh design          # model-population sampling plan only
 #   ./run_pipeline.sh talkmaps        # presentation maps only (R)
+#   ./run_pipeline.sh bulking         # seed-bulking table, figures and maps
 #   PYTHON=/path/to/python ./run_pipeline.sh
 #
 # External inputs are set in Scripts/project_paths.py (override with the
@@ -94,6 +95,15 @@ if [[ "$PART" == all || "$PART" == talkmaps ]]; then
   echo "▶ step30_talk_maps (R)"
   Rscript Scripts/step30_talk_maps.R > logs/step30_talk_maps.log 2>&1 \
     || { echo "✖ step30_talk_maps failed — see logs/step30_talk_maps.log"; exit 1; }
+fi
+
+# Seed bulking — reproductive status of every population, talk figures and
+# maps (figures_seed_bulking/, local); needs the seed-yield and sampling parts
+if [[ "$PART" == all || "$PART" == bulking ]]; then
+  run step32_seed_bulking
+  echo "▶ step32_seed_bulking_maps (R)"
+  Rscript Scripts/step32_seed_bulking_maps.R > logs/step32_seed_bulking_maps.log 2>&1 \
+    || { echo "✖ step32_seed_bulking_maps failed — see logs/step32_seed_bulking_maps.log"; exit 1; }
 fi
 
 echo "✔ done (logs in logs/)"
