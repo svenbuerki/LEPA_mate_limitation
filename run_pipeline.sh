@@ -71,6 +71,7 @@ if [[ "$PART" == all || "$PART" == validation ]]; then
   run step25_partC_clean_overlap
   run step26_partC_hypothesis_decomposition
   run step27_radius_sweep_H1
+  run step31_drift_calibration      # fits drift to the genotyped sites (reads step25, step02, step13)
 fi
 
 # Model-population sampling plan (deme selection + germplasm pick list)

@@ -45,7 +45,7 @@ The three repositories are intentionally **cross-linked by README reference only
 ## What's in here
 
 - **`Project_outline.md`** — the colleague-facing main document (**start here**): breeding units, predictions of SRK allele diversity and pollen compatibility, the seed-yield test and restoration priority list, the genotyped populations, model populations and discussion.
-- **`Sampling_design.md`** — the sampling design: a two-step plan to recover 90 % of each population's predicted SRK diversity (mothers per deme, then spatially separated demes across the population), the check that our material can test the predictions, and the lab lists of germplasm to germinate.
+- **`Sampling_design.md`** — the agreed sampling plan for the D1 model populations (P36 + P34): why they are sampled, the two-step plan (mothers per deme, then spatially separated demes), the simulations that support it, deme maps, and the lab sheet of mothers to germinate. The earlier detailed version is `archive/Sampling_design_detailed.md` (not maintained).
 - **`archive/Sampling_and_prediction.md`** — the earlier long technical reference doc (formulas, output schemas, § A.5 – § C.6 derivations). **Archived 2026-10-17 and no longer maintained**; `Project_outline.md` takes precedence where they differ.
 - **`SRK_mate_limitation_references.bib`** — citations for the metapopulation + Wright-neighbourhood + sporophytic-SI literature the pipeline leans on.
 - **`PIPELINE.md`** — how to run the pipeline (`./run_pipeline.sh`), the run order, what every step reads and writes, where outputs are saved, and the files it needs from other repositories (LEPA database, SRK_bioinformatics).

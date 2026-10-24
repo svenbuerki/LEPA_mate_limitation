@@ -296,7 +296,7 @@ well enough in both seasons (§ 6).
 
 **D1 is recommended** (★). It has a sharp 64× size contrast, both
 sides in BL3, and both sides sampled well enough in both years
-([`Sampling_design.md`](Sampling_design.md) § 3). With the pooled curve
+([`Sampling_design.md`](Sampling_design.md) § 6). With the pooled curve
 **P36 is mate-limited** (fold 0.52 in 2026) and **P34 over-produced
 in 2025** (1.28; 0.91 in 2026, not significant), the contrast D1 is
 built on. Both calls are **year-sensitive**: with the 2026 year offset
@@ -312,7 +312,7 @@ how many alleles a small and a big population of the same lineage
 actually hold, deme by deme, to calibrate the drift model (§ 8). With
 91 mothers it is too small to test mate limitation mother by mother on
 its own; that test needs mothers from many populations
-([`Sampling_design.md`](Sampling_design.md) § 1).
+([`Sampling_design.md`](Sampling_design.md) § 6).
 
 **D1 sampling plan.** Selecting spatially separated demes (Step 2 of
 the sampling design) recovers about 90 % of each D1 population's SRK
@@ -406,7 +406,7 @@ vary with weather.
    many mothers: D1's 91 detect a strong effect (half the compatible
    mates → 50 % less seed) only 38 % of the time, while the ~1 060
    mothers held across every population sampled well enough detect a
-   30 % effect 79 % of the time ([`Sampling_design.md`](Sampling_design.md) § 1).
+   30 % effect 79 % of the time ([`Sampling_design.md`](Sampling_design.md) § 6).
 
 ---
 
@@ -1152,7 +1152,7 @@ hold under drift? Driven **per deme** by its fertile plants, then
 unioned to the population, this is the drift output of the causal chain
 and the raw material on which the pollen-compatibility prediction
 (§ 30.2) operates. Whether our sampling can recover these alleles is
-covered in [`Sampling_design.md`](Sampling_design.md) § 3.
+covered in [`Sampling_design.md`](Sampling_design.md) § 6.
 
 **Approach — how the simulation works, step by step.**
 
@@ -1583,11 +1583,11 @@ Source: `step13_size_seed_yield.py`. Data:
 
 How many seeds per mother, how many mothers per deme, which demes to
 sample, and whether the material we already hold can test the
-predictions are covered in [`Sampling_design.md`](Sampling_design.md): seedlings per mother and statistical
-power (§ 1), mothers per deme (§ 2, Step 1), the sampling check per
-population (§ 3), the selection of spatially separated demes for the
-model populations (§ 4, Step 2) and the locked recipe with the lab
-files (§ 5).
+predictions are covered in [`Sampling_design.md`](Sampling_design.md): why D1 is sampled (§ 1), seedlings
+per mother and mothers per deme (§ 2, Step 1), the selection of spatially
+separated demes (§ 2, Step 2), the simulations that support the plan
+(§ 3), the D1 plan and maps (§ 4), the lab files (§ 5), and which other
+populations are sampled well enough and the statistical power (§ 6).
 
 ---
 
