@@ -296,7 +296,7 @@ well enough in both seasons (§ 6).
 
 **D1 is recommended** (★). It has a sharp 64× size contrast, both
 sides in BL3, and both sides sampled well enough in both years
-([`Sampling_design.md`](Sampling_design.md) § 6). With the pooled curve
+([`Sampling_design.md`](Sampling_design.md) § 5). With the pooled curve
 **P36 is mate-limited** (fold 0.52 in 2026) and **P34 over-produced
 in 2025** (1.28; 0.91 in 2026, not significant), the contrast D1 is
 built on. Both calls are **year-sensitive**: with the 2026 year offset
@@ -312,7 +312,7 @@ how many alleles a small and a big population of the same lineage
 actually hold, deme by deme, to calibrate the drift model (§ 8). With
 91 mothers it is too small to test mate limitation mother by mother on
 its own; that test needs mothers from many populations
-([`Sampling_design.md`](Sampling_design.md) § 6).
+([`Sampling_design.md`](Sampling_design.md) § 5).
 
 **D1 sampling plan.** Selecting spatially separated demes (Step 2 of
 the sampling design) recovers about 90 % of each D1 population's SRK
@@ -320,7 +320,7 @@ alleles with **91 mothers over the two years** (2 260 seeds to
 germinate, ≈ 1 360 seedlings), all with cleaned seed. In 2025 P34's
 largest deme holds fewer mothers than its target and is used with the 9
 it holds, the one adjustment to the plan; the selected demes and the
-germplasmIDs to pull are in [`Sampling_design.md`](Sampling_design.md) § 4.
+germplasmIDs to pull are in [`Sampling_design.md`](Sampling_design.md) § 4.6.
 
 Full `populationID → locationCode` map in
 [step30g_populations_classified.tsv](tables/step30g_populations_classified.tsv).
@@ -406,7 +406,7 @@ vary with weather.
    many mothers: D1's 91 detect a strong effect (half the compatible
    mates → 50 % less seed) only 38 % of the time, while the ~1 060
    mothers held across every population sampled well enough detect a
-   30 % effect 79 % of the time ([`Sampling_design.md`](Sampling_design.md) § 6).
+   30 % effect 79 % of the time ([`Sampling_design.md`](Sampling_design.md) § 5).
 
 ---
 
@@ -1152,7 +1152,7 @@ hold under drift? Driven **per deme** by its fertile plants, then
 unioned to the population, this is the drift output of the causal chain
 and the raw material on which the pollen-compatibility prediction
 (§ 30.2) operates. Whether our sampling can recover these alleles is
-covered in [`Sampling_design.md`](Sampling_design.md) § 6.
+covered in [`Sampling_design.md`](Sampling_design.md) § 5.
 
 **Approach — how the simulation works, step by step.**
 
@@ -1583,11 +1583,11 @@ Source: `step13_size_seed_yield.py`. Data:
 
 How many seeds per mother, how many mothers per deme, which demes to
 sample, and whether the material we already hold can test the
-predictions are covered in [`Sampling_design.md`](Sampling_design.md): why D1 is sampled (§ 1), seedlings
-per mother and mothers per deme (§ 2, Step 1), the selection of spatially
-separated demes (§ 2, Step 2), the simulations that support the plan
-(§ 3), the D1 plan and maps (§ 4), the lab files (§ 5), and which other
-populations are sampled well enough and the statistical power (§ 6).
+predictions are covered in [`Sampling_design.md`](Sampling_design.md): the goal and hypothesis (§ 1), how the
+model populations were chosen (§ 2), the strategy at a glance (§ 3), the
+research behind it — mothers per deme, choice of demes, simulations, the
+D1 plan, maps and lab sheet (§ 4) — and which other populations are
+sampled well enough, with the statistical power (§ 5).
 
 ---
 
@@ -2146,7 +2146,7 @@ drift-history confound.
 **Sampling the pair.** P36 holds 15 mothers with seed across the two
 years and P34 336. The two-step design samples 7 of P36's and 84 of
 P34's, in the demes chosen to recover 90 % of each population's SRK
-alleles — 91 mothers, ≈ 1 360 seedlings; see [`Sampling_design.md`](Sampling_design.md) § 4.
+alleles — 91 mothers, ≈ 1 360 seedlings; see [`Sampling_design.md`](Sampling_design.md) § 4.6.
 
 **Pair evaluations and stable-population inventory**:
 [`step30g_populations_classified.tsv`](tables/step30g_populations_classified.tsv)
