@@ -3,10 +3,10 @@
 **What this document is.** The agreed plan for measuring **SRK allele
 diversity** in the two D1 model populations by genotyping seedlings and
 their mothers: the goal (§ 1), how the populations were chosen (§ 2),
-the sampling strategy at a glance (§ 3), and the research behind it,
-ending with the deme maps and the lab sheet (§ 4). Sampling to measure
-pollen compatibility (mate limitation) is a separate step, designed next
-(§ 5). The wider project — populations, Bottleneck Lineages (BLs),
+the sampling strategy at a glance (§ 3), the research behind the design
+(§ 4), and the sampling itself — the D1 plan, deme maps and lab sheet
+(§ 5). Sampling to measure pollen compatibility (mate limitation) is a
+separate step, designed next (§ 6). The wider project — populations, Bottleneck Lineages (BLs),
 predictions and the seed-yield test — is described in
 [`Project_outline.md`](Project_outline.md). An earlier, more detailed
 version of this document is kept, no longer maintained, in
@@ -14,7 +14,7 @@ version of this document is kept, no longer maintained, in
 
 **For the lab team:** the mothers to germinate are listed in
 **[`tables/step30_D_model_design_lab_sheet.tsv`](tables/step30_D_model_design_lab_sheet.tsv)**
-(§ 4.7).
+(§ 5.2).
 
 ---
 
@@ -132,14 +132,14 @@ separately keeps that change visible.
 
 **The result:** **91 mothers, 2 260 seeds, about 1 356 seedlings**
 over the two seasons, all from cleaned seed lots ready to germinate
-(§ 4.6).
+(§ 5.1).
 - Maps of the sampled demes: **[Figure 2](#fig-2)** (P36, small,
   [`figures/step30_D_model_design_demes_schematic_P36.png`](figures/step30_D_model_design_demes_schematic_P36.png))
   and **[Figure 3](#fig-3)** (P34, big,
   [`figures/step30_D_model_design_demes_schematic_P34.png`](figures/step30_D_model_design_demes_schematic_P34.png)).
 - The list of mothers for the lab:
   **[`tables/step30_D_model_design_lab_sheet.tsv`](tables/step30_D_model_design_lab_sheet.tsv)**
-  (§ 4.7).
+  (§ 5.2).
 
 ---
 
@@ -231,7 +231,14 @@ sizes of P36 and P34 ([Figure 1](#fig-1)):
 
 **Figure 1.** Simulations behind the D1 plan. **A** — share of a deme's SRK alleles recovered against the number of mothers (15 seedlings each), one curve per deme size; dot = the number of mothers used; dotted line = 90 %. **B** — for each sampled deme, SRK alleles it holds (grey) and alleles its mothers' seedlings recover (red), mean and 95 % interval; labels give plants (pl.) and mothers (m.). **C** — share of the population's SRK alleles recovered by the plan (red) and by sampling every deme (blue), over independent simulations; bar = median. **D** — mothers needed to reach 90 % when demes are added in random order (grey) against the plan (red line). **E** — how often each deme is selected when the plan is rerun on 20 fresh simulations; red = in the plan.
 
-### 4.6 The D1 plan
+---
+
+## 5. Sampling
+
+Running the design (§ 4) on the demes and mothers collected in 2025 and
+2026 gives the plan below and the lab sheet that implements it.
+
+### 5.1 The D1 plan
 
 | Population | Season | Demes sampled (of usable) | Mothers | Seeds to germinate → seedlings | SRK alleles recovered (expected) |
 |---|:-:|:-:|:-:|:-:|:-:|
@@ -260,7 +267,7 @@ sizes of P36 and P34 ([Figure 1](#fig-1)):
 
 **Figure 3.** P34 (big) demes, 2025 (left) and 2026 (right); same conventions as Figure 2; * = the 2025 deme sampled with fewer mothers than its target (§ 4.4). File: [`figures/step30_D_model_design_demes_schematic_P34.png`](figures/step30_D_model_design_demes_schematic_P34.png) ([PDF](figures/step30_D_model_design_demes_schematic_P34.pdf)).
 
-### 4.7 The lab sheet
+### 5.2 The lab sheet
 
 **[`tables/step30_D_model_design_lab_sheet.tsv`](tables/step30_D_model_design_lab_sheet.tsv)**
 — one row per mother (91 rows), sorted by population (small P36 first, then big P34), season, deme
@@ -294,14 +301,14 @@ deme.
   — every deme of P36 and P34: plants, mothers needed and held, whether
   sampled.
 - [`tables/step30_D_model_design_summary.tsv`](tables/step30_D_model_design_summary.tsv)
-  — the totals of § 4.6.
+  — the totals of § 5.1.
 
 The plan is produced by `Scripts/step28_model_population_design.py`
 (`./run_pipeline.sh design`); rerunning it gives the same lists.
 
 ---
 
-## 5. Beyond D1, and what comes next
+## 6. Beyond D1, and what comes next
 
 **Other populations.** With the mothers already collected, 27 of 33
 populations (2025) and 32 of 37 (2026) hold enough mothers in every deme
