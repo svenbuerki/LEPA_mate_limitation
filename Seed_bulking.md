@@ -109,7 +109,7 @@ they can be typed** — they stay on every figure in light grey.
 <a id="fig-5"></a>
 ![Figure 5](figures_seed_bulking/plant_size_examples.png)
 
-**Figure 5.** Plant size phenotyping in the field, 2026: a small, a medium and a large plant photographed against the measuring board (crown width and height on the rulers), with their crown size and seed count. All three set about the seed their size predicts. Photos with location metadata removed: `figures_seed_bulking/plant_photos/`.
+**Figure 5.** Plant size phenotyping in the field, 2026: a small, a medium and a large plant photographed against the measuring board (crown width and height on the rulers), with their crown size. All three set about the seed their size predicts. Photos with location metadata removed: `figures_seed_bulking/plant_photos/`.
 
 <a id="fig-6"></a>
 ![Figure 6](figures_seed_bulking/seed_by_size_plants.png)
@@ -216,20 +216,10 @@ in both seasons, and 3 of those are reproductively intact
 | **P35** (EO25-A) | BL3 | 113 / 887 | 29 / 34 | 1.44 / 0.86 | 29 / 98 |
 | **P43** (EO68-3) | BL5 | 48 / 23 | 21 / 10 | 1.32 / 1.00 | 21 / 10 |
 
-**Seed available for bulking.** All three hold cleaned seed from both
-seasons — from about 7 000 (P43, 2026) to 130 000 seeds (P34, 2026) —
-drawn from 10 to 239 mothers ([Figure 12](#fig-12)); 64 of P35's 98 lots
-from 2026 still await cleaning, so its 2026 total will rise.
-
 <a id="fig-11"></a>
 ![Figure 11](figures_seed_bulking/seed_bulking_model_map.png)
 
 **Figure 11.** The three reproductively intact populations (teal) — candidate sources for seed bulking; other populations in grey; dashed outlines = Bottleneck Lineages.
-
-<a id="fig-12"></a>
-![Figure 12](figures_seed_bulking/bulking_seed_available.png)
-
-**Figure 12.** Cleaned seed held per candidate population (open = 2025, filled = 2026), with the number of mothers collected and lots still to clean. Data: [`tables/step32_seed_available.tsv`](tables/step32_seed_available.tsv).
 
 **What to keep in mind.**
 - All three set slightly more seed than expected in 2025 and the
@@ -243,6 +233,49 @@ from 2026 still await cleaning, so its 2026 total will rise.
   be known.
 - Next filters before bulking: SRK diversity, self-compatibility status
   and representation of each BL.
+
+---
+
+## 7. Populations that need our attention — BL1 and EO27
+
+**BL1 has no candidate source yet.** BL1, the largest lineage (17
+populations), has four populations measured in both seasons, and none is
+reproductively intact:
+
+| Population | EO | Type (two seasons) | Seed set for size, 2025 / 2026 |
+|---|---|---|---|
+| P10 | EO27-3 | **mate-limited** — significant in both seasons | 0.41 / 0.03 |
+| P6 | EO67 | mate-limited (candidate, not significant) | 0.51 / 0.58 |
+| P2 | EO30-1 | **over-producing** — significant in 2026 | 0.87 / 1.65 |
+| P16 | EO27-1 + EO27RT | not yet clear — significantly low in 2025, high in 2026 | 0.36 / 1.19 |
+
+**EO27 stands out.** All four of its populations set less seed than their
+size predicts in at least one season: P10 (EO27-3) in both, P8 (EO27) in
+2025 (0.41), P13 (EO27-1) in 2025 (0.78, not significant) and P16 in 2025
+before rising in 2026. EO27 is the clearest cluster of mate limitation in
+the dataset and the first place to confirm it genetically.
+
+**What would complete the picture.**
+
+1. **Clean the 2026 seed of P8 and P13 — first in the cleaning
+   queue.** Both were measured in 2025 and their mothers were collected
+   in 2026, but none of their 2026 seed lots is cleaned yet, so they
+   cannot be typed. Once cleaned and counted, both have two seasons:
+
+   | Population | EO (locationCode) | locationID | 2026 events (eventIDs) | Mothers collected, 2026 | Lots to clean |
+   |---|---|---|---|---|---|
+   | **P8** | EO27 | **9** | 17 (463 – 479) | 54 | **54** |
+   | **P13** | EO27-1 | **37** | 17 (690 – 706) | 38 | **38** |
+
+2. **Measure P5 (EO30-2) again in 2027.** P5 is the only BL1 population
+   that sets the seed its size predicts (1.30 of expected, not
+   significantly different, 34 plants), but it was above ground only in
+   2026. Its 2026 lots (locationID 42) are already cleaned; what it needs
+   is a second season. It is BL1's most likely candidate source.
+
+With P8 and P13 typed and P5 measured a second time, BL1 — and EO27 in
+particular — would move from "one season only" to firm calls, and BL1
+could gain its first candidate source for seed bulking.
 
 ---
 

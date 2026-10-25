@@ -39,7 +39,8 @@ Figures (talk style, no BL colours) → figures_seed_bulking/ (local):
   bulking_filter_funnel      44 populations → seed measured → two seasons
                              (by type) → reproductively intact
   bulking_seed_available     cleaned seed held per candidate population and
-                             season, with the number of mothers
+                             season — LOCAL ONLY (gitignored): seed counts are
+                             not shared
 Table: tables/step32_seed_bulking_populations.tsv (no coordinates)
 """
 from __future__ import annotations
@@ -274,7 +275,7 @@ def seed_available(pops: pd.DataFrame) -> pd.DataFrame:
                              lots_cleaned=len(c), lots_to_clean=len(g) - len(c),
                              seeds_cleaned=int(round(c["seeds"].sum()))))
     s = pd.DataFrame(rows)
-    s.to_csv(TABLES / "step32_seed_available.tsv", sep="\t", index=False)
+    s.to_csv(TABLES / "step32_seed_available.tsv", sep="\t", index=False)   # local only (gitignored)
     lab = {r["populationID"]: f"P{r['populationID']}\n({r['locationCodes'].split(',')[0].strip()})"
            for _, r in pops[pops["model_for_bulking"]].iterrows()}
     fig, ax = plt.subplots(figsize=(11, 6.5))
@@ -330,11 +331,10 @@ def plant_size_panel() -> None:
         im.thumbnail((2400, 2400))
         clean = Image.new("RGB", im.size)
         clean.putdata(list(im.getdata()))          # pixels only: no GPS or other metadata
-        clean.save(out / f"size_{lab.lower()}_OC{oc}_crown{r['crown']:g}cm_{r['seeds']:.0f}seeds.jpg",
-                   quality=90)
+        clean.save(out / f"size_{lab.lower()}_OC{oc}_crown{r['crown']:g}cm.jpg", quality=90)
         ax.imshow(clean); ax.axis("off")
         ax.set_title(f"{lab} plant", fontsize=20, weight="bold", pad=8)
-        ax.text(0.5, -0.06, f"crown {r['crown']:g} cm  ·  {r['seeds']:,.0f} seeds",
+        ax.text(0.5, -0.06, f"crown {r['crown']:g} cm",
                 transform=ax.transAxes, ha="center", va="top", fontsize=17)
     fig.tight_layout(w_pad=1.5)
     for ext in ("png", "pdf"):
