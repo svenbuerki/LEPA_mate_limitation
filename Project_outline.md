@@ -102,6 +102,11 @@ sampled in the wild) at six sites (§ 5).
   (Wright 1943, 1946; Levin & Kerster 1974). A 10 – 200 m sweep
   shows how much the design depends on it ([Figure 1](#fig-1)).
 
+<a id="schematic-units"></a>
+![How the units are built](figures/units_cartoon.png)
+
+**Schematic.** Slick spot (event) → deme → population. **1** — each slick spot surveyed in a season is an event, and its flowering plants are counted. **2** — within a season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. **3** — slick spots of all seasons (here 2025 and 2026) less than 500 m apart form one population, inside which demes are redrawn each season; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
+
 <span style="color:#777"><strong>Results.</strong></span> The occurrences resolve into
 **44 populations** ([Figure 2](#fig-2)) in **five BLs** (BL1 17
 populations, BL2 9, BL3 10, BL4 5, BL5 3; [Figures 3](#fig-3) –

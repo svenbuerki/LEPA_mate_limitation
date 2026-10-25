@@ -31,6 +31,18 @@ one tested here: genetic drift removes SRK alleles faster in small
 populations, so **a small population should hold fewer SRK alleles
 than a big one with the same history.**
 
+**The units** ([schematic](#schematic-units)). A **population** groups
+the slick spots of all seasons (so far 2025 and 2026) that lie within
+500 m of each other.
+Inside it, a **deme** groups the slick spots of one season that lie
+within 50 m of each other — close enough to share pollinators — so it is
+the unit within which plants mate and the unit we sample.
+
+<a id="schematic-units"></a>
+![How the units are built](figures/units_cartoon.png)
+
+**Schematic.** Slick spot (event) → deme → population. **1** — each slick spot surveyed in a season is an event, and its flowering plants are counted. **2** — within a season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. **3** — slick spots of all seasons (here 2025 and 2026) less than 500 m apart form one population, inside which demes are redrawn each season; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
+
 **Why it needs testing.** The genotypes we already hold show far less
 SRK diversity than the project's model expects: at five of the six
 genotyped sites we find 5 – 9 alleles where the model, which treats each

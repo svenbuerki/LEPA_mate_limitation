@@ -31,6 +31,7 @@ run() {
 if [[ "$PART" == all || "$PART" == units ]]; then
   # Part 1 — analysis units (populations, demes, Bottleneck Lineages)
   run step01_populations
+  run units_cartoon                 # schematic: slick spot → deme → population
   run step02_year_predictions
   run step03_BL_clustering
   run step04_BL_landscape_metrics
