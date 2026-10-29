@@ -15,7 +15,12 @@ in [`figures_seed_bulking/`](figures_seed_bulking/); the population table is
 > have a single season of data, so a second season could add sources,
 > including the first for BL1 and BL4 (§ 6, § 8). All three still need the
 > genetic filters (SRK diversity, no self-compatible plants) before
-> bulking.
+> bulking. **Where SRK genotypes already exist, they back the seed-set
+> call:** P34, the candidate with genotyped plants (32), carries a
+> balanced set of SRK alleles, no self-compatible plants and more
+> compatible mates than the mate-limited P42 (67 % against 53 %; § 5) —
+> the pattern its seed set predicted, an early sign that phenotyping
+> picks out the right populations.
 
 **Colours used throughout the talk.** Each population's reproductive
 type has one colour on every figure and map, distinct from the

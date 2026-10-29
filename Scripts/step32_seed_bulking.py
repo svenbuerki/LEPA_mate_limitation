@@ -417,7 +417,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
         ax.plot([xi - 0.3, xi + 0.3], [c.mean()] * 2, color="black", lw=3)
         ax.text(xi + 0.33, c.mean(), f"{100 * c.mean():.0f} %", va="center", fontsize=15,
                 weight="bold")
-    ax.set_xticks([0, 1]); ax.set_xticklabels(["P42", "P34"], fontsize=15)
+    ax.set_xticks([0, 1]); ax.set_xticklabels(["P42\n(EO70)", "P34\n(EO18)"], fontsize=14)
     for lab, pop in zip(ax.get_xticklabels(), (42, 34)):
         lab.set_color(col[pop])
     ax.set_ylim(0, 1.02); ax.set_xlim(-0.6, 1.8)
@@ -440,7 +440,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     ax.set_yscale("log"); ax.set_ylim(0.35, 3.6)
     ax.set_yticks([0.5, 1, 2]); ax.set_yticklabels(["0.5", "1", "2"])
     ax.yaxis.set_minor_locator(plt.NullLocator())
-    ax.set_xticks([0, 1]); ax.set_xticklabels(["P42", "P34"], fontsize=15)
+    ax.set_xticks([0, 1]); ax.set_xticklabels(["P42\n(EO70)", "P34\n(EO18)"], fontsize=14)
     for lab, pop in zip(ax.get_xticklabels(), (42, 34)):
         lab.set_color(col[pop])
     ax.set_xlim(-0.6, 1.6)
