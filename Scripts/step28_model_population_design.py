@@ -28,7 +28,11 @@ For each population and field season:
      selection is rerun. Both plans are reported (`original_*` columns).
      In D1 this applies to P34 2025, whose largest deme (158 plants) has
      9 of the 12 mothers its target asks for.
-3. **Pick list.** Within each selected deme, mothers are drawn at random
+3. **Pick list.** Mothers already in the lab are pinned
+   (`tables/step30_D_model_design_pinned_mothers.tsv`, frozen 2026-10-28
+   when the lab started): they are kept on every run, and a random draw
+   only fills a place a pinned mother can no longer fill. Otherwise,
+   within each selected deme, mothers are drawn at random
    (reproducible seed per population, year and deme) among those whose
    cleaned seed lot holds ≥ 25 seeds — one per slick spot, then the
    remaining places from the deme's other mothers; lots with fewer seeds,
@@ -207,6 +211,41 @@ def pick_mothers(m: pd.DataFrame, target: int,
     tier_note = {1: "", 2: "; lot < 25 seeds", 3: "; seed not cleaned yet"}
     out["reason"] = out["reason"] + out["tier"].map(tier_note)
     return out.drop(columns=["tier", "draw"])
+
+
+PINNED_TSV = TABLES / "step30_D_model_design_pinned_mothers.tsv"
+PINNED: dict = {}
+
+
+def load_pinned() -> dict:
+    """Mothers already in the lab (Sam started 2026-10-28): (pop, year, deme)
+    → [(occurrenceID, reason)], in lab-sheet order. Pinned mothers are kept
+    on every run so database updates do not change the list; a new draw
+    only fills places a pinned mother can no longer fill."""
+    if not PINNED_TSV.exists():
+        return {}
+    p = pd.read_csv(PINNED_TSV, sep="\t")
+    out = {}
+    for key, g in p.groupby(["populationID", "year", "demeID"], sort=False):
+        out[tuple(int(k) for k in key)] = list(zip(g["occurrenceID"].astype(int), g["selected_because"]))
+    return out
+
+
+def pick_with_pins(dm: pd.DataFrame, target: int, rng, pins: list | None) -> pd.DataFrame:
+    """Pinned mothers first (if still in the database), then random
+    replacements for any place left (pick_mothers rules)."""
+    if not pins:
+        return pick_mothers(dm, target, rng)
+    keep_ids = [o for o, _ in pins if o in set(dm["occurrenceID"])][:target]
+    why = dict(pins)
+    kept = (dm.set_index("occurrenceID").loc[keep_ids].reset_index()
+              .assign(reason=lambda x: x["occurrenceID"].map(why)))
+    need = target - len(kept)
+    if need <= 0:
+        return kept
+    extra = (pick_mothers(dm[~dm["occurrenceID"].isin(keep_ids)], need, rng).head(need)
+               .assign(reason=lambda x: "replacement for an unusable pinned mother (random)"))
+    return pd.concat([kept, extra])
 
 
 def _label(s):
@@ -423,6 +462,9 @@ def main() -> None:
     args = ap.parse_args()
     pairs = [p.strip() for p in args.pairs.split(",") if p.strip()]
     mothers = load_mothers()
+    global PINNED
+    PINNED = load_pinned()
+    print(f"[step28] pinned mothers: {sum(len(v) for v in PINNED.values())}")
     deme_rows, summary_rows, pick_rows, curves, sims = [], [], [], [], []
     for pair in pairs:
         for role, pop in MODEL_PAIRS[pair].items():
@@ -545,7 +587,8 @@ def main() -> None:
                     dm = mo[(mo["populationID"] == pop) & (mo["demeID"] == d.loc[i, "demeID"])]
                     rng_pick = np.random.default_rng([RNG_SEED, pop, year,
                                                       int(d.loc[i, "demeID"]), 7])
-                    for _, r in pick_mothers(dm, int(M[i]), rng_pick).iterrows():
+                    pins = PINNED.get((int(pop), int(year), int(d.loc[i, "demeID"])))
+                    for _, r in pick_with_pins(dm, int(M[i]), rng_pick, pins).iterrows():
                         pick_rows.append(dict(
                             pair=pair, role=role, populationID=pop, year=year,
                             demeID=int(d.loc[i, "demeID"]), eventID=int(r["eventID"]),

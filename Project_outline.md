@@ -247,7 +247,10 @@ EO25 cannot be split between its two populations and stays out.
   EO70 (P42) and EO76 (P40 + P41) ([Figure 15](#fig-15)) shows the gap stays flat down to
   10 m, so it is not a deme that is too wide: **local demes have
   drifted further than one draw from the species-wide frequencies
-  assumes**.
+  assumes**. Calibrating the model on these sites, and an SRK-specific
+  analysis that accounts for self-incompatibility, put each population at
+  about **7 – 10 SRK alleles** and an **effective size of only 18 – 50
+  plants**, whatever its census (§ C.0.d).
 - **Pollen compatibility follows the prediction at P6** (0.70
   observed, 0.62 predicted, within its wide interval 0.39 – 0.74)
   **and EO76** (0.72 / 0.78), **falls below it at P42** (0.53 vs
@@ -393,12 +396,12 @@ vary with weather.
    expected similarity of a population's SRK frequencies between
    years, and whether seed-bank turnover alone can produce swings
    like P19's.
-3. **Calibrate the drift model.** Real populations hold far fewer SRK
-   alleles than draws from the species-wide frequencies predict (§ 5),
-   and predicted compatibility does not track seed yield (§ 4). Fit how
-   far demes have drifted — an effective size well below the census,
-   or allele frequencies per Bottleneck Lineage instead of species-wide
-   — to the genotyped sites, then re-predict every population.
+3. **Drift calibration — first results (§ C.0.d).** Fitted to the six
+   genotyped sites, populations behave as if descended from a narrow
+   bottleneck whatever their census (effective size 18 – 50 plants once
+   self-incompatibility is accounted for), so census cannot predict SRK
+   diversity or compatibility. Next: refit with D1 (a small and a big
+   population of one lineage) and with sibling correction.
 4. Genotype seedlings and their mothers in the model populations
    (§ 7): their SRK diversity, measured in a small and a big
    population of the same lineage, is the data the calibration needs;
@@ -2076,6 +2079,99 @@ will measure).
 **Figure 15.** SRK diversity gap (y = predicted − observed distinct SRK alleles) vs pollinator radius at **EO70 (P42)** and **EO76 (P40 + P41)**. x = radius used to rebuild the deme partition (10 → 150 m, log scale). Lines + 95 % CI bands = per-location per-radius simulation (2000 replicates per combination). Right-side labels show the gap at the largest radius; parenthetical observed counts come from the Phase 4 adult SRK genotypes (a single measurement, not a sweep output — shown as labels, not horizontal lines). Zero line = perfect match. Vertical dotted line at 50 m marks the current operational deme. H1 (deme too wide) would predict the gap to shrink toward zero as radius tightens; it stays flat at +22 and +23 across all radii, including the 10 m extreme that fragments P42 into 3 demes and EO76 into 16 — rejecting H1 within the P1 drift assumption. P6 (= EO67) is omitted (deme partition invariant across the sweep, test non-informative). Source: `step27_radius_sweep_H1.py`.
 
 
+### C.0.d How far have the genotyped populations drifted? (Steps 31 and 33)
+
+**Why this analysis exists.** At five of the six genotyped sites the
+drift model predicts 22 – 29 SRK alleles where 5 – 9 are found (§ C.0.a),
+and C.0.c shows the gap is not a deme that is too wide. The model treats
+each population as a fresh random sample of the species' alleles; these
+analyses ask how much more drift the observed alleles imply.
+
+**1. Calibrating the drift model (Step 31).** Each population's SRK pool
+is modelled as descending from an effective number of founder plants,
+drawn from the species-wide alleles with LEPA's zygosity; that number is
+fitted to the allele counts of the six sites (genotyped plants treated as
+independent).
+- The best fit is **about 13 founders whatever a population's size
+  today** — a number that grows with today's census fits far worse. 13
+  such founders carry only **6 – 8 SRK alleles** between them: the
+  number is an index of how narrow the bottleneck was, not a count of
+  real founding plants.
+- The calibrated model reproduces the allele counts at all six sites and
+  predicts five of them when each is left out of the fit (P6, the only
+  small site, is the exception: without it nothing pins how the founder
+  number scales with size).
+- It cannot predict compatibility population by population: when every
+  population descends from so few founders, *which* alleles survived is
+  largely chance, so compatibility falls inside the predicted range at
+  three sites only (P42 and P13 are lower, P16 higher).
+- Seed yield still does not follow the calibrated predictions
+  (ρ = 0.22, p = 0.14): the model predicts nearly the same for every
+  population. **Census does not predict SRK diversity; it must be
+  measured.**
+
+**2. SRK-specific analysis (Step 33).** SRK is not a neutral gene: self-
+incompatibility favours rare alleles, and with Class I / Class II
+dominance, recessive (Class II) alleles naturally reach higher
+frequencies than dominant ones (Schierup et al. 1997). Three questions,
+on the same plants:
+
+| Site | Plants | Alleles found | Alleles in the population (Chao2, 95 %) | Class I alleles more unequal than SI predicts? | Effective size with SI (25 generations) | Neutral |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| P6 (EO67) | 37 | 7 | 7.5 (7 – 15) | borderline (p = 0.05) | 35 | 75 |
+| P42 (EO70) | 74 | 6 | 10.4 (6.5 – 46) | **yes** (p < 0.001) | 35 | 35 |
+| P40 + P41 (EO76) | 76 | 9 | 10.0 (9 – 23) | **yes** (p = 0.003) | 50 | 100 |
+| P34 (EO18) | 32 | 7 | 8.0 (7 – 18) | no | 50 | 75 |
+| P13 (EO27) | 12 | 5 | 6.8 (5 – 25) | too few plants to tell | 18 | 35 |
+| P16 (EO27) | 15 | 8 | 8.2 (8 – 11) | no | 50 | 100 |
+
+- **How many alleles?** The Chao2 estimator (Chao 1987) adds the alleles
+  a sample of that size is likely to miss. Even then, each population
+  holds about **7 – 10 SRK alleles**, well under a third of the species'
+  32: small samples do not explain the low diversity ([Figure 16](#fig-16) A).
+- **More unequal than SI predicts?** Alleles of the same dominance class
+  are expected at about equal frequency. Among Class I alleles — the
+  cleaner test, since Class II alleles may have their own dominance order
+  — **P42 is extreme** (one allele holds almost all Class I copies) and
+  EO76 is uneven: a drift signature. P34 and P16 look as the SI system
+  predicts ([Figure 16](#fig-16) B).
+- **Shared alleles.** Sites share 15 – 50 % of their alleles (Jaccard):
+  each kept its own subset, as expected after independent bottlenecks
+  ([Figure 16](#fig-16) C).
+- **Effective size under SI.** A forward simulation of tetraploid
+  sporophytic SI (plants mate only with compatible partners, each parent
+  passes 2 of its 4 copies) finds the effective size that reproduces each
+  site's allele count after 10, 25 or 50 generations. Because SI retains
+  rare alleles, few alleles imply a **smaller** effective size than a
+  neutral model needs — about half: **18 – 50 plants** after 25
+  generations (≈ 150 years with the seed bank), against censuses of
+  hundreds to thousands. The two smallest are P13 and P42, the two least
+  compatible sites ([Figure 17](#fig-17)).
+
+**What it means.** SRK diversity was set mainly by past bottlenecks, and
+each population now behaves as if a few tens of plants contribute to each
+generation. Compatibility therefore has to be measured by genotyping, not
+inferred from census — the purpose of the D1 genotyping (§ 7) — and
+restoring compatible mates will need alleles from more than one source
+population.
+
+**Caveats.** Six sites, only one small; genotyped siblings counted as
+independent; tetraploid inheritance modelled as random chromosome
+segregation; the seed bank is not simulated; no mutation over the
+simulated time.
+
+<a id="fig-16"></a>
+![Figure 16](figures/step33_srk_drift.png)
+
+**Figure 16.** SRK diversity at the six genotyped sites. **A** — SRK alleles found (black) and estimated in the population (Chao2, blue, 95 % interval). **B** — how unequal the alleles of each dominance class are (concentration of the class's copies; Class I purple, Class II grey) against the expectation if they were equally common (|); filled = more unequal than sampling explains (p < 0.05). **C** — share of alleles two sites have in common (Jaccard). Source: `step33_srk_drift.py`.
+
+<a id="fig-17"></a>
+![Figure 17](figures/step33_si_simulation.png)
+
+**Figure 17.** Effective size under self-incompatibility. **A** — SRK alleles found in a sample of genotyped plants after 25 generations at a given effective size, with self-incompatibility (black) and without (grey), 95 % range; band = the counts observed at the six sites. **B** — effective size that best reproduces each site's allele count, with SI and neutral (95 % support). Source: `step33_srk_drift.py`.
+
+---
+
 ## Phase B — Closing the causal chain with seed data
 
 **Test 1 — Mate-limitation regression (§ C.1 of the long doc).**
@@ -2234,6 +2330,8 @@ chain. BibTeX entries live in [`SRK_mate_limitation_references.bib`](SRK_mate_li
 - **Honnay, O. & Jacquemyn, H. (2007).** Susceptibility of common and rare plant species to the genetic consequences of habitat fragmentation. *Conservation Biology* 21, 823–831.
 - **Lawrence, M.J. (2000).** Population genetics of the homomorphic self-incompatibility polymorphisms in flowering plants. *Annals of Botany* 85 (Suppl. A), 221–226.
 - **Levin, D.A. & Kerster, H.W. (1974).** Gene flow in seed plants. *Evolutionary Biology* 7, 139–220.
+- **Chao, A. (1987).** Estimating the population size for capture–recapture data with unequal catchability. *Biometrics* 43, 783–791.
+- **Schierup, M.H., Vekemans, X. & Christiansen, F.B. (1997).** Evolutionary dynamics of sporophytic self-incompatibility alleles in plants. *Genetics* 147, 835–846.
 - **Schierup, M.H., Vekemans, X. & Christiansen, F.B. (1998).** Allelic genealogies in sporophytic self-incompatibility systems in plants. *Genetics* 150, 1187–1198.
 - **Vekemans, X. & Hardy, O.J. (2004).** New insights from fine-scale spatial genetic structure analyses in plant populations. *Molecular Ecology* 13, 921–935.
 - **Wright, S. (1943).** Isolation by distance. *Genetics* 28, 114–138.

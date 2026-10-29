@@ -74,6 +74,7 @@ if [[ "$PART" == all || "$PART" == validation ]]; then
   run step26_partC_hypothesis_decomposition
   run step27_radius_sweep_H1
   run step31_drift_calibration      # fits drift to the genotyped sites (reads step25, step02, step13)
+  run step33_srk_drift              # SRK-specific drift: alleles, evenness, sharing, SI simulation
 fi
 
 # Model-population sampling plan (deme selection + germplasm pick list)
@@ -99,7 +100,7 @@ if [[ "$PART" == all || "$PART" == talkmaps ]]; then
 fi
 
 # Seed bulking — reproductive status of every population, talk figures and
-# maps (figures_seed_bulking/, local); needs the seed-yield and sampling parts
+# maps (figures_seed_bulking/); needs the seed-yield and sampling parts
 if [[ "$PART" == all || "$PART" == bulking ]]; then
   run step32_seed_bulking
   echo "▶ step32_seed_bulking_maps (R)"

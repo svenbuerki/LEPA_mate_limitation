@@ -1,0 +1,7 @@
+site	label	plants	alleles_observed	in_one_plant	in_two_plants	alleles_estimated	estimate_lo95	estimate_hi95
+EO67	P6 (EO67)	37	7	1	1	7.5	7.0	15.3
+EO70	P42 (EO70)	74	6	3	1	10.4	6.5	46.4
+EO76	P40 + P41 (EO76)	76	9	2	0	10.0	9.1	22.8
+P34	P34 (EO18)	32	7	2	2	8.0	7.1	17.8
+P13	P13 (EO27)	12	5	2	1	6.8	5.2	25.4
+P16	P16 (EO27)	15	8	1	3	8.2	8.0	11.4

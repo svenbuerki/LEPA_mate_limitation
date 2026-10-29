@@ -380,11 +380,11 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     tab.to_csv(TABLES / "step32_genetic_example_P42_P34.tsv", sep="\t", index=False)
 
     fig = plt.figure(figsize=(18, 7))
-    gs = fig.add_gridspec(1, 3, width_ratios=[1.3, 1, 0.85], wspace=0.55)
+    gs = fig.add_gridspec(1, 3, width_ratios=[0.85, 1.3, 1], wspace=0.8)
     col = {42: TYPE_COLORS["Mate-limited"], 34: TYPE_COLORS["Reproductively intact"]}
-    name = {42: "P42 (EO70)\nmate-limited", 34: "P34 (EO18)\nreproductively intact"}
+    name = {42: "P42\n(EO70)", 34: "P34\n(EO18)"}
     # A — allele make-up
-    ax = fig.add_subplot(gs[0])
+    ax = fig.add_subplot(gs[1])
     shades = plt.get_cmap("Greys")(np.linspace(0.85, 0.25, len(order)))
     for yi, pop in zip((1, 0), (42, 34)):
         left = 0.0
@@ -407,9 +407,9 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     from matplotlib.ticker import PercentFormatter
     ax.set_xlim(0, 1); ax.set_xlabel("Share of SRK allele copies")
     ax.xaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
-    ax.set_title("A. SRK allele make-up", loc="left", weight="bold")
+    ax.set_title("B. SRK allele make-up", loc="left", weight="bold")
     # B — mates available per plant
-    ax = fig.add_subplot(gs[1])
+    ax = fig.add_subplot(gs[2])
     for xi, pop in zip((0, 1), (42, 34)):
         c = res[pop]["compat"]
         ax.scatter(xi + rng.uniform(-0.18, 0.18, len(c)), c, s=30, color=col[pop], alpha=0.6,
@@ -424,9 +424,9 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     from matplotlib.ticker import PercentFormatter
     ax.yaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
     ax.set_ylabel("Share of the population\na plant can mate with")
-    ax.set_title("B. Mates available per plant", loc="left", weight="bold")
+    ax.set_title("C. Mates available per plant", loc="left", weight="bold")
     # C — seed set for size
-    ax = fig.add_subplot(gs[2])
+    ax = fig.add_subplot(gs[0])
     pt = pops.set_index("populationID")
     for xi, pop in zip((0, 1), (42, 34)):
         r = pt.loc[pop]
@@ -450,7 +450,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
                         (1 / BAND, "mate-limited", "Mate-limited")):
         ax.text(1.02, yv, lab, transform=ax.get_yaxis_transform(), va="center", ha="left",
                 fontsize=13, weight="bold", color=TYPE_COLORS[tp])
-    ax.set_title("C. Seed set for plant size", loc="left", weight="bold")
+    ax.set_title("A. Seed set for plant size", loc="left", weight="bold")
     from matplotlib.lines import Line2D
     ax.legend(handles=[Line2D([], [], marker="o", ls="", color="#444", ms=10, label="2025"),
                        Line2D([], [], marker="s", ls="", color="#444", ms=10, label="2026"),

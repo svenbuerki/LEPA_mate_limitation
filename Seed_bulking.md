@@ -46,7 +46,7 @@ biological limit on reproduction. Our research shows that:
 - **Populations cluster into two genetic groups**, Snake River Plain (SRP)
   and Jarbidge (JAR); this work covers SRP.
 - **The landscape is heavily fragmented** — five fragments, the
-  Bottleneck Lineages, across SRP (Figures 1 – 3).
+  Bottleneck Lineages, across SRP (Figures 1, 2 and 4).
 - **The species is self-incompatible (SI)**, a trait under genetic
   control (the SRK gene): a plant can only be fertilised by a mate
   carrying different SRK alleles.
@@ -63,25 +63,42 @@ biological limit on reproduction. Our research shows that:
 
 **Figure 2.** The five fragments (Bottleneck Lineages), with the shortest distance between them.
 
-<a id="fig-3"></a>
-![Figure 3](figures_seed_bulking/population_EO_map_BL.png)
-
-**Figure 3.** Every population at its real extent, coloured by BL, with EO outlines; inset: population size per BL. The EO map coloured by BL is [`EO_sampling_map_BL.png`](figures_seed_bulking/EO_sampling_map_BL.png); the fine-scale maps, one per BL, are kept locally (`./run_pipeline.sh talkmaps`).
-
 **How populations are defined.** Every result that follows is reported
 per **population**, so the unit matters. A population groups the slick
 spots of all seasons (so far 2025 and 2026) that lie within 500 m of each other — far enough
 apart from the next population that pollen and seed rarely move between
 them. Inside a population, the slick spots of one season that lie within
 50 m of each other share pollinators and form a **deme**, the group of
-plants that actually mate with each other ([Figure 4](#fig-4)). Seed
+plants that actually mate with each other ([Figure 3](#fig-3)). Seed
 bulking draws its source seed from whole populations; deciding which
 population is a source therefore rests on this definition.
 
-<a id="fig-4"></a>
-![Figure 4](figures_seed_bulking/units_cartoon.png)
+<a id="fig-3"></a>
+![Figure 3](figures_seed_bulking/units_cartoon.png)
 
-**Figure 4.** Slick spot (event) → deme → population. **1** — each slick spot surveyed in a season is an event, and its flowering plants are counted. **2** — within a season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. **3** — slick spots of all seasons (here 2025 and 2026) less than 500 m apart form one population, inside which demes are redrawn each season; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
+**Figure 3.** Slick spot (event) → deme → population. **1** — each slick spot surveyed in a season is an event, and its flowering plants are counted. **2** — within a season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. **3** — slick spots of all seasons (here 2025 and 2026) less than 500 m apart form one population, inside which demes are redrawn each season; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
+
+**Populations by lineage.** Applying this definition to every slick spot
+surveyed in 2025 and 2026 gives **44 populations** in 21 EOs across the five
+Bottleneck Lineages ([Figure 4](#fig-4)):
+
+| Lineage | EOs | Populations | Present in both seasons |
+|---|:-:|:-:|:-:|
+| BL1 | 5 | 17 | 6 |
+| BL2 | 4 | 9 | 7 |
+| BL3 | 5 | 10 | 7 |
+| BL4 | 4 | 5 | 4 |
+| BL5 | 3 | 3 | 2 |
+| **Total** | **21** | **44** | **26** |
+
+BL1 holds the most populations but the smallest share present in both
+seasons (6 of 17); across all lineages, 18 populations were above ground in
+only one of the two seasons.
+
+<a id="fig-4"></a>
+![Figure 4](figures_seed_bulking/population_EO_map_BL.png)
+
+**Figure 4.** Every population at its real extent, coloured by BL, with EO outlines; inset: population size per BL. The EO map coloured by BL is [`EO_sampling_map_BL.png`](figures_seed_bulking/EO_sampling_map_BL.png); the fine-scale maps, one per BL, are kept locally (`./run_pipeline.sh talkmaps`).
 
 ---
 
@@ -90,7 +107,7 @@ population is a source therefore rests on this definition.
 **Approach.** Every plant whose seeds were collected is photographed
 against a whiteboard with rulers to measure its crown and height
 ([Figure 5](#fig-5)), and its seeds are counted. Larger plants set more
-seed. Across all **1 441 plants
+seed. Across all **1 509 plants
 measured in 2025 and 2026**, seed count rises with crown size along one
 curve shared by all populations, so each plant has an expected seed set
 for its size ([Figure 6](#fig-6)). A population whose plants set,
@@ -102,8 +119,8 @@ on average, significantly less seed than their size predicts is
 shape the curve, but a population is typed only if at least 3 of its
 plants were measured in **both** 2025 and 2026, so that no call rests on
 a single good or bad season. Seed set was 15 % lower in 2026 across
-populations; the types allow for that shared drop. **11 populations**
-qualify; the other **26 have one season of data and need more before
+populations; the types allow for that shared drop. **12 populations**
+qualify; the other **25 have one season of data and need more before
 they can be typed** — they stay on every figure in light grey.
 
 <a id="fig-5"></a>
@@ -114,16 +131,16 @@ they can be typed** — they stay on every figure in light grey.
 <a id="fig-6"></a>
 ![Figure 6](figures_seed_bulking/seed_by_size_plants.png)
 
-**Figure 6.** Seeds per plant against plant size (crown diameter), 1 441 plants, both seasons; log scales. Teal band = as expected, between half (magenta line) and twice (gold line) the seed a plant of that size is expected to set — the colours of the three reproductive types used in the rest of the talk.
+**Figure 6.** Seeds per plant against plant size (crown diameter), 1 509 plants, both seasons; log scales. Teal band = as expected, between half (magenta line) and twice (gold line) the seed a plant of that size is expected to set — the colours of the three reproductive types used in the rest of the talk.
 
-**Result — the 11 two-season populations.**
+**Result — the 12 two-season populations.**
 
 | Type | Populations (BL) |
 |---|---|
-| **Mate-limited** | P10 EO27-3 (BL1), P42 EO70 (BL5); candidates P6 EO67 (BL1), P36 EO25-B (BL3) |
+| **Mate-limited** | P10 EO27-3 (BL1), P16 EO27-1 + EO27RT (BL1), P42 EO70 (BL5); candidates P6 EO67 (BL1), P13 EO27-1 (BL1), P36 EO25-B (BL3) |
 | **Reproductively intact** | **P34** EO18-7 + EO18-8 (BL3), **P35** EO25-A (BL3), **P43** EO68-3 (BL5) |
 | **Over-producing** | P2 EO30-1 (BL1), P37 EO38 (BL4) |
-| Not yet clear | P16 EO27-1 (BL1), P19 EO8 (BL2) — switch between seasons |
+| Not yet clear | P19 EO8 (BL2) — significantly above expectation in 2025, below in 2026 |
 
 Among the one-season populations, four show a strong seed shortfall
 (P1 EO112, P4 EO30-3, P8 EO27, P32 EO24) and should be measured again
@@ -132,7 +149,7 @@ before they are typed.
 <a id="fig-7"></a>
 ![Figure 7](figures_seed_bulking/population_seed_yield.png)
 
-**Figure 7.** Seed set relative to what plant size predicts, per population and season, allowing for the 2026 drop shared by all populations; 1 = as expected, dashed lines = half and twice. Circle = 2025, square = 2026; **filled = that season differs significantly from expectation** (false-discovery-corrected q < 0.05), open = not significant. P10 and P42 are significantly below expectation in both seasons; P2 and P37 significantly above in 2026 only; P6 and P36 (candidates) and the three intact populations are not significant in either season; P16 and P19 are significant in opposite directions. Bottom row: the 26 one-season populations.
+**Figure 7.** Seed set relative to what plant size predicts, per population and season, allowing for the 2026 drop shared by all populations; 1 = as expected, dashed lines = half and twice. Circle = 2025, square = 2026; **filled = that season differs significantly from expectation** (false-discovery-corrected q < 0.05), open = not significant. P10 and P42 are significantly below expectation in both seasons and P16 in 2025; P2 and P37 significantly above in 2026 only; P6, P13 and P36 (candidates) and the three intact populations are not significant in either season; P19 is significant in opposite directions. Bottom row: the 25 one-season populations.
 
 <a id="fig-8"></a>
 ![Figure 8](figures_seed_bulking/seed_bulking_status_map.png)
@@ -168,17 +185,17 @@ Two of the typed populations already have SRK genotypes: **P42**
 (EO70), mate-limited in both seasons, and **P34** (EO18), reproductively
 intact in both seasons ([Figure 9](#fig-9)).
 
-- **SRK alleles (A).** P42's plants carry 6 SRK alleles, and two of them
+- **Seed set (A).** P42 sets about half the seed its plants' size
+  predicts in both seasons; P34 sets the expected amount.
+- **SRK alleles (B).** P42's plants carry 6 SRK alleles, and two of them
   make up 97 % of all copies. P34's carry 7, more evenly shared: the two
   commonest make up 69 %.
-- **Mates available (B).** Because most of P42's plants carry the same
+- **Mates available (C).** Because most of P42's plants carry the same
   two alleles, a plant can mate, on average, with **53 %** of its
   population; in P34, with **67 %**. The two ranges do not overlap
   (P42 0.51 – 0.56, P34 0.61 – 0.72).
-- **Seed set (C).** P42 sets about half the seed its plants' size
-  predicts in both seasons; P34 sets the expected amount.
 
-The genetics point to the same answer as the seed counts: **P42 is short
+The genetics point to the same answer as seed set for plant size: **P42 is short
 of compatible mates, P34 is not** — although P34's 67 % is itself below
 the 78 % expected if its alleles were a random sample of the species, so
 it too has lost diversity, just not enough to depress its seed set. This
@@ -192,7 +209,7 @@ comparison.
 <a id="fig-9"></a>
 ![Figure 9](figures_seed_bulking/genetic_example_P42_P34.png)
 
-**Figure 9.** SRK genotypes of a mate-limited (P42, magenta) and a reproductively intact population (P34, teal). **A** — share of SRK allele copies per allele (letters; the same letter is the same allele in both); **B** — for each genotyped plant, the share of its population it can mate with under the self-incompatibility system, with the average; **C** — seed set relative to plant size per season (circle = 2025, square = 2026; filled = significantly different from expectation). Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
+**Figure 9.** SRK genotypes of a mate-limited (P42, magenta) and a reproductively intact population (P34, teal). **A** — seed set relative to plant size per season, as in Figure 7 (circle = 2025, square = 2026; filled = significantly different from expectation); **B** — share of SRK allele copies per allele (letters; the same letter is the same allele in both); **C** — for each genotyped plant, the share of its population it can mate with under the self-incompatibility system, with the average. Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
 
 ---
 
@@ -201,7 +218,7 @@ comparison.
 **The reproductively intact populations are the candidate sources**:
 they set the seed their size predicts in both seasons, so their seed is
 neither limited by a lack of compatible mates nor inflated by possible
-self-fertilisation. Of the 44 populations, 37 have seed set measured, 11
+self-fertilisation. Of the 44 populations, 37 have seed set measured, 12
 in both seasons, and 3 of those are reproductively intact
 ([Figure 10](#fig-10)).
 
@@ -212,9 +229,9 @@ in both seasons, and 3 of those are reproductively intact
 
 | Population | BL | Fertile plants (2025 / 2026) | Plants measured (2025 / 2026) | Seed set for size (2025 / 2026) | Mothers with seed (2025 / 2026) |
 |---|:-:|:-:|:-:|:-:|:-:|
-| **P34** (EO18-7 + EO18-8) | BL3 | 523 / 1 150 | 113 / 221 | 1.28 / 0.91 | 115 / 239 |
-| **P35** (EO25-A) | BL3 | 113 / 887 | 29 / 34 | 1.44 / 0.86 | 29 / 98 |
-| **P43** (EO68-3) | BL5 | 48 / 23 | 21 / 10 | 1.32 / 1.00 | 21 / 10 |
+| **P34** (EO18-7 + EO18-8) | BL3 | 523 / 1 150 | 113 / 239 | 1.19 / 0.99 | 115 / 239 |
+| **P35** (EO25-A) | BL3 | 113 / 887 | 29 / 38 | 1.30 / 0.91 | 29 / 98 |
+| **P43** (EO68-3) | BL5 | 48 / 23 | 21 / 10 | 1.19 / 1.05 | 21 / 10 |
 
 <a id="fig-11"></a>
 ![Figure 11](figures_seed_bulking/seed_bulking_model_map.png)
@@ -239,43 +256,53 @@ in both seasons, and 3 of those are reproductively intact
 ## 7. Populations that need our attention — BL1 and EO27
 
 **BL1 has no candidate source yet.** BL1, the largest lineage (17
-populations), has four populations measured in both seasons, and none is
+populations), has five populations measured in both seasons, and none is
 reproductively intact:
 
 | Population | EO | Type (two seasons) | Seed set for size, 2025 / 2026 |
 |---|---|---|---|
-| P10 | EO27-3 | **mate-limited** — significant in both seasons | 0.41 / 0.03 |
-| P6 | EO67 | mate-limited (candidate, not significant) | 0.51 / 0.58 |
-| P2 | EO30-1 | **over-producing** — significant in 2026 | 0.87 / 1.65 |
-| P16 | EO27-1 + EO27RT | not yet clear — significantly low in 2025, high in 2026 | 0.36 / 1.19 |
+| P10 | EO27-3 | **mate-limited** — significant in both seasons | 0.42 / 0.03 |
+| P16 | EO27-1 + EO27RT | **mate-limited** — significant in 2025 | 0.37 / 1.16 |
+| P13 | EO27-1 | mate-limited (candidate) — not significant in either season | 0.79 / 1.14 |
+| P6 | EO67 | mate-limited (candidate) — not significant in either season | 0.51 / 0.57 |
+| P2 | EO30-1 | **over-producing** — significant in 2026 | 0.88 / 1.62 |
 
 **EO27 stands out.** All four of its populations set less seed than their
-size predicts in at least one season: P10 (EO27-3) in both, P8 (EO27) in
-2025 (0.41), P13 (EO27-1) in 2025 (0.78, not significant) and P16 in 2025
-before rising in 2026. EO27 is the clearest cluster of mate limitation in
-the dataset and the first place to confirm it genetically.
+size predicts in at least one season: P10 (EO27-3) significantly in both,
+P16 (EO27-1 + EO27RT) significantly in 2025, P8 (EO27) significantly in
+2025 (0.41, its only season so far) and P13 (EO27-1) in 2025 (0.79, not
+significant). EO27 is the clearest cluster of mate limitation in the
+dataset and the first place to confirm it genetically.
+
+**P13 is a candidate to confirm.** Its seed set is not significantly
+below expectation in either season — in 2026 it is slightly above — so
+seed set alone does not show mate limitation. But its genotyped plants
+have the lowest compatibility of any genotyped site: a plant can mate
+with only about 44 % of its population (P42: 53 %, P34: 67 %), with 5 SRK
+alleles and almost no Class I alleles. That rests on 12 plants from 7
+mothers, so it is indicative; seed–mother genotyping of P13 would settle
+it.
 
 **What would complete the picture.**
 
-1. **Clean the 2026 seed of P8 and P13 — first in the cleaning
-   queue.** Both were measured in 2025 and their mothers were collected
-   in 2026, but none of their 2026 seed lots is cleaned yet, so they
-   cannot be typed. Once cleaned and counted, both have two seasons:
+1. **Clean the 2026 seed of P8 — first in the cleaning queue.** P8 was
+   measured in 2025 and its mothers were collected in 2026, but none of
+   its 2026 seed lots is cleaned yet, so it cannot be typed. P13's 2026
+   lots are now cleaned and counted, which gave it its second season.
 
    | Population | EO (locationCode) | locationID | 2026 events (eventIDs) | Mothers collected, 2026 | Lots to clean |
    |---|---|---|---|---|---|
    | **P8** | EO27 | **9** | 17 (463 – 479) | 54 | **54** |
-   | **P13** | EO27-1 | **37** | 17 (690 – 706) | 38 | **38** |
 
 2. **Measure P5 (EO30-2) again in 2027.** P5 is the only BL1 population
-   that sets the seed its size predicts (1.30 of expected, not
+   that sets the seed its size predicts (1.26 of expected, not
    significantly different, 34 plants), but it was above ground only in
    2026. Its 2026 lots (locationID 42) are already cleaned; what it needs
    is a second season. It is BL1's most likely candidate source.
 
-With P8 and P13 typed and P5 measured a second time, BL1 — and EO27 in
-particular — would move from "one season only" to firm calls, and BL1
-could gain its first candidate source for seed bulking.
+With P8 typed and P5 measured a second time, every EO27 population would
+have a firm call, and BL1 could gain its first candidate source for seed
+bulking.
 
 ---
 

@@ -32,7 +32,7 @@ all_populations	Every population sampled well enough	subset of 200	within	0.2	20
 all_populations	Every population sampled well enough	subset of 400	within	0.2	400	58.0	0.247	300
 all_populations	Every population sampled well enough	subset of 800	within	0.2	800	58.0	0.417	300
 all_populations	Every population sampled well enough	all	within	0.3	1061	58.0	0.793	300
-all_populations	Every population sampled well enough	all	between	0.3	1061	58.0	0.09	300
+all_populations	Every population sampled well enough	all	between	0.3	1061	58.0	0.097	300
 all_populations	Every population sampled well enough	subset of 100	within	0.3	100	58.0	0.107	300
 all_populations	Every population sampled well enough	subset of 200	within	0.3	200	58.0	0.28	300
 all_populations	Every population sampled well enough	subset of 400	within	0.3	400	58.0	0.433	300

@@ -316,7 +316,13 @@ deme.
   — the totals of § 5.1.
 
 The plan is produced by `Scripts/step28_model_population_design.py`
-(`./run_pipeline.sh design`); rerunning it gives the same lists.
+(`./run_pipeline.sh design`). **The list of mothers is frozen** since the
+lab started work (28 October 2026):
+[`tables/step30_D_model_design_pinned_mothers.tsv`](tables/step30_D_model_design_pinned_mothers.tsv)
+holds the 91 mothers, and every rerun keeps them, so database updates do
+not change the list; a new random draw is made only for a place a pinned
+mother can no longer fill, and is marked as a replacement in
+`selected_because`.
 
 ---
 
