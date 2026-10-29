@@ -8,6 +8,15 @@ framework of [`Project_outline.md`](Project_outline.md). All figures are
 in [`figures_seed_bulking/`](figures_seed_bulking/); the population table is
 [`tables/step32_seed_bulking_populations.tsv`](tables/step32_seed_bulking_populations.tsv).
 
+> **Main result.** Of 44 populations, only **3 are reproductively intact
+> over two seasons** and qualify as sources for seed bulking — **P34**
+> (EO18) and **P35** (EO25-A) in BL3, and **P43** (EO68-3) in BL5 — and
+> they cover only two of the five lineages. Eight more look intact but
+> have a single season of data, so a second season could add sources,
+> including the first for BL1 and BL4 (§ 6, § 8). All three still need the
+> genetic filters (SRK diversity, no self-compatible plants) before
+> bulking.
+
 **Colours used throughout the talk.** Each population's reproductive
 type has one colour on every figure and map, distinct from the
 Bottleneck Lineage (BL) colours, which appear on maps as dashed outlines:
@@ -303,6 +312,55 @@ it.
 With P8 typed and P5 measured a second time, every EO27 population would
 have a firm call, and BL1 could gain its first candidate source for seed
 bulking.
+
+---
+
+## 8. What this means for seed bulking and restoration
+
+The three reproductive types play three different roles in a programme
+that produces seed for restoration.
+
+| Type | What it suggests | Role in the programme | Populations — two seasons (firm) | One season (to confirm) |
+|---|---|---|---|---|
+| **Reproductively intact** | Plants find enough compatible mates and outcross normally | **Sources for seed bulking** | **P34** (EO18, BL3), **P35** (EO25-A, BL3), **P43** (EO68-3, BL5) | P5 (EO30-2, BL1), P21, P22 (EO26, BL2), P28 (EO32, BL3), P30 (EO24-7, BL3), P38 (EO52, BL4), P39 (EO118, BL4), P41 (EO76, BL4) |
+| **Mate-limited** | Too few compatible mates — seed set falls short | **Restoration targets**: receive seed from intact sources | **P10** (EO27-3), **P16** (EO27-1 + EO27RT), **P42** (EO70); candidates P6 (EO67), P13 (EO27-1), P36 (EO25-B) | P1 (EO112), P4 (EO30-3), P8 (EO27), P32 (EO24) |
+| **Over-producing** | Likely escaped self-incompatibility and self-fertilise (self-compatible) | **Excluded** from the breeding programme | **P2** (EO30-1, BL1), **P37** (EO38, BL4) | P18 (EO8), P23 (EO26-3), P24 (EO26-1), P25 (EO61), all BL2; P40 (EO76, BL4) |
+
+**Reproductively intact populations are the basis for seed bulking.**
+Their seed comes from normal outcrossing among compatible plants, so a
+small collection grown in the greenhouse multiplies seed that carries the
+population's SRK diversity. The bulked seed is then used to restore the
+mate-limited populations.
+
+**Mate-limited populations need to be restored.** Their plants lack
+compatible mates, so they cannot recover by themselves: seed translocated
+from intact sources brings new SRK alleles and, with them, new compatible
+mates. The genetic example (§ 5) shows what this means for P42: its
+plants can mate with only about half of their population, and P34's
+alleles differ from most of P42's (they share about a third of their
+SRK alleles), so P34 seed would add compatible mates.
+
+**Over-producing populations must stay out of seed production.** Setting
+more seed than their size predicts is the expected signature of plants
+that have escaped self-incompatibility and fertilise themselves. Selfing
+exposes a population to **inbreeding depression**, and self-compatible
+plants would spread selfing through any population they are mixed into,
+so these populations cannot be part of a breeding programme for seed
+production. The genotypes already point the same way at EO76: of its 77
+genotyped plants, one carries no functional SRK allele — a self-compatible
+plant. EO76 holds P40, which over-produced in 2025, and P41; the site is
+genotyped as one, so the plant cannot yet be placed in either.
+
+**What to confirm before acting.**
+- **The over-producing call is a hypothesis.** Seed–mother genotyping
+  will test it directly: seedlings of a selfing mother carry only her own
+  SRK alleles.
+- **Sources need the genetic filters too** — enough SRK diversity, no
+  self-compatible plants and, ideally, one source per lineage.
+- **Recipients should receive alleles they lack**, which SRK genotypes of
+  both source and recipient will show.
+- **One-season populations** keep their place in the table only
+  provisionally; a second season of data decides their role.
 
 ---
 
