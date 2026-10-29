@@ -28,18 +28,19 @@ For each population and field season:
      selection is rerun. Both plans are reported (`original_*` columns).
      In D1 this applies to P34 2025, whose largest deme (158 plants) has
      9 of the 12 mothers its target asks for.
-3. **Pick list.** Mothers already in the lab are pinned
-   (`tables/step30_D_model_design_pinned_mothers.tsv`, frozen 2026-10-28
-   when the lab started): they are kept on every run, and a random draw
+3. **Pick list.** Mothers given to the lab are pinned
+   (`tables/step30_D_model_design_pinned_mothers.tsv`, frozen 2026-10-29
+   after the seed-reserve redraw): they are kept on every run, and a random draw
    only fills a place a pinned mother can no longer fill. Otherwise,
    within each selected deme, mothers are drawn at random
    (reproducible seed per population, year and deme) among those whose
-   cleaned seed lot holds ≥ 25 seeds — one per slick spot, then the
+   cleaned seed lot holds ≥ 50 seeds — one per slick spot, then the
    remaining places from the deme's other mothers; lots with fewer seeds,
    then uncleaned lots, are used only when eligible mothers run out. Seed
-   count beyond 25 plays no part, so the sample is not biased towards the
+   count beyond 50 plays no part, so the sample is not biased towards the
    most fecund mothers. Each mother gets 25 seeds to germinate (≈ 15
-   seedlings).
+   seedlings), but never more than half her lot: at least half of every
+   envelope stays in reserve.
 
 Demes are simulated independently, plant by plant, from the species-wide
 SRK frequencies (`srk_detection`: tetraploid empirical zygosity, fathers
@@ -82,6 +83,16 @@ MIN_SEPARATION_M = 100.0
 MIN_PLANTS_PER_DEME = 2
 SMALL_POP_MOTHERS = 10
 SEEDS_TO_GERMINATE = 25
+SEED_RESERVE_SHARE = 0.5    # at least this share of every lot stays in the envelope
+
+
+def seeds_to_germinate(seeds):
+    """Seeds taken from a cleaned lot: SEEDS_TO_GERMINATE, but never more
+    than (1 - SEED_RESERVE_SHARE) of the lot, so no envelope is emptied."""
+    return np.minimum(np.floor(np.asarray(seeds, float) * (1 - SEED_RESERVE_SHARE)).astype(int),
+                      SEEDS_TO_GERMINATE)
+
+
 N_POOLS = 1000              # simulated populations used to choose demes
 N_POOLS_EVAL = 250          # per independent evaluation set
 N_EVAL = 20
@@ -180,7 +191,7 @@ def load_mothers() -> pd.DataFrame:
         GROUP BY o.occurrenceID""", con)
     con.close()
     df["cleaned"] = df["germplasmID"].notna()
-    germ = np.minimum(df["seeds"].astype(int), SEEDS_TO_GERMINATE)
+    germ = seeds_to_germinate(df["seeds"])
     df["seedlings"] = np.where(df["cleaned"],
                                np.minimum(np.rint(germ * 0.60).astype(int), SEEDLINGS_PER_MOTHER),
                                SEEDLINGS_PER_MOTHER)
@@ -191,16 +202,18 @@ def pick_mothers(m: pd.DataFrame, target: int,
                  rng: np.random.Generator) -> pd.DataFrame:
     """Random mothers within one deme, not ranked by seed yield.
 
-    Tiers: (1) eligible — cleaned seed lot with ≥ SEEDS_TO_GERMINATE seeds
-    (enough for the full 15 seedlings); (2) cleaned lot with fewer seeds
-    (germinated in full); (3) seed not cleaned yet. One mother per slick
+    Tiers: (1) eligible — cleaned seed lot large enough to give
+    SEEDS_TO_GERMINATE seeds and still keep the reserve (≥ 50 seeds; the
+    full 15 seedlings); (2) smaller cleaned lot (half of it germinated);
+    (3) seed not cleaned yet. One mother per slick
     spot is drawn at random from the best tier available in that slick
     spot; the remaining places are drawn at random from the deme's other
     mothers, best tier first. Seed count beyond the 25-seed threshold plays
     no part, so the sample is not biased towards the most fecund mothers.
     """
     m = m.copy()
-    m["tier"] = np.select([m["cleaned"] & (m["seeds"] >= SEEDS_TO_GERMINATE), m["cleaned"]],
+    m["tier"] = np.select([m["cleaned"] & (seeds_to_germinate(m["seeds"]) >= SEEDS_TO_GERMINATE),
+                           m["cleaned"]],
                           [1, 2], 3)
     m["draw"] = rng.random(len(m))
     m = m.sort_values(["tier", "draw"])
@@ -208,7 +221,7 @@ def pick_mothers(m: pd.DataFrame, target: int,
     rest = (m.drop(floor.index).head(max(target - len(floor), 0))
              .assign(reason="random among the deme's other mothers"))
     out = pd.concat([floor, rest])
-    tier_note = {1: "", 2: "; lot < 25 seeds", 3: "; seed not cleaned yet"}
+    tier_note = {1: "", 2: "; lot < 50 seeds (half germinated)", 3: "; seed not cleaned yet"}
     out["reason"] = out["reason"] + out["tier"].map(tier_note)
     return out.drop(columns=["tier", "draw"])
 
@@ -218,7 +231,7 @@ PINNED: dict = {}
 
 
 def load_pinned() -> dict:
-    """Mothers already in the lab (Sam started 2026-10-28): (pop, year, deme)
+    """Mothers frozen for the lab (2026-10-29, after the seed-reserve redraw): (pop, year, deme)
     → [(occurrenceID, reason)], in lab-sheet order. Pinned mothers are kept
     on every run so database updates do not change the list; a new draw
     only fills places a pinned mother can no longer fill."""
@@ -596,7 +609,7 @@ def main() -> None:
                             germplasmID=(int(r["germplasmID"]) if r["cleaned"] else None),
                             status="germinate" if r["cleaned"] else "clean seed first",
                             seeds_available=int(r["seeds"]) if r["cleaned"] else None,
-                            seeds_to_germinate=(min(int(r["seeds"]), SEEDS_TO_GERMINATE)
+                            seeds_to_germinate=(int(seeds_to_germinate(r["seeds"]))
                                                 if r["cleaned"] else SEEDS_TO_GERMINATE),
                             seedlings_expected=int(r["seedlings"]), reason=r["reason"]))
     demes = pd.DataFrame(deme_rows)

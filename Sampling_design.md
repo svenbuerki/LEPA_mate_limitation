@@ -126,11 +126,11 @@ separately keeps that change visible.
 |---|---|
 | Unit of sampling | the **deme** — slick spots within 50 m of each other, sharing pollinators |
 | Goal per population and season | recover **90 %** of the population's SRK alleles |
-| Seeds per mother | **25** germinated → about **15 seedlings** genotyped |
+| Seeds per mother | **25** germinated → about **15 seedlings** genotyped; never more than **half a lot** (the other half stays in the envelope) |
 | Mothers per deme | scaled to deme size (1 for 2 – 5 plants, 2 for 10 – 20, 5 for 50, 9 for 100, 14 for 200, 23 for 400), **at least one per slick spot** |
 | Demes left out | demes with a single fertile plant |
 | Spacing between sampled demes | at least **100 m** |
-| Choice of mothers in a deme | **at random** among cleaned seed lots of at least 25 seeds |
+| Choice of mothers in a deme | **at random** among cleaned seed lots of at least 50 seeds (25 to germinate, 25 kept) |
 
 **Steps**
 1. **Size each deme's sample** — mothers needed to recover 90 % of the
@@ -140,9 +140,10 @@ separately keeps that change visible.
    population's alleles are recovered; in small P36, all demes (§ 4.2).
 3. **Draw the mothers at random** within each chosen deme (§ 4.3).
 4. **Germinate 25 seeds per mother and genotype about 15 seedlings**,
-   recording each seedling against its mother.
+   recording each seedling against its mother. At least half of every
+   seed lot stays in its envelope as a reserve.
 
-**The result:** **91 mothers, 2 260 seeds, about 1 356 seedlings**
+**The result:** **91 mothers, 2 248 seeds, about 1 349 seedlings**
 over the two seasons, all from cleaned seed lots ready to germinate
 (§ 5.1).
 - Maps of the sampled demes: **[Figure 2](#fig-2)** (P36, small,
@@ -201,8 +202,12 @@ fewest mothers is kept. In small P36 both demes are taken.
 ### 4.3 Mothers chosen at random
 
 Within a chosen deme, mothers are drawn at random among those whose
-cleaned seed lot holds at least 25 seeds — one per slick spot first,
-then the rest of the deme's number. Mothers are deliberately **not**
+cleaned seed lot holds at least 50 seeds — one per slick spot first,
+then the rest of the deme's number. A lot of 50 gives the 25 seeds to
+germinate and keeps 25 in reserve: **no envelope is emptied**, so seed
+remains for later work on the same mother. A smaller lot is used only
+when its slick spot or deme has no larger one, and then only half of it
+is germinated. Mothers are deliberately **not**
 chosen by how much seed they set: a mother sets much seed when she finds
 many compatible mates, so choosing on seed would favour some allele
 combinations and misrepresent the population's SRK diversity. The draw
@@ -256,9 +261,9 @@ Running the design (§ 4) on the demes and mothers collected in 2025 and
 |---|:-:|:-:|:-:|:-:|:-:|
 | P36 (small) | 2025 | 2 of 2 | 4 | 100 → ~60 | 98.5 % |
 | | 2026 | 2 of 2 | 3 | 75 → ~45 | 96.3 % |
-| P34 (big) | 2025 | 9 of 14 | 39 | 975 → ~585 | 90.5 % |
-| | 2026 | 4 of 20 | 45 | 1 110 → ~666 | 90.3 % |
-| **Total** | | | **91** | **2 260 → ~1 356** | |
+| P34 (big) | 2025 | 9 of 14 | 39 | 968 → ~581 | 90.5 % |
+| | 2026 | 4 of 20 | 45 | 1 105 → ~663 | 90.3 % |
+| **Total** | | | **91** | **2 248 → ~1 349** | |
 
 - **Sampled demes** (deme · mothers). P36: demes 1 and 2 in both
   seasons. P34 2025: 2 · 8, 3 · 6, 4 · 2, 5 · 9 (the adjusted deme,
@@ -266,8 +271,11 @@ Running the design (§ 4) on the demes and mothers collected in 2025 and
   9 · 17, 20 · 14.
 - The sampled demes hold 76 % (2025) and 54 % (2026) of P34's fertile
   plants and span the population from north-west to south.
-- **All 91 mothers have cleaned seed ready to germinate.** One P34 2026
-  lot holds 10 seeds and is germinated in full.
+- **All 91 mothers have cleaned seed ready to germinate.** Two lots
+  hold fewer than 50 seeds and give half their seeds: germplasm 1377
+  (P34 2026, the only plant of its slick spot; 10 seeds → 5) and
+  germplasm 305 (P34 2025, in the deme used with all the mothers it
+  holds, § 4.4; 36 seeds → 18).
 
 <a id="fig-2"></a>
 ![Figure 2 — P36](figures/step30_D_model_design_demes_schematic_P36.png)
@@ -296,7 +304,7 @@ works even where a germplasmID is still missing.
 | `pair`, `role` | D1, small (P36) or big (P34) |
 | `status` | `germinate` — the seed lot is ready |
 | `seeds_available` | Seeds in the lot |
-| `seeds_to_germinate` | 25, or the whole lot if smaller |
+| `seeds_to_germinate` | 25, or half the lot if it holds fewer than 50 seeds (the rest stays in the envelope) |
 | `seedlings_expected` | Seedlings to genotype (about 15) |
 | `selected_because` | How she was drawn (one per slick spot, or among the deme's other mothers) |
 
@@ -316,8 +324,9 @@ deme.
   — the totals of § 5.1.
 
 The plan is produced by `Scripts/step28_model_population_design.py`
-(`./run_pipeline.sh design`). **The list of mothers is frozen** since the
-lab started work (28 October 2026):
+(`./run_pipeline.sh design`). **The list of mothers is frozen** (29
+October 2026, redrawn once before the lab started so that every lot
+keeps a reserve):
 [`tables/step30_D_model_design_pinned_mothers.tsv`](tables/step30_D_model_design_pinned_mothers.tsv)
 holds the 91 mothers, and every rerun keeps them, so database updates do
 not change the list; a new random draw is made only for a place a pinned
