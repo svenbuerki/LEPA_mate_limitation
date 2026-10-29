@@ -1,92 +1,92 @@
 pair	role	populationID	year	demeID	eventID	occurrenceID	germplasmID	status	seeds_available	seeds_to_germinate	seedlings_expected	reason
 D1	small	36	2025	1	117	430	389	germinate	335	25	15	one per slick spot (random)
-D1	small	36	2025	2	120	435	393	germinate	78	25	15	one per slick spot (random)
 D1	small	36	2025	2	118	433	392	germinate	2640	25	15	one per slick spot (random)
 D1	small	36	2025	2	119	434	387	germinate	807	25	15	one per slick spot (random)
+D1	small	36	2025	2	120	435	393	germinate	78	25	15	one per slick spot (random)
 D1	small	36	2026	1	367	2754	1315	germinate	333	25	15	one per slick spot (random)
 D1	small	36	2026	1	368	2757	1310	germinate	201	25	15	one per slick spot (random)
 D1	small	36	2026	2	369	2761	1314	germinate	132	25	15	one per slick spot (random)
-D1	big	34	2025	2	66	317	383	germinate	689	25	15	one per slick spot (random)
-D1	big	34	2025	2	67	326	367	germinate	1501	25	15	one per slick spot (random)
 D1	big	34	2025	2	65	311	342	germinate	907	25	15	one per slick spot (random)
-D1	big	34	2025	2	69	329	338	germinate	3110	25	15	one per slick spot (random)
-D1	big	34	2025	2	66	320	386	germinate	1220	25	15	random among the deme's other mothers
-D1	big	34	2025	2	66	319	385	germinate	958	25	15	random among the deme's other mothers
 D1	big	34	2025	2	66	316	382	germinate	379	25	15	random among the deme's other mothers
+D1	big	34	2025	2	66	317	383	germinate	689	25	15	one per slick spot (random)
+D1	big	34	2025	2	66	319	385	germinate	958	25	15	random among the deme's other mothers
+D1	big	34	2025	2	66	320	386	germinate	1220	25	15	random among the deme's other mothers
+D1	big	34	2025	2	67	326	367	germinate	1501	25	15	one per slick spot (random)
 D1	big	34	2025	2	67	328	369	germinate	571	25	15	random among the deme's other mothers
-D1	big	34	2025	12	125	381	278	germinate	902	25	15	one per slick spot (random)
-D1	big	34	2025	12	125	383	280	germinate	1248	25	15	random among the deme's other mothers
+D1	big	34	2025	2	69	329	338	germinate	3110	25	15	one per slick spot (random)
 D1	big	34	2025	12	125	380	277	germinate	3596	25	15	random among the deme's other mothers
+D1	big	34	2025	12	125	381	278	germinate	902	25	15	one per slick spot (random)
 D1	big	34	2025	12	125	382	279	germinate	836	25	15	random among the deme's other mothers
-D1	big	34	2025	5	77	353	306	germinate	143	25	15	one per slick spot (random)
-D1	big	34	2025	5	76	349	299	germinate	177	25	15	one per slick spot (random)
-D1	big	34	2025	5	95	354	310	germinate	328	25	15	one per slick spot (random)
-D1	big	34	2025	5	77	351	304	germinate	322	25	15	random among the deme's other mothers
-D1	big	34	2025	5	76	348	298	germinate	157	25	15	random among the deme's other mothers
+D1	big	34	2025	12	125	383	280	germinate	1248	25	15	random among the deme's other mothers
 D1	big	34	2025	5	76	346	296	germinate	108	25	15	random among the deme's other mothers
 D1	big	34	2025	5	76	347	297	germinate	99	25	15	random among the deme's other mothers
+D1	big	34	2025	5	76	348	298	germinate	157	25	15	random among the deme's other mothers
+D1	big	34	2025	5	76	349	299	germinate	177	25	15	one per slick spot (random)
 D1	big	34	2025	5	76	350	300	germinate	126	25	15	random among the deme's other mothers
-D1	big	34	2025	5	77	352	305	germinate	36	18	11	random among the deme's other mothers; lot < 50 seeds (half germinated)
-D1	big	34	2025	13	128	388	225	germinate	1826	25	15	one per slick spot (random)
+D1	big	34	2025	5	77	351	304	germinate	322	25	15	random among the deme's other mothers
+D1	big	34	2025	5	77	352	305	germinate	36	25	15	random among the deme's other mothers; lot 35–49 seeds (≥ 10 kept)
+D1	big	34	2025	5	77	353	306	germinate	143	25	15	one per slick spot (random)
+D1	big	34	2025	5	95	354	310	germinate	328	25	15	one per slick spot (random)
 D1	big	34	2025	13	126	384	226	germinate	1865	25	15	one per slick spot (random)
 D1	big	34	2025	13	127	386	223	germinate	752	25	15	one per slick spot (random)
-D1	big	34	2025	8	103	376	288	germinate	255	25	15	one per slick spot (random)
+D1	big	34	2025	13	128	388	225	germinate	1826	25	15	one per slick spot (random)
 D1	big	34	2025	8	102	371	313	germinate	778	25	15	one per slick spot (random)
-D1	big	34	2025	14	131	394	307	germinate	590	25	15	one per slick spot (random)
+D1	big	34	2025	8	103	376	288	germinate	255	25	15	one per slick spot (random)
 D1	big	34	2025	14	129	390	320	germinate	265	25	15	one per slick spot (random)
 D1	big	34	2025	14	130	392	311	germinate	180	25	15	one per slick spot (random)
+D1	big	34	2025	14	131	394	307	germinate	590	25	15	one per slick spot (random)
 D1	big	34	2025	14	131	396	309	germinate	328	25	15	random among the deme's other mothers
 D1	big	34	2025	10	121	277	274	germinate	860	25	15	one per slick spot (random)
 D1	big	34	2025	4	70	332	353	germinate	639	25	15	one per slick spot (random)
 D1	big	34	2025	4	70	335	356	germinate	1229	25	15	random among the deme's other mothers
 D1	big	34	2025	3	68	307	371	germinate	80	25	15	one per slick spot (random)
-D1	big	34	2025	3	80	302	337	germinate	694	25	15	one per slick spot (random)
 D1	big	34	2025	3	78	294	347	germinate	68	25	15	one per slick spot (random)
 D1	big	34	2025	3	79	299	340	germinate	294	25	15	one per slick spot (random)
-D1	big	34	2025	3	93	293	361	germinate	151	25	15	one per slick spot (random)
+D1	big	34	2025	3	80	302	337	germinate	694	25	15	one per slick spot (random)
 D1	big	34	2025	3	81	303	344	germinate	328	25	15	one per slick spot (random)
-D1	big	34	2026	9	315	2569	1704	germinate	352	25	15	one per slick spot (random)
-D1	big	34	2026	9	314	2560	1718	germinate	2107	25	15	one per slick spot (random)
-D1	big	34	2026	9	319	2578	1709	germinate	202	25	15	one per slick spot (random)
-D1	big	34	2026	9	308	2541	1681	germinate	593	25	15	one per slick spot (random)
-D1	big	34	2026	9	318	2576	1696	germinate	194	25	15	one per slick spot (random)
-D1	big	34	2026	9	310	2555	1737	germinate	754	25	15	one per slick spot (random)
-D1	big	34	2026	9	309	2547	1664	germinate	84	25	15	one per slick spot (random)
-D1	big	34	2026	9	306	2536	1687	germinate	294	25	15	one per slick spot (random)
-D1	big	34	2026	9	312	2558	1725	germinate	1705	25	15	one per slick spot (random)
-D1	big	34	2026	9	316	2574	1698	germinate	72	25	15	one per slick spot (random)
-D1	big	34	2026	9	307	2537	1685	germinate	188	25	15	one per slick spot (random)
-D1	big	34	2026	9	311	2556	1666	germinate	1850	25	15	one per slick spot (random)
-D1	big	34	2026	9	317	2575	1695	germinate	1045	25	15	one per slick spot (random)
-D1	big	34	2026	9	313	2559	1699	germinate	1853	25	15	one per slick spot (random)
-D1	big	34	2026	9	305	2534	1726	germinate	1079	25	15	one per slick spot (random)
+D1	big	34	2025	3	93	293	361	germinate	151	25	15	one per slick spot (random)
 D1	big	34	2026	9	303	2522	1661	germinate	97	25	15	one per slick spot (random)
+D1	big	34	2026	9	305	2534	1726	germinate	1079	25	15	one per slick spot (random)
+D1	big	34	2026	9	306	2536	1687	germinate	294	25	15	one per slick spot (random)
+D1	big	34	2026	9	307	2537	1685	germinate	188	25	15	one per slick spot (random)
+D1	big	34	2026	9	308	2541	1681	germinate	593	25	15	one per slick spot (random)
+D1	big	34	2026	9	309	2547	1664	germinate	84	25	15	one per slick spot (random)
+D1	big	34	2026	9	310	2555	1737	germinate	754	25	15	one per slick spot (random)
+D1	big	34	2026	9	311	2556	1666	germinate	1850	25	15	one per slick spot (random)
+D1	big	34	2026	9	312	2558	1725	germinate	1705	25	15	one per slick spot (random)
+D1	big	34	2026	9	313	2559	1699	germinate	1853	25	15	one per slick spot (random)
+D1	big	34	2026	9	314	2560	1718	germinate	2107	25	15	one per slick spot (random)
+D1	big	34	2026	9	315	2569	1704	germinate	352	25	15	one per slick spot (random)
 D1	big	34	2026	9	315	2571	1706	germinate	1985	25	15	random among the deme's other mothers
-D1	big	34	2026	2	291	2495	1496	germinate	1391	25	15	one per slick spot (random)
-D1	big	34	2026	2	294	2500	1499	germinate	1554	25	15	one per slick spot (random)
-D1	big	34	2026	2	292	2497	1498	germinate	317	25	15	one per slick spot (random)
+D1	big	34	2026	9	316	2574	1698	germinate	72	25	15	one per slick spot (random)
+D1	big	34	2026	9	317	2575	1695	germinate	1045	25	15	one per slick spot (random)
+D1	big	34	2026	9	318	2576	1696	germinate	194	25	15	one per slick spot (random)
+D1	big	34	2026	9	319	2578	1709	germinate	202	25	15	one per slick spot (random)
 D1	big	34	2026	2	288	2485	1487	germinate	527	25	15	one per slick spot (random)
 D1	big	34	2026	2	289	2487	1506	germinate	66	25	15	one per slick spot (random)
 D1	big	34	2026	2	290	2488	1476	germinate	169	25	15	one per slick spot (random)
+D1	big	34	2026	2	291	2495	1496	germinate	1391	25	15	one per slick spot (random)
+D1	big	34	2026	2	292	2497	1498	germinate	317	25	15	one per slick spot (random)
 D1	big	34	2026	2	293	2499	1374	germinate	1032	25	15	one per slick spot (random)
+D1	big	34	2026	2	294	2500	1499	germinate	1554	25	15	one per slick spot (random)
 D1	big	34	2026	2	295	2501	1484	germinate	1252	25	15	one per slick spot (random)
-D1	big	34	2026	2	297	2507	1377	germinate	10	5	3	one per slick spot (random); lot < 50 seeds (half germinated)
-D1	big	34	2026	3	296	2506	1504	germinate	97	25	15	one per slick spot (random)
+D1	big	34	2026	2	289	2486	1505	germinate	386	25	15	replacement for an unusable pinned mother (random)
 D1	big	34	2026	3	296	2502	1500	germinate	348	25	15	random among the deme's other mothers
+D1	big	34	2026	3	296	2503	1501	germinate	272	25	15	random among the deme's other mothers
 D1	big	34	2026	3	296	2504	1502	germinate	68	25	15	random among the deme's other mothers
 D1	big	34	2026	3	296	2505	1503	germinate	327	25	15	random among the deme's other mothers
-D1	big	34	2026	3	296	2503	1501	germinate	272	25	15	random among the deme's other mothers
-D1	big	34	2026	20	342	2640	1569	germinate	444	25	15	one per slick spot (random)
-D1	big	34	2026	20	341	2637	1576	germinate	757	25	15	one per slick spot (random)
-D1	big	34	2026	20	344	2645	1514	germinate	630	25	15	one per slick spot (random)
-D1	big	34	2026	20	343	2644	1563	germinate	79	25	15	one per slick spot (random)
-D1	big	34	2026	20	345	2653	1512	germinate	637	25	15	one per slick spot (random)
-D1	big	34	2026	20	342	2641	1570	germinate	94	25	15	random among the deme's other mothers
-D1	big	34	2026	20	344	2648	1517	germinate	724	25	15	random among the deme's other mothers
-D1	big	34	2026	20	344	2647	1516	germinate	805	25	15	random among the deme's other mothers
-D1	big	34	2026	20	342	2642	1571	germinate	216	25	15	random among the deme's other mothers
-D1	big	34	2026	20	344	2649	1518	germinate	836	25	15	random among the deme's other mothers
-D1	big	34	2026	20	341	2635	1574	germinate	143	25	15	random among the deme's other mothers
-D1	big	34	2026	20	345	2654	1513	germinate	395	25	15	random among the deme's other mothers
+D1	big	34	2026	3	296	2506	1504	germinate	97	25	15	one per slick spot (random)
 D1	big	34	2026	20	341	2634	1573	germinate	111	25	15	random among the deme's other mothers
+D1	big	34	2026	20	341	2635	1574	germinate	143	25	15	random among the deme's other mothers
 D1	big	34	2026	20	341	2636	1575	germinate	777	25	15	random among the deme's other mothers
+D1	big	34	2026	20	341	2637	1576	germinate	757	25	15	one per slick spot (random)
+D1	big	34	2026	20	342	2640	1569	germinate	444	25	15	one per slick spot (random)
+D1	big	34	2026	20	342	2641	1570	germinate	94	25	15	random among the deme's other mothers
+D1	big	34	2026	20	342	2642	1571	germinate	216	25	15	random among the deme's other mothers
+D1	big	34	2026	20	343	2644	1563	germinate	79	25	15	one per slick spot (random)
+D1	big	34	2026	20	344	2645	1514	germinate	630	25	15	one per slick spot (random)
+D1	big	34	2026	20	344	2647	1516	germinate	805	25	15	random among the deme's other mothers
+D1	big	34	2026	20	344	2648	1517	germinate	724	25	15	random among the deme's other mothers
+D1	big	34	2026	20	344	2649	1518	germinate	836	25	15	random among the deme's other mothers
+D1	big	34	2026	20	345	2653	1512	germinate	637	25	15	one per slick spot (random)
+D1	big	34	2026	20	345	2654	1513	germinate	395	25	15	random among the deme's other mothers

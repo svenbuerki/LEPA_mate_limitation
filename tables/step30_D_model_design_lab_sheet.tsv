@@ -28,7 +28,7 @@ occurrenceID	germplasmID	BL	population	EO	locationCode	year	demeID	eventID_slick
 349	299	BL3	P34	EO18	EO18-7	2025	5	76	D1	big	germinate	177	25	15	one per slick spot (random)
 350	300	BL3	P34	EO18	EO18-7	2025	5	76	D1	big	germinate	126	25	15	random among the deme's other mothers
 351	304	BL3	P34	EO18	EO18-7	2025	5	77	D1	big	germinate	322	25	15	random among the deme's other mothers
-352	305	BL3	P34	EO18	EO18-7	2025	5	77	D1	big	germinate	36	18	11	random among the deme's other mothers; lot < 50 seeds (half germinated)
+352	305	BL3	P34	EO18	EO18-7	2025	5	77	D1	big	germinate	36	25	15	random among the deme's other mothers; lot 35–49 seeds (≥ 10 kept)
 353	306	BL3	P34	EO18	EO18-7	2025	5	77	D1	big	germinate	143	25	15	one per slick spot (random)
 354	310	BL3	P34	EO18	EO18-7	2025	5	95	D1	big	germinate	328	25	15	one per slick spot (random)
 371	313	BL3	P34	EO18	EO18-7	2025	8	102	D1	big	germinate	778	25	15	one per slick spot (random)
@@ -46,6 +46,7 @@ occurrenceID	germplasmID	BL	population	EO	locationCode	year	demeID	eventID_slick
 394	307	BL3	P34	EO18	EO18-7	2025	14	131	D1	big	germinate	590	25	15	one per slick spot (random)
 396	309	BL3	P34	EO18	EO18-7	2025	14	131	D1	big	germinate	328	25	15	random among the deme's other mothers
 2485	1487	BL3	P34	EO18	EO18-7	2026	2	288	D1	big	germinate	527	25	15	one per slick spot (random)
+2486	1505	BL3	P34	EO18	EO18-7	2026	2	289	D1	big	germinate	386	25	15	replacement for an unusable pinned mother (random)
 2487	1506	BL3	P34	EO18	EO18-7	2026	2	289	D1	big	germinate	66	25	15	one per slick spot (random)
 2488	1476	BL3	P34	EO18	EO18-7	2026	2	290	D1	big	germinate	169	25	15	one per slick spot (random)
 2495	1496	BL3	P34	EO18	EO18-7	2026	2	291	D1	big	germinate	1391	25	15	one per slick spot (random)
@@ -53,7 +54,6 @@ occurrenceID	germplasmID	BL	population	EO	locationCode	year	demeID	eventID_slick
 2499	1374	BL3	P34	EO18	EO18-7	2026	2	293	D1	big	germinate	1032	25	15	one per slick spot (random)
 2500	1499	BL3	P34	EO18	EO18-7	2026	2	294	D1	big	germinate	1554	25	15	one per slick spot (random)
 2501	1484	BL3	P34	EO18	EO18-7	2026	2	295	D1	big	germinate	1252	25	15	one per slick spot (random)
-2507	1377	BL3	P34	EO18	EO18-7	2026	2	297	D1	big	germinate	10	5	3	one per slick spot (random); lot < 50 seeds (half germinated)
 2502	1500	BL3	P34	EO18	EO18-7	2026	3	296	D1	big	germinate	348	25	15	random among the deme's other mothers
 2503	1501	BL3	P34	EO18	EO18-7	2026	3	296	D1	big	germinate	272	25	15	random among the deme's other mothers
 2504	1502	BL3	P34	EO18	EO18-7	2026	3	296	D1	big	germinate	68	25	15	random among the deme's other mothers

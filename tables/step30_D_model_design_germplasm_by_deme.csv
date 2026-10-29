@@ -28,7 +28,7 @@ D1,big,P34,2025,5,298,348,germinate,157,25,15,random among the deme's other moth
 D1,big,P34,2025,5,299,349,germinate,177,25,15,one per slick spot (random)
 D1,big,P34,2025,5,300,350,germinate,126,25,15,random among the deme's other mothers
 D1,big,P34,2025,5,304,351,germinate,322,25,15,random among the deme's other mothers
-D1,big,P34,2025,5,305,352,germinate,36,18,11,random among the deme's other mothers; lot < 50 seeds (half germinated)
+D1,big,P34,2025,5,305,352,germinate,36,25,15,random among the deme's other mothers; lot 35–49 seeds (≥ 10 kept)
 D1,big,P34,2025,5,306,353,germinate,143,25,15,one per slick spot (random)
 D1,big,P34,2025,5,310,354,germinate,328,25,15,one per slick spot (random)
 D1,big,P34,2025,8,288,376,germinate,255,25,15,one per slick spot (random)
@@ -46,13 +46,13 @@ D1,big,P34,2025,14,309,396,germinate,328,25,15,random among the deme's other mot
 D1,big,P34,2025,14,311,392,germinate,180,25,15,one per slick spot (random)
 D1,big,P34,2025,14,320,390,germinate,265,25,15,one per slick spot (random)
 D1,big,P34,2026,2,1374,2499,germinate,1032,25,15,one per slick spot (random)
-D1,big,P34,2026,2,1377,2507,germinate,10,5,3,one per slick spot (random); lot < 50 seeds (half germinated)
 D1,big,P34,2026,2,1476,2488,germinate,169,25,15,one per slick spot (random)
 D1,big,P34,2026,2,1484,2501,germinate,1252,25,15,one per slick spot (random)
 D1,big,P34,2026,2,1487,2485,germinate,527,25,15,one per slick spot (random)
 D1,big,P34,2026,2,1496,2495,germinate,1391,25,15,one per slick spot (random)
 D1,big,P34,2026,2,1498,2497,germinate,317,25,15,one per slick spot (random)
 D1,big,P34,2026,2,1499,2500,germinate,1554,25,15,one per slick spot (random)
+D1,big,P34,2026,2,1505,2486,germinate,386,25,15,replacement for an unusable pinned mother (random)
 D1,big,P34,2026,2,1506,2487,germinate,66,25,15,one per slick spot (random)
 D1,big,P34,2026,3,1500,2502,germinate,348,25,15,random among the deme's other mothers
 D1,big,P34,2026,3,1501,2503,germinate,272,25,15,random among the deme's other mothers

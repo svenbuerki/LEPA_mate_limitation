@@ -28,7 +28,7 @@ populationID	year	demeID	occurrenceID	selected_because
 34	2025	5	349	one per slick spot (random)
 34	2025	5	350	random among the deme's other mothers
 34	2025	5	351	random among the deme's other mothers
-34	2025	5	352	random among the deme's other mothers; lot < 50 seeds (half germinated)
+34	2025	5	352	random among the deme's other mothers
 34	2025	5	353	one per slick spot (random)
 34	2025	5	354	one per slick spot (random)
 34	2025	8	371	one per slick spot (random)
@@ -46,6 +46,7 @@ populationID	year	demeID	occurrenceID	selected_because
 34	2025	14	394	one per slick spot (random)
 34	2025	14	396	random among the deme's other mothers
 34	2026	2	2485	one per slick spot (random)
+34	2026	2	2486	replacement for an unusable pinned mother (random)
 34	2026	2	2487	one per slick spot (random)
 34	2026	2	2488	one per slick spot (random)
 34	2026	2	2495	one per slick spot (random)
@@ -53,7 +54,6 @@ populationID	year	demeID	occurrenceID	selected_because
 34	2026	2	2499	one per slick spot (random)
 34	2026	2	2500	one per slick spot (random)
 34	2026	2	2501	one per slick spot (random)
-34	2026	2	2507	one per slick spot (random); lot < 50 seeds (half germinated)
 34	2026	3	2502	random among the deme's other mothers
 34	2026	3	2503	random among the deme's other mothers
 34	2026	3	2504	random among the deme's other mothers

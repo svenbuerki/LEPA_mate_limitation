@@ -35,12 +35,12 @@ For each population and field season:
    within each selected deme, mothers are drawn at random
    (reproducible seed per population, year and deme) among those whose
    cleaned seed lot holds ≥ 50 seeds — one per slick spot, then the
-   remaining places from the deme's other mothers; lots with fewer seeds,
-   then uncleaned lots, are used only when eligible mothers run out. Seed
-   count beyond 50 plays no part, so the sample is not biased towards the
-   most fecund mothers. Each mother gets 25 seeds to germinate (≈ 15
-   seedlings), but never more than half her lot: at least half of every
-   envelope stays in reserve.
+   remaining places from the deme's other mothers; lots of 35 – 49 seeds,
+   then uncleaned lots, are used only when those run out, and lots under
+   35 seeds only as a last resort. Seed count beyond 50 plays no part, so
+   the sample is not biased towards the most fecund mothers. Each mother
+   gets 25 seeds to germinate (≈ 15 seedlings) and at least 10 seeds stay
+   in every envelope.
 
 Demes are simulated independently, plant by plant, from the species-wide
 SRK frequencies (`srk_detection`: tetraploid empirical zygosity, fathers
@@ -83,14 +83,27 @@ MIN_SEPARATION_M = 100.0
 MIN_PLANTS_PER_DEME = 2
 SMALL_POP_MOTHERS = 10
 SEEDS_TO_GERMINATE = 25
-SEED_RESERVE_SHARE = 0.5    # at least this share of every lot stays in the envelope
+# Seed lots (Sven, 2026-10-29): every mother gets SEEDS_TO_GERMINATE seeds
+# (≈ 15 seedlings) and no envelope is emptied.
+PREFERRED_LOT = 50          # 25 to germinate + ≥ 25 kept: drawn first
+MIN_LOT = 35                # 25 to germinate + ≥ 10 kept: fallback
+TIER_NOTE = {1: "", 2: "; lot 35–49 seeds (≥ 10 kept)", 3: "; seed not cleaned yet",
+             4: "; lot < 35 seeds (last resort, half germinated)"}
 
 
 def seeds_to_germinate(seeds):
-    """Seeds taken from a cleaned lot: SEEDS_TO_GERMINATE, but never more
-    than (1 - SEED_RESERVE_SHARE) of the lot, so no envelope is emptied."""
-    return np.minimum(np.floor(np.asarray(seeds, float) * (1 - SEED_RESERVE_SHARE)).astype(int),
-                      SEEDS_TO_GERMINATE)
+    """Seeds taken from a cleaned lot: SEEDS_TO_GERMINATE when the lot keeps
+    at least MIN_LOT - SEEDS_TO_GERMINATE seeds afterwards; a smaller lot
+    (used only as a last resort) gives half of its seeds."""
+    s = np.asarray(seeds, float)
+    return np.where(s >= MIN_LOT, SEEDS_TO_GERMINATE, np.floor(s / 2)).astype(int)
+
+
+def lot_tier(m: pd.DataFrame) -> np.ndarray:
+    """1 = lot ≥ PREFERRED_LOT; 2 = lot ≥ MIN_LOT; 3 = seed not cleaned yet
+    (25 seeds once cleaned); 4 = lot < MIN_LOT (last resort)."""
+    return np.select([m["cleaned"] & (m["seeds"] >= PREFERRED_LOT),
+                      m["cleaned"] & (m["seeds"] >= MIN_LOT), ~m["cleaned"]], [1, 2, 3], 4)
 
 
 N_POOLS = 1000              # simulated populations used to choose demes
@@ -202,27 +215,26 @@ def pick_mothers(m: pd.DataFrame, target: int,
                  rng: np.random.Generator) -> pd.DataFrame:
     """Random mothers within one deme, not ranked by seed yield.
 
-    Tiers: (1) eligible — cleaned seed lot large enough to give
-    SEEDS_TO_GERMINATE seeds and still keep the reserve (≥ 50 seeds; the
-    full 15 seedlings); (2) smaller cleaned lot (half of it germinated);
-    (3) seed not cleaned yet. One mother per slick
-    spot is drawn at random from the best tier available in that slick
-    spot; the remaining places are drawn at random from the deme's other
-    mothers, best tier first. Seed count beyond the 25-seed threshold plays
-    no part, so the sample is not biased towards the most fecund mothers.
+    Tiers (lot_tier): lots of ≥ PREFERRED_LOT seeds first, then
+    ≥ MIN_LOT, then uncleaned seed, so every mother gets 25 seeds (≈ 15
+    seedlings) and keeps a reserve; lots < MIN_LOT only as a last resort.
+    One mother per slick spot is drawn at random from the best tier
+    available in that slick spot — a slick spot whose only lots are
+    < MIN_LOT gets no floor place; the remaining places are drawn at random
+    from the deme's other mothers, best tier first. Seed count beyond the
+    tier thresholds plays no part, so the sample is not biased towards the
+    most fecund mothers.
     """
     m = m.copy()
-    m["tier"] = np.select([m["cleaned"] & (seeds_to_germinate(m["seeds"]) >= SEEDS_TO_GERMINATE),
-                           m["cleaned"]],
-                          [1, 2], 3)
+    m["tier"] = lot_tier(m)
     m["draw"] = rng.random(len(m))
     m = m.sort_values(["tier", "draw"])
-    floor = m.groupby("eventID", sort=False).head(1).assign(reason="one per slick spot (random)")
+    floor = (m[m["tier"] < 4].groupby("eventID", sort=False).head(1)
+               .assign(reason="one per slick spot (random)"))
     rest = (m.drop(floor.index).head(max(target - len(floor), 0))
              .assign(reason="random among the deme's other mothers"))
     out = pd.concat([floor, rest])
-    tier_note = {1: "", 2: "; lot < 50 seeds (half germinated)", 3: "; seed not cleaned yet"}
-    out["reason"] = out["reason"] + out["tier"].map(tier_note)
+    out["reason"] = out["reason"] + out["tier"].map(TIER_NOTE)
     return out.drop(columns=["tier", "draw"])
 
 
@@ -245,19 +257,30 @@ def load_pinned() -> dict:
 
 
 def pick_with_pins(dm: pd.DataFrame, target: int, rng, pins: list | None) -> pd.DataFrame:
-    """Pinned mothers first (if still in the database), then random
-    replacements for any place left (pick_mothers rules)."""
+    """Pinned mothers first (if still in the database, and with a lot of
+    ≥ MIN_LOT seeds unless the deme has no other usable mother), then
+    random replacements for any place left (pick_mothers rules)."""
     if not pins:
         return pick_mothers(dm, target, rng)
-    keep_ids = [o for o, _ in pins if o in set(dm["occurrenceID"])][:target]
-    why = dict(pins)
-    kept = (dm.set_index("occurrenceID").loc[keep_ids].reset_index()
-              .assign(reason=lambda x: x["occurrenceID"].map(why)))
+    tier = pd.Series(lot_tier(dm), index=dm["occurrenceID"].values)
+    pinned = [o for o, _ in pins if o in tier.index]
+    spare = int((tier.drop(pinned) < 4).sum())
+    keep_ids = []
+    for o in pinned:
+        if tier[o] == 4 and spare > 0:
+            spare -= 1                      # replaced by a mother with a larger lot
+            continue
+        keep_ids.append(o)
+    keep_ids = keep_ids[:target]
+    why = {o: r.split("; ")[0] for o, r in pins}
+    kept = dm.set_index("occurrenceID").loc[keep_ids].reset_index()
+    kept["reason"] = kept["occurrenceID"].map(why) + tier[keep_ids].map(TIER_NOTE).values
     need = target - len(kept)
     if need <= 0:
         return kept
     extra = (pick_mothers(dm[~dm["occurrenceID"].isin(keep_ids)], need, rng).head(need)
-               .assign(reason=lambda x: "replacement for an unusable pinned mother (random)"))
+               .assign(reason=lambda x: "replacement for an unusable pinned mother (random)"
+                                        + pd.Series(lot_tier(x), index=x.index).map(TIER_NOTE)))
     return pd.concat([kept, extra])
 
 

@@ -324,8 +324,8 @@ its own; that test needs mothers from many populations
 
 **D1 sampling plan.** Selecting spatially separated demes (Step 2 of
 the sampling design) recovers about 90 % of each D1 population's SRK
-alleles with **91 mothers over the two years** (2 248 seeds to
-germinate, ≈ 1 350 seedlings; at least half of every seed lot kept), all with cleaned seed. In 2025 P34's
+alleles with **91 mothers over the two years** (2 275 seeds to
+germinate, ≈ 1 365 seedlings; 25 seeds per mother, at least 10 kept in every lot), all with cleaned seed. In 2025 P34's
 largest deme holds fewer mothers than its target and is used with the 9
 it holds, the one adjustment to the plan; the selected demes and the
 germplasmIDs to pull are in [`Sampling_design.md`](Sampling_design.md) § 5.2.
