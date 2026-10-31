@@ -103,6 +103,8 @@ fi
 # maps (figures_seed_bulking/); needs the seed-yield and sampling parts
 if [[ "$PART" == all || "$PART" == bulking ]]; then
   run step32_seed_bulking
+  run restoration_cartoon           # schematic: scarce seed → bulking → breeding → restoration
+  run source_screening_cartoon      # schematic: our approach to find candidate sources
   echo "▶ step32_seed_bulking_maps (R)"
   Rscript Scripts/step32_seed_bulking_maps.R > logs/step32_seed_bulking_maps.log 2>&1 \
     || { echo "✖ step32_seed_bulking_maps failed — see logs/step32_seed_bulking_maps.log"; exit 1; }
