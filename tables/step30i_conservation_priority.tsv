@@ -23,7 +23,7 @@ populationID	BL	population_label	conservation_priority	priority_rank	restoration
 37	BL4	EO38_1	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	1.1732916014328074	2.246779615419736	29	33	si_escape_candidate	False	si_escape_candidate
 40	BL4	EO76_2	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.188486825156417		58	0	si_escape_candidate	False	si_escape_candidate
 5	BL1	EO30-2_42	reproduction_intact	5	no action	[2026]	[]	[]		1.182890847681091	0	34	reproduction_intact	False	reproduction_intact
-13	BL1	EO27-1_37	reproduction_intact	5	no action	[2025, 2026]	[]	[]	0.8336224321690217	1.0646994518864268	24	38	candidate_mate_limited	True	year_sensitive
+13	BL1	EO27-1_37	reproduction_intact	5	no action	[2025, 2026]	[]	[]	0.8336224321690217	1.0646994518864268	24	38	reproduction_intact	False	reproduction_intact
 21	BL2	EO26-3_32, EO26-3_33, EO26-3_34, EO26_48	reproduction_intact	5	no action	[2025]	[]	[]	1.4024793817415773		18	0	reproduction_intact	False	reproduction_intact
 22	BL2	EO26-4_36, EO26_49	reproduction_intact	5	no action	[2025]	[]	[]	1.2673951410111042		11	0	reproduction_intact	False	reproduction_intact
 27	BL3	EO48_7	reproduction_intact	5	no action	[2025]	[]	[]	0.8327336801374363		9	0	candidate_mate_limited	True	year_sensitive

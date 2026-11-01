@@ -41,7 +41,7 @@ the unit within which plants mate and the unit we sample.
 <a id="schematic-units"></a>
 ![How the units are built](figures/units_cartoon.png)
 
-**Schematic.** Slick spot (event) → deme → population. **1** — each slick spot surveyed in a season is an event, and its flowering plants are counted. **2** — within a season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. **3** — slick spots of all seasons (here 2025 and 2026) less than 500 m apart form one population, inside which demes are redrawn each season; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
+**Schematic.** Slick spot (event) → deme → population. **1** — the same ground in 2025 (left) and 2026 (right): each slick spot surveyed in a season is an event, and its flowering plants are counted; some slick spots are not above ground in a season (dashed), others appear. **2** — within each season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. Demes are redrawn every season: here a new 2026 slick spot links two 2025 demes. **3** — the two seasons combined: slick spots of both seasons (open = 2025, filled = 2026) less than 500 m apart form one population; slick spots more than 500 m apart (red ✗) belong to different populations; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
 
 **Why it needs testing.** The genotypes we already hold show far less
 SRK diversity than the project's model expects: at five of the six

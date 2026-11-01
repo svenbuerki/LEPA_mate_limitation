@@ -54,6 +54,26 @@ import pandas as pd
 from srk_units import load_event_units
 from step13_size_seed_yield import load_occurrences
 
+with plt.rc_context():                  # the cartoon modules set their own font size
+    from type_icons import icon as type_icon
+
+
+def add_type_icons(fig, texts, side: str, size_in: float = 0.95) -> None:
+    """Badge icon of each reproductive type next to its label — `texts` maps
+    type → matplotlib Text; side "above" (centred over the label) or "right"
+    (after it). Icons from type_icons.py."""
+    fig.canvas.draw()
+    inv = fig.transFigure.inverted()
+    w, h = size_in / fig.get_figwidth(), size_in / fig.get_figheight()
+    for tp, t in texts.items():
+        bb = t.get_window_extent()
+        (x0, y0), (x1, y1) = inv.transform((bb.x0, bb.y0)), inv.transform((bb.x1, bb.y1))
+        if side == "above":
+            rect = [(x0 + x1) / 2 - w / 2, y1 + 0.004, w, h]
+        else:
+            rect = [x1 + 0.006, (y0 + y1) / 2 - h / 2, w, h]
+        type_icon(fig.add_axes(rect), tp)
+
 TABLES = Path("tables")
 OUT = Path("figures_seed_bulking")
 TYPE_OF = {"mate_limited": "Mate-limited",
@@ -64,6 +84,15 @@ NOT_CLEAR = "Not yet clear"
 ONE_SEASON = "One season only"
 MIN_PLANTS = 3
 ALPHA = 0.05        # season significant when Step 13's year-adjusted FDR q < ALPHA
+
+
+def season_significant(r, yr: int) -> bool:
+    """Filled marker: for a reproductively intact population, seed set is
+    significantly WITHIN half – twice what size predicts (Step 13's
+    equivalence test); for any other type, it significantly DIFFERS from
+    expectation."""
+    q = r[f"qeq_{yr}"] if r["type"] == "Reproductively intact" else r[f"q_{yr}"]
+    return bool(pd.notna(q) and q < ALPHA)
 TYPE_ORDER = ["Mate-limited", "Reproductively intact", "Over-producing", NOT_CLEAR, ONE_SEASON]
 TYPE_COLORS = {"Mate-limited": "#C2185B",          # magenta
                "Over-producing": "#E6A100",        # gold
@@ -98,11 +127,15 @@ def population_table() -> pd.DataFrame:
     q.columns = [f"q_{y}" for y in q.columns]
     fa = s.pivot(index="populationID", columns="year", values="fold_year_adjusted")
     fa.columns = [f"fold_adj_{y}" for y in fa.columns]
+    qe = s.pivot(index="populationID", columns="year", values="q_equiv_year_adjusted")
+    qe.columns = [f"qeq_{y}" for y in qe.columns]
     c = c.merge(q.reset_index(), on="populationID", how="left")
+    c = c.merge(qe.reset_index(), on="populationID", how="left")
     c = c.merge(fa.reset_index(), on="populationID", how="left")
     cols = ["populationID", "BL", "locationCodes", "two_seasons", "type", "candidate", "color",
             "model_for_bulking", "priority_year_adjusted", "robust_priority", "fold_2025", "fold_2026", "n_plants_2025", "n_plants_2026",
-            "fold_adj_2025", "fold_adj_2026", "q_2025", "q_2026", "fertile_plants_2025", "fertile_plants_2026",
+            "fold_adj_2025", "fold_adj_2026", "q_2025", "q_2026", "qeq_2025", "qeq_2026",
+            "fertile_plants_2025", "fertile_plants_2026",
             "mothers_collected_2025", "mothers_collected_2026"]
     t = c[cols].copy()
     t["type"] = pd.Categorical(t["type"], TYPE_ORDER, ordered=True)
@@ -119,7 +152,8 @@ def plants_with_type(pops: pd.DataFrame) -> pd.DataFrame:
 
 def seed_by_size(m: pd.DataFrame, name: str, bands: bool = True) -> None:
     """Every plant in one colour; the band between half and twice the seed
-    a plant's size predicts shaded teal (as expected), the upper line gold
+    a plant's size predicts shaded teal (as expected), the fitted size →
+    seed line teal through its middle, the upper line gold
     (more seed) and the lower line magenta (less seed) — the colour codes
     of the reproductive types, leading into population_seed_yield.
     bands=False draws the same frame with the points only (band, lines
@@ -137,12 +171,15 @@ def seed_by_size(m: pd.DataFrame, name: str, bands: bool = True) -> None:
                linewidths=0, zorder=2)
     ax.plot(10 ** xs, hi, color=TYPE_COLORS["Over-producing"], lw=3, zorder=3, alpha=show)
     ax.plot(10 ** xs, lo, color=TYPE_COLORS["Mate-limited"], lw=3, zorder=3, alpha=show)
+    ax.plot(10 ** xs, 10 ** (b0 + b1 * xs), color=TYPE_COLORS["Reproductively intact"], lw=3,
+            zorder=3, alpha=show)                                # the size → seed relationship
     mid = 10 ** (b0 + b1 * xs[-1])
+    labels = {}
     for y, lab, tp in ((hi[-1], "↑ over-producing\n(more seed, ×2)", "Over-producing"),
                        (mid, "as expected", "Reproductively intact"),
                        (lo[-1], "↓ mate-limited\n(less seed, ÷2)", "Mate-limited")):
-        ax.text(10 ** xs[-1] * 1.04, y, lab, va="center", ha="left", fontsize=14,
-                weight="bold", color=TYPE_COLORS[tp], alpha=show)
+        labels[tp] = ax.text(10 ** xs[-1] * 1.04, y, lab, va="center", ha="left", fontsize=14,
+                             weight="bold", color=TYPE_COLORS[tp], alpha=show)
     ax.set_xscale("log"); ax.set_yscale("log")
     ax.set_xlim(10 ** m["logc"].min() * 0.9, 10 ** m["logc"].max() * 2.2)
     ax.set_ylim(10 ** m["logy"].min() * 0.8, 10 ** m["logy"].max() * 1.25)
@@ -152,6 +189,15 @@ def seed_by_size(m: pd.DataFrame, name: str, bands: bool = True) -> None:
     ax.text(0.01, 0.99, f"{len(m):,} plants · 2025 + 2026", transform=ax.transAxes,
             va="top", fontsize=13, color="#444")
     fig.tight_layout()
+    if bands:                                   # icons in the empty space each line bounds
+        fig.canvas.draw()
+        inv = fig.transFigure.inverted()
+        size_in = 1.35
+        w, h = size_in / fig.get_figwidth(), size_in / fig.get_figheight()
+        for tp, (xd, yd) in (("Over-producing", (1.9, 2500)),     # above the gold line
+                             ("Mate-limited", (40, 12))):         # below the magenta line
+            cx, cy = inv.transform(ax.transData.transform((xd, yd)))
+            type_icon(fig.add_axes([cx - w / 2, cy - h / 2, w, h]), tp)
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"{name}.{ext}", dpi=220, bbox_inches="tight")
     plt.close(fig)
@@ -176,7 +222,7 @@ def population_seed_yield(pops: pd.DataFrame, data: bool = True,
         ax.plot([r["fold_adj_2025"], r["fold_adj_2026"]], [y + dy[2025], y + dy[2026]],
                 color=c, lw=2, alpha=0.7 * show)
         for yr, mk in ((2025, "o"), (2026, "s")):
-            sig = pd.notna(r[f"q_{yr}"]) and r[f"q_{yr}"] < ALPHA
+            sig = season_significant(r, yr)
             ax.scatter(r[f"fold_adj_{yr}"], y + dy[yr], s=130, marker=mk,
                        facecolors=c if sig else "white", edgecolors=c, linewidths=2.2, zorder=3,
                        alpha=show)
@@ -192,25 +238,35 @@ def population_seed_yield(pops: pd.DataFrame, data: bool = True,
     ax.set_xscale("log")
     ax.set_xticks([0.02, 0.1, 0.25, 0.5, 1, 2, 4])
     ax.set_xticklabels(["0.02", "0.1", "0.25", "0.5", "1", "2", "4"])
-    ax.set_xlabel("Seeds per plant ÷ seeds expected for its size\n"
-                  "(allowing for the 2026 drop shared by all populations)")
+    ax.set_xlabel("Seeds per plant ÷ seeds expected for its size")
+    labels = {}
     for xv, yv, lab, tp, ha in ((1 / BAND, 1.01, "← mate-limited", "Mate-limited", "right"),
                                 (1, 1.045, "as expected", "Reproductively intact", "center"),
                                 (BAND, 1.01, "over-producing →", "Over-producing", "left")):
-        ax.text(xv, yv, lab, transform=ax.get_xaxis_transform(), ha=ha, va="bottom",
-                fontsize=13, weight="bold", color=TYPE_COLORS[tp])
+        labels[tp] = ax.text(xv, yv, lab, transform=ax.get_xaxis_transform(), ha=ha,
+                             va="bottom", fontsize=13, weight="bold", color=TYPE_COLORS[tp])
     from matplotlib.lines import Line2D
     h = [Line2D([], [], marker="o", ls="", color=TYPE_COLORS[t], ms=11, label=t)
          for t in ("Mate-limited", "Reproductively intact", "Over-producing", NOT_CLEAR)]
     h += [Line2D([], [], marker="o", ls="", mfc="#444", mec="#444", ms=11, label="2025"),
           Line2D([], [], marker="s", ls="", mfc="#444", mec="#444", ms=11, label="2026"),
           Line2D([], [], marker="o", ls="", mfc="#444", mec="#444", ms=11,
-                 label="filled = differs from expectation\n(q < 0.05)"),
-          Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=11,
-                 label="open = not significant")]
-    ax.legend(handles=h, loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=12, frameon=False)
+                 label="filled = significant (q < 0.05): differs from\n"
+                       "expectation, or (teal) lies within half – twice"),
+          Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=9,
+                 label="open = not significant"),
+          Line2D([], [], ls="", label="x axis allows for the 2026 drop\n"
+                                      "shared by all populations")]
+    for hh in h:
+        hh.set_markersize(9)
+    leg = ax.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, -0.09), ncol=3,
+                    fontsize=10.5, frameon=True, edgecolor="#999999", fancybox=False,
+                    title="Legend", title_fontproperties={"weight": "bold", "size": 11.5},
+                    columnspacing=1.8, handletextpad=0.4, borderpad=0.7)
+    leg.get_frame().set_linewidth(1.0)                     # boxed legend under the plot
     ax.spines[["top", "right"]].set_visible(False)
     fig.tight_layout()
+    add_type_icons(fig, labels, "above", size_in=1.25)
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"{name}.{ext}", dpi=220, bbox_inches="tight")
     plt.close(fig)
@@ -431,7 +487,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     for xi, pop in zip((0, 1), (42, 34)):
         r = pt.loc[pop]
         for yr, mk, dx in ((2025, "o", -0.12), (2026, "s", 0.12)):
-            sig = pd.notna(r[f"q_{yr}"]) and r[f"q_{yr}"] < ALPHA
+            sig = season_significant(r, yr)
             ax.scatter(xi + dx, r[f"fold_adj_{yr}"], s=170, marker=mk, edgecolors=col[pop],
                        facecolors=col[pop] if sig else "white", linewidths=2.4, zorder=3)
     ax.axhline(1, color="black", lw=1.2)

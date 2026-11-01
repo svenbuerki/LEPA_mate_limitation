@@ -31,12 +31,14 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.transforms as mt
 import numpy as np
+from matplotlib.path import Path as MPath
 from matplotlib.patches import (Circle, Ellipse, FancyArrowPatch, FancyBboxPatch, Polygon,
                                 Rectangle)
 
 OUT = Path("figures_seed_bulking")
 INTACT, MATE_LIM, OVER = "#00897B", "#C2185B", "#E6A100"
-STEM, LEAF, FLOWER, FRUIT = "#3B6E3B", "#5E8C3A", "#FFFFFF", "#A7C77A"
+STEM, LEAF, FLOWER, FRUIT = "#3B6E3B", "#5E8C3A", "#FFFFFF", "#A0522D"   # fruit: sienna, as the seeds
+FRUIT_EDGE = "#5D3A1A"
 SPOT, SPOT_EDGE = "#E8D3A8", "#B08D57"
 POT, POT_EDGE, SEED = "#C9A27E", "#7A5B3E", "#6D4C41"
 NO = "#C62828"
@@ -49,10 +51,12 @@ RNG = np.random.default_rng(7)
 # ---- icons (axes in data units 0–100) -------------------------------------
 def lepa(ax, x, y, h=12, alleles=None, faded=False, fruits=True):
     """Slickspot peppergrass: short, much-branched stem, clusters of small
-    white flowers, round fruits; optional S-allele dots at the base."""
+    white flowers, round fruits (True = on every branch, an int = on that
+    many branches); optional S-allele dots at the base."""
+    n_fruit = 5 if fruits is True else int(fruits)
     a = 0.35 if faded else 1.0
     ax.plot([x, x], [y, y + 0.45 * h], color=STEM, lw=2.2, alpha=a, zorder=3)
-    for ang in (-50, -25, 0, 25, 50):
+    for b, ang in enumerate((-50, -25, 0, 25, 50)):
         r = np.deg2rad(90 + ang)
         bx, by = x, y + 0.45 * h
         tx, ty = bx + 0.55 * h * np.cos(r), by + 0.55 * h * np.sin(r)
@@ -60,9 +64,9 @@ def lepa(ax, x, y, h=12, alleles=None, faded=False, fruits=True):
         for _ in range(4):
             ax.add_patch(Circle((tx + RNG.normal(0, 0.06 * h), ty + RNG.normal(0, 0.05 * h)),
                                 0.075 * h, fc=FLOWER, ec="#999", lw=0.5, alpha=a, zorder=4))
-        if fruits:
-            ax.add_patch(Circle((tx - 0.08 * h, ty - 0.14 * h), 0.06 * h, fc=FRUIT, ec=STEM,
-                                lw=0.5, alpha=a, zorder=4))
+        if b in (2, 0, 4, 1, 3)[:n_fruit]:                # centre branch first
+            ax.add_patch(Circle((tx - 0.08 * h, ty - 0.14 * h), 0.06 * h, fc=FRUIT, ec=FRUIT_EDGE,
+                                lw=0.5, zorder=5))   # fruits stay visible on faded plants
     for s in (-1, 1):
         ax.add_patch(Polygon([[x, y], [x + s * 0.35 * h, y + 0.08 * h],
                               [x + s * 0.2 * h, y + 0.18 * h]], fc=LEAF, ec="none", alpha=a,
@@ -199,7 +203,7 @@ def panel_wild(ax):
     for k, (x, y, w, h, n) in enumerate(spots):
         ax.add_patch(Ellipse((x, y), w, h, fc=SPOT, ec=SPOT_EDGE, lw=1.4, zorder=1))
         for dx in np.linspace(-(n - 1) * 4, (n - 1) * 4, n):
-            lepa(ax, x + dx, y - 5, h=8, faded=dx != 0, fruits=dx == 0)
+            lepa(ax, x + dx, y - 5, h=8, faded=dx != 0, fruits=2 if dx == 0 else 1)  # scarce, never none
         seed_bag(ax, x + w / 2 + 2, y - 7, 4.5, 5, 1 + k % 2)
     for (x1, y1), (x2, y2) in (((40, 74), (62, 77)), ((44, 44), (59, 46)), ((26, 64), (29, 53))):
         ax.plot([x1, x2], [y1, y2], color="#999", lw=1.2, ls=(0, (2, 3)), zorder=0)
@@ -289,31 +293,45 @@ def panel_restoration(ax):
 PANELS = (panel_wild, panel_bulking, panel_breeding, panel_restoration)
 
 
-def draw(n_shown: int):
-    """Figure with the first n_shown steps; later steps left blank (same
-    pixel size, so the frames build up one step per slide)."""
-    global RNG
-    RNG = np.random.default_rng(7)                       # same plants in every frame
-    fig, axes = plt.subplots(1, len(PANELS), figsize=(24, 7.8))
-    for k, (ax, f) in enumerate(zip(axes, PANELS)):
+def grid_figure(panels, n_shown: int, bottom: float = 0.02):
+    """Four steps on two rows (1–2 above, 3–4 below), each panel drawn on a
+    0–100 square; steps after n_shown left blank (same pixel size, so the
+    frames build up one step per slide). Arrows 1 → 2, 2 → 3 (down to the
+    next row) and 3 → 4. Shared with source_screening_cartoon.py."""
+    fig, axes = plt.subplots(2, 2, figsize=(16, 15.5 + 14 * bottom))
+    flat = axes.flat
+    for k, (ax, f) in enumerate(zip(flat, panels)):
         if k < n_shown:
             f(ax)
         else:
             ax.set_xlim(0, 100), ax.set_ylim(0, 100), ax.set_aspect("equal"), ax.axis("off")
             ax.set_title(" ", fontsize=18, pad=10)
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.93, bottom=0.13, wspace=0.08)
+    fig.subplots_adjust(left=0.02, right=0.98, top=0.95, bottom=bottom, wspace=0.1, hspace=0.12)
     fig.canvas.draw()                                    # final layout before placing arrows
-    for k, (a, b) in enumerate(zip(axes[:-1], axes[1:])):    # arrows between panels
-        if k + 1 >= n_shown:
-            break
-        p = fig.transFigure.inverted().transform(a.transData.transform((100, 50)))
-        q = fig.transFigure.inverted().transform(b.transData.transform((0, 50)))
-        fig.add_artist(FancyArrowPatch(p, q, transform=fig.transFigure, arrowstyle="-|>",
-                                       mutation_scale=26, color="#333", lw=3))
+    to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
+    style = dict(transform=fig.transFigure, arrowstyle="-|>", mutation_scale=26, color="#333",
+                 lw=3)
+    for k, (a, b) in enumerate(((axes[0, 0], axes[0, 1]), (axes[1, 0], axes[1, 1]))):
+        if 2 * k + 1 >= n_shown:                         # 1 → 2 and 3 → 4, side by side
+            continue
+        fig.add_artist(FancyArrowPatch(to_fig(a, (100, 50)), to_fig(b, (0, 50)), shrinkA=6,
+                                       shrinkB=6, **style))
+    if n_shown >= 3:                                     # 2 → 3: elbow connector
+        (x0, y0), (x1, y1) = to_fig(axes[0, 1], (50, 0)), to_fig(axes[1, 0], (88, 100))
+        y_mid = y0 - 0.012                               # just under the top row
+        fig.add_artist(FancyArrowPatch(path=MPath([(x0, y0 - 0.003), (x0, y_mid), (x1, y_mid),
+                                                  (x1, y1 + 0.004)]), **style))
+    return fig
+
+
+def draw(n_shown: int):
+    global RNG
+    RNG = np.random.default_rng(7)                       # same plants in every frame
+    fig = grid_figure(PANELS, n_shown, bottom=0.07)
     if n_shown == len(PANELS):                          # what the programme rests on
-        fig.text(0.5, 0.055, "★  The whole programme rests on rapidly identifying candidate "
+        fig.text(0.5, 0.03, "★  The whole programme rests on rapidly identifying candidate\n"
                  "source populations for seed bulking — our approach", ha="center", va="center",
-                 fontsize=16, fontweight="bold", color="white",
+                 fontsize=16, fontweight="bold", color="white", linespacing=1.3,
                  bbox=dict(boxstyle="round,pad=0.6", fc=INTACT, ec="none"))
     return fig
 

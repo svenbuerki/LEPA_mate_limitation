@@ -179,6 +179,26 @@ def pick_best_predictor(df: pd.DataFrame) -> tuple[str, str, pd.DataFrame]:
 # ---------------------------------------------------------------------------
 # Per-population test
 # ---------------------------------------------------------------------------
+EQUIV_FOLD = 2.0    # equivalence band: half to twice the seed predicted by size
+
+
+def tost_p(r: np.ndarray, fold: float = EQUIV_FOLD) -> float:
+    """Equivalence test (two one-sided t-tests) on log10 residuals: p for
+    "the population's mean seed set lies within 1/fold – fold of what its
+    plants' size predicts". Small p = significantly as expected, which the
+    difference test alone cannot show (non-significance is not evidence)."""
+    n = len(r)
+    if n < 3:
+        return np.nan
+    se = float(r.std(ddof=1)) / np.sqrt(n)
+    b = np.log10(fold)
+    if se == 0:
+        return 0.0 if abs(float(r.mean())) < b else 1.0
+    p_lo = stats.t.sf((r.mean() + b) / se, n - 1)       # H1: mean > −b
+    p_hi = stats.t.cdf((r.mean() - b) / se, n - 1)      # H1: mean < +b
+    return float(max(p_lo, p_hi))
+
+
 def per_population_year_test(df: pd.DataFrame) -> pd.DataFrame:
     out = []
     for (pid, yr), g in df.groupby(["populationID", "year"]):
@@ -209,7 +229,7 @@ def per_population_year_test(df: pd.DataFrame) -> pd.DataFrame:
                         population_label=label, n_plants=int(n),
                         mean_resid=mean, ci95=ci, t_stat=float(t)
                         if not np.isnan(t) else np.nan,
-                        p_ttest=p_t, p_wilcoxon=p_w))
+                        p_ttest=p_t, p_wilcoxon=p_w, p_equiv=tost_p(r)))
     res = pd.DataFrame(out)
     # BH-FDR across all (populationID, year) rows with n ≥ 3
     mask = res["n_plants"] >= 3
@@ -217,6 +237,9 @@ def per_population_year_test(df: pd.DataFrame) -> pd.DataFrame:
     if mask.sum() >= 2:
         q = fdrcorrection(res.loc[mask, "p_ttest"].fillna(1.0).to_numpy())[1]
         res.loc[mask, "q_ttest"] = q
+    res["q_equiv"] = np.nan                     # BH-FDR on the equivalence test, same rows
+    if mask.sum() >= 2:
+        res.loc[mask, "q_equiv"] = fdrcorrection(res.loc[mask, "p_equiv"].fillna(1.0).to_numpy())[1]
     res["fold_of_expectation"] = 10 ** res["mean_resid"]
     res["fold_lo95"] = 10 ** (res["mean_resid"] - res["ci95"])
     res["fold_hi95"] = 10 ** (res["mean_resid"] + res["ci95"])
@@ -224,6 +247,10 @@ def per_population_year_test(df: pd.DataFrame) -> pd.DataFrame:
                                        & (res["mean_resid"] < 0))
     res["flag_above_expectation"] = ((res["q_ttest"].fillna(1.0) < 0.05)
                                        & (res["mean_resid"] > 0))
+    # Equivalence (decided 2026-11-01): seed set significantly within half –
+    # twice the size expectation. A season below 0.8 that is nonetheless
+    # significantly within the band is "as expected", not a candidate.
+    res["flag_within_band"] = res["q_equiv"].fillna(1.0) < 0.05
 
     # Reproductive-status bucket per (populationID, year). Hypothesis:
     # seed production reflects the reproductive status of the
@@ -238,8 +265,8 @@ def per_population_year_test(df: pd.DataFrame) -> pd.DataFrame:
             return "mate_limited"
         if r["flag_above_expectation"]:
             return "si_escape_candidate"
-        if r["fold_of_expectation"] < 0.8:
-            # Trend below but not FDR-sig — watch
+        if r["fold_of_expectation"] < 0.8 and not r["flag_within_band"]:
+            # Trend below, neither FDR-sig below nor within the band — watch
             return "candidate_mate_limited"
         return "reproduction_intact"
 
@@ -254,6 +281,8 @@ def summarise_per_population(res: pd.DataFrame) -> pd.DataFrame:
       mate_limited           FDR-sig under-producing in >= 1 year, never over
       switching              FDR-sig under in one year AND over in the other
       candidate_mate_limited fold < 0.8 in >= 1 year (n >= 3), not FDR-sig
+                             and not significantly within half – twice
+                             (equivalence test) — an inconclusive shortfall
       si_escape_candidate    FDR-sig over-producing in >= 1 year, never under
       reproduction_intact    every testable year at expectation
       insufficient_data      no year with n >= 3 plants
@@ -286,7 +315,7 @@ def summarise_per_population(res: pd.DataFrame) -> pd.DataFrame:
             return "mate_limited"
         if above:
             return "si_escape_candidate"
-        if (testable & (g["fold_of_expectation"] < 0.8)).any():
+        if (testable & (g["fold_of_expectation"] < 0.8) & ~g["flag_within_band"]).any():
             return "candidate_mate_limited"
         if not testable.any():
             return "insufficient_data"
@@ -798,10 +827,11 @@ def main() -> None:
     adj["resid"] = adj["logy"] - adj["expected"]
     res_adj = per_population_year_test(adj.drop(columns="logy_adj"))
     res = res.merge(
-        res_adj[["populationID", "year", "fold_of_expectation", "q_ttest",
+        res_adj[["populationID", "year", "fold_of_expectation", "q_ttest", "q_equiv",
                  "conservation_bucket"]]
         .rename(columns={"fold_of_expectation": "fold_year_adjusted",
                          "q_ttest": "q_year_adjusted",
+                         "q_equiv": "q_equiv_year_adjusted",
                          "conservation_bucket": "bucket_year_adjusted"}),
         on=["populationID", "year"], how="left")
     # BL ordering + populationID within-BL ordering for display

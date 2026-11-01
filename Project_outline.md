@@ -105,7 +105,7 @@ sampled in the wild) at six sites (§ 5).
 <a id="schematic-units"></a>
 ![How the units are built](figures/units_cartoon.png)
 
-**Schematic.** Slick spot (event) → deme → population. **1** — each slick spot surveyed in a season is an event, and its flowering plants are counted. **2** — within a season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. **3** — slick spots of all seasons (here 2025 and 2026) less than 500 m apart form one population, inside which demes are redrawn each season; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
+**Schematic.** Slick spot (event) → deme → population. **1** — the same ground in 2025 (left) and 2026 (right): each slick spot surveyed in a season is an event, and its flowering plants are counted; some slick spots are not above ground in a season (dashed), others appear. **2** — within each season, pollinators move between slick spots less than 50 m apart, which then form one deme; a slick spot on its own is a deme by itself. Demes are redrawn every season: here a new 2026 slick spot links two 2025 demes. **3** — the two seasons combined: slick spots of both seasons (open = 2025, filled = 2026) less than 500 m apart form one population; slick spots more than 500 m apart (red ✗) belong to different populations; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py`.
 
 <span style="color:#777"><strong>Results.</strong></span> The occurrences resolve into
 **44 populations** ([Figure 2](#fig-2)) in **five BLs** (BL1 17
@@ -180,7 +180,11 @@ empirical zygosity**, averaged over demes weighted by size
 2. **Per population and year.** Each plant's residual (observed −
    expected) is tested against 0 (one-sample t-test, corrected for
    multiple testing with Benjamini–Hochberg). The fold of expectation
-   is observed / expected seed yield ([Figure 12b](#fig-12b)).
+   is observed / expected seed yield ([Figure 12b](#fig-12b)). An
+   **equivalence test** (two one-sided t-tests, same correction) asks
+   the complementary question — is the mean seed set significantly
+   *within* half – twice the expectation? — so that "as expected" rests
+   on evidence, not on a non-significant difference.
 3. **Year check.** Within populations, 2026 plants made 15 % fewer
    seeds for their size than 2025 plants (fold 0.85, p = 0.005). The
    test is therefore run twice: with the pooled curve, and with this
@@ -190,7 +194,8 @@ empirical zygosity**, averaged over demes weighted by size
 4. **Population status.** The two years combine into one status:
    *mate-limited* (significant under-production in ≥ 1 year, never
    over), *switching* (under in one year, over in the other),
-   *candidate mate-limited* (fold < 0.8, not significant),
+   *candidate mate-limited* (fold < 0.8, neither significantly below
+   nor significantly within half – twice — an inconclusive shortfall),
    *SI-escape candidate* (significant over-production, never under),
    *reproduction intact*, or *insufficient data* (no year with ≥ 3
    plants).
@@ -204,12 +209,12 @@ empirical zygosity**, averaged over demes weighted by size
 
 | Rank | Status | n | Populations |
 |:-:|---|:-:|---|
-| 1 | **Mate-limited** | **6** | P1 (EO112, new to our sampling in 2026), P4 (EO30-3), P8, P10 (EO27 cluster) (BL1) · P32 (EO24, BL3) · P42 (EO70, BL5) |
+| 1 | **Mate-limited** | **7** | P1 (EO112, new to our sampling in 2026), P4 (EO30-3), P8, P10, P16 (EO27 cluster) (BL1) · P32 (EO24, BL3) · P42 (EO70, BL5) |
 | 2 | **Switching** (over in 2025 → under in 2026) | **1** | P19 (EO8, BL2) |
 | 3 | Candidate mate-limited | 3 | P3 (EO30-4), P6 (EO67) (BL1) · P20 (EO26-2, BL2) |
 | 4 | **SI-escape candidate** | **7** | P2 (BL1) · P18, P23, P24, P25 (BL2) · P37, P40 (BL4) |
-| 5 | Reproduction intact | 8 | — |
-| — | **Year-sensitive** | **9** | mate-limited with the pooled curve: P16 (EO27-1 + EO27RT; switching with the offset), P36 (EO25-B; candidate) · SI-escape with the pooled curve, intact with the offset: P26, P29, P34, P35, P43 · intact → candidate: P13, P27 |
+| 5 | Reproduction intact | 10 | P5 (EO30-2), P13 (EO27-1) (BL1) · P21, P22 (EO26, BL2) · P28 (EO32), P30 (EO24-7) (BL3) · P38 (EO52), P39 (EO118), P41 (EO76) (BL4) · P43 (EO68-3, BL5) |
+| — | **Year-sensitive** | **6** | mate-limited with the pooled curve, candidate with the offset: P36 (EO25-B) · SI-escape with the pooled curve, intact with the offset: P26, P29, P34, P35 · intact → candidate: P27 |
 | 6 | Insufficient data | 3 | P7, P31, P33 |
 
 The most severe shortfall is P10 EO27-3 (fold 0.44 in 2025, 0.02 in
@@ -1524,7 +1529,10 @@ significantly above expectation under both curves):
   **P34 EO18-7 + EO18-8** (1.28; the big side of D1), **P35 EO25-A**
   (1.44) and **P43 EO68-3** (1.32).
 - Intact with the pooled curve, candidate mate-limited with the
-  offset: **P13 EO27-1** and **P27 EO48** (both 0.83, 2025).
+  offset: **P27 EO48** (0.83, 2025). P13 EO27-1 showed the same
+  pattern until the equivalence test (2026-11-01): its seed set is
+  significantly within half – twice the expectation in both seasons,
+  so it is intact under both curves.
 
 **Candidate mate-limited (sub-threshold)** — fold < 0.8 but not
 FDR-sig, worth watching: **P6 EO67_39** (fold 0.54 / 0.54,
@@ -1695,9 +1703,11 @@ P13 (EO27, 12), P16 (EO27, 15). In total **246 genotyped plants**.
   only 5 alleles and FG001 (0.56) and FG002 (0.27) dominating: only
   4 % of its SRK copies are Class I, so almost every plant expresses
   Class II (a class-balance collapse, § C.0.b). In the seed-yield test
-  P13 is intact with the pooled curve and a candidate with the year
-  offset (year-sensitive, § 30.3). Few plants (12, from 7 mothers):
-  treat as indicative.
+  P13 is **reproductively intact** — its seed set is significantly
+  within half – twice the expectation in both seasons (equivalence
+  test, § 30.3) — so seed set and SRK disagree here. Few plants (12,
+  from 7 mothers): treat the genetics as indicative; seed–mother
+  genotyping of P13 would settle it.
 - **P16 (EO27)** — compatibility **above** the prediction here (0.84
   vs 0.79): its 8 alleles are evenly spread, with rare alleles (FG005,
   FG017) at 0.10 each. This comparison draws fathers with the
@@ -2322,6 +2332,7 @@ framework and the fragmentation → drift → mate-limitation causal
 chain. BibTeX entries live in [`SRK_mate_limitation_references.bib`](SRK_mate_limitation_references.bib).
 
 - **Aguilar, R., Quesada, M., Ashworth, L., Herrerías-Diego, Y. & Lobo, J. (2008).** Genetic consequences of habitat fragmentation in plant populations: susceptible signals in plant traits and methodological approaches. *Molecular Ecology* 17, 5177–5188.
+- **Buerki, S., Geisler, M., Martinez, P., Beck, J. & Robertson, I. (2026).** Genomics and phylogenetics inform a species recovery plan for a threatened allopolyploid plant. *Botanical Journal of the Linnean Society* 212(3), 275–291. doi:10.1093/botlinnean/boaf116.
 - **Castric, V. & Vekemans, X. (2004).** Plant self-incompatibility in natural populations: a critical assessment of recent theoretical and empirical advances. *Molecular Ecology* 13, 2873–2889.
 - **Freckleton, R.P. & Watkinson, A.R. (2002).** Large-scale spatial dynamics of plants: metapopulations, regional ensembles and patchy populations. *Journal of Ecology* 90, 419–434.
 - **Hanski, I. (1998).** Metapopulation dynamics. *Nature* 396, 41–49.

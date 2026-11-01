@@ -93,8 +93,9 @@ def panel_curve(ax):
             rotation=90)
     ax.text(x0 + w - 1, line(x0 + w, 9) + 2, "twice", ha="right", va="bottom", fontsize=11,
             color=OVER)
-    ax.text(x0 + w + 1, line(x0 + w) - 2, "expected", ha="right", va="top", fontsize=11,
-            color=INTACT, fontweight="bold")
+    ax.text(x0 + w - 1, line(x0 + w - 1) - 5, "expected", ha="right", va="center",
+            fontsize=11, color=INTACT, fontweight="bold", zorder=5,
+            bbox=dict(boxstyle="round,pad=0.15", fc="#D9EEEA", ec="none"))
     ax.text(x0 + w - 1, line(x0 + w, -9) - 3, "half", ha="right", va="top", fontsize=11,
             color=MATE_LIM)
 
@@ -135,7 +136,7 @@ def panel_candidates(ax):
         ax.text(40, y + 2, lab, ha="left", va="bottom", fontsize=12.5, color=c, fontweight="bold")
         ax.text(40, y - 1, f"= {role}", ha="left", va="top", fontsize=12.5, color=c)
     cross_mark(ax, 22, 22, s=6, col=OVER, lw=2.5)
-    ax.text(40, 64.5, "P34 · P35 · P43", ha="left", va="top", fontsize=10.5, color=INTACT,
+    ax.text(40, 64.5, "P13 · P34 · P35 · P43", ha="left", va="top", fontsize=10.5, color=INTACT,
             style="italic")
     arrow(ax, (62, 78), (70, 78), col=INTACT, lw=2.2)    # → seed bulking
     greenhouse(ax, 72, 70, 22, 18)
@@ -156,23 +157,7 @@ PANELS = (panel_measure, panel_curve, panel_compare, panel_candidates)
 
 def draw(n_shown: int):
     rc.RNG = np.random.default_rng(11)                   # same plants in every frame
-    fig, axes = plt.subplots(1, len(PANELS), figsize=(24, 7.0))
-    for k, (ax, f) in enumerate(zip(axes, PANELS)):
-        if k < n_shown:
-            f(ax)
-        else:
-            ax.set_xlim(0, 100), ax.set_ylim(0, 100), ax.set_aspect("equal"), ax.axis("off")
-            ax.set_title(" ", fontsize=18, pad=10)
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.92, bottom=0.04, wspace=0.08)
-    fig.canvas.draw()
-    for k, (a, b) in enumerate(zip(axes[:-1], axes[1:])):
-        if k + 1 >= n_shown:
-            break
-        p = fig.transFigure.inverted().transform(a.transData.transform((100, 50)))
-        q = fig.transFigure.inverted().transform(b.transData.transform((0, 50)))
-        fig.add_artist(FancyArrowPatch(p, q, transform=fig.transFigure, arrowstyle="-|>",
-                                       mutation_scale=26, color="#333", lw=3))
-    return fig
+    return rc.grid_figure(PANELS, n_shown)
 
 
 def main():
