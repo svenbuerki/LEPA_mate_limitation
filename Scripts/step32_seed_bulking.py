@@ -363,9 +363,12 @@ def seed_available(pops: pd.DataFrame) -> pd.DataFrame:
 SIZE_EXAMPLES = [("Small", 2515), ("Medium", 2592), ("Large", 2748)]   # occurrenceIDs, 2026
 
 
-def plant_size_panel() -> None:
+def plant_size_panel(m: pd.DataFrame) -> None:
     """Three 2026 measuring-board photos (small / medium / large plant, each
-    near the seed its size predicts), saved without any metadata."""
+    near the seed its size predicts), saved without any metadata; each is
+    labelled with its crown size and the seed its size predicts on the
+    Figure 9 curve (pooled size → seed fit over all plants)."""
+    b1, b0 = np.polyfit(m["logc"], m["logy"], 1)
     import sqlite3
     from PIL import Image, ImageOps
     from project_paths import LEPA_DB
@@ -390,8 +393,12 @@ def plant_size_panel() -> None:
         clean.save(out / f"size_{lab.lower()}_OC{oc}_crown{r['crown']:g}cm.jpg", quality=90)
         ax.imshow(clean); ax.axis("off")
         ax.set_title(f"{lab} plant", fontsize=20, weight="bold", pad=8)
+        exp_seed = 10 ** (b0 + b1 * np.log10(r["crown"]))
         ax.text(0.5, -0.06, f"crown {r['crown']:g} cm",
                 transform=ax.transAxes, ha="center", va="top", fontsize=17)
+        ax.text(0.5, -0.16, f"expected ≈ {round(exp_seed, -1):,.0f} seeds",
+                transform=ax.transAxes, ha="center", va="top", fontsize=17, weight="bold",
+                color=TYPE_COLORS["Reproductively intact"])
     fig.tight_layout(w_pad=1.5)
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"plant_size_examples.{ext}", dpi=200, bbox_inches="tight")
@@ -435,53 +442,22 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     tab = pd.DataFrame(rows)
     tab.to_csv(TABLES / "step32_genetic_example_P42_P34.tsv", sep="\t", index=False)
 
-    fig = plt.figure(figsize=(18, 7))
-    gs = fig.add_gridspec(1, 3, width_ratios=[0.85, 1.3, 1], wspace=0.8)
+    # S-type colours as in Figure 5 (breeding_system_cartoon), A = commonest
+    s_cols = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#17becf",
+              "#bcbd22", "#aec7e8", "#ffbb78", "#98df8a", "#c5b0d5"]
+    s_col = {i: s_cols[k % len(s_cols)] for k, i in enumerate(order)}
     col = {42: TYPE_COLORS["Mate-limited"], 34: TYPE_COLORS["Reproductively intact"]}
-    name = {42: "P42\n(EO70)", 34: "P34\n(EO18)"}
-    # A — allele make-up
-    ax = fig.add_subplot(gs[1])
-    shades = plt.get_cmap("Greys")(np.linspace(0.85, 0.25, len(order)))
-    for yi, pop in zip((1, 0), (42, 34)):
-        left = 0.0
-        for k, i in enumerate(order):
-            w = freqs[pop][i]
-            if w <= 0:
-                continue
-            ax.barh(yi, w, left=left, color=shades[k], edgecolor="white", height=0.6)
-            if w >= 0.06:
-                ax.text(left + w / 2, yi, letter[i], ha="center", va="center", fontsize=14,
-                        weight="bold", color="white" if k < len(order) / 2 else "black")
-            left += w
-        top2 = np.sort(freqs[pop])[::-1][:2].sum()
-        ax.text(0, yi + 0.34, f"{res[pop]['alleles']} alleles · top two hold {100 * top2:.0f} %",
-                va="bottom", ha="left", fontsize=13, color=col[pop], weight="bold")
-    ax.set_ylim(-0.45, 1.6)
-    ax.set_yticks([1, 0]); ax.set_yticklabels([name[42], name[34]], fontsize=14)
-    for lab, pop in zip(ax.get_yticklabels(), (42, 34)):
-        lab.set_color(col[pop])
-    from matplotlib.ticker import PercentFormatter
-    ax.set_xlim(0, 1); ax.set_xlabel("Share of SRK allele copies")
-    ax.xaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
-    ax.set_title("B. SRK allele make-up", loc="left", weight="bold")
-    # B — mates available per plant
-    ax = fig.add_subplot(gs[2])
-    for xi, pop in zip((0, 1), (42, 34)):
-        c = res[pop]["compat"]
-        ax.scatter(xi + rng.uniform(-0.18, 0.18, len(c)), c, s=30, color=col[pop], alpha=0.6,
-                   linewidths=0)
-        ax.plot([xi - 0.3, xi + 0.3], [c.mean()] * 2, color="black", lw=3)
-        ax.text(xi + 0.33, c.mean(), f"{100 * c.mean():.0f} %", va="center", fontsize=15,
-                weight="bold")
-    ax.set_xticks([0, 1]); ax.set_xticklabels(["P42\n(EO70)", "P34\n(EO18)"], fontsize=14)
-    for lab, pop in zip(ax.get_xticklabels(), (42, 34)):
-        lab.set_color(col[pop])
-    ax.set_ylim(0, 1.02); ax.set_xlim(-0.6, 1.8)
-    from matplotlib.ticker import PercentFormatter
-    ax.yaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
-    ax.set_ylabel("Share of the population\na plant can mate with")
-    ax.set_title("C. Mates available per plant", loc="left", weight="bold")
-    # C — seed set for size
+    name = {42: "P42 (EO70)\nmate-limited", 34: "P34 (EO18)\nintact"}
+    fig = plt.figure(figsize=(19, 8.2))
+    gs = fig.add_gridspec(1, 3, width_ratios=[0.72, 2.5, 0.8], wspace=0.42)
+
+    def pop_ticks(ax, xs):
+        ax.set_xticks(xs)
+        ax.set_xticklabels([name[p].replace(" (", "\n(") for p in (42, 34)], fontsize=13)
+        for lab, pop in zip(ax.get_xticklabels(), (42, 34)):
+            lab.set_color(col[pop])
+
+    # A — seed set for size (as Figure 10)
     ax = fig.add_subplot(gs[0])
     pt = pops.set_index("populationID")
     for xi, pop in zip((0, 1), (42, 34)):
@@ -496,24 +472,79 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     ax.set_yscale("log"); ax.set_ylim(0.35, 3.6)
     ax.set_yticks([0.5, 1, 2]); ax.set_yticklabels(["0.5", "1", "2"])
     ax.yaxis.set_minor_locator(plt.NullLocator())
-    ax.set_xticks([0, 1]); ax.set_xticklabels(["P42\n(EO70)", "P34\n(EO18)"], fontsize=14)
-    for lab, pop in zip(ax.get_xticklabels(), (42, 34)):
-        lab.set_color(col[pop])
-    ax.set_xlim(-0.6, 1.6)
+    pop_ticks(ax, [0, 1]); ax.set_xlim(-0.6, 1.6)
     ax.set_ylabel("Seeds per plant ÷ seeds\nexpected for its size")
     for yv, lab, tp in ((BAND, "over-producing", "Over-producing"),
                         (1, "as expected", "Reproductively intact"),
                         (1 / BAND, "mate-limited", "Mate-limited")):
         ax.text(1.02, yv, lab, transform=ax.get_yaxis_transform(), va="center", ha="left",
-                fontsize=13, weight="bold", color=TYPE_COLORS[tp])
+                fontsize=12.5, weight="bold", color=TYPE_COLORS[tp])
     ax.set_title("A. Seed set for plant size", loc="left", weight="bold")
+
+    # B — S-types carried: 100 circles = 100 % of S-allele copies, colour = S-type
+    ax = fig.add_subplot(gs[1])
+    x0s = {42: 0.0, 34: 11.2}
+    for pop in (42, 34):
+        f = np.array([freqs[pop][i] for i in order])
+        present = f > 0
+        dots = present.astype(int)                       # every S-type present shows ≥ 1 circle
+        share = f * (100 - dots.sum())
+        dots += np.floor(share).astype(int)
+        rem = share - np.floor(share)
+        for k in np.argsort(-rem)[: 100 - dots.sum()]:
+            dots[k] += 1
+        seq = np.repeat(np.arange(len(order)), dots)     # commonest first, filling rows
+        for n, k in enumerate(seq):
+            ax.add_patch(plt.Circle((x0s[pop] + n % 10 + 0.5, 9.5 - n // 10), 0.42,
+                                    fc=s_col[order[k]], ec="white", lw=0.6))
+        main = (f >= 0.05).sum()
+        ax.text(x0s[pop] + 5, 13.6, name[pop].replace("\n", " — "), ha="center", va="top",
+                fontsize=16.5, color=col[pop])
+        ax.text(x0s[pop] + 5, 12.4, f"{present.sum()} S-types\n{main} main hold "
+                f"{100 * f[f >= 0.05].sum():.0f} %", ha="center", va="top",
+                fontsize=15, weight="bold", color=col[pop])
+    ax.set_xlim(-0.1, 21.3); ax.set_ylim(-0.1, 15.0); ax.set_aspect("equal")
+    ax.set_anchor("N")                                   # title level with panels A and C
+    ax.set_xticks([]); ax.set_yticks([])
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    ax.set_title("B. S-types carried (SRK alleles)", loc="left", weight="bold")
+
+    # C — compatible mates per plant
+    ax = fig.add_subplot(gs[2])
+    for xi, pop in zip((0, 1), (42, 34)):
+        c = res[pop]["compat"]
+        ax.scatter(xi + rng.uniform(-0.18, 0.18, len(c)), c, s=30, color=col[pop], alpha=0.6,
+                   linewidths=0)
+        ax.plot([xi - 0.3, xi + 0.3], [c.mean()] * 2, color="black", lw=3)
+        ax.text(xi + 0.33, c.mean(), f"{100 * c.mean():.0f} %", va="center", fontsize=15,
+                weight="bold")
+    pop_ticks(ax, [0, 1])
+    ax.set_ylim(0, 1.02); ax.set_xlim(-0.6, 1.8)
+    from matplotlib.ticker import PercentFormatter
+    ax.yaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
+    ax.set_ylabel("Share of the population\na plant can mate with")
+    ax.set_title("C. Compatible mates per plant", loc="left", weight="bold")
+
+    # boxed legend under the panels (as Figure 10)
     from matplotlib.lines import Line2D
-    ax.legend(handles=[Line2D([], [], marker="o", ls="", color="#444", ms=10, label="2025"),
-                       Line2D([], [], marker="s", ls="", color="#444", ms=10, label="2026"),
-                       Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=10,
-                              label="open = not significant")],
-              fontsize=11, loc="upper left", bbox_to_anchor=(0, 1.0), frameon=False)
-    for a in fig.axes:
+    h = [Line2D([], [], marker="o", ls="", color="#444", ms=9, label="2025"),
+         Line2D([], [], marker="s", ls="", color="#444", ms=9, label="2026"),
+         Line2D([], [], marker="o", ls="", color="#444", ms=9,
+                label="filled = significant (q < 0.05): differs from\n"
+                      "expectation, or (teal) lies within half – twice"),
+         Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=9,
+                label="open = not significant"),
+         Line2D([], [], marker="o", ls="", color=s_cols[0], ms=9,
+                label="1 circle = 1 % of S-allele copies;\ncolour = S-type (as in Figure 5)"),
+         Line2D([], [], marker="o", ls="", color="black", ms=0,
+                label="bar = population average")]
+    leg = fig.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=3,
+                     fontsize=10.5, frameon=True, edgecolor="#999999", fancybox=False,
+                     title="Legend", title_fontproperties={"weight": "bold", "size": 11.5},
+                     columnspacing=1.8, handletextpad=0.4, borderpad=0.7)
+    leg.get_frame().set_linewidth(1.0)
+    for a in fig.axes[:1] + fig.axes[2:]:
         a.spines[["top", "right"]].set_visible(False)
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"genetic_example_P42_P34.{ext}", dpi=220, bbox_inches="tight")
@@ -529,7 +560,7 @@ def main() -> None:
     pops.to_csv(TABLES / "step32_seed_bulking_populations.tsv", sep="\t", index=False)
     print(pops.groupby("type", observed=True)["populationID"].apply(list).to_string())
     m = plants_with_type(pops)
-    plant_size_panel()
+    plant_size_panel(m)
     seed_by_size(m, "seed_by_size_plants")
     seed_by_size(m, "seed_by_size_points", bands=False)       # animation step 1
     population_seed_yield(pops)

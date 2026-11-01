@@ -53,6 +53,7 @@ size_scale <- scale_size_area(name = "Flowering plants\n(two-year average)", max
 
 # ---------------------------------------------------------------- 1. all types
 typed <- cent[cent$type != "One season only", ]
+typed <- typed[order(typed$avg_fertile, decreasing = TRUE), ]   # small circles on top (P13 under P16)
 p_status <- ggplot() + base_layers(dem_reg, bb_reg) + bl_layers() +
   geom_point(data = cent[cent$type == "One season only", ], aes(X, Y, size = avg_fertile,
              fill = type), shape = 21, color = "grey60", stroke = 0.4, alpha = 0.85) +
@@ -71,6 +72,12 @@ p_status <- ggplot() + base_layers(dem_reg, bb_reg) + bl_layers() +
   label_layer(data.frame(X = typed$X, Y = typed$Y, label = paste0("P", typed$populationID),
                          kind = "pop"), city_anchors(bb_reg)) +
   coord_sf(crs = UTM, expand = FALSE) + labs(x = NULL, y = NULL) + map_theme
+# reproductive-type icons where population_EO_map_BL has its inset (type_icons.py)
+icons <- grid::rasterGrob(png::readPNG(file.path(OUT, "type_icons_strip.png")))
+icons <- wrap_elements(full = icons) +
+  theme(plot.background = element_rect(fill = NA, colour = NA))   # no white box behind the panel
+p_status <- p_status + inset_element(icons, left = 0.53, bottom = 0.755, right = 0.97,
+                                     top = 0.98, align_to = "panel")   # ~12 % larger than Fig 7's
 save_map(p_status, "seed_bulking_status_map")
 
 # ---------------------------------------------------------------- 2. model populations

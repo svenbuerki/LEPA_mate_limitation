@@ -12,7 +12,8 @@ Drawn with the flower, pollen-arc and fruit glyphs of
 breeding_system_cartoon.py (after the ISI figures of SRK_bioinformatics),
 inside a round badge ringed in the type's colour. Use add_icon(fig, kind,
 [x, y, w, h]) to place one on any figure (figure coordinates).
-Output (preview sheet): figures_seed_bulking/type_icons.png
+Output: figures_seed_bulking/type_icons.png (preview sheet) and
+type_icons_strip.png (transparent legend strip for the status map)
 """
 from __future__ import annotations
 
@@ -75,6 +76,28 @@ def add_icon(fig, kind, rect):
     return ax
 
 
+def legend_strip(path):
+    """Transparent strip of the three badges with short labels, on a light
+    rounded panel — placed on the status map where Figure 7 has its inset."""
+    from matplotlib.patches import FancyBboxPatch
+    fig = plt.figure(figsize=(6.6, 2.75))
+    fig.patch.set_alpha(0)
+    bg = fig.add_axes([0, 0, 1, 1]); bg.axis("off")
+    bg.add_patch(FancyBboxPatch((0.01, 0.02), 0.98, 0.96, boxstyle="round,pad=0,rounding_size=0.06",
+                                fc="white", ec="#999999", lw=1.2, alpha=0.92,
+                                transform=bg.transAxes))
+    bg.text(0.5, 0.9, "Reproductive type", ha="center", va="center", fontsize=13,
+            fontweight="bold", transform=bg.transAxes)
+    for k, (kind, lab) in enumerate((("Mate-limited", "mate-limited"),
+                                      ("Reproductively intact", "intact"),
+                                      ("Over-producing", "over-producing"))):
+        add_icon(fig, kind, [0.04 + 0.32 * k, 0.2, 0.28, 0.6])
+        fig.text(0.18 + 0.32 * k, 0.11, lab, ha="center", va="center", fontsize=12,
+                 fontweight="bold", color=KINDS[kind])
+    fig.savefig(path, dpi=300, transparent=True)
+    plt.close(fig)
+
+
 def main():
     fig = plt.figure(figsize=(9, 3.6))
     for k, kind in enumerate(KINDS):
@@ -83,7 +106,8 @@ def main():
                  ha="center", va="center", fontsize=12, fontweight="bold", color=KINDS[kind])
     fig.savefig(OUT / "type_icons.png", dpi=220)
     plt.close(fig)
-    print(f"  wrote {OUT}/type_icons.png")
+    legend_strip(OUT / "type_icons_strip.png")
+    print(f"  wrote {OUT}/type_icons.png and type_icons_strip.png")
 
 
 if __name__ == "__main__":

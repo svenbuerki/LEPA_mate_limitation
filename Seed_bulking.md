@@ -268,7 +268,7 @@ so each plant has an expected seed set for its size
 <a id="fig-8"></a>
 ![Figure 8](figures_seed_bulking/plant_size_examples.png)
 
-**Figure 8.** Plant size phenotyping in the field, 2026: a small, a medium and a large plant photographed against the measuring board (crown width and height on the rulers), with their crown size. All three set about the seed their size predicts. Photos with location metadata removed: `figures_seed_bulking/plant_photos/`.
+**Figure 8.** Plant size phenotyping in the field, 2026: a small, a medium and a large plant photographed against the measuring board (crown width and height on the rulers), with their crown size and the seed a plant of that size is expected to set (the teal line of [Figure 9](#fig-9)): about 150, 390 and 1 040 seeds. All three set about the seed their size predicts. Photos with location metadata removed: `figures_seed_bulking/plant_photos/`.
 
 <a id="fig-9"></a>
 ![Figure 9](figures_seed_bulking/seed_by_size_plants.png)
@@ -327,7 +327,7 @@ before they are typed ([Figure 10](#fig-10), [Figure 11](#fig-11)).
 <a id="fig-11"></a>
 ![Figure 11](figures_seed_bulking/seed_bulking_status_map.png)
 
-**Figure 11.** Reproductive type of every population on the Snake River Plain, sized by flowering plants; dashed outlines = Bottleneck Lineages.
+**Figure 11.** Reproductive type of every population on the Snake River Plain, sized by flowering plants; dashed outlines = Bottleneck Lineages. Inset: the reproductive-type icons of [Figures 9](#fig-9) and [10](#fig-10). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
 
 #### 6.3.2 A genetic example — P42 against P34
 
@@ -337,10 +337,11 @@ intact in both seasons ([Figure 12](#fig-12)).
 
 - **Seed set (A).** P42 sets about half the seed its plants' size
   predicts in both seasons; P34 sets the expected amount.
-- **SRK alleles (B).** P42's plants carry 6 SRK alleles, and two of them
-  make up 97 % of all copies. P34's carry 7, more evenly shared: the two
-  commonest make up 69 %.
-- **Mates available (C).** Because most of P42's plants carry the same
+- **S-types carried (B).** The two populations hold a similar number of
+  S-types (SRK alleles): 6 in P42 and 7 in P34. What differs is how they
+  are shared: in P42 two S-types make up 97 % of all copies, while P34
+  has four main S-types (90 %), more evenly spread.
+- **Compatible mates (C).** Because most of P42's plants carry the same
   two alleles, a plant can mate, on average, with **53 %** of its
   population; in P34, with **67 %**. The two ranges do not overlap
   (P42 0.51 – 0.56, P34 0.61 – 0.72).
@@ -359,7 +360,7 @@ comparison.
 <a id="fig-12"></a>
 ![Figure 12](figures_seed_bulking/genetic_example_P42_P34.png)
 
-**Figure 12.** SRK genotypes of a mate-limited (P42, magenta) and a reproductively intact population (P34, teal). **A** — seed set relative to plant size per season, as in Figure 10 (circle = 2025, square = 2026; filled = significant: P42 differs from expectation, P34 lies within half – twice); **B** — share of SRK allele copies per allele (letters; the same letter is the same allele in both); **C** — for each genotyped plant, the share of its population it can mate with under the self-incompatibility system, with the average. Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
+**Figure 12.** SRK genotypes of a mate-limited (P42, magenta) and a reproductively intact population (P34, teal). **A** — seed set for plant size per season, as in [Figure 10](#fig-10) (circle = 2025, square = 2026; filled = significant: P42 differs from expectation, P34 lies within half – twice). **B** — the S-types carried: 100 circles per population, one circle = 1 % of S-allele copies, one colour per S-type as in [Figure 5](#fig-5) (the same colour is the same S-type in both). Both hold 6 – 7 S-types, but P42 has two main ones and P34 four (main = at least 5 % of copies). **C** — for each genotyped plant, the share of its population it can mate with under the self-incompatibility system; bar = average. Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
 
 #### 6.3.3 Candidate sources for seed bulking
 
