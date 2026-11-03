@@ -113,7 +113,7 @@ def draw_demes(ax, pts, dx, names):
 
 
 def bee(ax, x, y, s=7.0, angle=20):
-    """Small pollinator icon: striped body, two wings (data units = metres)."""
+    """Small pollinator icon: striped body, two wings (data units = meters)."""
     from matplotlib.patches import Ellipse as E
     import matplotlib.transforms as mt
     tr = mt.Affine2D().rotate_deg_around(x, y, angle) + ax.transData

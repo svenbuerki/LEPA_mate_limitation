@@ -81,7 +81,7 @@ def plot_overview(pop_summary: pd.DataFrame,
         "LEPA populations across the Snake River Plain — "
         "2025 + 2026 above-ground occupancy\n"
         "One dot per population; size ∝ total n_fertile across both "
-        "years; colour = occupancy pattern.",
+        "years; color = occupancy pattern.",
         fontsize=11,
     )
     ax.legend(loc="upper right", fontsize=9, frameon=True,

@@ -95,7 +95,7 @@ p_model <- ggplot() + base_layers(dem_reg, bb_reg) + bl_layers() +
   label_layer(data.frame(X = model$X, Y = model$Y, label = paste0("P", model$populationID),
                          kind = "pop"), city_anchors(bb_reg)) +
   labs(x = NULL, y = NULL,
-       subtitle = sprintf("Reproductively intact over two seasons (%d) — candidate sources for seed bulking; grey = other populations",
+       subtitle = sprintf("Reproductively intact over two seasons (%d) — candidate sources for seed bulking; gray = other populations",
                           nrow(model))) +
   coord_sf(crs = UTM, expand = FALSE) + map_theme +
   theme(plot.subtitle = element_text(size = 12, face = "bold",

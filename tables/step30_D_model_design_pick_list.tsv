@@ -63,6 +63,7 @@ D1	big	34	2026	9	317	2575	1695	germinate	1045	25	15	one per slick spot (random)
 D1	big	34	2026	9	318	2576	1696	germinate	194	25	15	one per slick spot (random)
 D1	big	34	2026	9	319	2578	1709	germinate	202	25	15	one per slick spot (random)
 D1	big	34	2026	2	288	2485	1487	germinate	527	25	15	one per slick spot (random)
+D1	big	34	2026	2	289	2486	1505	germinate	386	25	15	replacement for an unusable pinned mother (random)
 D1	big	34	2026	2	289	2487	1506	germinate	66	25	15	one per slick spot (random)
 D1	big	34	2026	2	290	2488	1476	germinate	169	25	15	one per slick spot (random)
 D1	big	34	2026	2	291	2495	1496	germinate	1391	25	15	one per slick spot (random)
@@ -70,7 +71,6 @@ D1	big	34	2026	2	292	2497	1498	germinate	317	25	15	one per slick spot (random)
 D1	big	34	2026	2	293	2499	1374	germinate	1032	25	15	one per slick spot (random)
 D1	big	34	2026	2	294	2500	1499	germinate	1554	25	15	one per slick spot (random)
 D1	big	34	2026	2	295	2501	1484	germinate	1252	25	15	one per slick spot (random)
-D1	big	34	2026	2	289	2486	1505	germinate	386	25	15	replacement for an unusable pinned mother (random)
 D1	big	34	2026	3	296	2502	1500	germinate	348	25	15	random among the deme's other mothers
 D1	big	34	2026	3	296	2503	1501	germinate	272	25	15	random among the deme's other mothers
 D1	big	34	2026	3	296	2504	1502	germinate	68	25	15	random among the deme's other mothers

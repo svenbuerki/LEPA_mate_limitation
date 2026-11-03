@@ -404,7 +404,7 @@ def build_field_team_recipe(step28_tsv: Path,
         "budget-limited (all available seeds)",
         np.where(
             n_exp <= n_miss,
-            "Rule 1 (90 % expected coverage — small event, cheap to characterise)",
+            "Rule 1 (90 % expected coverage — small event, cheap to characterize)",
             "Rule 2 (29-seed miss-probability floor — large event, Rule 1 impractical)",
         ),
     )
@@ -617,7 +617,7 @@ def plot_curves_empirical(prior_f: np.ndarray, per_location: pd.DataFrame,
     ax_bars.set_yticks(y)
     ax_bars.set_yticklabels(df["locationCode"], fontsize=6.5)
     ax_bars.set_xlim(0, 1.02); ax_bars.set_ylim(-0.7, len(df) - 0.3)
-    cov_label = ("realised per-mother seed budgets (Rule 2)"
+    cov_label = ("realized per-mother seed budgets (Rule 2)"
                  if cov_col == "exp_Fg_cov_realised_miss_P1"
                  else f"uniform {seeds_per_mother} seeds / mother")
     ax_bars.set_xlabel(f"Achieved Fg coverage under P1  —  {cov_label}")
@@ -832,7 +832,7 @@ def main() -> None:
             per_location["exp_Fg_cov_realised_miss_P1"]
             >= EXPECTED_COVERAGE
         ).mean()
-        print(f"[step29] Realised (per-mother-budget) coverage under Rule 2: "
+        print(f"[step29] Realized (per-mother-budget) coverage under Rule 2: "
               f"{pct_hit_real:.0%} of locations hit the 90 %-Fgs target.")
     elif prior_f is not None:
         print(f"[step29] WARNING: {DEFAULT_STEP28_TSV} not found — "

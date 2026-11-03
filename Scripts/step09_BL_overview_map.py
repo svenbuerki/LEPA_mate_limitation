@@ -209,7 +209,7 @@ def plot_bl_maps() -> None:
         _scale_bar(ax, lat0)
         ax.set_xlabel("Longitude (°)")
         ax.set_ylabel("Latitude (°)")
-        ax.set_title(f"{bl} — element occurrences (grey dashed convex hulls) "
+        ax.set_title(f"{bl} — element occurrences (gray dashed convex hulls) "
                      f"and populations (filled, P{{N}}); {len(pops)} populations",
                      loc="left", fontsize=11, weight="bold")
         ax.grid(True, alpha=0.25)

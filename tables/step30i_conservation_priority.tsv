@@ -1,38 +1,39 @@
 populationID	BL	population_label	conservation_priority	priority_rank	restoration_action	years_observed	years_sig_below	years_sig_above	fold_2025	fold_2026	n_plants_2025	n_plants_2026	priority_year_adjusted	year_sensitive	robust_priority
-1	BL1	EO112_53	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.33873528229446415	0	7	mate_limited	False	mate_limited
-4	BL1	EO30-3_51	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.22585782282166467	0	16	mate_limited	False	mate_limited
-8	BL1	EO27_9	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025]	[2025]	[]	0.4384479309179405		13	0	mate_limited	False	mate_limited
-10	BL1	EO27-3_10	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025, 2026]	[]	0.43866378529356675	0.023992767114366785	13	7	mate_limited	False	mate_limited
-16	BL1	EO27-1_11, EO27RT_12	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025]	[]	0.3861540234530791	1.091433979928747	54	124	mate_limited	False	mate_limited
-32	BL3	EO24_24	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2026]	[]	0.45290885702193623	0.213862570080804	1	5	mate_limited	False	mate_limited
-36	BL3	EO25-B_21	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2026]	[]	0.7853604437430983	0.5090342317014919	7	8	candidate_mate_limited	True	year_sensitive
-42	BL5	EO70_26	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025, 2026]	[]	0.5802273464833216	0.5535252023886019	25	42	mate_limited	False	mate_limited
-19	BL2	EO8_27, EO8_28	switching	2	intervene; genotype seed + mothers from both years	[2025, 2026]	[2026]	[2025]	1.7244962851892425	0.5915115144000739	37	137	switching	False	switching
-3	BL1	EO30-4_52	candidate_mate_limited	3	watch; sample more mothers to confirm	[2026]	[]	[]		0.5399346574441394	0	7	candidate_mate_limited	False	candidate_mate_limited
-6	BL1	EO67_39	candidate_mate_limited	3	watch; sample more mothers to confirm	[2025, 2026]	[]	[]	0.5384723366702161	0.531760738324567	4	6	candidate_mate_limited	False	candidate_mate_limited
-20	BL2	EO26-2_35	candidate_mate_limited	3	watch; sample more mothers to confirm	[2025]	[]	[]	0.6969931910986928		8	0	candidate_mate_limited	False	candidate_mate_limited
-2	BL1	EO30-1_13	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	0.9255866100154646	1.5005211853579015	20	16	si_escape_candidate	False	si_escape_candidate
-18	BL2	EO8_29, EO8_47	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.251950844029674		25	0	si_escape_candidate	False	si_escape_candidate
-23	BL2	EO26-3_31, EO26-3_32	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.19463510297705		47	0	si_escape_candidate	False	si_escape_candidate
-24	BL2	EO26-1_30	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.6404710929242838		22	0	si_escape_candidate	False	si_escape_candidate
-25	BL2	EO61_38	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.9008962785590284		54	0	si_escape_candidate	False	si_escape_candidate
-26	BL2	EO29_8	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.485496685292704		19	0	reproduction_intact	True	year_sensitive
-29	BL3	EO32_6	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.5559171263134353		19	0	reproduction_intact	True	year_sensitive
-34	BL3	EO18-7_15, EO18-7_16, EO18-7_17, EO18-7_19, EO18-8_18	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2025]	1.2681572846525497	0.9365810992581511	113	239	reproduction_intact	True	year_sensitive
-35	BL3	EO25-A_20	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2025]	1.4106278393626694	0.8642352678830597	29	38	reproduction_intact	True	year_sensitive
-37	BL4	EO38_1	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	1.1732916014328074	2.246779615419736	29	33	si_escape_candidate	False	si_escape_candidate
-40	BL4	EO76_2	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.188486825156417		58	0	si_escape_candidate	False	si_escape_candidate
-5	BL1	EO30-2_42	reproduction_intact	5	no action	[2026]	[]	[]		1.182890847681091	0	34	reproduction_intact	False	reproduction_intact
-13	BL1	EO27-1_37	reproduction_intact	5	no action	[2025, 2026]	[]	[]	0.8336224321690217	1.0646994518864268	24	38	reproduction_intact	False	reproduction_intact
-21	BL2	EO26-3_32, EO26-3_33, EO26-3_34, EO26_48	reproduction_intact	5	no action	[2025]	[]	[]	1.4024793817415773		18	0	reproduction_intact	False	reproduction_intact
-22	BL2	EO26-4_36, EO26_49	reproduction_intact	5	no action	[2025]	[]	[]	1.2673951410111042		11	0	reproduction_intact	False	reproduction_intact
-27	BL3	EO48_7	reproduction_intact	5	no action	[2025]	[]	[]	0.8327336801374363		9	0	candidate_mate_limited	True	year_sensitive
-28	BL3	EO32_6	reproduction_intact	5	no action	[2025]	[]	[]	1.2451434564307944		19	0	reproduction_intact	False	reproduction_intact
-30	BL3	EO24-7_25	reproduction_intact	5	no action	[2025]	[]	[]	2.4840855536173727		3	0	reproduction_intact	False	reproduction_intact
-38	BL4	EO52_3	reproduction_intact	5	no action	[2025, 2026]	[]	[]	0.9379400670353671	0.8045558676480024	18	1	reproduction_intact	False	reproduction_intact
-39	BL4	EO118_4	reproduction_intact	5	no action	[2025]	[]	[]	1.0285237029036158		12	0	reproduction_intact	False	reproduction_intact
-41	BL4	EO76_2	reproduction_intact	5	no action	[2025]	[]	[]	2.4017517514165245		4	0	reproduction_intact	False	reproduction_intact
-43	BL5	EO68-3_5	reproduction_intact	5	no action	[2025, 2026]	[]	[]	1.2906809496849072	0.9888676148419342	21	10	reproduction_intact	False	reproduction_intact
-7	BL1	EO72-2_40	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.9484930753598614		2	0	insufficient_data	False	insufficient_data
-31	BL3	EO24-1_22	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.3272373697389695		2	0	insufficient_data	False	insufficient_data
-33	BL3	EO24-2_23	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.688478502221239		1	0	insufficient_data	False	insufficient_data
+1	BL1	EO112_53	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.33710211686878006	0	7	mate_limited	False	mate_limited
+4	BL1	EO30-3_51	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2026]	[2026]	[]		0.22685982919555353	0	16	mate_limited	False	mate_limited
+8	BL1	EO27_9	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025]	[]	0.4449205702806653	0.814558388065897	13	54	mate_limited	False	mate_limited
+10	BL1	EO27-3_10	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025, 2026]	[]	0.4470487912189739	0.02412509232780728	13	7	mate_limited	False	mate_limited
+16	BL1	EO27-1_11, EO27RT_12	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025]	[]	0.3927480472489783	1.0961461724788355	54	124	mate_limited	False	mate_limited
+32	BL3	EO24_24	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2026]	[]	0.4540127770989742	0.21379760998010605	1	5	mate_limited	False	mate_limited
+36	BL3	EO25-B_21	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2026]	[]	0.7819727319535009	0.5063816305939479	7	8	candidate_mate_limited	True	year_sensitive
+42	BL5	EO70_26	mate_limited	1	intervene (cross-pollination / founder augmentation)	[2025, 2026]	[2025, 2026]	[]	0.5894051404451175	0.5509071141710945	25	42	mate_limited	False	mate_limited
+19	BL2	EO8_27, EO8_28	switching	2	intervene; genotype seed + mothers from both years	[2025, 2026]	[2026]	[2025]	1.7322692210546569	0.5924843275293527	37	137	switching	False	switching
+3	BL1	EO30-4_52	candidate_mate_limited	3	watch; sample more mothers to confirm	[2026]	[]	[]		0.5397750658995438	0	7	candidate_mate_limited	False	candidate_mate_limited
+6	BL1	EO67_39	candidate_mate_limited	3	watch; sample more mothers to confirm	[2025, 2026]	[]	[]	0.5490849833798301	0.5330178895968	4	6	candidate_mate_limited	False	candidate_mate_limited
+20	BL2	EO26-2_35	candidate_mate_limited	3	watch; sample more mothers to confirm	[2025]	[]	[]	0.7100538121163887		8	0	candidate_mate_limited	False	candidate_mate_limited
+2	BL1	EO30-1_13	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	0.9416740544257659	1.5241886310034947	20	16	si_escape_candidate	False	si_escape_candidate
+18	BL2	EO8_29, EO8_47	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.272605292783318		25	0	si_escape_candidate	False	si_escape_candidate
+23	BL2	EO26-3_31, EO26-3_32	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.2273544159627794		47	0	si_escape_candidate	False	si_escape_candidate
+24	BL2	EO26-1_30	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.6546663577872611		22	0	si_escape_candidate	False	si_escape_candidate
+25	BL2	EO61_38	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.910400967318545		54	0	si_escape_candidate	False	si_escape_candidate
+26	BL2	EO29_8	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.5030057029815533		19	0	reproduction_intact	True	year_sensitive
+29	BL3	EO32_6	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	1.5700497219090364		19	0	reproduction_intact	True	year_sensitive
+34	BL3	EO18-7_15, EO18-7_16, EO18-7_17, EO18-7_19, EO18-8_18	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2025]	1.2733301946134086	0.9357347958283043	113	239	reproduction_intact	True	year_sensitive
+35	BL3	EO25-A_20	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2025]	1.3920092124863461	0.8543289766759367	29	38	reproduction_intact	True	year_sensitive
+37	BL4	EO38_1	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025, 2026]	[]	[2026]	1.1771419803557228	2.2478559756926266	29	33	si_escape_candidate	False	si_escape_candidate
+40	BL4	EO76_2	si_escape_candidate	4	genotype seed + mothers to confirm selfing	[2025]	[]	[2025]	2.1790607333660845		58	0	si_escape_candidate	False	si_escape_candidate
+5	BL1	EO30-2_42	reproduction_intact	5	no action	[2026]	[]	[]		1.192162897227612	0	34	reproduction_intact	False	reproduction_intact
+9	BL1	EO27_9	reproduction_intact	5	no action	[2026]	[]	[]		1.231386909925068	0	25	reproduction_intact	False	reproduction_intact
+13	BL1	EO27-1_37	reproduction_intact	5	no action	[2025, 2026]	[]	[]	0.8478083203538987	1.0712598085136464	24	38	reproduction_intact	False	reproduction_intact
+21	BL2	EO26-3_32, EO26-3_33, EO26-3_34, EO26_48	reproduction_intact	5	no action	[2025]	[]	[]	1.4217819855454423		18	0	reproduction_intact	False	reproduction_intact
+22	BL2	EO26-4_36, EO26_49	reproduction_intact	5	no action	[2025]	[]	[]	1.2810589364104656		11	0	reproduction_intact	False	reproduction_intact
+27	BL3	EO48_7	reproduction_intact	5	no action	[2025]	[]	[]	0.850359210989883		9	0	reproduction_intact	False	reproduction_intact
+28	BL3	EO32_6	reproduction_intact	5	no action	[2025]	[]	[]	1.2561959388274433		19	0	reproduction_intact	False	reproduction_intact
+30	BL3	EO24-7_25	reproduction_intact	5	no action	[2025]	[]	[]	2.485026763574553		3	0	reproduction_intact	False	reproduction_intact
+38	BL4	EO52_3	reproduction_intact	5	no action	[2025, 2026]	[]	[]	0.9352166676462744	0.7948636479000307	18	1	reproduction_intact	False	reproduction_intact
+39	BL4	EO118_4	reproduction_intact	5	no action	[2025]	[]	[]	1.0442188945448325		12	0	reproduction_intact	False	reproduction_intact
+41	BL4	EO76_2	reproduction_intact	5	no action	[2025]	[]	[]	2.40139475360618		4	0	reproduction_intact	False	reproduction_intact
+43	BL5	EO68-3_5	reproduction_intact	5	no action	[2025, 2026]	[]	[]	1.2737682028409392	0.9856942002097359	21	10	reproduction_intact	False	reproduction_intact
+7	BL1	EO72-2_40	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.971168006276736		2	0	insufficient_data	False	insufficient_data
+31	BL3	EO24-1_22	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.3306026698095432		2	0	insufficient_data	False	insufficient_data
+33	BL3	EO24-2_23	insufficient_data	6	sample more plants (n < 3 per year)	[2025]	[]	[]	0.6923241381662661		1	0	insufficient_data	False	insufficient_data

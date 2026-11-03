@@ -329,7 +329,7 @@ def draw(n_shown: int):
     RNG = np.random.default_rng(7)                       # same plants in every frame
     fig = grid_figure(PANELS, n_shown, bottom=0.07)
     if n_shown == len(PANELS):                          # what the programme rests on
-        fig.text(0.5, 0.03, "★  The whole programme rests on rapidly identifying candidate\n"
+        fig.text(0.5, 0.03, "★  The whole program rests on rapidly identifying candidate\n"
                  "source populations for seed bulking — our approach", ha="center", va="center",
                  fontsize=16, fontweight="bold", color="white", linespacing=1.3,
                  bbox=dict(boxstyle="round,pad=0.6", fc=INTACT, ec="none"))

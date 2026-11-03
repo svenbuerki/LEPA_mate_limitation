@@ -99,7 +99,7 @@ def self_loop(ax, cx, cy, r, label=True):
 
 # ---- new glyphs --------------------------------------------------------------
 def s_badge(ax, x, y, k, r=2.0):
-    """A plant's S-type: coloured disc (one colour = one S-type)."""
+    """A plant's S-type: colored disc (one color = one S-type)."""
     ax.add_patch(Circle((x, y), r, fc=ALLELE[k], ec="k", lw=0.8, zorder=7))
 
 
@@ -133,7 +133,7 @@ def panel_si(ax):
     tag(ax, 82, 93, "self-incompatible", SI_RED)
     for k, t in enumerate((0, 2, 4)):                    # key: colour = S-type
         s_badge(ax, 6 + 4.5 * k, 93, t, r=1.6)
-    ax.text(19, 93, "colour = S-type\n(32 known in LEPA)", ha="left", va="center", fontsize=11,
+    ax.text(19, 93, "color = S-type\n(32 known in LEPA)", ha="left", va="center", fontsize=11,
             linespacing=1.1, color="#333")
     # own pollen → no seed
     flower(ax, 24, 66, r=7, stem_bottom=50, s_type=0)

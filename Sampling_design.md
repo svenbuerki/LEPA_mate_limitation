@@ -23,7 +23,7 @@ version of this document is kept, no longer maintained, in
 **Estimate SRK allele diversity at population level, and test the
 hypothesis that smaller populations hold less SRK diversity.**
 
-LEPA is self-incompatible: a plant can only be fertilised by a mate
+LEPA is self-incompatible: a plant can only be fertilized by a mate
 carrying different SRK alleles. The project follows one causal chain —
 **fragmentation → genetic drift → mate limitation or SI escape**
 ([`Project_outline.md`](Project_outline.md)). Its second link is the
@@ -212,7 +212,7 @@ seeds cannot give 25 seeds and keep a reserve, so its place goes to
 another mother of the same deme; such a lot would be used (half of it
 germinated) only in a deme with no other mother. Mothers are deliberately **not**
 chosen by how much seed they set: a mother sets much seed when she finds
-many compatible mates, so choosing on seed would favour some allele
+many compatible mates, so choosing on seed would favor some allele
 combinations and misrepresent the population's SRK diversity. The draw
 is reproducible (a fixed random seed per population, season and deme).
 
@@ -233,7 +233,7 @@ sizes of P36 and P34 ([Figure 1](#fig-1)):
 
 - **Each sampled deme recovers most of its alleles** (Figure 1 B): the
   alleles its mothers' seedlings reveal (red) sit close to the alleles
-  the deme holds (grey).
+  the deme holds (gray).
 - **Each population reaches the 90 % goal** (Figure 1 C), judged on
   simulations not used to choose the demes: 98.5 % and 96.3 % for P36,
   90.5 % and 90.3 % for P34 (2025, 2026). Sampling every deme would
@@ -249,7 +249,7 @@ sizes of P36 and P34 ([Figure 1](#fig-1)):
 <a id="fig-1"></a>
 ![Figure 1](figures/step30_D_model_design_simulations.png)
 
-**Figure 1.** Simulations behind the D1 plan. **A** — share of a deme's SRK alleles recovered against the number of mothers (15 seedlings each), one curve per deme size; dot = the number of mothers used; dotted line = 90 %. **B** — for each sampled deme, SRK alleles it holds (grey) and alleles its mothers' seedlings recover (red), mean and 95 % interval; labels give plants (pl.) and mothers (m.). **C** — share of the population's SRK alleles recovered by the plan (red) and by sampling every deme (blue), over independent simulations; bar = median. **D** — mothers needed to reach 90 % when demes are added in random order (grey) against the plan (red line). **E** — how often each deme is selected when the plan is rerun on 20 fresh simulations; red = in the plan.
+**Figure 1.** Simulations behind the D1 plan. **A** — share of a deme's SRK alleles recovered against the number of mothers (15 seedlings each), one curve per deme size; dot = the number of mothers used; dotted line = 90 %. **B** — for each sampled deme, SRK alleles it holds (gray) and alleles its mothers' seedlings recover (red), mean and 95 % interval; labels give plants (pl.) and mothers (m.). **C** — share of the population's SRK alleles recovered by the plan (red) and by sampling every deme (blue), over independent simulations; bar = median. **D** — mothers needed to reach 90 % when demes are added in random order (gray) against the plan (red line). **E** — how often each deme is selected when the plan is rerun on 20 fresh simulations; red = in the plan.
 
 ---
 
@@ -283,7 +283,7 @@ Running the design (§ 4) on the demes and mothers collected in 2025 and
 <a id="fig-2"></a>
 ![Figure 2 — P36](figures/step30_D_model_design_demes_schematic_P36.png)
 
-**Figure 2.** P36 (small) demes, 2025 (left) and 2026 (right). Coloured = sampled (label: deme · mothers); grey = not sampled (label: deme); dashed = a single-plant deme, left out. Black dots = slick spots, sized by fertile plants. Positions are in metres from an arbitrary origin, north up; the map carries no geographic coordinates. Both demes are sampled in both seasons. File: [`figures/step30_D_model_design_demes_schematic_P36.png`](figures/step30_D_model_design_demes_schematic_P36.png) ([PDF](figures/step30_D_model_design_demes_schematic_P36.pdf)).
+**Figure 2.** P36 (small) demes, 2025 (left) and 2026 (right). Colored = sampled (label: deme · mothers); gray = not sampled (label: deme); dashed = a single-plant deme, left out. Black dots = slick spots, sized by fertile plants. Positions are in meters from an arbitrary origin, north up; the map carries no geographic coordinates. Both demes are sampled in both seasons. File: [`figures/step30_D_model_design_demes_schematic_P36.png`](figures/step30_D_model_design_demes_schematic_P36.png) ([PDF](figures/step30_D_model_design_demes_schematic_P36.pdf)).
 
 <a id="fig-3"></a>
 ![Figure 3 — P34](figures/step30_D_model_design_demes_schematic_P34.png)
@@ -363,7 +363,7 @@ measured here.
 
 **Assumptions to keep in mind.** The simulations treat each deme as an
 independent draw from the species-wide allele frequencies. Real demes
-have drifted further and neighbouring demes share alleles, so the real
+have drifted further and neighboring demes share alleles, so the real
 populations probably hold fewer alleles than simulated — which makes the
 90 % goal easier, not harder, to reach. Genotyped plants are treated as
 independent; siblings of one mother are not yet corrected for.

@@ -212,7 +212,7 @@ def plot_event_K_by_location(ev_df: pd.DataFrame, loc_df: pd.DataFrame,
         "Pollen-donor plants reachable within 50 m per event "
         "(N_reachable_50m = Σ N_fertile in events within 50 m − 1)\n"
         f"Red dotted: N = {N_FLOOR_SINGLE} single-plant SI floor · "
-        f"Grey dashed: N = {N_CEILING_SPECIES} plants = {PLOIDY * N_CEILING_SPECIES} "
+        f"Gray dashed: N = {N_CEILING_SPECIES} plants = {PLOIDY * N_CEILING_SPECIES} "
         f"tetraploid allele copies, the coupon-collector floor for the 32-Fg "
         f"species pool",
         fontsize=10,
@@ -244,7 +244,7 @@ def main() -> None:
     print(f"[step30b] Wrote {out_loc} ({len(loc)} populations)")
 
     print("[step30b] Fragmentation summary (50 m primary):")
-    print(f" Events with ≥ 1 neighbour within 50 m : "
+    print(f" Events with ≥ 1 neighbor within 50 m : "
           f"{int(ev['has_neighbour_50m'].sum())} / {len(ev)}")
     print(f" Populations with F_population ≥ 0.5 : "
           f"{int((loc['F_population'] >= 0.5).sum())} / {len(loc)}")

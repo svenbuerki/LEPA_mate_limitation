@@ -461,7 +461,7 @@ def plot_schematic_map(pop: int, demes: pd.DataFrame, out: Path) -> None:
                plt.Line2D([], [], marker="o", ls="", color="black", ms=4,
                           label="slick spot (size ∝ fertile plants)")]
     axes[-1].legend(handles=handles, fontsize=8, loc="upper right")
-    fig.suptitle(f"P{pop} — demes per year (positions in metres from an arbitrary origin; "
+    fig.suptitle(f"P{pop} — demes per year (positions in meters from an arbitrary origin; "
                  "no geographic coordinates)", fontsize=12, weight="bold", color=col, y=1.03)
     fig.tight_layout()
     # grey labels: first corner of the deme (bottom-left, top-left,

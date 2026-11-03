@@ -536,7 +536,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
          Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=9,
                 label="open = not significant"),
          Line2D([], [], marker="o", ls="", color=s_cols[0], ms=9,
-                label="1 circle = 1 % of S-allele copies;\ncolour = S-type (as in Figure 5)"),
+                label="1 circle = 1 % of S-allele copies;\ncolor = S-type (as in Figure 5)"),
          Line2D([], [], marker="o", ls="", color="black", ms=0,
                 label="bar = population average")]
     leg = fig.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=3,

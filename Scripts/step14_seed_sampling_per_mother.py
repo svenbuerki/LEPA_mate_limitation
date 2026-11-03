@@ -309,7 +309,7 @@ def load_all_events(db_path: Path, year: int | None = None) -> pd.DataFrame:
 
 
 def compute_pairwise_distances(events: pd.DataFrame) -> np.ndarray:
-    """Full haversine distance matrix (metres) over all events."""
+    """Full haversine distance matrix (meters) over all events."""
     lat = events["lat"].values
     lon = events["lon"].values
     return haversine_meters(
@@ -948,7 +948,7 @@ def plot_per_mother_budget(per_mother: pd.DataFrame,
     ax.set_xlabel("Recommended seeds for 90 % expected coverage")
     ax.set_ylabel("Seed budget per mother (germplasmQuantityEstimate)")
     ax.set_title(
-        "Per-mother seed budget vs required sample size — coloured by event size",
+        "Per-mother seed budget vs required sample size — colored by event size",
         fontsize=12,
     )
     ax.legend(loc="lower right", fontsize=9, frameon=True)
@@ -972,7 +972,7 @@ def main() -> None:
     ap.add_argument("--year", type=int, default=None,
                     help="Restrict to mothers / events of the given "
                          "eventDate year (e.g. 2025). Also restricts the "
-                         "spatial neighbourhood to same-year events. "
+                         "spatial neighborhood to same-year events. "
                          "Default: all years combined.")
     args = ap.parse_args()
 
@@ -1013,7 +1013,7 @@ def main() -> None:
     with np.errstate(divide="ignore", invalid="ignore"):
         frac = (K_sp / K_ev.replace(0, np.nan)).dropna()
     n_no_coord = int(per_mother[f"K_spatial_{R}m"].isna().sum())
-    print(f"[step28] Spatial neighbourhood (R = {R} m): "
+    print(f"[step28] Spatial neighborhood (R = {R} m): "
           f"{n_grew}/{len(per_mother)} mothers see a larger K than the "
           f"event-only view. Median K_spatial / K_event = "
           f"{frac.median():.2f}. "
