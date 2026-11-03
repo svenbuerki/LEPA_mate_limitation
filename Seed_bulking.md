@@ -54,18 +54,33 @@ Ashley Zahurak & Ian Robertson.
 
 **The challenge.** Slickspot peppergrass is federally threatened, and
 wild populations have limited fertility, so a restoration program
-starts with very little seed. This scarcity impedes population
-restoration.
+starts with very little seed. **Seed scarcity is what impedes
+restoration:** there is far too little wild seed to restore populations
+directly, and collecting more would deplete the populations it comes
+from.
 
-**The goal.** To re-establish reproduction in mate-limited populations
-while keeping as much genetic diversity as possible, through a
-two-stage program ([Figure 1](#fig-1)):
+**The answer: a two-step program.** Because seed is scarce, it must
+first be multiplied, then bred to carry as much genetic diversity as
+possible ([Figure 1](#fig-1)):
 
 1. **Seed bulking** — collecting a small number of seeds from a source
    population and growing them in a greenhouse to harvest a much larger
    quantity;
 2. **Informed breeding** — crossing plants chosen by their SRK genotypes,
    to produce seed for restoration through seed translocation.
+
+This program also makes it possible to **restore reproduction in
+mate-limited populations**: seed carrying new S-alleles gives their
+plants more compatible mates. Mate limitation is one outcome the program
+can address, not its justification — the program is needed because
+there is too little seed.
+
+**The goal.** Everything therefore depends on the populations the seed
+comes from. Seed bulking multiplies whatever a source carries — its
+genetic diversity and its reproductive health, but also its flaws. Our
+goal is to **identify candidate source populations for seed bulking
+that are as close to ideal as possible**: reproductively intact, rich in
+S-alleles and free of self-compatible plants.
 
 <a id="fig-1"></a>
 ![Figure 1](figures_seed_bulking/restoration_cartoon.png)
@@ -76,10 +91,9 @@ two-stage program ([Figure 1](#fig-1)):
 
 ## 2. Our approach
 
-The whole program rests on **rapidly identifying candidate source
-populations for seed bulking** — populations that are reproductively
-intact, or as close as possible. Sources must meet specific reproductive
-and genetic requirements. Genotyping every population is slow and
+We need to identify candidate sources **rapidly**, across every
+population, against specific reproductive and genetic requirements.
+Genotyping every population is slow and
 costly; our approach is fast and low cost, using what is measured on
 every plant anyway: **seed set for plant size** ([Figure 2](#fig-2)),
 with SRK genotypes as the genetic check where they exist (§ 6).
