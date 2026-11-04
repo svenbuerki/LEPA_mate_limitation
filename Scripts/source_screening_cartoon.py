@@ -12,8 +12,9 @@ Four steps, left to right:
      its plants' size, per season: below (mate-limited), as expected
      (reproductively intact) or above (over-producing).
   4. **Candidate sources** — intact populations go to seed bulking;
-     mate-limited ones are restoration targets; over-producing ones are
-     excluded; SRK genotypes are the next check.
+     mate-limited ones (flaw: reduced fecundity) are restoration targets;
+     over-producing ones (flaw: inbreeding depression) are excluded; SRK
+     genotypes are the next check. No results shown — the approach only.
 
 Same icons and colours as restoration_cartoon.py; invented plants and
 values. Output: figures_seed_bulking/source_screening_cartoon.{png,pdf},
@@ -127,17 +128,19 @@ def panel_compare(ax):
 
 def panel_candidates(ax):
     frame(ax, 4, "Candidate sources", "intact = candidate source → seed bulking")
-    rows = [(76, INTACT, "intact", "source"), (49, MATE_LIM, "mate-limited", "target"),
-            (22, OVER, "over-producing", "excluded")]
-    for y, c, lab, role in rows:
+    rows = [(76, INTACT, "intact", "source", None),
+            (49, MATE_LIM, "mate-limited", "target", "reduced fecundity"),
+            (22, OVER, "over-producing", "excluded", "inbreeding depression")]
+    for y, c, lab, role, flaw in rows:
         ax.add_patch(Ellipse((22, y), 28, 15, fc=SPOT, ec=c, lw=3, zorder=1))
         for dx in (-6, 6):
             lepa(ax, 22 + dx, y - 5, h=8, faded=c == MATE_LIM and dx > 0, fruits=c != MATE_LIM)
         ax.text(40, y + 2, lab, ha="left", va="bottom", fontsize=12.5, color=c, fontweight="bold")
         ax.text(40, y - 1, f"= {role}", ha="left", va="top", fontsize=12.5, color=c)
+        if flaw:                                         # why it cannot be a source
+            ax.text(40, y - 6.5, f"flaw: {flaw}", ha="left", va="top", fontsize=11, color=c,
+                    style="italic")
     cross_mark(ax, 22, 22, s=6, col=OVER, lw=2.5)
-    ax.text(40, 64.5, "P13 · P34 · P35 · P43", ha="left", va="top", fontsize=10.5, color=INTACT,
-            style="italic")
     arrow(ax, (62, 78), (70, 78), col=INTACT, lw=2.2)    # → seed bulking
     greenhouse(ax, 72, 70, 22, 18)
     for k in range(3):
