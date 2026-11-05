@@ -1,34 +1,36 @@
-"""source_screening_cartoon.py — schematic of our approach to rapidly
-identify candidate source populations for seed bulking, with slickspot
-peppergrass (Lepidium papilliferum) as the model. Companion of
-restoration_cartoon.py, whose programme rests on this step.
+"""source_screening_cartoon.py — our approach to sort populations for
+population restoration, with slickspot peppergrass (Lepidium papilliferum)
+as the model (Seed_bulking Figure 3). It is the technique of step 1 of
+restoration_program_cartoon.py (Figure 2).
 
-Four steps, left to right:
-  1. **Measure every plant** — crown size and seeds of every flowering
-     plant, in two seasons: fast and low cost, no genotyping.
-  2. **Seeds expected for size** — all plants together give the seed a
-     plant of a given size is expected to set (band: half to twice).
-  3. **Compare each population** — each population's seed set relative to
-     its plants' size, per season: below (mate-limited), as expected
-     (reproductively intact) or above (over-producing).
-  4. **Candidate sources** — intact populations go to seed bulking;
-     mate-limited ones (flaw: reduced fecundity) are restoration targets;
-     over-producing ones (flaw: inbreeding depression) are excluded; SRK
-     genotypes are the next check. No results shown — the approach only.
+Three steps, left to right:
+  1. **Plant phenotyping** — plant size (crown width, height) and seed
+     yield of every flowering plant, in two seasons: fast and low cost, no
+     genotyping.
+  2. **Modeling** — (a) build: all plants together give the seed yield a
+     plant of a given size is expected to set (band: half to twice);
+     (b) deploy by population: each population's seed yield relative to
+     that expectation, per season.
+  3. **Sort populations for population restoration** — reproductively
+     intact = source (seed bulking; top conservation priority);
+     mate-limited = genetic rescue (flaw: reduced fecundity);
+     over-producing = excluded as source (flaw: inbreeding depression);
+     SRK genotypes are the genetic check.
 
-Same icons and colours as restoration_cartoon.py; invented plants and
+Same icons and colors as restoration_cartoon.py; invented plants and
 values. Output: figures_seed_bulking/source_screening_cartoon.{png,pdf},
-plus source_screening_cartoon_step1–3.png (same size, later steps blank).
+plus source_screening_cartoon_step1–2.png (same size, later steps blank)
+to build a slide.
 """
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, Rectangle
+from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, Polygon, Rectangle
 
 import restoration_cartoon as rc
-from restoration_cartoon import (INTACT, MATE_LIM, OVER, OUT, SPOT, SPOT_EDGE, arrow,
-                                 cross_mark, dna, frame, greenhouse, lepa, seed_bag)
+from restoration_cartoon import (INTACT, MATE_LIM, OUT, OVER, SPOT, SPOT_EDGE, arrow, cross_mark,
+                                 dna, lepa, seed_bag)
 
 GREY_PT = "#9E9E9E"
 
@@ -44,10 +46,21 @@ def stopwatch(ax, x, y, r=4.5):
     ax.plot([x, x], [y, y + 0.7 * r], color="#333", lw=1.6, zorder=7)
 
 
-def panel_measure(ax):
-    frame(ax, 1, "Measure every plant", "crown size + seeds, every plant, two seasons")
+def shield(ax, x, y, s=1.0, col=INTACT):
+    pts = [[x - 7 * s, y + 8 * s], [x, y + 10 * s], [x + 7 * s, y + 8 * s], [x + 6 * s, y - 2 * s],
+           [x, y - 9 * s], [x - 6 * s, y - 2 * s]]
+    ax.add_patch(Polygon(pts, closed=True, fc=col, ec="#004D40", lw=1.4, zorder=6))
+    ang = np.deg2rad(90 + 36 * np.arange(10))
+    r = np.where(np.arange(10) % 2 == 0, 4.4 * s, 1.8 * s)
+    ax.add_patch(Polygon(np.c_[x + r * np.cos(ang), y + 0.5 * s + r * np.sin(ang)], fc="white",
+                         ec="none", zorder=7))
+
+
+# ---- 1. plant phenotyping ------------------------------------------------------------
+def panel_phenotyping(ax):
+    rc.frame(ax, 1, "Plant phenotyping", "plant size + seed yield, every plant, two seasons")
     ax.add_patch(Ellipse((50, 74), 70, 22, fc=SPOT, ec=SPOT_EDGE, lw=1.4, zorder=1))
-    for k, (dx, h) in enumerate(((-26, 7), (-14, 10), (-2, 6), (10, 12), (22, 8))):
+    for dx, h in ((-26, 7), (-14, 10), (-2, 6), (10, 12), (22, 8)):
         lepa(ax, 50 + dx, 67, h=h)
     ax.text(50, 89, "every flowering plant", ha="center", fontsize=11.5, color="#555",
             style="italic")
@@ -64,103 +77,116 @@ def panel_measure(ax):
     ax.add_patch(FancyArrowPatch((40, 28), (40, 48), arrowstyle="<|-|>", mutation_scale=10,
                                  color="#333", lw=1.2, zorder=6))
     ax.text(41.5, 38, "height", ha="left", va="center", fontsize=10.5, rotation=90)
+    ax.text(25, 20.5, "plant size", ha="center", va="top", fontsize=12, fontweight="bold")
     arrow(ax, (50, 40), (57, 40), lw=1.8)
     seed_bag(ax, 64, 34, 8, 9, 14)
-    ax.text(64, 30.5, "seeds", ha="center", va="top", fontsize=11.5)
+    ax.text(64, 30.5, "seed yield", ha="center", va="top", fontsize=12, fontweight="bold")
     stopwatch(ax, 85, 42)
     ax.text(85, 33.5, "fast &\nlow cost", ha="center", va="top", fontsize=11, color=INTACT,
             fontweight="bold", linespacing=1.1)
-    for k, (yr, mk) in enumerate((("2025", "o"), ("2026", "s"))):
+    for k, yr in enumerate(("2025", "2026")):
         ax.text(70 + 15 * k, 15, yr, ha="center", va="center", fontsize=11,
                 bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="#888"))
 
 
-def panel_curve(ax):
-    frame(ax, 2, "Seeds expected for size", "all plants → seed expected for plant size")
-    x0, y0, w, h = 16, 18, 74, 66
-    ax.plot([x0, x0, x0 + w], [y0 + h, y0, y0], color="#333", lw=1.5, zorder=3)
+# ---- 2. modeling: build, then deploy by population -----------------------------------------
+def panel_modeling(ax):
+    rc.frame(ax, 2, "Modeling", "build on all plants → deploy by population")
+    # (a) build: seed yield expected for plant size
+    ax.text(3, 95, "a  build", ha="left", va="center", fontsize=13, fontweight="bold")
+    ax.text(25, 95, "all plants → seed yield expected for size", ha="left", va="center",
+            fontsize=11, color="#555")
+    x0, y0, w, h = 18, 58, 74, 31
+    ax.plot([x0, x0, x0 + w], [y0 + h, y0, y0], color="#333", lw=1.3, zorder=3)
     xx = np.array([x0, x0 + w])
-    line = lambda x, off=0: y0 + 12 + (x - x0) * 0.6 + off
-    ax.fill_between(xx, line(xx, -9), line(xx, 9), color=INTACT, alpha=0.16, lw=0, zorder=1)
-    ax.plot(xx, line(xx), color=INTACT, lw=2.4, zorder=3)
-    ax.plot(xx, line(xx, -9), color=MATE_LIM, lw=1.6, ls="--", zorder=3)
-    ax.plot(xx, line(xx, 9), color=OVER, lw=1.6, ls="--", zorder=3)
+    line = lambda x, off=0: y0 + 5 + (x - x0) * 0.3 + off
+    ax.fill_between(xx, line(xx, -4.5), line(xx, 4.5), color=INTACT, alpha=0.16, lw=0, zorder=1)
+    ax.plot(xx, line(xx), color=INTACT, lw=2.2, zorder=3)
+    ax.plot(xx, line(xx, -4.5), color=MATE_LIM, lw=1.3, ls="--", zorder=3)
+    ax.plot(xx, line(xx, 4.5), color=OVER, lw=1.3, ls="--", zorder=3)
     rng = np.random.default_rng(3)
-    px = rng.uniform(x0 + 3, x0 + w - 3, 70)
-    ax.scatter(px, np.clip(line(px, rng.normal(0, 5.5, 70)), y0 + 1, y0 + h), s=14, c=GREY_PT,
+    px = rng.uniform(x0 + 2, x0 + w - 2, 55)
+    ax.scatter(px, np.clip(line(px, rng.normal(0, 2.8, 55)), y0 + 1, y0 + h), s=9, c=GREY_PT,
                ec="white", lw=0.3, zorder=2)
-    ax.text(x0 + w / 2, y0 - 3, "plant size (crown)", ha="center", va="top", fontsize=12)
-    ax.text(x0 - 3, y0 + h / 2, "seeds per plant", ha="right", va="center", fontsize=12,
+    ax.text(x0 + w / 2, y0 - 1.5, "plant size", ha="center", va="top", fontsize=10.5)
+    ax.text(x0 - 2, y0 + h / 2, "seed yield", ha="right", va="center", fontsize=10.5,
             rotation=90)
-    ax.text(x0 + w - 1, line(x0 + w, 9) + 2, "twice", ha="right", va="bottom", fontsize=11,
-            color=OVER)
-    ax.text(x0 + w - 1, line(x0 + w - 1) - 5, "expected", ha="right", va="center",
-            fontsize=11, color=INTACT, fontweight="bold", zorder=5,
+    ax.text(x0 + w - 1, line(x0 + w - 1) - 2.5, "expected", ha="right", va="top", fontsize=10.5,
+            color=INTACT, fontweight="bold", zorder=5,
             bbox=dict(boxstyle="round,pad=0.15", fc="#D9EEEA", ec="none"))
-    ax.text(x0 + w - 1, line(x0 + w, -9) - 3, "half", ha="right", va="top", fontsize=11,
-            color=MATE_LIM)
-
-
-def panel_compare(ax):
-    frame(ax, 3, "Compare each population", "two seasons: below, as expected or above")
-    xs = {0.5: 32, 1: 55, 2: 78}                         # log-scaled positions
+    # (b) deploy by population: seed yield ÷ expected, per season
+    arrow(ax, (7, 88), (7, 49), lw=2)                 # build → deploy
+    ax.text(3, 45, "b  deploy", ha="left", va="center", fontsize=13, fontweight="bold")
+    ax.text(27, 45, "each population, each season", ha="left", va="center", fontsize=11,
+            color="#555")
+    xs = {0.5: 36, 1: 57, 2: 78}                         # log-scaled positions
+    ytop, ybot = 39, 15
+    ax.add_patch(Rectangle((36, ybot), 42, ytop - ybot, fc=INTACT, alpha=0.10, lw=0, zorder=0))
     for v, x in xs.items():
-        ax.plot([x, x], [24, 84], color={0.5: MATE_LIM, 1: "#777", 2: OVER}[v], lw=1.4,
-                ls="-" if v == 1 else "--", zorder=1)
-        ax.text(x, 21, {0.5: "half", 1: "as expected", 2: "twice"}[v], ha="center", va="top",
-                fontsize=11, color={0.5: MATE_LIM, 1: "#555", 2: OVER}[v])
-    ax.add_patch(Rectangle((32, 24), 46, 60, fc=INTACT, alpha=0.10, lw=0, zorder=0))
-    rows = [("pop. A", (57, 52), INTACT), ("pop. B", (21, 26), MATE_LIM), ("pop. C", (86, 83), OVER),
-            ("pop. D", (50, 61), INTACT)]
-    for k, (lab, (x25, x26), c) in enumerate(rows):
-        y = 76 - 15 * k
-        ax.plot([x25, x26], [y, y], color=c, lw=1.2, zorder=2)
-        ax.scatter([x25], [y], s=110, marker="o", c=c, ec="white", lw=0.8, zorder=3)
-        ax.scatter([x26], [y], s=110, marker="s", c=c, ec="white", lw=0.8, zorder=3)
-        ax.text(13, y, lab, ha="right", va="center", fontsize=11.5)
-    ax.scatter([18], [91], s=60, marker="o", c="#555"), ax.text(21, 91, "2025", va="center",
-                                                                fontsize=11)
-    ax.scatter([38], [91], s=60, marker="s", c="#555"), ax.text(41, 91, "2026", va="center",
-                                                                fontsize=11)
-    ax.text(55, 13.5, "seed set ÷ seed expected for size", ha="center", va="top", fontsize=11,
-            color="#333")
+        col = {0.5: MATE_LIM, 1: "#777", 2: OVER}[v]
+        ax.plot([x, x], [ybot, ytop], color=col, lw=1.2, ls="-" if v == 1 else "--", zorder=1)
+        ax.text(x, ybot - 1.5, {0.5: "half", 1: "expected", 2: "twice"}[v], ha="center",
+                va="top", fontsize=10, color=col)
+    for k, (lab, (x25, x26), c) in enumerate((("pop. A", (59, 54), INTACT),
+                                              ("pop. B", (24, 28), MATE_LIM),
+                                              ("pop. C", (87, 84), OVER))):
+        y = 34 - 8.5 * k
+        ax.plot([x25, x26], [y, y], color=c, lw=1.1, zorder=2)
+        ax.scatter([x25], [y], s=70, marker="o", c=c, ec="white", lw=0.7, zorder=3)
+        ax.scatter([x26], [y], s=70, marker="s", c=c, ec="white", lw=0.7, zorder=3)
+        ax.text(15, y, lab, ha="right", va="center", fontsize=10.5)
+    ax.scatter([86], [44.5], s=35, marker="o", c="#555")
+    ax.text(88.5, 44.5, "2025", va="center", fontsize=9.5)
+    ax.scatter([86], [40.5], s=35, marker="s", c="#555")
+    ax.text(88.5, 40.5, "2026", va="center", fontsize=9.5)
 
 
-def panel_candidates(ax):
-    frame(ax, 4, "Candidate sources", "intact = candidate source → seed bulking")
-    rows = [(76, INTACT, "intact", "source", None),
-            (49, MATE_LIM, "mate-limited", "target", "reduced fecundity"),
-            (22, OVER, "over-producing", "excluded", "inbreeding depression")]
+# ---- 3. sort populations for population restoration ----------------------------------------
+def panel_sort(ax):
+    rc.frame(ax, 3, "Sort populations for restoration", "by seed yield for plant size")
+    rows = [(78, INTACT, "reproductively intact", "→ source for seed bulking", None),
+            (51, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
+            (24, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
     for y, c, lab, role, flaw in rows:
-        ax.add_patch(Ellipse((22, y), 28, 15, fc=SPOT, ec=c, lw=3, zorder=1))
-        for dx in (-6, 6):
-            lepa(ax, 22 + dx, y - 5, h=8, faded=c == MATE_LIM and dx > 0, fruits=c != MATE_LIM)
-        ax.text(40, y + 2, lab, ha="left", va="bottom", fontsize=12.5, color=c, fontweight="bold")
-        ax.text(40, y - 1, f"= {role}", ha="left", va="top", fontsize=12.5, color=c)
-        if flaw:                                         # why it cannot be a source
-            ax.text(40, y - 6.5, f"flaw: {flaw}", ha="left", va="top", fontsize=11, color=c,
-                    style="italic")
-    cross_mark(ax, 22, 22, s=6, col=OVER, lw=2.5)
-    arrow(ax, (62, 78), (70, 78), col=INTACT, lw=2.2)    # → seed bulking
-    greenhouse(ax, 72, 70, 22, 18)
-    for k in range(3):
-        ax.add_patch(Rectangle((75.5 + 6 * k, 71), 3, 1.5, fc=rc.POT, ec=rc.POT_EDGE, lw=0.6,
-                               zorder=2))
-        lepa(ax, 77 + 6 * k, 72.5, h=4.5)
-    ax.text(83, 66.5, "seed bulking", ha="center", va="top", fontsize=11, color=INTACT,
-            fontweight="bold")
-    dna(ax, 83, 40, h=11, w=2.4)
-    ax.text(83, 37, "next: SRK\ncheck", ha="center", va="top", fontsize=10.5, color="#555",
-            linespacing=1.1)
-    arrow(ax, (83, 63), (83, 53), col="#888", lw=1.5, ls="--")
+        ax.add_patch(Ellipse((15, y), 24, 13, fc=SPOT, ec=c, lw=3, zorder=1))
+        for dx in (-5, 5):
+            lepa(ax, 15 + dx, y - 4.5, h=7, faded=c == MATE_LIM and dx > 0, fruits=c != MATE_LIM)
+        ax.text(31, y + 3, lab, ha="left", va="bottom", fontsize=13, color=c, fontweight="bold")
+        ax.text(31, y + 0.5, role, ha="left", va="top", fontsize=12.5, color=c)
+        if flaw:
+            ax.text(31, y - 5.5, flaw, ha="left", va="top", fontsize=11, color=c, style="italic")
+    cross_mark(ax, 15, 24, s=5, col=OVER, lw=2.5)
+    shield(ax, 88, 80, s=0.75)
+    ax.text(88, 70, "top\npriority", ha="center", va="top", fontsize=10.5, color=INTACT,
+            fontweight="bold", linespacing=1.05)
+    dna(ax, 88, 33, h=10, w=2.2)
+    ax.text(88, 30.5, "SRK:\ngenetic\ncheck", ha="center", va="top", fontsize=10, color="#555",
+            linespacing=1.05)
 
 
-PANELS = (panel_measure, panel_curve, panel_compare, panel_candidates)
+PANELS = (panel_phenotyping, panel_modeling, panel_sort)
 
 
 def draw(n_shown: int):
+    """Three square panels in a row (landscape), arrows between them."""
     rc.RNG = np.random.default_rng(11)                   # same plants in every frame
-    return rc.grid_figure(PANELS, n_shown)
+    side, gap, m = 7.2, 1.0, 0.35
+    w, h = 2 * m + 3 * side + 2 * gap, 2 * m + 0.6 + side
+    fig = plt.figure(figsize=(w, h))
+    axes = [fig.add_axes([(m + k * (side + gap)) / w, m / h, side / w, side / h]) for k in range(3)]
+    for k, (ax, f) in enumerate(zip(axes, PANELS)):
+        if k < n_shown:
+            f(ax)
+        else:
+            ax.axis("off")
+    fig.canvas.draw()
+    to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
+    for k in range(min(n_shown, 3) - 1):
+        fig.add_artist(FancyArrowPatch(to_fig(axes[k], (100, 50)), to_fig(axes[k + 1], (0, 50)),
+                                       transform=fig.transFigure, arrowstyle="-|>",
+                                       mutation_scale=26, color="#333", lw=3, shrinkA=6,
+                                       shrinkB=6))
+    return fig
 
 
 def main():
@@ -173,7 +199,7 @@ def main():
         fig = draw(n)
         fig.savefig(OUT / f"source_screening_cartoon_step{n}.png", dpi=200)
         plt.close(fig)
-    print(f"  wrote {OUT}/source_screening_cartoon.png (+ _step1–3 frames for slides)")
+    print(f"  wrote {OUT}/source_screening_cartoon.png (+ _step1–2 frames for slides)")
 
 
 if __name__ == "__main__":

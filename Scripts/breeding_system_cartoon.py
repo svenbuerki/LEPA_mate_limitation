@@ -127,7 +127,7 @@ def tag(ax, x, y, text, col):
 
 # ---- panels ------------------------------------------------------------------
 def panel_si(ax):
-    frame(ax, 1, "Plants reject their own pollen",
+    frame(ax, 1, "Self-incompatible: plants reject\n    their own pollen",
           "the S-locus (a male + a female gene) gives each plant an\n"
           "S-type: pollen with the flower's own S-type is rejected")
     tag(ax, 82, 93, "self-incompatible", SI_RED)
@@ -158,8 +158,8 @@ def panel_si(ax):
 
 
 def panel_mates(ax):
-    frame(ax, 2, "Few S-types → mate limitation\n    → population decline",
-          "small, isolated populations lose S-types:\n"
+    frame(ax, 2, "Fragmentation + drift → mate limitation\n    → population decline",
+          "small, isolated populations lose S-types by drift:\n"
           "plants run out of compatible mates and set little seed")
     tag(ax, 79, 93, "mate limitation", MATE_LIM)
     for x0, ok, types in ((26, True, (0, 2, 4, 6, 1)), (74, False, (0, 0, 1, 0, 1))):
@@ -179,6 +179,9 @@ def panel_mates(ax):
         bee(ax, x0 + 2, 72, s=1.6)
         for k in range(3):
             (silique_full if ok else silique_empty)(ax, x0 - 9 + 9 * k, 28, size=3.4)
+    arrow(ax, (41, 82), (59, 82), col="#555", lw=2.2)    # many → few S-types
+    ax.text(50, 85, "habitat fragmentation\n+ genetic drift", ha="center", va="bottom",
+            fontsize=11, color="#333", fontweight="bold", linespacing=1.05)
     cross_mark(ax, 74 - 7, 70.5, s=1.4)
     cross_mark(ax, 74 + 7, 70.5, s=1.4)
     ax.text(74, 17, "in the field: less seed than\nplant size predicts", ha="center", va="center",
@@ -186,9 +189,9 @@ def panel_mates(ax):
 
 
 def panel_sc(ax):
-    frame(ax, 3, "Some plants broke the gene",
+    frame(ax, 3, "Rapid adaptation: escape from SI\n    → self-compatible, short-term gain",
           "plants with broken S-locus copies accept their own pollen\n"
-          "and set seed alone")
+          "and set seed alone, without mates")
     tag(ax, 82, 93, "self-compatible", SC_GREEN)
     gene_copies(ax, 6, 64, [True] * 4)
     ax.text(17.5, 60, "working S-locus\n(4 copies)", ha="center", va="top", fontsize=11.5,
@@ -216,7 +219,7 @@ def panel_sc(ax):
 
 
 def panel_inbreeding(ax):
-    frame(ax, 4, "Selfing → inbreeding → reduced fitness\n    → population decline",
+    frame(ax, 4, "Long-term cost: inbreeding depression\n    → population decline",
           "selfed offspring grow more alike and weaker,\n"
           "generation after generation")
     tag(ax, 82, 93, "inbreeding", OVER)

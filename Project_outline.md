@@ -1360,7 +1360,7 @@ inflated at populations that are still missing collections; re-run
 the seed-dependent parts (seedyield, sampling, Step 31, design,
 bulking) as each location is added. The cleaning order — second
 seasons for likely sources first — is in
-[`Seed_bulking.md`](Seed_bulking.md) § 6.4.4.
+[`Seed_bulking.md`](Seed_bulking.md) § 7.4.4.
 
 <a id="fig-12a"></a>
 ![Figure 12a](figures/step30i_species_calibration.png)

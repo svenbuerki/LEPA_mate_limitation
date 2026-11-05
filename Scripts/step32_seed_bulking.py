@@ -442,7 +442,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     tab = pd.DataFrame(rows)
     tab.to_csv(TABLES / "step32_genetic_example_P42_P34.tsv", sep="\t", index=False)
 
-    # S-type colours as in Figure 5 (breeding_system_cartoon), A = commonest
+    # S-type colours as in Figure 1 (breeding_system_cartoon), A = commonest
     s_cols = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#17becf",
               "#bcbd22", "#aec7e8", "#ffbb78", "#98df8a", "#c5b0d5"]
     s_col = {i: s_cols[k % len(s_cols)] for k, i in enumerate(order)}
@@ -536,7 +536,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
          Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=9,
                 label="open = not significant"),
          Line2D([], [], marker="o", ls="", color=s_cols[0], ms=9,
-                label="1 circle = 1 % of S-allele copies;\ncolor = S-type (as in Figure 5)"),
+                label="1 circle = 1 % of S-allele copies;\ncolor = S-type (as in Figure 1)"),
          Line2D([], [], marker="o", ls="", color="black", ms=0,
                 label="bar = population average")]
     leg = fig.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=3,

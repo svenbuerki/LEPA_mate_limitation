@@ -103,7 +103,8 @@ fi
 # maps (figures_seed_bulking/); needs the seed-yield and sampling parts
 if [[ "$PART" == all || "$PART" == bulking ]]; then
   run step32_seed_bulking
-  run restoration_cartoon           # schematic: scarce seed → bulking → breeding → restoration
+  run restoration_program_cartoon   # Figure 1: challenge → sources → bulking → rescue → restore; priorities
+  run restoration_cartoon           # previous Figure 1 (kept); also the shared cartoon helpers
   run source_screening_cartoon      # schematic: our approach to find candidate sources
   run breeding_system_cartoon       # schematic: SI, mate limitation, SC escape, inbreeding
   run type_icons                    # badge icons of the reproductive types (also used by step32)
