@@ -19,7 +19,8 @@
 OUT <- "figures_seed_bulking"
 source("Scripts/srk_map_background.R")
 
-TYPE_ORDER <- c("Mate-limited", "Reproductively intact", "Over-producing", "Not yet clear",
+# order of Figures 2-3 and of the icon inset
+TYPE_ORDER <- c("Reproductively intact", "Mate-limited", "Over-producing", "Not yet clear",
                 "One season only")
 st <- read.delim("tables/step32_seed_bulking_populations.tsv")
 st$candidate <- st$candidate %in% c("True", TRUE)

@@ -41,7 +41,8 @@ Figures (talk style, no BL colours) → figures_seed_bulking/ (local):
   bulking_seed_available     cleaned seed held per candidate population and
                              season — LOCAL ONLY (gitignored): seed counts are
                              not shared
-Table: tables/step32_seed_bulking_populations.tsv (no coordinates)
+Tables: tables/step32_seed_bulking_populations.tsv and step32_materials_by_season.tsv
+(locations, EOs, slick spots and plants per season; no coordinates)
 """
 from __future__ import annotations
 
@@ -94,8 +95,8 @@ def season_significant(r, yr: int) -> bool:
     q = r[f"qeq_{yr}"] if r["type"] == "Reproductively intact" else r[f"q_{yr}"]
     return bool(pd.notna(q) and q < ALPHA)
 TYPE_ORDER = ["Mate-limited", "Reproductively intact", "Over-producing", NOT_CLEAR, ONE_SEASON]
-TYPE_COLORS = {"Mate-limited": "#C2185B",          # magenta
-               "Over-producing": "#E6A100",        # gold
+TYPE_COLORS = {"Mate-limited": "#E6A100",          # gold
+               "Over-producing": "#C2185B",        # magenta (close to the red "avoid" sign)
                "Reproductively intact": "#00897B",  # teal
                NOT_CLEAR: "#9E9E9E",               # grey
                ONE_SEASON: "#D9D9D9"}              # light grey
@@ -367,42 +368,131 @@ def plant_size_panel(m: pd.DataFrame) -> None:
     """Three 2026 measuring-board photos (small / medium / large plant, each
     near the seed its size predicts), saved without any metadata; each is
     labelled with its crown size and the seed its size predicts on the
-    Figure 9 curve (pooled size → seed fit over all plants)."""
+    Figure 9 curve (pooled size → seed fit over all plants). The crown shown
+    is the one written on the field board in the photo (Phenotyping remarks
+    "field board h=… w=…"), so label and board agree; the database value
+    (measured afterwards from the photo's rulers) is used when no board
+    value is recorded."""
     b1, b0 = np.polyfit(m["logc"], m["logy"], 1)
     import sqlite3
     from PIL import Image, ImageOps
     from project_paths import LEPA_DB
     con = sqlite3.connect(f"file:{LEPA_DB}?mode=ro", uri=True)
     ids = ",".join(str(o) for _, o in SIZE_EXAMPLES)
-    d = pd.read_sql(f"""SELECT p.occurrenceID, p.occurrenceCrownSize AS crown, m.identifier,
+    d = pd.read_sql(f"""SELECT p.occurrenceID, p.occurrenceCrownSize AS crown, p.remarks, m.identifier,
                                t.seedQuantityTotal AS seeds
                         FROM Phenotyping p JOIN Multimedia m ON m.multimediaID = p.multimediaID
                         JOIN vOccurrenceTraits t ON t.occurrenceID = p.occurrenceID
                         WHERE p.occurrenceID IN ({ids})""", con).set_index("occurrenceID")
     con.close()
+    board = d["remarks"].str.extract(r"board h=[\d.]+ w=([\d.]+)", expand=False).astype(float)
+    d["crown"] = board.fillna(d["crown"])               # crown as written on the board
     photos = Path(LEPA_DB).parent / "Multimedia_main"
     out = OUT / "plant_photos"
     out.mkdir(parents=True, exist_ok=True)
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5.6))
-    for ax, (lab, oc) in zip(axes, SIZE_EXAMPLES):
+    cleaned = {}
+    for lab, oc in SIZE_EXAMPLES:
         r = d.loc[oc]
         im = ImageOps.exif_transpose(Image.open(photos / r["identifier"])).convert("RGB")
         im.thumbnail((2400, 2400))
         clean = Image.new("RGB", im.size)
         clean.putdata(list(im.getdata()))          # pixels only: no GPS or other metadata
         clean.save(out / f"size_{lab.lower()}_OC{oc}_crown{r['crown']:g}cm.jpg", quality=90)
-        ax.imshow(clean); ax.axis("off")
-        ax.set_title(f"{lab} plant", fontsize=20, weight="bold", pad=8)
-        exp_seed = 10 ** (b0 + b1 * np.log10(r["crown"]))
-        ax.text(0.5, -0.06, f"crown {r['crown']:g} cm",
-                transform=ax.transAxes, ha="center", va="top", fontsize=17)
-        ax.text(0.5, -0.16, f"expected ≈ {round(exp_seed, -1):,.0f} seeds",
-                transform=ax.transAxes, ha="center", va="top", fontsize=17, weight="bold",
-                color=TYPE_COLORS["Reproductively intact"])
-    fig.tight_layout(w_pad=1.5)
+        cleaned[oc] = clean
+
+    def size_row(fig, axes):
+        for ax, (lab, oc) in zip(axes, SIZE_EXAMPLES):
+            crown = d.loc[oc, "crown"]
+            ax.imshow(cleaned[oc]); ax.axis("off")
+            ax.set_title(f"{lab} plant", fontsize=20, weight="bold", pad=8)
+            exp_seed = 10 ** (b0 + b1 * np.log10(crown))
+            ax.text(0.5, -0.06, f"crown {crown:g} cm",
+                    transform=ax.transAxes, ha="center", va="top", fontsize=17)
+            ax.text(0.5, -0.16, f"expected ≈ {round(exp_seed, -1):,.0f} seeds",
+                    transform=ax.transAxes, ha="center", va="top", fontsize=17, weight="bold",
+                    color=TYPE_COLORS["Reproductively intact"])
+
+    # Figure 8: plant size (top) and seed yield (bottom)
+    fig = plt.figure(figsize=(18, 14.4))
+    fig.text(0.02, 0.985, "Plant size (field)", fontsize=22, weight="bold", va="top")
+    size_row(fig, [fig.add_axes([0.0 + k * 0.337, 0.615, 0.326, 0.32]) for k in range(3)])
+    fig.text(0.02, 0.52, "Seed yield (lab)", fontsize=22, weight="bold", va="top")
+    seed_cleaning_panel(fig, out, bottom=0.0, height=0.44)
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"plant_size_examples.{ext}", dpi=200, bbox_inches="tight")
     plt.close(fig)
+
+    # talk: one 16:9 slide per row
+    title = dict(fontsize=26, weight="bold", va="top")
+    fig = plt.figure(figsize=(16, 9))
+    fig.text(0.03, 0.95, "Plant phenotyping: plant size (field)", **title)
+    size_row(fig, [fig.add_axes([0.005 + k * 0.333, 0.32, 0.323, 0.52]) for k in range(3)])
+    fig.text(0.5, 0.12, "Each plant is photographed against a board with rulers;"
+             " its crown predicts the seed it should set", ha="center", fontsize=17, color="#444")
+    for ext in ("png", "pdf"):
+        fig.savefig(OUT / f"plant_size_examples_slide1.{ext}", dpi=200)
+    plt.close(fig)
+    fig = plt.figure(figsize=(16, 9))
+    fig.text(0.03, 0.95, "Plant phenotyping: seed yield (lab)", **title)
+    seed_cleaning_panel(fig, out, bottom=0.08, height=0.62)
+    for ext in ("png", "pdf"):
+        fig.savefig(OUT / f"plant_size_examples_slide2.{ext}", dpi=200)
+    plt.close(fig)
+
+
+# Seed-count model of the LEPA DB (germplasmQuantityEstimate): lot weight (g)
+# = SEED_W0 + SEED_W1 x seeds, 95 % prediction interval +/- SEED_PI g
+SEED_W0, SEED_W1, SEED_PI = 0.0003681555, 0.0004252451, 0.01926434
+
+
+def seed_cleaning_panel(fig, out: Path, bottom: float, height: float) -> None:
+    """Seed-yield row of Figure 8 (and talk slide 2): the cleaning bench for
+    context, then the close-up of a cleaned lot (seed separated from chaff)
+    with the weighing photo inset at its top right and, under it, the
+    weight → seed-count model as a legend. Both photos at the same height,
+    centred; they are metadata-free copies (plant_photos/
+    seed_cleaning_lab.jpg, seed_weighing_lab.jpg), cropped here."""
+    from PIL import Image
+    src = Image.open(out / "seed_cleaning_lab.jpg")
+    bench = src.crop((0, 375, 1440, 1650))
+    close = src.crop((705, 960, 1800, 1665))
+    fw, fh = fig.get_size_inches()
+    h_in, gap = height * fh, 0.25
+    w1, w2 = h_in * bench.width / bench.height, h_in * close.width / close.height
+    x = (fw - w1 - w2 - gap) / 2
+    title = dict(fontsize=20, weight="bold", pad=8)
+    ax1 = fig.add_axes([x / fw, bottom, w1 / fw, height])
+    ax1.imshow(bench); ax1.axis("off"); ax1.set_title("Cleaning by hand", **title)
+    ax = fig.add_axes([(x + w1 + gap) / fw, bottom, w2 / fw, height])
+    ax.imshow(close); ax.axis("off"); ax.set_title("Cleaned seed, weighed and counted", **title)
+    ax.text(0.03, 0.64, "chaff", transform=ax.transAxes, fontsize=17, weight="bold",
+            color="white", bbox=dict(boxstyle="round,pad=0.25", fc="#555", ec="none"))
+    ax.text(0.03, 0.04, "cleaned seed", transform=ax.transAxes, fontsize=17, weight="bold",
+            color="white", bbox=dict(boxstyle="round,pad=0.25", fc="#7a5230", ec="none"))
+    ax.annotate("", xy=(0.26, 0.50), xytext=(0.12, 0.62), xycoords="axes fraction",
+                arrowprops=dict(arrowstyle="-|>", color="#555", lw=2.5))
+    ax.annotate("", xy=(0.24, 0.19), xytext=(0.17, 0.10), xycoords="axes fraction",
+                arrowprops=dict(arrowstyle="-|>", color="#7a5230", lw=2.5))
+    weigh = Image.open(out / "seed_weighing_lab.jpg").crop((450, 645, 1650, 1800))
+    x0, y0, w, h = ax.get_position().bounds
+    ins = fig.add_axes([x0 + w * 0.60, y0 + h * 0.47, w * 0.39, h * 0.52])
+    ins.imshow(weigh); ins.set_xticks([]); ins.set_yticks([])
+    for sp in ins.spines.values():
+        sp.set_edgecolor("white"); sp.set_linewidth(4)
+    ins.text(0.5, 0.03, "weighed (0.1 mg)", transform=ins.transAxes, ha="center", va="bottom",
+             fontsize=15, weight="bold", color="white",
+             bbox=dict(boxstyle="round,pad=0.25", fc="#333", ec="none"))
+    from matplotlib.offsetbox import AnchoredOffsetbox, TextArea, VPacker
+    legend = VPacker(align="center", pad=0, sep=5, children=[
+        TextArea(f"Seed count = (weight − {SEED_W0 * 1e3:.2f} mg) ÷ {SEED_W1 * 1e3:.3f} mg",
+                 textprops=dict(fontsize=15, weight="bold", color="#111")),
+        TextArea(f"95 % interval ± {SEED_PI / SEED_W1:.0f} seeds",
+                 textprops=dict(fontsize=13, color="#555"))])
+    box = AnchoredOffsetbox(loc="upper right", child=legend, pad=0.5, borderpad=0,
+                            frameon=True, bbox_to_anchor=(0.99, 0.44),
+                            bbox_transform=ax.transAxes)
+    box.patch.set(boxstyle="round,pad=0.3", fc="white", ec="#888", lw=1.5)
+    ax.add_artist(box)
 
 
 def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
@@ -554,6 +644,33 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     return tab
 
 
+def materials_by_season() -> pd.DataFrame:
+    """Materials shared by both parts of Seed_bulking (§ 5): per season,
+    locations, EOs, slick spots (events) surveyed, reproductive plants
+    counted, and plants measured for size and seed yield (LEPA DB; counts
+    only, no coordinates). Demes and populations are results of Part 1,
+    not materials, so they are not in this table."""
+    import sqlite3
+    from project_paths import LEPA_DB
+    con = sqlite3.connect(f"file:{LEPA_DB}?mode=ro", uri=True)
+    ev = pd.read_sql("""SELECT e.eventID, e.eventYear AS season, e.locationID, l.EOID,
+                               e.organismQuantityFertile AS plants, e.populationID
+                        FROM Events e JOIN Locations l USING(locationID)
+                        WHERE e.populationID IS NOT NULL""", con)
+    con.close()
+    measured = load_occurrences()[["eventID", "year"]].merge(ev[["eventID"]], on="eventID")
+    rows = []
+    for season, g in list(ev.groupby("season")) + [("both", ev)]:
+        n_meas = (measured["year"] == season).sum() if season != "both" else len(measured)
+        rows.append(dict(season=season, EOs=g["EOID"].nunique(),
+                         locations=g["locationID"].nunique(), slick_spots=g["eventID"].nunique(),
+                         reproductive_plants=int(g["plants"].sum()),
+                         plants_measured=int(n_meas)))
+    out = pd.DataFrame(rows)
+    out.to_csv(TABLES / "step32_materials_by_season.tsv", sep="\t", index=False)
+    return out
+
+
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     pops = population_table()
@@ -568,6 +685,7 @@ def main() -> None:
     filter_funnel(pops)
     genetic_example(pops)
     print(seed_available(pops).to_string(index=False))
+    print(materials_by_season().to_string(index=False))
     print(f"[step32] wrote tables/step32_seed_bulking_populations.tsv and figures in {OUT}/")
 
 

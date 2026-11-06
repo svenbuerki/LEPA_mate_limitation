@@ -40,3 +40,7 @@ cache/
 figures_seed_bulking/bulking_seed_available.*
 tables/step32_seed_available.tsv
 figures_seed_bulking/plant_photos/same_size_*
+
+# original phone photos (GPS in metadata); stripped copies live in figures_seed_bulking/plant_photos/
+*.HEIC
+*.heic

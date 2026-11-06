@@ -30,9 +30,9 @@ Bottleneck Lineage (BL) colors, which appear on maps as dashed outlines:
 
 | Type | Color | Meaning |
 |---|---|---|
-| **Mate-limited** | magenta `#C2185B` | sets less seed than its plants' size predicts (hollow = candidate) |
+| **Mate-limited** | gold `#E6A100` | sets less seed than its plants' size predicts (hollow = candidate) |
 | **Reproductively intact** | teal `#00897B` | sets the seed its plants' size predicts |
-| **Over-producing** | gold `#E6A100` | sets more seed than its size predicts — a possible sign of self-fertilization (SI escape) |
+| **Over-producing** | magenta `#C2185B` | sets more seed than its size predicts — a possible sign of self-fertilization (SI escape) |
 | Not yet clear | gray `#9E9E9E` | switches between seasons |
 | One season only | light gray `#D9D9D9` | seed data in a single season — more data required |
 
@@ -155,7 +155,7 @@ would compromise the whole program.
 <a id="fig-2"></a>
 ![Figure 2](figures_seed_bulking/restoration_program_cartoon.png)
 
-**Figure 2.** The population restoration program, with slickspot peppergrass as the model. Panel titles are the three **objectives** — objective 3, rescue mate-limited populations, in two steps (3a, 3b) — and the gray tags name the **technique** used. **The challenge** — wild populations set few fruits, most likely from reproductive failure, so there are very few seeds to start with: too few to restore populations directly. **1 — Prioritize populations for population restoration** (technique: seed set for plant size, our approach in [Figure 3](#fig-3)): reproductively intact populations are the **sources** and the top conservation priority — losing one compromises the whole restoration — and their seed goes on to step 2; mate-limited populations are rescued (objective 3); populations under inbreeding depression (over-producing, likely selfing) are excluded as sources. **2 — Multiply seed** from the sources (technique: seed bulking in the greenhouse, hand-crossed within each source, one row per mother). **3 — Rescue mate-limited populations**, which have limited genetic diversity and too few compatible mates, in two steps. **3a — Breed seed with new S-alleles** (technique: informed breeding — seedlings of the source (pollen donors, teal) and of the target population (mothers, magenta) are grown together in the greenhouse and genotyped at SRK, colored dots = S-alleles; source pollen is put on target flowers, pairs chosen so that they share no S-allele — a source plant sharing S1 with the targets is not used; the seed, harvested from the target mothers, carries new S-alleles). **3b — Sow the seed into the population** (technique: seed outcasting — the bred seed is sown into the mate-limited population; new S-alleles give its plants more compatible mates and seed set recovers; seed set and S-alleles are monitored). Plants and alleles are invented. Source: `Scripts/restoration_program_cartoon.py`; one frame per part for slides: `restoration_program_cartoon_step0–3.png`; landscape slides `restoration_program_cartoon_slide1` (challenge, objective 1) and `_slide2` (objectives 2 – 3). The previous version of this figure is kept (`Scripts/restoration_cartoon.py`, `restoration_cartoon.png`).
+**Figure 2.** The population restoration program, with slickspot peppergrass as the model. Panel titles are the three **objectives** — objective 3, rescue mate-limited populations, in two steps (3a, 3b) — and the gray tags name the **technique** used. **The challenge** — wild populations set few fruits, most likely from reproductive failure, so there are very few seeds to start with: too few to restore populations directly. **1 — Prioritize populations for population restoration** (technique: seed set for plant size, our approach in [Figure 3](#fig-3)): reproductively intact populations are the **sources** and the top conservation priority — losing one compromises the whole restoration — and their seed goes on to step 2; mate-limited populations are rescued (objective 3; ring buoy); populations under inbreeding depression (over-producing, likely selfing) are excluded as sources (red "avoid" sign). The badges mark the three population types, as in [Figure 3](#fig-3) and Figures 10 – 11. **2 — Multiply seed** from the sources (technique: seed bulking in the greenhouse, hand-crossed within each source, one row per mother). **3 — Rescue mate-limited populations**, which have limited genetic diversity and too few compatible mates, in two steps. **3a — Breed seed with new S-alleles** (technique: informed breeding — seedlings of the source (pollen donors, teal) and of the target population (mothers, gold) are grown together in the greenhouse and genotyped at SRK, colored dots = S-alleles; source pollen is put on target flowers, pairs chosen so that they share no S-allele — a source plant sharing S1 with the targets is not used; the seed, harvested from the target mothers, carries new S-alleles). **3b — Sow the seed into the population** (technique: seed outcasting — the bred seed is sown into the mate-limited population; new S-alleles give its plants more compatible mates and seed set recovers; seed set and S-alleles are monitored). Plants and alleles are invented. Source: `Scripts/restoration_program_cartoon.py`; one frame per part for slides: `restoration_program_cartoon_step0–3.png`; landscape slides `restoration_program_cartoon_slide1` (challenge, objective 1) and `_slide2` (objectives 2 – 3). The previous version of this figure is kept (`Scripts/restoration_cartoon.py`, `restoration_cartoon.png`).
 
 ---
 
@@ -179,7 +179,7 @@ SRK genotypes are the genetic check where they exist (§ 7).
 <a id="fig-3"></a>
 ![Figure 3](figures_seed_bulking/source_screening_cartoon.png)
 
-**Figure 3.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 2](#fig-2). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant are measured in two seasons: fast and low cost, no genotyping. **2 — Modeling:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (teal line; band from half, magenta, to twice, gold); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026). **3 — Sort populations for restoration:** reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; SRK genotypes are the genetic check. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; one frame per step for slides: `source_screening_cartoon_step1–2.png`.
+**Figure 3.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 2](#fig-2). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant are measured in two seasons: fast and low cost, no genotyping. **2 — Modeling:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (teal line; band from half, gold, to twice, magenta); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026); the badge next to each population gives the type it is sorted into in panel 3. **3 — Sort populations for restoration** (one type badge per row, as in [Figure 2](#fig-2)): reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; the symbols on the right give the action for each type (shield = top priority, ring buoy = rescue, prohibition sign = avoid, as in [Figure 2](#fig-2)); SRK genotypes are the genetic check. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; one frame per step for slides: `source_screening_cartoon_step1–2.png`.
 
 ---
 
@@ -196,9 +196,46 @@ two parts:
    population: which are reproductively intact (sources), mate-limited
    (to rescue) or over-producing (excluded as sources).
 
-Each part is presented as approach, methods and materials, results and
-discussion; § 8 summarizes the outcome of each part and what to do
-next.
+Each part is presented as approach, methods, results and discussion;
+§ 8 summarizes the outcome of each part and what to do next.
+
+### 5.1 Materials (both parts)
+
+Both parts rest on the same field data, from the LEPA database: every
+slick spot holding reproductive plants surveyed in 2025 and 2026 on the
+Snake River Plain. Part 1 uses the slick spots and their plant counts;
+Part 2 uses the plants measured for size and seed yield.
+
+| | 2025 | 2026 | Both seasons |
+|---|:-:|:-:|:-:|
+| Element occurrences (EOs) | 19 | 19 | 21 |
+| Locations (survey sites) | 39 | 43 | 52 |
+| Slick spots surveyed (events) | 237 | 486 | 723 |
+| Reproductive plants counted | 5 687 | 10 344 | 16 031 |
+| Plants measured for size and seed yield | 741 | 847 | 1 588 |
+
+An EO can hold several locations; a slick spot surveyed in both seasons
+counts once per season. Source:
+[`tables/step32_materials_by_season.tsv`](tables/step32_materials_by_season.tsv).
+
+**Where the data come from.** The 21 EOs range from a handful of
+flowering plants to several hundred ([Figure 4](#fig-4)).
+
+<a id="fig-4"></a>
+![Figure 4](figures_seed_bulking/EO_sampling_map_black.png)
+
+**Figure 4.** The element occurrences (EOs) sampled across the Snake River Plain, sized by flowering plants (two-year average).
+
+**Five lineages.** The EOs fall into five fragments of the landscape,
+the **Bottleneck Lineages** (BL1 – BL5), separated by gaps too wide for
+pollinators or seed to cross ([Figure 5](#fig-5)); each lineage evolves
+largely on its own, so a lineage that loses diversity cannot regain it
+from its neighbors.
+
+<a id="fig-5"></a>
+![Figure 5](figures_seed_bulking/BL_fragmentation_network_map.png)
+
+**Figure 5.** The five fragments (Bottleneck Lineages), with the shortest distance between them.
 
 ---
 
@@ -210,51 +247,34 @@ A population must group the plants that exchange pollen and seed, and
 be separate enough from the next population that it can be treated as
 a source or a target on its own. Pollinator flight sets the mating
 unit, the **deme**; the **population** groups the slick spots that stay
-together across seasons ([Figure 4](#fig-4)).
+together across seasons ([Figure 6](#fig-6)).
 
-### 6.2 Methods and materials
+### 6.2 Methods
 
 Every slick spot surveyed in a season is an **event**, and its
-flowering plants are counted. Within a season, slick spots less than
+reproductive plants are counted (materials in § 5.1). Within a season, slick spots less than
 **50 m** apart (pollinator flight) are linked, and each connected group
 is a **deme**, the group of plants that actually mate with each other;
 a slick spot on its own is a deme by itself. Slick spots of all seasons
 (so far 2025 and 2026) less than **500 m** apart are linked into one
-**population** — far enough from the next population that pollen and
-seed rarely move between them — inside which demes are redrawn each
+**population** — the maximum pollinator dispersal, so that pollen and
+seed rarely move between populations — inside which demes are redrawn each
 season. The rules are applied to every slick spot surveyed in 2025 and
 2026 in the LEPA database (`./run_pipeline.sh units`).
 
-<a id="fig-4"></a>
-![Figure 4](figures_seed_bulking/units_cartoon_landscape.png)
+<a id="fig-6"></a>
+![Figure 6](figures_seed_bulking/units_cartoon_landscape.png)
 
-**Figure 4.** Slick spot (event) → deme → population. **1 — Survey slick spots holding reproductive plants** (technique: field survey, two seasons): the same ground in 2025 (top) and 2026 (bottom); each slick spot surveyed in a season is an event, and its reproductive (flowering) plants are counted; some slick spots are not above ground in a season (dashed), others appear. **2 — Determine the mating pool (demes)** (technique: pollinator flight, < 50 m, each season): plants on slick spots less than 50 m apart can mate, so these slick spots form one deme; a slick spot on its own is a deme by itself. Demes are redrawn every season: here a new 2026 slick spot links two 2025 demes. **3 — Determine populations, the units to prioritize** (technique: maximum pollinator dispersal, < 500 m): slick spots of both seasons (open = 2025, filled = 2026) less than 500 m apart form one population — the unit for seed collection, restoration and prioritization; slick spots more than 500 m apart (red ✗) belong to different populations; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py` (landscape version for slides; the portrait version, `units_cartoon.png`, is used in the project outline and sampling design).
+**Figure 6.** Slick spot (event) → deme → population. **1 — Survey slick spots holding reproductive plants** (technique: field survey, two seasons): the same ground in 2025 (top) and 2026 (bottom); each slick spot surveyed in a season is an event, and its reproductive (flowering) plants are counted; some slick spots are not above ground in a season (dashed), others appear. **2 — Determine the mating pool (demes)** (technique: pollinator flight, < 50 m, each season): plants on slick spots less than 50 m apart can mate, so these slick spots form one deme; a slick spot on its own is a deme by itself. Demes are redrawn every season: here a new 2026 slick spot links two 2025 demes. **3 — Determine populations, the units to prioritize** (technique: maximum pollinator dispersal, < 500 m): slick spots of both seasons (open = 2025, filled = 2026) less than 500 m apart form one population — the unit for seed collection, restoration and prioritization; slick spots more than 500 m apart (red ✗) belong to different populations; the red box marks where the close-up of panels 1 – 2 lies. Positions are invented. Source: `Scripts/units_cartoon.py` (landscape version for slides; the portrait version, `units_cartoon.png`, is used in the project outline and sampling design).
 
 ### 6.3 Results
 
-**Where we worked.** We applied the rules to every slick spot surveyed
-in 2025 and 2026 in **21 element occurrences (EOs)** across the Snake
-River Plain, from a handful of flowering plants to several hundred
-([Figure 5](#fig-5)).
-
-<a id="fig-5"></a>
-![Figure 5](figures_seed_bulking/EO_sampling_map_black.png)
-
-**Figure 5.** The element occurrences (EOs) sampled across the Snake River Plain, sized by flowering plants (two-year average).
-
-**44 populations in five lineages.** The rules give **44 populations**,
-structured within the five fragments of the landscape, the **Bottleneck
-Lineages** (BL1 – BL5), separated by gaps too wide for pollinators or
-seed to cross ([Figure 6](#fig-6)); each lineage evolves largely on its
-own, so a lineage that loses diversity cannot regain it from its
-neighbors.
-
-<a id="fig-6"></a>
-![Figure 6](figures_seed_bulking/BL_fragmentation_network_map.png)
-
-**Figure 6.** The five fragments (Bottleneck Lineages), with the shortest distance between them.
-
-Populations per lineage ([Figure 7](#fig-7)):
+**Demes and populations.** The rules give **99 demes in 2025 and 189 in
+2026** — the mating pools, redrawn each season (more slick spots were
+surveyed in 2026) — and **44 populations** over the two seasons (33
+above ground in 2025, 37 in 2026, 26 in both), structured within the
+five Bottleneck Lineages ([Figure 5](#fig-5)). Populations per lineage
+([Figure 7](#fig-7)):
 
 | Lineage | EOs | Populations | Present in both seasons |
 |---|:-:|:-:|:-:|
@@ -305,12 +325,13 @@ significantly more, **over-producing**; significantly within half –
 twice of it, **reproductively intact** ([Figure 3](#fig-3)). These seed-set types are hypotheses about
 reproduction; SRK genotypes, where they exist, are the genetic check.
 
-### 7.2 Methods and materials
+### 7.2 Methods
 
 **Plant size and seed.** Every plant whose seeds were collected is
 photographed against a whiteboard with rulers to measure its crown and
-height ([Figure 8](#fig-8)), and its seeds are counted. Larger plants set
-more seed. Across all **1 588 plants measured in 2025 and 2026**, seed
+height, and its seeds are cleaned, weighed and converted to a seed count
+([Figure 8](#fig-8)). Larger plants set
+more seed. Across all **1 588 plants measured in 2025 and 2026** (§ 5.1), seed
 count rises with crown size along one curve shared by all populations,
 so each plant has an expected seed set for its size
 ([Figure 9](#fig-9)).
@@ -318,12 +339,12 @@ so each plant has an expected seed set for its size
 <a id="fig-8"></a>
 ![Figure 8](figures_seed_bulking/plant_size_examples.png)
 
-**Figure 8.** Plant size phenotyping in the field, 2026: a small, a medium and a large plant photographed against the measuring board (crown width and height on the rulers), with their crown size and the seed a plant of that size is expected to set (the teal line of [Figure 9](#fig-9)): about 150, 390 and 1 040 seeds. All three set about the seed their size predicts. Photos with location metadata removed: `figures_seed_bulking/plant_photos/`.
+**Figure 8.** Plant phenotyping. **Plant size (field, top), 2026:** a small, a medium and a large plant photographed against the measuring board (crown width and height on the rulers), with their crown size as written on the field board (6, 13 and 30 cm) and the seed a plant of that size is expected to set (the teal line of [Figure 9](#fig-9)): about 150, 390 and 1 110 seeds. All three set about the seed their size predicts. **Seed yield (lab, bottom):** each plant's fruits are cleaned by hand at the bench (left), separating the seed (lower pile) from the chaff (upper pile; right); the cleaned seed is weighed to 0.1 mg (inset) and the weight is converted to a seed count with the linear model of the LEPA database (boxed legend): seeds = (weight − 0.37 mg) ÷ 0.425 mg (about 2.4 seeds per mg; 95 % prediction interval ± 45 seeds). Photos with location metadata removed: `figures_seed_bulking/plant_photos/`.
 
 <a id="fig-9"></a>
 ![Figure 9](figures_seed_bulking/seed_by_size_plants.png)
 
-**Figure 9.** Seeds per plant against plant size (crown diameter), 1 588 plants, both seasons; log scales. Teal line = the seed a plant of that size is expected to set (the relationship shared by all populations); teal band = as expected, between half (magenta line) and twice (gold line) that seed — the colors of the three reproductive types used in the rest of the talk. Icons: over-producing (gold — a flower pollinating itself, extra fruit) above the gold line; mate-limited (magenta — two flowers of the same S-type, pollen rejected, empty fruit) below the magenta line.
+**Figure 9.** Seeds per plant against plant size (crown diameter), 1 588 plants, both seasons; log scales. Teal line = the seed a plant of that size is expected to set (the relationship shared by all populations); teal band = as expected, between half (gold line) and twice (magenta line) that seed — the colors of the three reproductive types used in the rest of the talk. Icons: over-producing (magenta — a flower pollinating itself, extra fruit) above the magenta line; mate-limited (gold — two flowers of the same S-type, pollen rejected, empty fruit) below the gold line.
 
 **Only populations with two seasons of data are typed.** All plants
 shape the curve, but a population is typed only if at least 3 of its
@@ -410,7 +431,7 @@ comparison.
 <a id="fig-12"></a>
 ![Figure 12](figures_seed_bulking/genetic_example_P42_P34.png)
 
-**Figure 12.** SRK genotypes of a mate-limited (P42, magenta) and a reproductively intact population (P34, teal). **A** — seed set for plant size per season, as in [Figure 10](#fig-10) (circle = 2025, square = 2026; filled = significant: P42 differs from expectation, P34 lies within half – twice). **B** — the S-types carried: 100 circles per population, one circle = 1 % of S-allele copies, one color per S-type as in [Figure 1](#fig-1) (the same color is the same S-type in both). Both hold 6 – 7 S-types, but P42 has two main ones and P34 four (main = at least 5 % of copies). **C** — for each genotyped plant, the share of its population it can mate with under the self-incompatibility system; bar = average. Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
+**Figure 12.** SRK genotypes of a mate-limited (P42, gold) and a reproductively intact population (P34, teal). **A** — seed set for plant size per season, as in [Figure 10](#fig-10) (circle = 2025, square = 2026; filled = significant: P42 differs from expectation, P34 lies within half – twice). **B** — the S-types carried: 100 circles per population, one circle = 1 % of S-allele copies, one color per S-type as in [Figure 1](#fig-1) (the same color is the same S-type in both). Both hold 6 – 7 S-types, but P42 has two main ones and P34 four (main = at least 5 % of copies). **C** — for each genotyped plant, the share of its population it can mate with under the self-incompatibility system; bar = average. Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
 
 #### 7.3.3 Candidate sources for seed bulking
 

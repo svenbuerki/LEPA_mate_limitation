@@ -36,7 +36,7 @@ from matplotlib.patches import (Circle, Ellipse, FancyArrowPatch, FancyBboxPatch
                                 Rectangle)
 
 OUT = Path("figures_seed_bulking")
-INTACT, MATE_LIM, OVER = "#00897B", "#C2185B", "#E6A100"
+INTACT, MATE_LIM, OVER = "#00897B", "#E6A100", "#C2185B"
 STEM, LEAF, FLOWER, FRUIT = "#3B6E3B", "#5E8C3A", "#FFFFFF", "#A0522D"   # fruit: sienna, as the seeds
 FRUIT_EDGE = "#5D3A1A"
 SPOT, SPOT_EDGE = "#E8D3A8", "#B08D57"

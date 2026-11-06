@@ -39,6 +39,7 @@ from matplotlib.patches import (Circle, Ellipse, FancyArrowPatch, FancyBboxPatch
 from matplotlib.path import Path as MPath
 
 import restoration_cartoon as rc
+from type_icons import add_icon, lifebuoy, no_sign
 from restoration_cartoon import (ALLELE, INTACT, LEAF, MATE_LIM, NO, OUT, OVER, POT, POT_EDGE,
                                  SPOT, SPOT_EDGE, STEM, arrow, bee, brush, clipboard, cross_mark,
                                  dna, greenhouse, lepa, seed, seed_bag, tube)
@@ -123,16 +124,26 @@ def panel_challenge_square(ax):
 
 
 # ---- 1. identify source populations ------------------------------------------------
+def badge(ax, kind, x, y, size):
+    """Type badge of type_icons.py centered at (x, y), `size` data units wide
+    (panel axes: square, data 0–100)."""
+    pos = ax.get_position()
+    w = size / 100 * pos.width
+    h = size / 100 * pos.height
+    cx, cy = pos.x0 + x / 100 * pos.width, pos.y0 + y / 100 * pos.height
+    add_icon(ax.figure, kind, [cx - w / 2, cy - h / 2, w, h])
+
+
 def panel_sources(ax):
     """Prioritize populations: intact = source (priority 1, protect) → step 2;
-    mate-limited → rescue (objective 3); inbreeding depression → excluded."""
+    mate-limited → rescue (objective 3); over-producing (inbreeding
+    depression) → excluded. Badges as in Figure 3; action symbols: shield,
+    ring buoy (rescue), no-sign (avoid)."""
     frame(ax, "Prioritize populations for population restoration", 1)
     # reproductively intact = source: top conservation priority, on to step 2
-    ax.add_patch(Ellipse((58, 70), 30, 16, fc=SPOT, ec=INTACT, lw=3, zorder=1))
-    for dx in (-7, 7):
-        lepa(ax, 58 + dx, 64.5, h=9)
-    magnifier(ax, 58, 70, r=11.5)
-    ax.text(58, 89, "reproductively intact (source)", ha="center", fontsize=13.5, color=INTACT,
+    badge(ax, "Reproductively intact", 58, 70, 24)
+    magnifier(ax, 58, 70, r=14.5)
+    ax.text(58, 89.5, "reproductively intact (source)", ha="center", fontsize=13.5, color=INTACT,
             fontweight="bold")
     shield(ax, 17, 72, s=1.05)
     ax.text(17, 56.5, "top conservation\npriority: protect", ha="center", va="top",
@@ -140,16 +151,20 @@ def panel_sources(ax):
     ax.plot([4, 96], [47, 47], color="#CCCCCC", lw=1.2, ls=(0, (4, 3)), zorder=0)
     # the other two types
     for y, col, kind, head, action in (
-            (35, MATE_LIM, "ml", "mate-limited", "→ rescue (objective 3)"),
-            (16, OVER, "over", "inbreeding depression", "→ excluded as source")):
-        ax.add_patch(Ellipse((17, y), 24, 12, fc=SPOT, ec=col, lw=3, zorder=1))
-        for dx in (-5, 5):
-            lepa(ax, 17 + dx, y - 4, h=6.5, faded=kind == "ml" and dx > 0, fruits=kind != "ml")
-        if kind == "over":
-            cross_mark(ax, 17, y, s=5, col=OVER, lw=2.5)
-        ax.text(34, y + 2.5, head, ha="left", va="bottom", fontsize=13.5, color=col,
+            (35, MATE_LIM, "Mate-limited", "mate-limited", "→ rescue (objective 3)"),
+            (16, OVER, "Over-producing", "over-producing",
+             "→ inbreeding depression:\n    excluded as source")):
+        badge(ax, kind, 17, y, 17)
+        ax.text(31, y + 2.5, head, ha="left", va="bottom", fontsize=13.5, color=col,
                 fontweight="bold")
-        ax.text(34, y - 0.5, action, ha="left", va="top", fontsize=12.5, color=col)
+        ax.text(31, y - 0.5, action, ha="left", va="top", fontsize=12.5, color=col,
+                linespacing=1.1)
+    lifebuoy(ax, 71, 38, r=5)                          # mate-limited: rescue
+    ax.text(71, 31.5, "rescue", ha="center", va="top", fontsize=11.5, color=MATE_LIM,
+            fontweight="bold")
+    no_sign(ax, 71, 20, r=5)                              # over-producing: avoid as source
+    ax.text(71, 13.5, "avoid", ha="center", va="top", fontsize=11.5, color="#C62828",
+            fontweight="bold")
     technique(ax, "seed set for plant size (see Figure 3)", y=4)
 
 

@@ -29,6 +29,7 @@ import numpy as np
 from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, Polygon, Rectangle
 
 import restoration_cartoon as rc
+from type_icons import add_icon, lifebuoy, no_sign
 from restoration_cartoon import (INTACT, MATE_LIM, OUT, OVER, SPOT, SPOT_EDGE, arrow, cross_mark,
                                  dna, lepa, seed_bag)
 
@@ -54,6 +55,18 @@ def shield(ax, x, y, s=1.0, col=INTACT):
     r = np.where(np.arange(10) % 2 == 0, 4.4 * s, 1.8 * s)
     ax.add_patch(Polygon(np.c_[x + r * np.cos(ang), y + 0.5 * s + r * np.sin(ang)], fc="white",
                          ec="none", zorder=7))
+
+
+def badge(ax, kind, x, y, size):
+    """Type badge of type_icons.py centered at (x, y), `size` data units wide
+    (panel axes: square, data 0–100)."""
+    pos = ax.get_position()
+    cx, cy = pos.x0 + x / 100 * pos.width, pos.y0 + y / 100 * pos.height
+    w, h = size / 100 * pos.width, size / 100 * pos.height
+    add_icon(ax.figure, kind, [cx - w / 2, cy - h / 2, w, h])
+
+
+KINDS = {INTACT: "Reproductively intact", MATE_LIM: "Mate-limited", OVER: "Over-producing"}
 
 
 # ---- 1. plant phenotyping ------------------------------------------------------------
@@ -134,7 +147,8 @@ def panel_modeling(ax):
         ax.plot([x25, x26], [y, y], color=c, lw=1.1, zorder=2)
         ax.scatter([x25], [y], s=70, marker="o", c=c, ec="white", lw=0.7, zorder=3)
         ax.scatter([x26], [y], s=70, marker="s", c=c, ec="white", lw=0.7, zorder=3)
-        ax.text(15, y, lab, ha="right", va="center", fontsize=10.5)
+        ax.text(16, y, lab, ha="right", va="center", fontsize=10.5)
+        badge(ax, KINDS[c], 4.5, y, 7.5)                  # type, as in panel 3
     ax.scatter([86], [44.5], s=35, marker="o", c="#555")
     ax.text(88.5, 44.5, "2025", va="center", fontsize=9.5)
     ax.scatter([86], [40.5], s=35, marker="s", c="#555")
@@ -148,20 +162,23 @@ def panel_sort(ax):
             (51, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
             (24, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
     for y, c, lab, role, flaw in rows:
-        ax.add_patch(Ellipse((15, y), 24, 13, fc=SPOT, ec=c, lw=3, zorder=1))
-        for dx in (-5, 5):
-            lepa(ax, 15 + dx, y - 4.5, h=7, faded=c == MATE_LIM and dx > 0, fruits=c != MATE_LIM)
+        badge(ax, KINDS[c], 15, y, 21)                   # type badges, as in Figures 2 and 10 – 11
         ax.text(31, y + 3, lab, ha="left", va="bottom", fontsize=13, color=c, fontweight="bold")
         ax.text(31, y + 0.5, role, ha="left", va="top", fontsize=12.5, color=c)
         if flaw:
             ax.text(31, y - 5.5, flaw, ha="left", va="top", fontsize=11, color=c, style="italic")
-    cross_mark(ax, 15, 24, s=5, col=OVER, lw=2.5)
+    # what to do with each type: protect, rescue, avoid
     shield(ax, 88, 80, s=0.75)
     ax.text(88, 70, "top\npriority", ha="center", va="top", fontsize=10.5, color=INTACT,
             fontweight="bold", linespacing=1.05)
-    dna(ax, 88, 33, h=10, w=2.2)
-    ax.text(88, 30.5, "SRK:\ngenetic\ncheck", ha="center", va="top", fontsize=10, color="#555",
-            linespacing=1.05)
+    lifebuoy(ax, 88, 53, r=5.5)
+    ax.text(88, 45.5, "rescue", ha="center", va="top", fontsize=10.5, color=MATE_LIM,
+            fontweight="bold")
+    no_sign(ax, 88, 26, r=5)
+    ax.text(88, 19.5, "avoid", ha="center", va="top", fontsize=10.5, color="#C62828",
+            fontweight="bold")
+    dna(ax, 7, 88, h=8, w=1.8)
+    ax.text(10, 92, "SRK: genetic check", ha="left", va="center", fontsize=10, color="#555")
 
 
 PANELS = (panel_phenotyping, panel_modeling, panel_sort)
