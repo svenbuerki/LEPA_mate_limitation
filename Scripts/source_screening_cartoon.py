@@ -18,9 +18,11 @@ Three steps, left to right:
      SRK genotypes are the genetic check.
 
 Same icons and colors as restoration_cartoon.py; invented plants and
-values. Output: figures_seed_bulking/source_screening_cartoon.{png,pdf},
-plus source_screening_cartoon_step1–2.png (same size, later steps blank)
-to build a slide.
+values. Output: figures_seed_bulking/source_screening_cartoon.{png,pdf}
+(landscape, for the talk) plus source_screening_cartoon_step1–2.png (same
+size, later steps blank) to build a slide, and
+source_screening_cartoon_compact.{png,pdf} (panels 1 and 2 side by side,
+panel 3 short and wide below: the web document, Seed_bulking Figure 3).
 """
 from __future__ import annotations
 
@@ -189,11 +191,55 @@ def panel_sort(ax):
             fontweight="bold")
 
 
+def panel_sort_wide(ax):
+    """Panel 3 as a short, wide panel (214 × 66 data units, same scale as the
+    square panels): the three types side by side, for the compact layout."""
+    xmax, ymax = 214, 66
+    ax.set_xlim(0, xmax), ax.set_ylim(0, ymax), ax.set_aspect("equal")
+    ax.set_xticks([]), ax.set_yticks([])
+    for sp in ax.spines.values():
+        sp.set_edgecolor("#BBBBBB")
+    ax.set_title("3. Sort populations for restoration", loc="left", fontsize=18, fontweight="bold",
+                 pad=10)
+    ax.text(xmax / 2, 2.5, "hypotheses from seed yield for plant size", ha="center", va="bottom",
+            fontsize=13, color="#222")
+    ax.add_patch(FancyBboxPatch((3, 54), xmax - 6, 10, boxstyle="round,pad=0,rounding_size=2",
+                                fc="#F3F4F6", ec="#888", lw=1.2, zorder=1))
+    dna(ax, 9, 55, h=8, w=1.8)
+    ax.text(15, 59, "Hypotheses → test with genetics", ha="left", va="center", fontsize=13,
+            fontweight="bold", color="#222", zorder=2)
+    ax.text(88, 59, "SRK genotypes: S-allele diversity, compatible mates, selfing", ha="left",
+            va="center", fontsize=11.5, color="#555", zorder=2)
+    pos = ax.get_position()
+    cols = [(2, INTACT, "reproductively intact", "→ source for seed bulking", None),
+            (73, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
+            (144, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
+    for x0, c, lab, role, flaw in cols:
+        size = 27                                        # type badge, as in the square panel
+        cx = pos.x0 + (x0 + 15) / xmax * pos.width
+        cy = pos.y0 + 31 / ymax * pos.height
+        w, h = size / xmax * pos.width, size / ymax * pos.height
+        add_icon(ax.figure, KINDS[c], [cx - w / 2, cy - h / 2, w, h])
+        ax.text(x0 + 31, 46, lab, ha="left", va="center", fontsize=13, color=c, fontweight="bold")
+        ax.text(x0 + 31, 39.5, role, ha="left", va="center", fontsize=12.5, color=c)
+        if flaw:
+            ax.text(x0 + 31, 33, flaw, ha="left", va="center", fontsize=11, color=c, style="italic")
+    shield(ax, 40, 19.5, s=0.62)
+    ax.text(48, 20, "top priority", ha="left", va="center", fontsize=11.5, color=INTACT,
+            fontweight="bold")
+    lifebuoy(ax, 111, 20, r=5.5)
+    ax.text(119, 20, "rescue", ha="left", va="center", fontsize=11.5, color=MATE_LIM,
+            fontweight="bold")
+    no_sign(ax, 182, 20, r=5)
+    ax.text(190, 20, "avoid", ha="left", va="center", fontsize=11.5, color="#C62828",
+            fontweight="bold")
+
+
 PANELS = (panel_phenotyping, panel_modeling, panel_sort)
 
 
 def draw(n_shown: int):
-    """Three square panels in a row (landscape), arrows between them."""
+    """Three square panels in a row (landscape, slides), arrows between them."""
     rc.RNG = np.random.default_rng(11)                   # same plants in every frame
     side, gap, m = 7.2, 1.0, 0.35
     w, h = 2 * m + 3 * side + 2 * gap, 2 * m + 0.6 + side
@@ -214,17 +260,46 @@ def draw(n_shown: int):
     return fig
 
 
+def draw_compact():
+    """The web document: panels 1 and 2 side by side, panel 3 short and wide
+    below, so the whole figure fits on a screen with larger text."""
+    rc.RNG = np.random.default_rng(11)
+    side, gap, m, row = 7.2, 1.0, 0.35, 1.15
+    wide_w = 2 * side + gap
+    wide_h = wide_w * 66 / 214
+    w, h = 2 * m + wide_w, 2 * m + 0.6 + side + row + wide_h
+    fig = plt.figure(figsize=(w, h))
+    y_top = m + wide_h + row
+    a1 = fig.add_axes([m / w, y_top / h, side / w, side / h])
+    a2 = fig.add_axes([(m + side + gap) / w, y_top / h, side / w, side / h])
+    a3 = fig.add_axes([m / w, m / h, wide_w / w, wide_h / h])
+    panel_phenotyping(a1)
+    panel_modeling(a2)
+    panel_sort_wide(a3)
+    fig.canvas.draw()
+    to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
+    style = dict(transform=fig.transFigure, arrowstyle="-|>", mutation_scale=26, color="#333", lw=3)
+    fig.add_artist(FancyArrowPatch(to_fig(a1, (100, 50)), to_fig(a2, (0, 50)), shrinkA=6, shrinkB=6,
+                                   **style))
+    p = to_fig(a2, (50, 0))
+    fig.add_artist(FancyArrowPatch(p, (p[0], to_fig(a3, (0, 66))[1]), shrinkA=4, shrinkB=4, **style))
+    return fig
+
+
 def main():
     OUT.mkdir(exist_ok=True)
-    fig = draw(len(PANELS))
-    for ext in ("png", "pdf"):
-        fig.savefig(OUT / f"source_screening_cartoon.{ext}", dpi=200 if ext == "png" else None)
-    plt.close(fig)
+    for name, make in (("source_screening_cartoon", lambda: draw(len(PANELS))),
+                       ("source_screening_cartoon_compact", draw_compact)):
+        fig = make()
+        for ext in ("png", "pdf"):
+            fig.savefig(OUT / f"{name}.{ext}", dpi=200 if ext == "png" else None)
+        plt.close(fig)
     for n in range(1, len(PANELS)):
         fig = draw(n)
         fig.savefig(OUT / f"source_screening_cartoon_step{n}.png", dpi=200)
         plt.close(fig)
-    print(f"  wrote {OUT}/source_screening_cartoon.png (+ _step1–2 frames for slides)")
+    print(f"  wrote {OUT}/source_screening_cartoon.png (landscape, talk; + _step1–2 frames) "
+          f"and _compact (web document)")
 
 
 if __name__ == "__main__":
