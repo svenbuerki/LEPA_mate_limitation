@@ -204,8 +204,9 @@ def panel_sc(ax):
     flower(ax, 80, 66, r=7, stem_bottom=50)
     self_loop(ax, 80, 66, 7)
     arrow(ax, (80, 46), (80, 37), col="#666", lw=1.8)
-    silique_full(ax, 80, 26, size=5)
-    ax.text(80, 15.5, "seed", ha="center", va="top", fontsize=13, color=COL_POD_EDGE,
+    silique_full(ax, 76, 26, size=5)                     # more seed: short-term gain
+    silique_full(ax, 84, 26, size=5)
+    ax.text(80, 15.5, "seed ↑", ha="center", va="top", fontsize=14.5, color=SC_GREEN,
             fontweight="bold")
     # LEPA numbers (SRK_bioinformatics, 263 genotyped plants)
     ax.text(30, 44, "LEPA — 263 plants genotyped", ha="center", fontsize=12, fontweight="bold",
