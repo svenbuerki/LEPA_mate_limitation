@@ -111,6 +111,7 @@ if [[ "$PART" == all || "$PART" == bulking ]]; then
   echo "▶ step32_seed_bulking_maps (R)"
   Rscript Scripts/step32_seed_bulking_maps.R > logs/step32_seed_bulking_maps.log 2>&1 \
     || { echo "✖ step32_seed_bulking_maps failed — see logs/step32_seed_bulking_maps.log"; exit 1; }
+  run talk_figures                  # numbered copies in talk order → talk_figures/ (local)
 fi
 
 echo "✔ done (logs in logs/)"

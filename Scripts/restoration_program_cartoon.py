@@ -6,8 +6,9 @@ Objectives are told apart from techniques: each panel's title is the
 **objective** (what), and a gray tag at its foot names the **technique**
 (how).
 
-  The challenge — very few seeds to start with, most likely from
-     reproductive failure.
+  The challenge (very little seed to start with) is drawn here
+     (panel_challenge) but shown at the top of Figure 1
+     (breeding_system_cartoon.py), not in this figure.
   1. Prioritize populations for population restoration — reproductively
      intact populations are the sources (top conservation priority: losing
      one compromises the whole program) and go on to step 2; mate-limited
@@ -26,9 +27,9 @@ Objectives are told apart from techniques: each panel's title is the
 
 Icons and colors as restoration_cartoon.py; invented plants and alleles.
 Output: figures_seed_bulking/restoration_program_cartoon.{png,pdf}, plus
-restoration_program_cartoon_step0–3.png (same size, later parts blank) to
-build a slide; landscape slides restoration_program_cartoon_slide1 (the
-challenge and step 1) and _slide2 (steps 2–4), {png,pdf}, with _step frames.
+restoration_program_cartoon_step1–3.png (same size, later parts blank) to
+build a slide; landscape slides restoration_program_cartoon_slide1 (steps 1
+and 2) and _slide2 (3a and 3b), {png,pdf}, with _step frames.
 """
 from __future__ import annotations
 
@@ -44,7 +45,7 @@ from restoration_cartoon import (ALLELE, INTACT, LEAF, MATE_LIM, NO, OUT, OVER, 
                                  SPOT, SPOT_EDGE, STEM, arrow, bee, brush, clipboard, cross_mark,
                                  dna, greenhouse, lepa, seed, seed_bag, tube)
 
-W, H = 16.0, 21.7                                        # figure size, inches
+W, H = 16.0, 17.85                                       # figure size, inches
 TECH = "#546E7A"                                         # technique tags
 
 
@@ -89,38 +90,41 @@ def magnifier(ax, x, y, r=8):
 
 
 # ---- the challenge ---------------------------------------------------------------
-def panel_challenge(ax):
-    frame(ax, "The challenge: very few seeds to start with", xmax=200, ymax=38)
-    spots = [(20, 20, 26, 14, 3), (52, 23, 20, 11, 2), (82, 18, 24, 13, 3), (112, 22, 18, 10, 2)]
-    for k, (x, y, w, h, n) in enumerate(spots):
-        ax.add_patch(Ellipse((x, y), w, h, fc=SPOT, ec=SPOT_EDGE, lw=1.4, zorder=1))
-        for dx in np.linspace(-(n - 1) * 4, (n - 1) * 4, n):
-            lepa(ax, x + dx, y - 5, h=8, faded=dx != 0, fruits=1 if dx == 0 else 0)
-    ax.text(66, 34, "wild populations: few fruits — most likely reproductive failure",
-            ha="center", va="center", fontsize=13, color="#555", style="italic")
-    arrow(ax, (126, 20), (142, 20), lw=2.6)
-    seed_bag(ax, 152, 13, 9, 10, 3)
-    ax.text(161, 20, "very few\nseeds", ha="left", va="center", fontsize=15, fontweight="bold",
-            linespacing=1.15)
-    ax.text(186, 20, "→ too few\nto restore\ndirectly", ha="center", va="center", fontsize=12.5,
-            color=NO, linespacing=1.15)
+def threatened_tag(ax, x, y, size=12.5, ha="left"):
+    """Status tag: the species is federally listed as threatened."""
+    ax.text(x, y, "federally threatened (ESA)", ha=ha, va="center", fontsize=size, color=NO,
+            fontweight="bold", zorder=10,
+            bbox=dict(boxstyle="round,pad=0.35", fc="white", ec=NO, lw=1.6))
 
 
-def panel_challenge_square(ax):
-    """The challenge as a square panel, for the landscape slides."""
-    frame(ax, "The challenge: very few seeds to start with")
-    ax.text(50, 92, "wild populations: few fruits —\nmost likely reproductive failure", ha="center",
-            va="center", fontsize=13, color="#555", style="italic", linespacing=1.15)
-    spots = [(25, 72, 30, 14, 3), (72, 75, 24, 12, 2), (32, 51, 24, 12, 2), (74, 54, 30, 14, 3)]
+def consequences(ax, x, y, dy, size):
+    """Why seed scarcity impedes restoration: two ✗ lines (the problems to solve)."""
+    for k, line in enumerate(("far too little to restore\npopulations directly",
+                              "collecting more would deplete\nthe populations it comes from")):
+        ax.text(x, y - k * dy, "✗", ha="left", va="center", fontsize=size + 6, color=NO,
+                fontweight="bold")
+        ax.text(x + 0.5 * dy, y - k * dy, line, ha="left", va="center", fontsize=size,
+                color=NO, fontweight="bold", linespacing=1.15)
+
+
+def panel_challenge(ax, title="The challenge: very little seed to start with"):
+    """Wide panel (200 × 38 data units): the top of Figure 1 (breeding_system_cartoon)."""
+    frame(ax, title, xmax=200, ymax=38)
+    threatened_tag(ax, 3, 34, size=13.5)
+    ax.text(50, 34, "wild populations: limited fertility — few fruits", ha="left", va="center",
+            fontsize=13.5, color="#555", style="italic")
+    # slick spots jittered up and down, so they can be larger without touching
+    spots = [(16, 12.5, 30, 20, 3), (39.5, 22, 22, 15.5, 2), (62.5, 12, 30, 20, 3),
+             (89, 21, 22, 16.5, 2)]
     for x, y, w, h, n in spots:
         ax.add_patch(Ellipse((x, y), w, h, fc=SPOT, ec=SPOT_EDGE, lw=1.4, zorder=1))
-        for dx in np.linspace(-(n - 1) * 4.5, (n - 1) * 4.5, n):
-            lepa(ax, x + dx, y - 5, h=9, faded=dx != 0, fruits=1 if dx == 0 else 0)
-    arrow(ax, (50, 41), (50, 32), lw=2.6)
-    seed_bag(ax, 36, 9, 12, 13, 3)
-    ax.text(47, 23, "very few seeds", ha="left", va="center", fontsize=16, fontweight="bold")
-    ax.text(47, 14, "→ too few to restore\n    populations directly", ha="left", va="center",
-            fontsize=13, color=NO, linespacing=1.15)
+        for dx in np.linspace(-(n - 1) * 4, (n - 1) * 4, n):
+            lepa(ax, x + dx, y - 6, h=10, faded=dx != 0, fruits=1 if dx == 0 else 0)
+    arrow(ax, (101.5, 16), (108.5, 16), lw=2.6)
+    seed_bag(ax, 115, 9, 9, 10, 3)
+    ax.text(122, 16, "very little\nseed", ha="left", va="center", fontsize=16, fontweight="bold",
+            linespacing=1.15)
+    consequences(ax, 141, 22, 12, 15)
 
 
 # ---- 1. identify source populations ------------------------------------------------
@@ -286,27 +290,22 @@ def rescue_header(fig, ax_a, ax_b):
 
 
 def draw(n_shown: int):
-    """n_shown: 0 = challenge only, 1–4 = steps (4 = complete figure)."""
+    """n_shown: 1–4 = steps shown (4 = complete figure)."""
     rc.RNG = np.random.default_rng(7)                    # same plants in every frame
     fig = plt.figure(figsize=(W, H))
-    top = axes_in(fig, 0.4, 0.75, 15.2, 15.2 * 38 / 200)
-    panel_challenge(top)
     side, gap = 7.2, 0.8
-    xs, ys = (0.4, 0.4 + side + gap), (4.6, 4.6 + side + 2.4)
+    xs, ys = (0.4, 0.4 + side + gap), (0.75, 0.75 + side + 2.4)
     grid = [[axes_in(fig, x, y, side, side) for x in xs] for y in ys]
     for k, (ax, f) in enumerate(zip([a for row in grid for a in row], PANELS)):
         if k < n_shown:
             f(ax)
         else:
             ax.axis("off")
-    # connectors: challenge → 1, 1 → 2, 2 → 3 (elbow), 3 → 4
+    # connectors: 1 → 2, 2 → 3 (elbow), 3 → 4
     fig.canvas.draw()
     to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
     style = dict(transform=fig.transFigure, arrowstyle="-|>", mutation_scale=26, color="#333",
                  lw=3)
-    if n_shown >= 1:
-        (x0, y0), (x1, y1) = to_fig(top, (40, 0)), to_fig(grid[0][0], (50, 100))
-        fig.add_artist(FancyArrowPatch((x0, y0 - 0.002), (x0, y1 + 0.022), **style))
     if n_shown >= 2:                                     # 1 → 2 leaves from the source
         fig.add_artist(FancyArrowPatch(to_fig(grid[0][0], (75, 70)), to_fig(grid[0][1], (0, 70)),
                                        shrinkA=4, shrinkB=6, **{**style, "color": INTACT}))
@@ -353,8 +352,8 @@ def draw_slide(panels, n_shown: int):
     return fig
 
 
-SLIDES = {"slide1": (panel_challenge_square, panel_sources),       # why and which populations
-          "slide2": (panel_bulking, panel_rescue, panel_restore)}   # how: the techniques
+SLIDES = {"slide1": (panel_sources, panel_bulking),     # objectives 1 – 2: sources, more seed
+          "slide2": (panel_rescue, panel_restore)}     # objective 3: rescue (3a, 3b)
 
 
 def main():
@@ -363,7 +362,7 @@ def main():
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"restoration_program_cartoon.{ext}", dpi=200 if ext == "png" else None)
     plt.close(fig)
-    for n in range(0, 4):                                # talk build: challenge, then steps
+    for n in range(1, 4):                                # talk build, step by step
         fig = draw(n)
         fig.savefig(OUT / f"restoration_program_cartoon_step{n}.png", dpi=200)
         plt.close(fig)
@@ -377,8 +376,8 @@ def main():
             fig = draw_slide(panels, n)
             fig.savefig(OUT / f"restoration_program_cartoon_{name}_step{n}.png", dpi=200)
             plt.close(fig)
-    print(f"  wrote {OUT}/restoration_program_cartoon.png (+ _step0–3 frames) and the "
-          f"landscape slides _slide1 (challenge, 1) and _slide2 (2–4)")
+    print(f"  wrote {OUT}/restoration_program_cartoon.png (+ _step1–3 frames) and the "
+          f"landscape slides _slide1 (1, 2) and _slide2 (3a, 3b)")
 
 
 if __name__ == "__main__":

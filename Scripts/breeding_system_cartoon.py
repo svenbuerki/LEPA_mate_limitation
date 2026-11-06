@@ -21,8 +21,10 @@ breeding-system cartoon of SRK_bioinformatics (Canu_amplicon,
 draw_ISI_cartoon.py); the gene-copy icon follows its SRK functional-copy
 figure. LEPA numbers from SRK_bioinformatics (Canu-amplicon genotypes:
 263 plants, 32 S-types). Other icons and colours as restoration_cartoon.py.
+The challenge (restoration_program_cartoon.panel_challenge, shared with
+Figure 2) sits on top: the problem these panels explain.
 Output: figures_seed_bulking/breeding_system_cartoon.{png,pdf}, plus
-breeding_system_cartoon_step1–3.png (same size, later panels blank).
+breeding_system_cartoon_step0–3.png (same size, later panels blank).
 """
 from __future__ import annotations
 
@@ -243,16 +245,28 @@ PANELS = (panel_si, panel_mates, panel_sc, panel_inbreeding)
 
 
 def draw(n_shown: int):
+    """n_shown: 0 = the challenge only, 1–4 = breeding-system panels."""
+    from restoration_program_cartoon import panel_challenge      # (lazy: avoids an import cycle)
     rc.RNG = np.random.default_rng(5)                    # same plants in every frame
-    fig, axes = plt.subplots(2, 2, figsize=(16, 15.5))
+    fig = plt.figure(figsize=(16, 19.0))
+    top = fig.add_axes([0.02, 0.825, 0.96, 0.96 * 16 / 19.0 * 38 / 200])
+    panel_challenge(top, "The challenge: very little seed to start with — why?")
+    gs = fig.add_gridspec(2, 2, left=0.02, right=0.98, top=0.735, bottom=0.015, wspace=0.1,
+                          hspace=0.17)
+    axes = np.array([[fig.add_subplot(gs[i, j]) for j in range(2)] for i in range(2)])
     for k, (ax, f) in enumerate(zip(axes.flat, PANELS)):
         if k < n_shown:
             f(ax)
         else:
             ax.set_xlim(0, 100), ax.set_ylim(0, 100), ax.set_aspect("equal"), ax.axis("off")
             ax.set_title(" ", fontsize=18, pad=10)
-    fig.subplots_adjust(left=0.02, right=0.98, top=0.93, bottom=0.02, wspace=0.1, hspace=0.17)
     fig.canvas.draw()
+    if n_shown >= 1:                                     # challenge → why: the breeding system
+        p = fig.transFigure.inverted().transform(top.transData.transform((100, 0)))
+        q = fig.transFigure.inverted().transform(axes[0, 0].transData.transform((50, 100)))
+        fig.add_artist(FancyArrowPatch((p[0], p[1] - 0.004), (p[0], q[1] + 0.03),
+                                       transform=fig.transFigure, arrowstyle="-|>",
+                                       mutation_scale=26, color="#333", lw=3))
     for k, (a, b) in enumerate(((axes[0, 0], axes[0, 1]), (axes[1, 0], axes[1, 1]))):
         if 2 * k + 1 >= n_shown:                         # mechanism → impact, per row
             continue
@@ -269,11 +283,11 @@ def main():
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"breeding_system_cartoon.{ext}", dpi=200 if ext == "png" else None)
     plt.close(fig)
-    for n in range(1, len(PANELS)):
+    for n in range(0, len(PANELS)):
         fig = draw(n)
         fig.savefig(OUT / f"breeding_system_cartoon_step{n}.png", dpi=200)
         plt.close(fig)
-    print(f"  wrote {OUT}/breeding_system_cartoon.png (+ _step1–3 frames for slides)")
+    print(f"  wrote {OUT}/breeding_system_cartoon.png (+ _step0–3 frames for slides)")
 
 
 if __name__ == "__main__":

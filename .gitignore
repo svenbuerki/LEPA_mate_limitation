@@ -45,3 +45,6 @@ figures_seed_bulking/plant_photos/same_size_*
 # original phone photos (GPS in metadata); stripped copies live in figures_seed_bulking/plant_photos/
 *.HEIC
 *.heic
+
+# talk figures: numbered copies of figures_seed_bulking/ (Scripts/talk_figures.py)
+talk_figures/
