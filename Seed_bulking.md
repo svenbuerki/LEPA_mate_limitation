@@ -13,7 +13,7 @@ in [`figures_seed_bulking/`](figures_seed_bulking/); the population table is
 > twice what their plants' size predicts in both seasons — and qualify
 > as sources for seed bulking: **P34** (EO18) and **P35** (EO25-A) in
 > BL3, **P43** (EO68-3) in BL5 and **P13** (EO27-1) in BL1, covering
-> three of the five lineages. Nine more look intact but have a single
+> three of the five lineages. Eleven more look intact but have a single
 > season of data, so a second season could add sources, including the
 > first for BL2 and BL4 (§ 7.3.3, § 7.4.3). All four still need the
 > genetic filters (SRK diversity, no self-compatible plants) before
@@ -311,7 +311,7 @@ only one of the two seasons.
   management, but their boundaries do not follow pollinators.
   Populations are drawn from pollinator flight (§ 6.2), so they do. The
   two rarely match: **8 EOs hold more than one
-  population** — EO26 and EO27 five each, EO24 and EO30 four — and one
+  population** — EO27 ten, EO26 five, EO24 and EO30 four — and one
   population can join parts of an EO (P34 = EO18-7 + EO18-8; P16 =
   EO27-1 + EO27RT).
 - **Populations within one EO differ in reproductive type** (§ 7).
@@ -398,20 +398,27 @@ seed-set type.
 
 #### 7.3.1 Reproductive type of every population
 
-**13 populations** have two seasons of data and are typed; the other
-**25 have one season of data and need more before they can be typed** —
-they stay on every figure in light gray.
+**44 populations** in all: **13 have two seasons of seed data and are
+typed**; the other **31 have one season of data** — 25 with seed data
+from that season and 6 seen only in 2026 whose seed has no data yet.
+One season gives a **candidate** type only, to be confirmed by a second
+season; one-season populations stay on every figure in light gray.
 
-| Type | Populations (BL) |
-|---|---|
-| **Mate-limited** | P8 EO27 (BL1), P10 EO27-3 (BL1), P16 EO27-1 + EO27RT (BL1), P42 EO70 (BL5); candidates P6 EO67 (BL1), P36 EO25-B (BL3) |
-| **Reproductively intact** | **P13** EO27-1 (BL1), **P34** EO18-7 + EO18-8 (BL3), **P35** EO25-A (BL3), **P43** EO68-3 (BL5) |
-| **Over-producing** | P2 EO30-1 (BL1), P37 EO38 (BL4) |
-| Not yet clear | P19 EO8 (BL2) — significantly above expectation in 2025, below in 2026 |
+| Type | Two seasons (typed) | One season (candidates) | Total |
+|---|---|---|:-:|
+| **Reproductively intact** | 4: **P13** EO27-1 (BL1), **P34** EO18-7 + EO18-8 (BL3), **P35** EO25-A (BL3), **P43** EO68-3 (BL5) | 11: **P26\*** EO29 (BL2), **P28\*** EO32 (BL3), **P39\*** EO118 (BL4); P5 EO30-2 (BL1), P9 EO27 (BL1), P21 EO26 + EO26-3 (BL2), P22 EO26 + EO26-4 (BL2), P27 EO48 (BL3), P30 EO24-7 (BL3), P38 EO52 (BL4), P41 EO76 (BL4) | 15 |
+| **Mate-limited** | 6: P8 EO27 (BL1), P10 EO27-3 (BL1), P16 EO27-1 + EO27RT (BL1), P42 EO70 (BL5); candidates P6 EO67 (BL1), P36 EO25-B (BL3) | 5: P1 EO112 (BL1), P4 EO30-3 (BL1), P32 EO24 (BL3); not significant: P3 EO30-4 (BL1), P20 EO26-2 (BL2) | 11 |
+| **Over-producing** | 2: P2 EO30-1 (BL1), P37 EO38 (BL4) | 5: P18 EO8, P23 EO26-3, P24 EO26-1, P25 EO61 (all BL2), P40 EO76 (BL4) | 7 |
+| Not yet clear | 1: P19 EO8 (BL2) — significantly above expectation in 2025, below in 2026 | — | 1 |
+| Not typed yet | — | 10: P7 EO72-2 (BL1), P29 EO32 (BL3), P31 EO24-1 (BL3), P33 EO24-2 (BL3) — too few plants or not conclusive; no seed data yet: P11, P12, P14, P15, P17 (EO27, BL1), P44 EO69 (BL5) | 10 |
+| **Total** | **13** | **31** | **44** |
 
-Among the one-season populations, three show a strong seed shortfall
-(P1 EO112, P4 EO30-3, P32 EO24) and should be measured again
-before they are typed ([Figure 10](#fig-10), [Figure 11](#fig-11)).
+\* 2026 seed being cleaned, and 2025 seed set significantly within half –
+twice the expectation: these three can be confirmed as sources first
+(teal rings in [Figure 11](#fig-11); § 7.4.4). Among the one-season
+mate-limited candidates, P1, P4 and P32 show a strong seed shortfall
+and should be measured again before they are typed
+([Figure 10](#fig-10), [Figure 11](#fig-11)).
 
 <a id="fig-10"></a>
 ![Figure 10](figures_seed_bulking/population_seed_yield.png)
@@ -421,7 +428,7 @@ before they are typed ([Figure 10](#fig-10), [Figure 11](#fig-11)).
 <a id="fig-11"></a>
 ![Figure 11](figures_seed_bulking/seed_bulking_status_map.png)
 
-**Figure 11.** Reproductive type of every population on the Snake River Plain, sized by flowering plants; dashed outlines = Bottleneck Lineages. Inset, top: the reproductive-type icons of [Figures 9](#fig-9) and [10](#fig-10). Inset, right (under the icons): zoom on EO27 (box on the map; dashed outline = the EO) — one EO holding five populations, each population as a polygon (its slick spots, buffered 60 m) colored by its type: BL1's source P13 (teal) next to the mate-limited P8, P10 and P16 (gold) and P9 (one season only, gray); why the population, not the EO, is the unit (§ 6.4). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
+**Figure 11.** Reproductive type of every population on the Snake River Plain (all 44; one season only = seen or measured in a single season, including 6 seen in 2026 whose seed has no data yet), sized by flowering plants; **teal ring = candidate source**: one season so far, its 2025 seed set significantly within half – twice the expectation, and its 2026 seed being cleaned — P39 (BL4) and P28 (BL3), the two locations being cleaned first, and P26 (BL2, borderline; § 7.4.4); dashed outlines = Bottleneck Lineages. Inset, top: the reproductive-type icons of [Figures 9](#fig-9) and [10](#fig-10). Inset, right (under the icons): zoom on EO27 (box on the map; dashed outline = the EO) — one EO holding ten populations, each as a polygon (its slick spots, buffered 60 m) colored by its type: BL1's source P13 (teal) next to the mate-limited P8, P10 and P16 (gold), and six populations with one season only (gray): P9 and P11, P12, P14, P15, P17, seen in 2026 with no seed data yet; why the population, not the EO, is the unit (§ 6.4). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
 
 #### 7.3.2 A genetic example — P42 against P34
 
@@ -429,16 +436,22 @@ Two of the typed populations already have SRK genotypes: **P42**
 (EO70), mate-limited in both seasons, and **P34** (EO18), reproductively
 intact in both seasons ([Figure 12](#fig-12)).
 
-- **Seed set (A).** P42 sets about half the seed its plants' size
-  predicts in both seasons; P34 sets the expected amount.
-- **S-types carried (B).** The two populations hold a similar number of
-  S-types (SRK alleles): 6 in P42 and 7 in P34. What differs is how they
-  are shared: in P42 two S-types make up 97 % of all copies, while P34
-  has four main S-types (90 %), more evenly spread.
-- **Compatible mates (C).** Because most of P42's plants carry the same
-  two alleles, a plant can mate, on average, with **53 %** of its
-  population; in P34, with **67 %**. The two ranges do not overlap
-  (P42 0.51 – 0.56, P34 0.61 – 0.72).
+Seed set for plant size already typed them: P42 sets about half the
+seed its plants' size predicts in both seasons, P34 the expected amount
+([Figure 10](#fig-10)).
+
+- **SRK genotypes (A).** The two populations hold a similar number of
+  S-types (SRK alleles): 6 in P42 and 7 in P34. What differs is **how
+  they are arranged across plants**. In P42, most plants carry only one
+  or both of the same two S-types, so three S-type sets make up 93 % of
+  its 74 plants; in P34 the plants carry more varied sets (the three
+  commonest make up 66 % of its 32 plants).
+- **Random mating → compatible mates (B).** Under self-incompatibility, a
+  plant rejects pollen from a father that shares its S-type. Mating at
+  random within its population, a P42 plant can therefore mate, on
+  average, with only **53 %** of its population; a P34 plant with
+  **67 %**. The two ranges do not overlap (P42 0.51 – 0.56, P34
+  0.61 – 0.72).
 
 The genetics point to the same answer as seed set for plant size: **P42 is short
 of compatible mates, P34 is not** — although P34's 67 % is itself below
@@ -454,7 +467,7 @@ comparison.
 <a id="fig-12"></a>
 ![Figure 12](figures_seed_bulking/genetic_example_P42_P34.png)
 
-**Figure 12.** SRK genotypes of a mate-limited (P42, gold) and a reproductively intact population (P34, teal). **A** — seed set for plant size per season, as in [Figure 10](#fig-10) (circle = 2025, square = 2026; filled = significant: P42 differs from expectation, P34 lies within half – twice). **B** — the S-types carried: 100 circles per population, one circle = 1 % of S-allele copies, one color per S-type as in [Figure 1](#fig-1) (the same color is the same S-type in both). Both hold 6 – 7 S-types, but P42 has two main ones and P34 four (main = at least 5 % of copies). **C** — for each genotyped plant, the share of its population it can mate with under the self-incompatibility system; bar = average. Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
+**Figure 12.** Same S-allele diversity, different arrangement: SRK genotypes of a mate-limited (P42, gold) and a reproductively intact population (P34, teal), with their type badges. **A** — every genotyped plant as a square, its 4 dots its 4 SRK copies (tetraploid), one color per S-type as in [Figure 1](#fig-1) (the same color is the same S-type in both); plants are grouped by the set of S-types they carry, commonest set first. Both hold 6 – 7 S-types, but in P42 the same few sets repeat from plant to plant (3 sets = 93 % of plants; P34: 66 %). **Arrow — random mating** (bee: pollinators carry pollen between plants at random): each plant meets fathers from its own population, and a father sharing an S-type is rejected. **B** — the result: for each genotyped plant, the share of its population it can mate with under the self-incompatibility system; bar = average (P42 53 %, P34 67 %). Badges with **✓ confirmed**: the genetics agrees with the type called from seed set for plant size (phenotyping) for both populations. Data: [`tables/step32_genetic_example_P42_P34.tsv`](tables/step32_genetic_example_P42_P34.tsv).
 
 #### 7.3.3 Candidate sources for seed bulking
 
@@ -538,7 +551,8 @@ one of them — P13 — is reproductively intact:
 | P6 | EO67 | mate-limited (candidate) — not significant in either season | 0.52 / 0.56 |
 | P2 | EO30-1 | **over-producing** — significant in 2026 | 0.90 / 1.62 |
 
-**EO27 stands out.** Three of its five populations set significantly
+**EO27 stands out.** It holds ten populations; five have seed data so
+far (the other five, seen in 2026, have none yet). Three of these five set significantly
 less seed than their size predicts: P10 (EO27-3) in both seasons, and
 P16 (EO27-1 + EO27RT) and P8 (EO27) in 2025. P16 and P8 share the same
 pattern — a strong shortfall in 2025 (0.37 and 0.42), then about the
@@ -582,7 +596,7 @@ program that produces seed for restoration ([Figure 2](#fig-2),
 
 | Type | What it suggests | Role in the program | Populations — two seasons (firm) | One season (to confirm) |
 |---|---|---|---|---|
-| **Reproductively intact** | Plants find enough compatible mates and outcross normally | **Sources for seed bulking** | **P34** (EO18, BL3), **P35** (EO25-A, BL3), **P43** (EO68-3, BL5), **P13** (EO27-1, BL1) | P5 (EO30-2, BL1), P9 (EO27, BL1), P21, P22 (EO26, BL2), P28 (EO32, BL3), P30 (EO24-7, BL3), P38 (EO52, BL4), P39 (EO118, BL4), P41 (EO76, BL4) |
+| **Reproductively intact** | Plants find enough compatible mates and outcross normally | **Sources for seed bulking** | **P34** (EO18, BL3), **P35** (EO25-A, BL3), **P43** (EO68-3, BL5), **P13** (EO27-1, BL1) | P5 (EO30-2, BL1), P9 (EO27, BL1), P21, P22 (EO26, BL2), P26 (EO29, BL2), P27 (EO48, BL3), P28 (EO32, BL3), P30 (EO24-7, BL3), P38 (EO52, BL4), P39 (EO118, BL4), P41 (EO76, BL4) |
 | **Mate-limited** | Too few compatible mates — seed set falls short | **Restoration targets**: receive seed from intact sources | **P8** (EO27), **P10** (EO27-3), **P16** (EO27-1 + EO27RT), **P42** (EO70); candidates P6 (EO67), P36 (EO25-B) | P1 (EO112), P4 (EO30-3), P32 (EO24) |
 | **Over-producing** | Likely escaped self-incompatibility and self-fertilize (self-compatible) | **Excluded** from the breeding program | **P2** (EO30-1, BL1), **P37** (EO38, BL4) | P18 (EO8), P23 (EO26-3), P24 (EO26-1), P25 (EO61), all BL2; P40 (EO76, BL4) |
 

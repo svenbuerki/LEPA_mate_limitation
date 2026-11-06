@@ -516,7 +516,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     class_i = build_class_i_mask(fg, load_class_map())
     zyg = load_zygosity_dist()
     sites = {42: "EO70", 34: "P34"}
-    res, freqs = {}, {}
+    res, freqs, genos = {}, {}, {}
     for pop, site in sites.items():
         sub = ind[(ind["EO"] == site) & (ind["n_functional_copies"] > 0)]
         g = np.stack(sub["genotype"].values)
@@ -524,6 +524,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
         comp = p_compat_sporophytic_empirical(g, f, class_i, zyg, n_fathers=2000, rng=rng)
         res[pop] = dict(n=len(sub), compat=comp, alleles=int((f > 0).sum()))
         freqs[pop] = f
+        genos[pop] = g                                   # 4 SRK copies per plant (tetraploid)
     order = np.argsort(-(freqs[42] + freqs[34]))
     order = [i for i in order if freqs[42][i] + freqs[34][i] > 0]
     letter = {i: chr(65 + k) for k, i in enumerate(order)}
@@ -538,104 +539,115 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     s_col = {i: s_cols[k % len(s_cols)] for k, i in enumerate(order)}
     col = {42: TYPE_COLORS["Mate-limited"], 34: TYPE_COLORS["Reproductively intact"]}
     name = {42: "P42 (EO70)\nmate-limited", 34: "P34 (EO18)\nintact"}
-    fig = plt.figure(figsize=(19, 8.2))
-    gs = fig.add_gridspec(1, 3, width_ratios=[0.72, 2.5, 0.8], wspace=0.42)
+    fig = plt.figure(figsize=(19, 7.0))
+    gs = fig.add_gridspec(1, 3, width_ratios=[2.6, 0.5, 0.85], wspace=0.3)
 
-    def pop_ticks(ax, xs):
-        ax.set_xticks(xs)
-        ax.set_xticklabels([name[p].replace(" (", "\n(") for p in (42, 34)], fontsize=13)
-        for lab, pop in zip(ax.get_xticklabels(), (42, 34)):
-            lab.set_color(col[pop])
-
-    # A — seed set for size (as Figure 10)
+    # A — SRK genotype of every plant: 4 copies (tetraploid), colour = S-type;
+    # plants grouped by their set of S-types, commonest set first
     ax = fig.add_subplot(gs[0])
-    pt = pops.set_index("populationID")
-    for xi, pop in zip((0, 1), (42, 34)):
-        r = pt.loc[pop]
-        for yr, mk, dx in ((2025, "o", -0.12), (2026, "s", 0.12)):
-            sig = season_significant(r, yr)
-            ax.scatter(xi + dx, r[f"fold_adj_{yr}"], s=170, marker=mk, edgecolors=col[pop],
-                       facecolors=col[pop] if sig else "white", linewidths=2.4, zorder=3)
-    ax.axhline(1, color="black", lw=1.2)
-    for fb in (BAND, 1 / BAND):
-        ax.axhline(fb, color="black", lw=1, ls="--")
-    ax.set_yscale("log"); ax.set_ylim(0.35, 3.6)
-    ax.set_yticks([0.5, 1, 2]); ax.set_yticklabels(["0.5", "1", "2"])
-    ax.yaxis.set_minor_locator(plt.NullLocator())
-    pop_ticks(ax, [0, 1]); ax.set_xlim(-0.6, 1.6)
-    ax.set_ylabel("Seeds per plant ÷ seeds\nexpected for its size")
-    for yv, lab, tp in ((BAND, "over-producing", "Over-producing"),
-                        (1, "as expected", "Reproductively intact"),
-                        (1 / BAND, "mate-limited", "Mate-limited")):
-        ax.text(1.02, yv, lab, transform=ax.get_yaxis_transform(), va="center", ha="left",
-                fontsize=12.5, weight="bold", color=TYPE_COLORS[tp])
-    ax.set_title("A. Seed set for plant size", loc="left", weight="bold")
-
-    # B — S-types carried: 100 circles = 100 % of S-allele copies, colour = S-type
-    ax = fig.add_subplot(gs[1])
-    x0s = {42: 0.0, 34: 11.2}
+    import collections
+    ncol, x0s = 10, {42: 0.0, 34: 12.6}
     for pop in (42, 34):
-        f = np.array([freqs[pop][i] for i in order])
-        present = f > 0
-        dots = present.astype(int)                       # every S-type present shows ≥ 1 circle
-        share = f * (100 - dots.sum())
-        dots += np.floor(share).astype(int)
-        rem = share - np.floor(share)
-        for k in np.argsort(-rem)[: 100 - dots.sum()]:
-            dots[k] += 1
-        seq = np.repeat(np.arange(len(order)), dots)     # commonest first, filling rows
-        for n, k in enumerate(seq):
-            ax.add_patch(plt.Circle((x0s[pop] + n % 10 + 0.5, 9.5 - n // 10), 0.42,
-                                    fc=s_col[order[k]], ec="white", lw=0.6))
-        main = (f >= 0.05).sum()
-        ax.text(x0s[pop] + 5, 13.6, name[pop].replace("\n", " — "), ha="center", va="top",
-                fontsize=16.5, color=col[pop])
-        ax.text(x0s[pop] + 5, 12.4, f"{present.sum()} S-types\n{main} main hold "
-                f"{100 * f[f >= 0.05].sum():.0f} %", ha="center", va="top",
-                fontsize=15, weight="bold", color=col[pop])
-    ax.set_xlim(-0.1, 21.3); ax.set_ylim(-0.1, 15.0); ax.set_aspect("equal")
-    ax.set_anchor("N")                                   # title level with panels A and C
-    ax.set_xticks([]); ax.set_yticks([])
-    for sp in ax.spines.values():
-        sp.set_visible(False)
-    ax.set_title("B. S-types carried (SRK alleles)", loc="left", weight="bold")
+        g = genos[pop]
+        sets = [tuple(sorted({int(x) for x in r if x >= 0})) for r in g]
+        cnt = collections.Counter(sets)
+        idx = sorted(range(len(g)), key=lambda i: (-cnt[sets[i]], sets[i], tuple(sorted(g[i]))))
+        for n, i in enumerate(idx):
+            cx, cy = x0s[pop] + n % ncol + 0.5, -(n // ncol) - 0.5
+            ax.add_patch(plt.Rectangle((cx - 0.46, cy - 0.46), 0.92, 0.92, fc="#F2F2F2",
+                                       ec="#CFCFCF", lw=0.6))
+            for k, a_ in enumerate(sorted(int(x) for x in g[i])):
+                if a_ < 0:
+                    continue
+                ax.add_patch(plt.Circle((cx + (-0.21 if k % 2 == 0 else 0.21),
+                                         cy + (0.21 if k < 2 else -0.21)), 0.18,
+                                        fc=s_col.get(a_, "#999"), ec="white", lw=0.5))
+        top3 = sum(c for _, c in cnt.most_common(3)) / len(g)
+        f = freqs[pop]
+        ax.text(x0s[pop] + 3.0, 3.85, name[pop].replace("\n", " — "), ha="left", va="top",
+                fontsize=15, color=col[pop])
+        ax.text(x0s[pop] + 3.0, 2.75, f"{int((f > 0).sum())} S-types · {len(g)} plants\n"
+                f"3 S-type sets = {100 * top3:.0f} % of plants", ha="left", va="top",
+                fontsize=13.5, weight="bold", color=col[pop], linespacing=1.3)
+    ax.set_xlim(-0.1, 22.7); ax.set_ylim(-8.2, 5.4); ax.set_aspect("equal")   # room under the title
+    ax.set_anchor("N")
+    ax.axis("off")
+    ax_geno = ax
+    ax.set_title("A. SRK genotypes: the S-types each plant carries", loc="left", weight="bold")
 
-    # C — compatible mates per plant
+    # arrow: genotypes → mating (random mating within the population)
+    # (a pollinator next to it: mating partners are drawn at random by pollinators)
+    from restoration_cartoon import bee
+    ax = fig.add_subplot(gs[1]); ax.axis("off")
+    ax.set_xlim(0, 10); ax.set_ylim(0, 30); ax.set_aspect("equal"); ax.set_anchor("W")
+    ax.annotate("", xy=(8.6, 15), xytext=(-3.5, 15), annotation_clip=False,
+                arrowprops=dict(arrowstyle="-|>,head_width=0.6,head_length=0.9", lw=4, color="#333"))
+    bee(ax, 2.6, 19.2, s=1.3)
+    ax.plot([-2.4, -0.6, 1.0], [17.0, 18.6, 18.9], ls=(0, (2, 2)), color="#777", lw=1.2)
+    ax.text(2.6, 21.8, "random mating", ha="center", va="bottom", fontsize=15, weight="bold")
+    ax.text(2.6, 13.2, "each plant meets\nfathers from its\npopulation; a shared\nS-type = rejected",
+            ha="center", va="top", fontsize=11.5, color="#444", linespacing=1.15)
+
+    # B — compatible mates per plant
     ax = fig.add_subplot(gs[2])
-    for xi, pop in zip((0, 1), (42, 34)):
+    x_mates = {42: 0.0, 34: 2.0}                              # spread apart to declutter
+    for pop in (42, 34):
+        xi = x_mates[pop]
         c = res[pop]["compat"]
-        ax.scatter(xi + rng.uniform(-0.18, 0.18, len(c)), c, s=30, color=col[pop], alpha=0.6,
+        ax.scatter(xi + rng.uniform(-0.32, 0.32, len(c)), c, s=34, color=col[pop], alpha=0.6,
                    linewidths=0)
-        ax.plot([xi - 0.3, xi + 0.3], [c.mean()] * 2, color="black", lw=3)
-        ax.text(xi + 0.33, c.mean(), f"{100 * c.mean():.0f} %", va="center", fontsize=15,
+        ax.plot([xi - 0.45, xi + 0.45], [c.mean()] * 2, color="black", lw=3)
+        ax.text(xi + 0.5, c.mean(), f"{100 * c.mean():.0f} %", va="center", fontsize=15,
                 weight="bold")
-    pop_ticks(ax, [0, 1])
-    ax.set_ylim(0, 1.02); ax.set_xlim(-0.6, 1.8)
+    ax.set_xticks([x_mates[42], x_mates[34]])
+    ax.set_xticklabels([name[p].replace(" (", "\n(") for p in (42, 34)], fontsize=16)
+    for lab, pop in zip(ax.get_xticklabels(), (42, 34)):
+        lab.set_color(col[pop])
+    ax.tick_params(axis="y", labelsize=16, length=6, width=1.2)
+    ax.tick_params(axis="x", length=6, width=1.2)
+    ax.set_ylim(0, 1.40); ax.set_xlim(-0.55, 2.75)
+    ax.set_yticks(np.arange(0, 1.01, 0.2))
+    ax.spines["left"].set_bounds(0, 1)
+    for pop in (42, 34):                                 # genetics agrees with the seed-set type
+        ax.text(x_mates[pop], 1.115, "✓", ha="center", va="center", fontsize=26,
+                weight="bold", color=col[pop])
+        ax.text(x_mates[pop], 1.045, "confirmed", ha="center", va="center", fontsize=12,
+                weight="bold", color=col[pop])
+    ax_mates = ax
     from matplotlib.ticker import PercentFormatter
     ax.yaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
     ax.set_ylabel("Share of the population\na plant can mate with")
-    ax.set_title("C. Compatible mates per plant", loc="left", weight="bold")
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.set_title("B. Compatible mates per plant", loc="left", weight="bold")
 
     # boxed legend under the panels (as Figure 10)
     from matplotlib.lines import Line2D
-    h = [Line2D([], [], marker="o", ls="", color="#444", ms=9, label="2025"),
-         Line2D([], [], marker="s", ls="", color="#444", ms=9, label="2026"),
-         Line2D([], [], marker="o", ls="", color="#444", ms=9,
-                label="filled = significant (q < 0.05): differs from\n"
-                      "expectation, or (teal) lies within half – twice"),
-         Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=9,
-                label="open = not significant"),
+    from matplotlib.patches import Patch
+    h = [Patch(fc="#F2F2F2", ec="#CFCFCF", label="1 square = 1 genotyped plant;\n4 dots = its 4 SRK copies (tetraploid)"),
          Line2D([], [], marker="o", ls="", color=s_cols[0], ms=9,
-                label="1 circle = 1 % of S-allele copies;\ncolor = S-type (as in Figure 1)"),
-         Line2D([], [], marker="o", ls="", color="black", ms=0,
-                label="bar = population average")]
-    leg = fig.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=3,
+                label="color = S-type (as in Figure 1)"),
+         Line2D([], [], marker="o", ls="", color="#888", ms=6, alpha=0.6,
+                label="dot = one plant; bar = population average")]
+    leg = fig.legend(handles=h, loc="upper center", bbox_to_anchor=(0.5, -0.05), ncol=3,
                      fontsize=10.5, frameon=True, edgecolor="#999999", fancybox=False,
                      title="Legend", title_fontproperties={"weight": "bold", "size": 11.5},
-                     columnspacing=1.8, handletextpad=0.4, borderpad=0.7)
+                     columnspacing=1.8, handletextpad=0.5, borderpad=0.7)
     leg.get_frame().set_linewidth(1.0)
-    for a in fig.axes[:1] + fig.axes[2:]:
-        a.spines[["top", "right"]].set_visible(False)
+    # type badges (as Figures 2 – 3) left of each population's header in panel A
+    from type_icons import add_icon
+    fig.canvas.draw()                                    # final layout of the equal-aspect panel
+    to_fig = (ax_geno.transData + fig.transFigure.inverted()).transform
+    w_over_h = fig.get_figwidth() / fig.get_figheight()
+    for pop, kind in ((42, "Mate-limited"), (34, "Reproductively intact")):
+        (xa, ya), (xb, yb) = to_fig([(x0s[pop] + 0.0, 0.25), (x0s[pop] + 2.7, 3.95)])
+        side = min(xb - xa, (yb - ya) / w_over_h)
+        add_icon(fig, kind, [xa, ya, side, side * w_over_h])
+    # and above each population in panel B, with the genetic confirmation
+    to_fig_b = (ax_mates.transData + fig.transFigure.inverted()).transform
+    for pop, kind in ((42, "Mate-limited"), (34, "Reproductively intact")):
+        (cx, cy), = to_fig_b([(x_mates[pop], 1.28)])
+        side = 0.046
+        add_icon(fig, kind, [cx - side / 2, cy - side * w_over_h / 2, side, side * w_over_h])
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"genetic_example_P42_P34.{ext}", dpi=220, bbox_inches="tight")
     plt.close(fig)
