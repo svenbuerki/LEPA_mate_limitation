@@ -22,7 +22,8 @@ in [`figures_seed_bulking/`](figures_seed_bulking/); the population table is
 > SRK alleles, no self-compatible plants and more compatible mates than
 > the mate-limited P42 (67 % against 53 %; § 7.3.2). P13 is the
 > exception: its few genotyped plants (12) can mate with only 44 % of
-> their population, so it is the source to confirm first (§ 7.4.2).
+> their population. On its two seasons of seed set it stays BL1's
+> source, and more of its mothers will be genotyped (§ 7.4.2).
 
 **Colors used throughout the talk.** Each population's reproductive
 type has one color on every figure and map, distinct from the
@@ -165,21 +166,24 @@ To meet objective 1, we need to sort populations **rapidly**, across every popul
 against specific reproductive and genetic requirements. Genotyping every
 population is slow and costly; our approach is fast and low cost, using
 what is measured on every plant anyway — **seed yield for plant size** —
-in three steps ([Figure 3](#fig-3)):
+in four steps ([Figure 3](#fig-3)):
 
 1. **Plant phenotyping** — plant size and seed yield of every flowering
    plant, in two seasons;
 2. **Modeling** — build the model of seed yield expected for plant size
    on all plants, then deploy it population by population;
 3. **Sort populations for restoration** — sources, populations to
-   rescue and populations excluded as sources.
-
-SRK genotypes are the genetic check where they exist (§ 7).
+   rescue and populations excluded as sources;
+4. **Test with genetics** — the sort gives hypotheses: seed set shows how
+   a population reproduces, not why. Each call is tested by **SRK
+   genotyping** (S-allele diversity, share of compatible mates,
+   self-compatible plants), so genotyping is spent only on the
+   populations that matter — sources and rescue targets first (§ 7).
 
 <a id="fig-3"></a>
 ![Figure 3](figures_seed_bulking/source_screening_cartoon.png)
 
-**Figure 3.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 2](#fig-2). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant are measured in two seasons: fast and low cost, no genotyping. **2 — Modeling:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (teal line; band from half, gold, to twice, magenta); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026); the badge next to each population gives the type it is sorted into in panel 3. **3 — Sort populations for restoration** (one type badge per row, as in [Figure 2](#fig-2)): reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; the symbols on the right give the action for each type (shield = top priority, ring buoy = rescue, prohibition sign = avoid, as in [Figure 2](#fig-2)); SRK genotypes are the genetic check. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; one frame per step for slides: `source_screening_cartoon_step1–2.png`.
+**Figure 3.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 2](#fig-2). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant are measured in two seasons: fast and low cost, no genotyping. **2 — Modeling:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (teal line; band from half, gold, to twice, magenta); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026); the badge next to each population gives the type it is sorted into in panel 3. **3 — Sort populations for restoration** (one type badge per row, as in [Figure 2](#fig-2)): reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; the symbols on the right give the action for each type (shield = top priority, ring buoy = rescue, prohibition sign = avoid, as in [Figure 2](#fig-2)). **This sort is a set of hypotheses** (banner): phenotyping and modeling say how a population behaves, not why, so each type is tested with genetics — SRK genotypes give the S-allele diversity, the share of compatible mates and any selfing. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; one frame per step for slides: `source_screening_cartoon_step1–2.png`.
 
 ---
 
@@ -189,9 +193,11 @@ This document addresses **objective 1 — prioritize populations for
 population restoration** — with the approach of [Figure 3](#fig-3), in
 two parts:
 
-1. **Define populations** (§ 6) — a prerequisite: the population is the
-   unit that is prioritized, the source of the seed and the target that
-   receives it, so it is drawn first from the field data.
+1. **Define populations** (§ 6) — a prerequisite: the population — not
+   the EO — is the unit that is prioritized, the source of the seed and
+   the target that receives it. It must predict the mating pool, which
+   EOs, a landscape-management unit, do not represent, so it is drawn
+   first from the field data.
 2. **Prioritize populations** (§ 7) — the approach applied to every
    population: which are reproductively intact (sources), mate-limited
    (to rescue) or over-producing (excluded as sources).
@@ -243,9 +249,10 @@ from its neighbors.
 
 ### 6.1 Approach
 
-A population must group the plants that exchange pollen and seed, and
-be separate enough from the next population that it can be treated as
-a source or a target on its own. Pollinator flight sets the mating
+A population must group the plants that exchange pollen and seed — the
+mating pool we must predict, which EOs, drawn for landscape management,
+do not capture — and be separate enough from the next population that
+it can be treated as a source or a target on its own. Pollinator flight sets the mating
 unit, the **deme**; the **population** groups the slick spots that stay
 together across seasons ([Figure 6](#fig-6)).
 
@@ -296,11 +303,27 @@ only one of the two seasons.
 
 ### 6.4 Discussion
 
-- **The population, not the EO, is the unit.** An EO can hold several
-  populations (EO27 holds four), and one population can span parts of
-  two EOs (P34 = EO18-7 + EO18-8). Seed bulking draws its source seed
-  from whole populations and restoration targets whole populations, so
-  deciding which population is a source rests on this definition.
+- **The population, not the EO, is the unit, because we must predict
+  the mating pool.** Mate limitation and genetic rescue both act on the
+  plants that exchange pollen and set seed together, so the unit has to
+  follow pollen movement. EOs do not represent this: they are mapped to
+  track where the species occurs and are the right unit for landscape
+  management, but their boundaries do not follow pollinators.
+  Populations are drawn from pollinator flight (§ 6.2), so they do. The
+  two rarely match: **8 EOs hold more than one
+  population** — EO26 and EO27 five each, EO24 and EO30 four — and one
+  population can join parts of an EO (P34 = EO18-7 + EO18-8; P16 =
+  EO27-1 + EO27RT).
+- **Populations within one EO differ in reproductive type** (§ 7).
+  EO27 holds BL1's only source, P13, next to three mate-limited
+  populations (P8, P10, P16) — P13 and P16 even share the EO part
+  EO27-1 ([Figure 11](#fig-11), zoom); EO25 holds the source P35 (EO25-A) and the candidate
+  mate-limited P36 (EO25-B). Judged as one unit, EO27 would either hide
+  BL1's only source or mask its mate limitation, and seed collected
+  across the EO would mix source seed with seed from mate-limited
+  plants. Seed bulking draws its seed from whole populations and
+  restoration targets whole populations, so both rest on this
+  definition.
 - **Demes are the unit of mating.** They set how many mothers to sample
   within a population for SRK genotyping
   ([`Sampling_design.md`](Sampling_design.md)).
@@ -398,7 +421,7 @@ before they are typed ([Figure 10](#fig-10), [Figure 11](#fig-11)).
 <a id="fig-11"></a>
 ![Figure 11](figures_seed_bulking/seed_bulking_status_map.png)
 
-**Figure 11.** Reproductive type of every population on the Snake River Plain, sized by flowering plants; dashed outlines = Bottleneck Lineages. Inset: the reproductive-type icons of [Figures 9](#fig-9) and [10](#fig-10). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
+**Figure 11.** Reproductive type of every population on the Snake River Plain, sized by flowering plants; dashed outlines = Bottleneck Lineages. Inset, top: the reproductive-type icons of [Figures 9](#fig-9) and [10](#fig-10). Inset, right (under the icons): zoom on EO27 (box on the map; dashed outline = the EO) — one EO holding five populations, each population as a polygon (its slick spots, buffered 60 m) colored by its type: BL1's source P13 (teal) next to the mate-limited P8, P10 and P16 (gold) and P9 (one season only, gray); why the population, not the EO, is the unit (§ 6.4). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
 
 #### 7.3.2 A genetic example — P42 against P34
 
@@ -464,9 +487,10 @@ and 4 of those are reproductively intact ([Figure 13](#fig-13),
 - Two lie in BL3, one in BL5 and one in BL1; BL2 and BL4 have no intact
   two-season population yet. Covering every lineage will need more
   seasons of data for the one-season populations.
-- **P13 needs its genetics checked first.** Its seed set is as expected,
-  but its few genotyped plants have the lowest compatibility of any
-  genotyped site (§ 7.4.2).
+- **P13 is BL1's source; its genetics need a closer look.** Its seed set
+  is as expected in both seasons, but its few genotyped plants have the
+  lowest compatibility of any genotyped site, so more of its mothers
+  will be genotyped (§ 7.4.2).
 - P34 is also the large population of the SRK genotyping design
   ([`Sampling_design.md`](Sampling_design.md)), so its SRK diversity will
   be known.
@@ -501,7 +525,7 @@ mask a shortage of mates.
 
 #### 7.4.2 Populations that need our attention — BL1 and EO27
 
-**BL1 has one candidate source, to confirm.** BL1, the largest lineage
+**BL1 has one source, P13.** BL1, the largest lineage
 (17 populations), has six populations measured in both seasons, and
 one of them — P13 — is reproductively intact:
 
@@ -527,14 +551,14 @@ first place to confirm it genetically.
 **P13: intact by seed set, at odds with its genetics.** Its seed set
 is significantly within half – twice the expectation in both seasons
 (0.81 in 2025, 1.13 in 2026), so by seed set it is reproductively intact
-— BL1's only candidate source. But its genotyped plants have the lowest
+— BL1's only source. But its genotyped plants have the lowest
 compatibility of any genotyped site: a plant can mate with only about
 44 % of its population (P42: 53 %, P34: 67 %), with 5 SRK alleles and
 almost no Class I alleles. That rests on 12 plants from 7 mothers, so it
-is indicative. Before P13 is used for seed bulking, more of its mothers
-should be genotyped — seed–mother genotyping would show whether its
-plants find compatible mates — and its 2027 seed set would confirm the
-call.
+is indicative. We keep P13 as BL1's source on its seed set; as it
+enters seed bulking, more of its mothers will be genotyped — seed–mother
+genotyping would show whether its plants find compatible mates — and
+its 2027 seed set adds a third season.
 
 **What would complete the picture.**
 
@@ -544,12 +568,11 @@ call.
    significantly within half – twice — and their 2026 lots are cleaned.
    What they need is a second season. They are BL1's most likely
    candidate sources after P13.
-2. **Genotype more of P13's mothers** (see above).
+2. **Genotype more of P13's mothers** as it enters seed bulking (see above).
 
 P8's 2026 seed (locationID 9) was cleaned on 2026-11-03, which gave it
-its second season and its type (mate-limited). With P13's genetics
-checked and P5 and P9 measured a second time, BL1 could hold up to three
-candidate sources for seed bulking.
+its second season and its type (mate-limited). With P5 and P9 measured
+a second time, BL1 could hold up to three sources for seed bulking.
 
 #### 7.4.3 What this means for seed bulking and restoration
 
@@ -559,7 +582,7 @@ program that produces seed for restoration ([Figure 2](#fig-2),
 
 | Type | What it suggests | Role in the program | Populations — two seasons (firm) | One season (to confirm) |
 |---|---|---|---|---|
-| **Reproductively intact** | Plants find enough compatible mates and outcross normally | **Sources for seed bulking** | **P34** (EO18, BL3), **P35** (EO25-A, BL3), **P43** (EO68-3, BL5), **P13** (EO27-1, BL1; genetics to confirm) | P5 (EO30-2, BL1), P9 (EO27, BL1), P21, P22 (EO26, BL2), P28 (EO32, BL3), P30 (EO24-7, BL3), P38 (EO52, BL4), P39 (EO118, BL4), P41 (EO76, BL4) |
+| **Reproductively intact** | Plants find enough compatible mates and outcross normally | **Sources for seed bulking** | **P34** (EO18, BL3), **P35** (EO25-A, BL3), **P43** (EO68-3, BL5), **P13** (EO27-1, BL1) | P5 (EO30-2, BL1), P9 (EO27, BL1), P21, P22 (EO26, BL2), P28 (EO32, BL3), P30 (EO24-7, BL3), P38 (EO52, BL4), P39 (EO118, BL4), P41 (EO76, BL4) |
 | **Mate-limited** | Too few compatible mates — seed set falls short | **Restoration targets**: receive seed from intact sources | **P8** (EO27), **P10** (EO27-3), **P16** (EO27-1 + EO27RT), **P42** (EO70); candidates P6 (EO67), P36 (EO25-B) | P1 (EO112), P4 (EO30-3), P32 (EO24) |
 | **Over-producing** | Likely escaped self-incompatibility and self-fertilize (self-compatible) | **Excluded** from the breeding program | **P2** (EO30-1, BL1), **P37** (EO38, BL4) | P18 (EO8), P23 (EO26-3), P24 (EO26-1), P25 (EO61), all BL2; P40 (EO76, BL4) |
 
@@ -639,8 +662,11 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
 **Part 1 — Define populations.**
 - **Outcome.** Pollinator flight (50 m demes) and cross-season grouping
   (500 m populations) give **44 populations** in 21 EOs across the five
-  Bottleneck Lineages; 26 are present in both seasons. The population is
-  the unit for both seed bulking and restoration.
+  Bottleneck Lineages; 26 are present in both seasons. The population,
+  not the EO, is the unit for both seed bulking and restoration, because
+  it predicts the mating pool; EOs remain the unit for landscape
+  management. 8 EOs hold several populations, and in EO27 and EO25 those populations
+  differ in reproductive type (a source next to mate-limited ones).
 - **Next.** Add each new season with the same rules, so that the
   one-season populations gain the second season they need.
 
@@ -648,15 +674,16 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
 - **Outcome.** Seed set for plant size types the 13 two-season
   populations: **4 reproductively intact** — seed set significantly
   within half – twice the expectation in both seasons — P34, P35 (BL3),
-  P43 (BL5) and P13 (BL1), the candidate sources; 4 mate-limited (P8,
+  P43 (BL5) and P13 (BL1), the sources; 4 mate-limited (P8,
   P10, P16, P42) plus 2 candidates (P6, P36), the restoration targets; 2
   over-producing (P2, P37), excluded. Where SRK genotypes exist, they
-  back the call for P34 against P42, but not yet for P13.
+  back the call for P34 against P42; P13's few genotyped plants have
+  low compatibility, so more of its mothers will be genotyped.
 - **Next.**
   - **Genetic filters on the sources** — SRK diversity and
     self-compatibility status of P34 (SRK genotyping under way,
     [`Sampling_design.md`](Sampling_design.md)), P35 and P43; for P13,
-    genotype more mothers first, since its few genotyped plants have
+    genotype more mothers too, since its few genotyped plants have
     low compatibility.
   - **More seasons** — measure the one-season populations again,
     starting with P5 and P9 (BL1's most likely sources) in 2027.

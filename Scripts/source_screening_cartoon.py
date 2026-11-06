@@ -26,7 +26,7 @@ from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, Polygon, Rectangle
+from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, FancyBboxPatch, Polygon, Rectangle
 
 import restoration_cartoon as rc
 from type_icons import add_icon, lifebuoy, no_sign
@@ -157,28 +157,36 @@ def panel_modeling(ax):
 
 # ---- 3. sort populations for population restoration ----------------------------------------
 def panel_sort(ax):
-    rc.frame(ax, 3, "Sort populations for restoration", "by seed yield for plant size")
-    rows = [(78, INTACT, "reproductively intact", "→ source for seed bulking", None),
-            (51, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
+    """Sort populations: the three types and what to do with each — hypotheses
+    from phenotyping + modeling, to be tested with genetics (SRK)."""
+    rc.frame(ax, 3, "Sort populations for restoration", "hypotheses from seed yield for plant size")
+    # the sort is a hypothesis: genetics (SRK genotypes) tests it
+    ax.add_patch(FancyBboxPatch((3, 86), 94, 11, boxstyle="round,pad=0,rounding_size=2",
+                                fc="#F3F4F6", ec="#888", lw=1.2, zorder=1))
+    dna(ax, 9, 87.3, h=8.5, w=1.8)
+    ax.text(15, 94, "Hypotheses → test with genetics", ha="left", va="center", fontsize=13,
+            fontweight="bold", color="#222", zorder=2)
+    ax.text(15, 89.3, "SRK genotypes: S-allele diversity, compatible mates, selfing", ha="left",
+            va="center", fontsize=10, color="#555", zorder=2)
+    rows = [(72, INTACT, "reproductively intact", "→ source for seed bulking", None),
+            (48, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
             (24, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
     for y, c, lab, role, flaw in rows:
-        badge(ax, KINDS[c], 15, y, 21)                   # type badges, as in Figures 2 and 10 – 11
+        badge(ax, KINDS[c], 15, y, 19)                   # type badges, as in Figures 2 and 10 – 11
         ax.text(31, y + 3, lab, ha="left", va="bottom", fontsize=13, color=c, fontweight="bold")
         ax.text(31, y + 0.5, role, ha="left", va="top", fontsize=12.5, color=c)
         if flaw:
             ax.text(31, y - 5.5, flaw, ha="left", va="top", fontsize=11, color=c, style="italic")
     # what to do with each type: protect, rescue, avoid
-    shield(ax, 88, 80, s=0.75)
-    ax.text(88, 70, "top\npriority", ha="center", va="top", fontsize=10.5, color=INTACT,
+    shield(ax, 88, 74, s=0.7)
+    ax.text(88, 64.5, "top\npriority", ha="center", va="top", fontsize=10.5, color=INTACT,
             fontweight="bold", linespacing=1.05)
-    lifebuoy(ax, 88, 53, r=5.5)
-    ax.text(88, 45.5, "rescue", ha="center", va="top", fontsize=10.5, color=MATE_LIM,
+    lifebuoy(ax, 88, 50, r=5.5)
+    ax.text(88, 42.5, "rescue", ha="center", va="top", fontsize=10.5, color=MATE_LIM,
             fontweight="bold")
     no_sign(ax, 88, 26, r=5)
     ax.text(88, 19.5, "avoid", ha="center", va="top", fontsize=10.5, color="#C62828",
             fontweight="bold")
-    dna(ax, 7, 88, h=8, w=1.8)
-    ax.text(10, 92, "SRK: genetic check", ha="left", va="center", fontsize=10, color="#555")
 
 
 PANELS = (panel_phenotyping, panel_modeling, panel_sort)
