@@ -29,6 +29,7 @@ figures/step30h_BL_maps.pdf
 figures_seed_bulking/BL[0-9]_populations_EO_map.*
 figures_seed_bulking/BL[0-9]_seed_bulking_status_map.*
 figures_seed_bulking/BL[0-9]_BL[0-9]_populations_EO_map.*
+figures_seed_bulking/BL[0-9]_BL[0-9]_seed_bulking_status_map.*
 
 # Shared map cache (elevation tiles, river) and the model-design deme maps
 # (slick-spot resolution) — local only

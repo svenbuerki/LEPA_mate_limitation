@@ -12,6 +12,8 @@
 #      (EO_sampling_map_black) for before clustering,
 #      sized by its average number of flowering plants over 2025 + 2026
 #      (mean over the years with plants above ground).
+#   2c. EO sampling map with dashed BL outlines + BL labels (EO_sampling_map_BL_outline,
+#      Figure 4).
 #   2b. Population map — every population at its real extent, coloured by
 #      BL, EO convex hulls, BL outlines; inset violin of population size.
 #   3. One map per BL — populations as polygons (convex hull of their slick
@@ -220,6 +222,36 @@ p_pop <- ggplot() + base_layers(dem_reg, bb_reg) +
 p_pop <- p_pop + inset_element(p_violin, left = 0.58, bottom = 0.60, right = 0.97,
                                top = 0.98, align_to = "panel")
 save_map(p_pop, "population_EO_map_BL")
+
+# 2c. EO sampling map with the BL footprints (Figure 4): the EOs as black
+# circles (as EO_sampling_map_black) inside dashed BL outlines in the BL colors,
+# each BL labeled with its number of EOs (populations come later in the talk)
+bl_lab_eo <- transform(bl_lab, label = sprintf("%s\n%d EO%s%s", BL, n_eo,
+                                               ifelse(n_eo == 1, "", "s"),
+                                               ifelse(n_new, " + 1 new site", "")))
+p_eo_bl <- ggplot() + base_layers(dem_reg, bb_reg) +
+  geom_sf(data = bl_hulls, aes(color = BL), fill = NA, linetype = "longdash",
+          linewidth = 0.9, key_glyph = "path") +
+  scale_color_manual(values = BL_COLORS, name = "Bottleneck lineage (BL)",
+                     guide = guide_legend(order = 1, override.aes = list(linewidth = 1.2))) +
+  geom_segment(data = bl_lab_eo, aes(x = ex, y = ey, xend = X, yend = Y, color = BL),
+               linewidth = 0.5, show.legend = FALSE) +
+  new_scale_color() +
+  geom_point(data = eo_nodes, aes(X, Y, size = avg_fertile), shape = 21,
+             fill = "black", color = "white", stroke = 0.8) +
+  scale_size_area(name = "Flowering plants per EO\n(two-year average)", max_size = 16,
+                  breaks = c(10, 100, 500, 1000, 2000), labels = scales::comma) +
+  guides(size = guide_legend(order = 2, override.aes = list(shape = 21, fill = "black",
+                                                            color = "white"))) +
+  city_layers(bb_reg) +
+  geom_label(data = bl_lab_eo, aes(X, Y, label = label), size = 3.6, fontface = "bold",
+             fill = "white", color = "grey15", alpha = 0.92, lineheight = 0.95,
+             label.size = 0.25) +
+  label_layer(rbind(data.frame(X = eo_nodes$X, Y = eo_nodes$Y, label = eo_nodes$EO, kind = "eo"),
+                    data.frame(X = bl_lab_eo$X, Y = bl_lab_eo$Y, label = "", kind = "anchor")),
+              city_anchors(bb_reg)) +
+  coord_sf(crs = UTM, expand = FALSE) + labs(x = NULL, y = NULL) + map_theme
+save_map(p_eo_bl, "EO_sampling_map_BL_outline")
 
 # ---------------------------------------------------------------- 3. per-BL maps
 hull <- function(g, buf) st_buffer(st_convex_hull(st_union(g)), buf)

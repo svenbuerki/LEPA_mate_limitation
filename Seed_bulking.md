@@ -46,7 +46,7 @@ Ashley Zahurak & Ian Robertson.
 [3. Goal and objectives](#3-goal-and-objectives) ·
 [4. Our approach](#4-our-approach) ·
 [5. What this document covers](#5-what-this-document-covers) ·
-[6. Part 1 — Define populations](#6-part-1--define-populations) ·
+[6. Part 1 — Do EOs reflect populations?](#6-part-1--do-eos-reflect-populations) ·
 [7. Part 2 — Prioritize populations for population restoration](#7-part-2--prioritize-populations-for-population-restoration) ·
 [8. Conclusions](#8-conclusions) · [References](#references)
 
@@ -195,11 +195,13 @@ This document addresses **objective 1 — prioritize populations for
 population restoration** — with the approach of [Figure 3](#fig-3), in
 two parts:
 
-1. **Define populations** (§ 6) — a prerequisite: the population — not
-   the EO — is the unit that is prioritized, the source of the seed and
-   the target that receives it. It must predict the mating pool, which
-   EOs, a landscape-management unit, do not represent, so it is drawn
-   first from the field data.
+1. **Do EOs reflect populations?** (§ 6) — a prerequisite: restoration
+   works on populations, the plants that mate together — the unit that
+   is prioritized, the source of the seed and the target that receives
+   it. Our records are organized by element occurrence (EO), the unit of
+   landscape management. We build populations from the slick spots,
+   independently of the EOs, and test whether the two align — and, where
+   they do not, how they compare.
 2. **Prioritize populations** (§ 7) — the approach applied to every
    population: which are reproductively intact (sources), mate-limited
    (to rescue) or over-producing (excluded as sources).
@@ -230,9 +232,9 @@ counts once per season. Source:
 flowering plants to several hundred ([Figure 4](#fig-4)).
 
 <a id="fig-4"></a>
-![Figure 4](figures_seed_bulking/EO_sampling_map_black.png)
+![Figure 4](figures_seed_bulking/EO_sampling_map_BL_outline.png)
 
-**Figure 4.** The element occurrences (EOs) sampled across the Snake River Plain, sized by flowering plants (two-year average).
+**Figure 4.** The element occurrences (EOs) sampled across the Snake River Plain, sized by flowering plants (two-year average), within the five bottleneck lineages (BLs; dashed outlines, each labeled with its number of EOs).
 
 **Five lineages.** The EOs fall into five fragments of the landscape,
 the **Bottleneck Lineages** (BL1 – BL5), separated by gaps too wide for
@@ -247,14 +249,19 @@ from its neighbors.
 
 ---
 
-## 6. Part 1 — Define populations
+## 6. Part 1 — Do EOs reflect populations?
 
 ### 6.1 Approach
 
-A population must group the plants that exchange pollen and seed — the
-mating pool we must predict, which EOs, drawn for landscape management,
-do not capture — and be separate enough from the next population that
-it can be treated as a source or a target on its own. Pollinator flight sets the mating
+Restoration needs **populations**: groups of plants that exchange
+pollen and seed — the mating pool — separate enough from the next
+population to be treated as a source or a target on their own. Our
+records, like the species' management, are organized by **element
+occurrence (EO)**, the unit drawn to track where the species occurs and
+to manage the landscape. So we ask: **do EOs reflect populations?**
+To answer, we build populations from the ground up — from the slick
+spots, with rules set by pollinator flight and blind to EO boundaries —
+then compare them with the EOs. Pollinator flight sets the mating
 unit, the **deme**; the **population** groups the slick spots that stay
 together across seasons ([Figure 6](#fig-6)).
 
@@ -269,7 +276,9 @@ a slick spot on its own is a deme by itself. Slick spots of all seasons
 **population** — the maximum pollinator dispersal, so that pollen and
 seed rarely move between populations — inside which demes are redrawn each
 season. The rules are applied to every slick spot surveyed in 2025 and
-2026 in the LEPA database (`./run_pipeline.sh units`).
+2026 in the LEPA database (`./run_pipeline.sh units`). We then compare
+each EO with the populations its slick spots fall into: one EO holding
+exactly one population means the two align.
 
 <a id="fig-6"></a>
 ![Figure 6](figures_seed_bulking/units_cartoon_landscape.png)
@@ -298,6 +307,27 @@ BL1 holds the most populations but the smallest share present in both
 seasons (6 of 17); across all lineages, 18 populations were above ground in
 only one of the two seasons.
 
+**How EOs compare with populations.** The two are **nested**: no
+population crosses an EO boundary, so every population lies within a
+single EO. This is a real test: populations are built from all slick
+spots together, without reference to EOs, so a population would join
+two EOs wherever their slick spots came within 500 m. They never do —
+the closest slick spots of two different EOs (EO8 and EO26) are 1.1 km
+apart, and the next closest pair (EO18 and EO25) 1.25 km.
+
+| EOs | Populations per EO | Populations |
+|---|---|:-:|
+| 13 | one — EO and population align | 13 |
+| 4 | two (EO8, EO25, EO32, EO76) | 8 |
+| 2 | four (EO24, EO30) | 8 |
+| 1 | five (EO26) | 5 |
+| 1 | ten (EO27) | 10 |
+| **21** | | **44** |
+
+In the other direction, four populations join two parts of the same EO
+(P34 = EO18-7 + EO18-8; P16 = EO27-1 + EO27RT; P21 and P22 each join a
+part of EO26 with EO26 itself).
+
 <a id="fig-7"></a>
 ![Figure 7](figures_seed_bulking/population_EO_map_BL.png)
 
@@ -305,17 +335,19 @@ only one of the two seasons.
 
 ### 6.4 Discussion
 
-- **The population, not the EO, is the unit, because we must predict
-  the mating pool.** Mate limitation and genetic rescue both act on the
-  plants that exchange pollen and set seed together, so the unit has to
-  follow pollen movement. EOs do not represent this: they are mapped to
-  track where the species occurs and are the right unit for landscape
-  management, but their boundaries do not follow pollinators.
-  Populations are drawn from pollinator flight (§ 6.2), so they do. The
-  two rarely match: **8 EOs hold more than one
-  population** — EO27 ten, EO26 five, EO24 and EO30 four — and one
-  population can join parts of an EO (P34 = EO18-7 + EO18-8; P16 =
-  EO27-1 + EO27RT).
+- **EOs reflect populations in most places, and never cut across
+  them.** 13 of the 21 EOs hold exactly one population, and no
+  population is split between EOs: EOs and populations are nested, not
+  in conflict. Where an EO holds one population, the EO can be managed,
+  sampled and restored as that population.
+- **Where they differ, the EO is the coarser unit.** 8 EOs hold several
+  populations — 31 of the 44 — EO27 ten, EO26 five, EO24 and EO30 four.
+  This is expected: EOs are drawn to track where the species occurs and
+  to manage the landscape, while populations follow pollen movement
+  (§ 6.2). Mate limitation and genetic rescue act on the plants that
+  mate together, so in these EOs restoration works on the populations
+  within the EO, and the EO remains the frame for landscape
+  management.
 - **Populations within one EO differ in reproductive type** (§ 7).
   EO27 holds BL1's only source, P13, next to three mate-limited
   populations (P8, P10, P16) — P13 and P16 even share the EO part
@@ -324,8 +356,8 @@ only one of the two seasons.
   BL1's only source or mask its mate limitation, and seed collected
   across the EO would mix source seed with seed from mate-limited
   plants. Seed bulking draws its seed from whole populations and
-  restoration targets whole populations, so both rest on this
-  definition.
+  restoration targets whole populations, so in multi-population EOs
+  both work at the population level.
 - **Demes are the unit of mating.** They set how many mothers to sample
   within a population for SRK genotyping
   ([`Sampling_design.md`](Sampling_design.md)).
@@ -430,7 +462,7 @@ and should be measured again before they are typed
 <a id="fig-11"></a>
 ![Figure 11](figures_seed_bulking/seed_bulking_status_map.png)
 
-**Figure 11.** Reproductive type of every population on the Snake River Plain (all 44; one season only = seen or measured in a single season, including 6 seen in 2026 whose seed has no data yet), sized by flowering plants; **teal ring = candidate source**: one season so far, its 2025 seed set significantly within half – twice the expectation, and its 2026 seed being cleaned — P39 (BL4) and P28 (BL3), the two locations being cleaned first, and P26 (BL2, borderline; § 7.4.4); dashed outlines = Bottleneck Lineages. Inset, top: the reproductive-type icons of [Figures 9](#fig-9) and [10](#fig-10). Inset, right (under the icons): zoom on EO27 (box on the map; dashed outline = the EO) — one EO holding ten populations, each as a polygon (its slick spots, buffered 60 m) colored by its type: BL1's source P13 (teal) next to the mate-limited P8, P10 and P16 (gold), and six populations with one season only (gray): P9 and P11, P12, P14, P15, P17, seen in 2026 with no seed data yet; why the population, not the EO, is the unit (§ 6.4). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
+**Figure 11.** Reproductive type of every population on the Snake River Plain (all 44; one season only = seen or measured in a single season, including 6 seen in 2026 whose seed has no data yet), sized by flowering plants; **teal ring = candidate source**: one season so far, its 2025 seed set significantly within half – twice the expectation, and its 2026 seed being cleaned — P39 (BL4) and P28 (BL3), the two locations being cleaned first, and P26 (BL2, borderline; § 7.4.4); dashed outlines = Bottleneck Lineages. Inset, top: the reproductive-type icons of [Figures 9](#fig-9) and [10](#fig-10). Inset, right (under the icons): zoom on EO27 (box on the map; dashed outline = the EO) — one EO holding ten populations, each as a polygon (its slick spots, buffered 60 m) colored by its type: BL1's source P13 (teal) next to the mate-limited P8, P10 and P16 (gold), and six populations with one season only (gray): P9 and P11, P12, P14, P15, P17, seen in 2026 with no seed data yet; an EO that holds several populations, so restoration works on the populations within it (§ 6.4). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
 
 #### 7.3.2 A genetic example — P42 against P34
 
@@ -675,14 +707,17 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
 
 ## 8. Conclusions
 
-**Part 1 — Define populations.**
+**Part 1 — Do EOs reflect populations?**
 - **Outcome.** Pollinator flight (50 m demes) and cross-season grouping
   (500 m populations) give **44 populations** in 21 EOs across the five
-  Bottleneck Lineages; 26 are present in both seasons. The population,
-  not the EO, is the unit for both seed bulking and restoration, because
-  it predicts the mating pool; EOs remain the unit for landscape
-  management. 8 EOs hold several populations, and in EO27 and EO25 those populations
-  differ in reproductive type (a source next to mate-limited ones).
+  Bottleneck Lineages; 26 are present in both seasons. EOs and
+  populations are **nested**: no population crosses an EO boundary, and
+  **13 EOs align with exactly one population**. The other 8 EOs are
+  coarser and hold 31 populations; in EO27 and EO25 these differ in
+  reproductive type (a source next to mate-limited ones). Seed bulking
+  and restoration work on populations — the EO itself where it aligns,
+  the populations within it where it holds several — and EOs remain the
+  frame for landscape management.
 - **Next.** Add each new season with the same rules, so that the
   one-season populations gain the second season they need.
 

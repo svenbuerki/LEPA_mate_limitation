@@ -8,6 +8,8 @@
 #                            over-producing / not yet clear; insets: type
 #                            icons and a zoom on EO27 (one EO, five populations
 #                            of different types, one polygon per population)
+#   seed_bulking_status_map_talk  the same without the EO27 zoom (talk; the
+#                            close-ups are BL1_BL3_seed_bulking_status_map)
 #   seed_bulking_model_map   the reproductively intact populations (the model
 #                            populations for seed bulking) highlighted and
 #                            labelled; all others in light grey
@@ -93,6 +95,15 @@ p_status <- ggplot() + base_layers(dem_reg, bb_reg) + bl_layers() +
                          label = paste0("P", c(typed$populationID, cand$populationID)),
                          kind = "pop"), city_anchors(bb_reg)) +
   coord_sf(crs = UTM, expand = FALSE) + labs(x = NULL, y = NULL) + map_theme
+# reproductive-type icons where population_EO_map_BL has its inset (type_icons.py)
+icons <- grid::rasterGrob(png::readPNG(file.path(OUT, "type_icons_strip.png")))
+icons <- wrap_elements(full = icons) +
+  theme(plot.background = element_rect(fill = NA, colour = NA))   # no white box behind the panel
+add_icons <- function(p) p + inset_element(icons, left = 0.53, bottom = 0.755, right = 0.97,
+                                           top = 0.98, align_to = "panel")   # ~12 % larger than Fig 7's
+# talk version: no EO27 zoom (the close-ups are their own slide, step32_BL_pair_map.R)
+save_map(add_icons(p_status), "seed_bulking_status_map_talk")
+
 # zoom on EO27: one EO, five populations of different types (Seed_bulking § 6.4) —
 # populations as polygons (convex hull of their slick spots + 60 m, to stay visible), the EO as a
 # dashed hull (as on population_EO_map_BL), a box marking the zoom on the main map
@@ -138,12 +149,7 @@ p_status <- p_status + geom_sf(data = st_as_sfc(zbb), fill = NA, color = "grey10
                     xmax = at_x(ZOOM_POS[["right"]]), ymin = at_y(ZOOM_POS[["bottom"]]),
                     ymax = at_y(ZOOM_POS[["top"]])) +
   coord_sf(crs = UTM, expand = FALSE)
-# reproductive-type icons where population_EO_map_BL has its inset (type_icons.py)
-icons <- grid::rasterGrob(png::readPNG(file.path(OUT, "type_icons_strip.png")))
-icons <- wrap_elements(full = icons) +
-  theme(plot.background = element_rect(fill = NA, colour = NA))   # no white box behind the panel
-p_status <- p_status + inset_element(icons, left = 0.53, bottom = 0.755, right = 0.97,
-                                     top = 0.98, align_to = "panel")   # ~12 % larger than Fig 7's
+p_status <- add_icons(p_status)
 save_map(p_status, "seed_bulking_status_map")
 
 # ---------------------------------------------------------------- 2. model populations
