@@ -97,14 +97,14 @@ def threatened_tag(ax, x, y, size=12.5, ha="left"):
             bbox=dict(boxstyle="round,pad=0.35", fc="white", ec=NO, lw=1.6))
 
 
-def consequences(ax, x, y, dy, size):
+def consequences(ax, x, y, dy, size, indent=None):
     """Why seed scarcity impedes restoration: two ✗ lines (the problems to solve)."""
     for k, line in enumerate(("far too little to restore\npopulations directly",
                               "collecting more would deplete\nthe populations it comes from")):
         ax.text(x, y - k * dy, "✗", ha="left", va="center", fontsize=size + 6, color=NO,
                 fontweight="bold")
-        ax.text(x + 0.5 * dy, y - k * dy, line, ha="left", va="center", fontsize=size,
-                color=NO, fontweight="bold", linespacing=1.15)
+        ax.text(x + (0.5 * dy if indent is None else indent), y - k * dy, line, ha="left",
+                va="center", fontsize=size, color=NO, fontweight="bold", linespacing=1.15)
 
 
 def panel_challenge(ax, title="The challenge: very little seed to start with"):
@@ -125,6 +125,27 @@ def panel_challenge(ax, title="The challenge: very little seed to start with"):
     ax.text(122, 16, "very little\nseed", ha="left", va="center", fontsize=16, fontweight="bold",
             linespacing=1.15)
     consequences(ax, 141, 22, 12, 15)
+
+
+def panel_challenge_slide(ax):
+    """The challenge alone, filling a 16:9 slide (160 × 90 data units, no frame):
+    the same content as panel_challenge, laid out for the talk."""
+    ax.set_xlim(0, 160), ax.set_ylim(0, 90), ax.set_aspect("equal"), ax.axis("off")
+    ax.text(4, 83, "The challenge: very little seed to start with — why?", ha="left", va="center",
+            fontsize=34, fontweight="bold")
+    threatened_tag(ax, 5, 72, size=22)
+    ax.text(62, 72, "wild populations: limited fertility — few fruits", ha="left", va="center",
+            fontsize=22, color="#555", style="italic")
+    spots = [(26, 46, 44, 28, 3), (71, 51, 34, 22, 2), (29, 16, 34, 22, 2), (71, 18, 44, 28, 3)]
+    for x, y, w, h, n in spots:
+        ax.add_patch(Ellipse((x, y), w, h, fc=SPOT, ec=SPOT_EDGE, lw=1.8, zorder=1))
+        for dx in np.linspace(-(n - 1) * 6, (n - 1) * 6, n):
+            lepa(ax, x + dx, y - 7, h=15, faded=dx != 0, fruits=1 if dx == 0 else 0)
+    arrow(ax, (92, 50), (102, 50), lw=4)
+    seed_bag(ax, 113, 43, 13, 14, 3)
+    ax.text(124, 50, "very little\nseed", ha="left", va="center", fontsize=30, fontweight="bold",
+            linespacing=1.15)
+    consequences(ax, 98, 28, 17, 21, indent=6)
 
 
 # ---- 1. identify source populations ------------------------------------------------
@@ -170,6 +191,40 @@ def panel_sources(ax):
     ax.text(71, 13.5, "avoid", ha="center", va="top", fontsize=11.5, color="#C62828",
             fontweight="bold")
     technique(ax, "seed set for plant size (see Figure 3)", y=4)
+
+
+def panel_sources_talk(ax, use=True):
+    """Talk version of panel_sources, no title: the three population types
+    aligned, one row each (badge, type); use=True adds what each means for
+    restoration (use of the type, action symbol). Rows do not move between
+    the two versions."""
+    frame(ax, "")
+    rows = ((85, INTACT, "Reproductively intact", "reproductively intact",
+             "→ source of seed: top\n    conservation priority"),
+            (55.5, MATE_LIM, "Mate-limited", "mate-limited", "→ genetic rescue"),
+            (26, OVER, "Over-producing", "over-producing",
+             "→ inbreeding depression:\n    excluded as source"))
+    for y, col, kind, head, action in rows:              # rows fill the panel above the tag
+        badge(ax, kind, 15, y, 24)
+        ax.text(31, y + 2.5, head, ha="left", va="bottom", fontsize=19, color=col,
+                fontweight="bold")
+        if use:
+            ax.text(31, y - 0.5, action, ha="left", va="top", fontsize=17, color=col,
+                    linespacing=1.1)
+    for y in (70.25, 40.75):
+        ax.plot([4, 96], [y, y], color="#CCCCCC", lw=1.2, ls=(0, (4, 3)), zorder=0)
+    technique(ax, "seed set for plant size", y=5)
+    if not use:
+        return
+    shield(ax, 86, 88, s=0.72)
+    ax.text(86, 76.5, "protect", ha="center", va="center", fontsize=15, color=INTACT,
+            fontweight="bold")
+    lifebuoy(ax, 86, 58.5, r=6.5)
+    ax.text(86, 47, "rescue", ha="center", va="center", fontsize=15, color=MATE_LIM,
+            fontweight="bold")
+    no_sign(ax, 86, 29, r=6.5)
+    ax.text(86, 17.5, "avoid", ha="center", va="center", fontsize=15, color="#C62828",
+            fontweight="bold")
 
 
 # ---- 2. multiply seed -----------------------------------------------------------
@@ -356,8 +411,22 @@ SLIDES = {"slide1": (panel_sources, panel_bulking),     # objectives 1 – 2: so
           "slide2": (panel_rescue, panel_restore)}     # objective 3: rescue (3a, 3b)
 
 
+def draw_types(use: bool):
+    """Talk: the three types alone (panel_sources_talk), one square panel."""
+    rc.RNG = np.random.default_rng(7)
+    side, m = 7.2, 0.1
+    fig = plt.figure(figsize=(side + 2 * m, side + 2 * m))
+    k = m / (side + 2 * m)
+    panel_sources_talk(fig.add_axes([k, k, 1 - 2 * k, 1 - 2 * k]), use)
+    return fig
+
+
 def main():
     OUT.mkdir(exist_ok=True)
+    for name, use in (("types", False), ("types_use", True)):
+        fig = draw_types(use)
+        fig.savefig(OUT / f"restoration_program_cartoon_{name}.png", dpi=200)
+        plt.close(fig)
     fig = draw(4)
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"restoration_program_cartoon.{ext}", dpi=200 if ext == "png" else None)

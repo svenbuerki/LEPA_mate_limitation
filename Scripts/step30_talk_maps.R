@@ -157,6 +157,28 @@ eo_hl <- cbind(st_drop_geometry(eo_hulls),
                as.data.frame(t(sapply(st_geometry(eo_hulls), function(g) {
                  b <- st_bbox(g); c(X = unname(b["xmax"]), Y = unname(b["ymax"]))
                }))))
+# BL labels in the style of the network map (Figure 5): name, EOs, populations
+# (all populations seen over the two seasons), placed at the BL footprint
+bl_lab <- ev %>% group_by(BL) %>%
+  summarise(n_eo = n_distinct(EO[EO != "New 2026 population"]),
+            n_new = any(EO == "New 2026 population"),
+            n_pop = n_distinct(populationID), .groups = "drop")
+# each label sits in open ground next to its BL (offset from the footprint, km),
+# a leader line to the footprint's nearest edge
+BL_LAB_OFFSET <- list(BL1 = c(2, -20), BL2 = c(12, 21), BL3 = c(-22, 12),
+                      BL4 = c(-24, -4), BL5 = c(26, 0))
+bl_lab <- do.call(rbind, lapply(seq_len(nrow(bl_lab)), function(i) {
+  r <- bl_lab[i, ]
+  h <- bl_hulls[bl_hulls$BL == r$BL, ]
+  c0 <- st_coordinates(st_centroid(h))
+  pos <- c0 + BL_LAB_OFFSET[[r$BL]] * 1000
+  edge <- st_coordinates(st_cast(st_nearest_points(
+    st_boundary(st_geometry(h)), st_sfc(st_point(pos), crs = UTM)), "POINT"))[1, ]
+  cbind(r, X = pos[1], Y = pos[2], ex = edge[1], ey = edge[2])
+}))
+bl_lab$label <- sprintf("%s\n%d EO%s%s\n%d populations", bl_lab$BL, bl_lab$n_eo,
+                        ifelse(bl_lab$n_eo == 1, "", "s"),
+                        ifelse(bl_lab$n_new, " + 1 new site", ""), bl_lab$n_pop)
 p_violin <- ggplot(pops, aes(BL, avg_fertile, fill = BL)) +
   geom_violin(scale = "width", color = "grey25", linewidth = 0.3, alpha = 0.85, trim = TRUE) +
   geom_jitter(width = 0.08, height = 0, size = 1.1, color = "grey15", alpha = 0.8) +
@@ -185,7 +207,14 @@ p_pop <- ggplot() + base_layers(dem_reg, bb_reg) +
   scale_color_manual(values = BL_COLORS, guide = "none") +
   city_layers(bb_reg) +
   guides(fill = guide_legend(order = 1)) +
-  label_layer(data.frame(X = eo_hl$X, Y = eo_hl$Y, label = eo_hl$EO, kind = "eo"),
+  geom_segment(data = bl_lab, aes(x = ex, y = ey, xend = X, yend = Y, color = BL),
+               linewidth = 0.5, show.legend = FALSE) +
+  scale_color_manual(values = BL_COLORS, guide = "none") +
+  geom_label(data = bl_lab, aes(X, Y, label = label), size = 3.4, fontface = "bold",
+             fill = "white", color = "grey15", alpha = 0.92, lineheight = 0.95,
+             label.size = 0.25) +
+  label_layer(rbind(data.frame(X = eo_hl$X, Y = eo_hl$Y, label = eo_hl$EO, kind = "eo"),
+                    data.frame(X = bl_lab$X, Y = bl_lab$Y, label = "", kind = "anchor")),
               city_anchors(bb_reg)) +
   coord_sf(crs = UTM, expand = FALSE) + labs(x = NULL, y = NULL) + map_theme
 p_pop <- p_pop + inset_element(p_violin, left = 0.58, bottom = 0.60, right = 0.97,

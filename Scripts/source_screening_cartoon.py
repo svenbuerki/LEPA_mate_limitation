@@ -7,7 +7,7 @@ Three steps, left to right:
   1. **Plant phenotyping** — plant size (crown width, height) and seed
      yield of every flowering plant, in two seasons: fast and low cost, no
      genotyping.
-  2. **Modeling** — (a) build: all plants together give the seed yield a
+  2. **Predicting reproductive status** — (a) build: all plants together give the seed yield a
      plant of a given size is expected to set (band: half to twice);
      (b) deploy by population: each population's seed yield relative to
      that expectation, per season.
@@ -106,7 +106,7 @@ def panel_phenotyping(ax):
 
 # ---- 2. modeling: build, then deploy by population -----------------------------------------
 def panel_modeling(ax):
-    rc.frame(ax, 2, "Modeling", "build on all plants → deploy by population")
+    rc.frame(ax, 2, "Predicting reproductive status", "build on all plants → deploy by population")
     # (a) build: seed yield expected for plant size
     ax.text(3, 95, "a  build", ha="left", va="center", fontsize=13, fontweight="bold")
     ax.text(25, 95, "all plants → seed yield expected for size", ha="left", va="center",
@@ -157,37 +157,61 @@ def panel_modeling(ax):
     ax.text(88.5, 40.5, "2026", va="center", fontsize=9.5)
 
 
+HYP_TITLE = "Hypotheses → test with genetics"
+HYP_WHY = "plant size and seed yield can also be driven by resource availability"
+HYP_TEST = "→ test with the SRK gene (S-types): S-allele diversity, compatible mates, selfing"
+
+
+def hypotheses_banner(ax, x, y, w, h, wide=False):
+    """Gray banner: the sort is a set of hypotheses, tested with the SRK gene."""
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0,rounding_size=2",
+                                fc="#F3F4F6", ec="#888", lw=1.2, zorder=1))
+    dna(ax, x + 6, y + h / 2 - 4.25, h=8.5, w=1.8)
+    if wide:                                              # title left, two lines to its right
+        ax.text(x + 12, y + h / 2, HYP_TITLE, ha="left", va="center", fontsize=13,
+                fontweight="bold", color="#222", zorder=2)
+        ax.text(x + 85, y + h * 0.70, HYP_WHY, ha="left", va="center", fontsize=13.5,
+                color="#222", zorder=2)
+        ax.text(x + 85, y + h * 0.28, HYP_TEST, ha="left", va="center", fontsize=11.5,
+                color="#444", zorder=2)
+        return
+    ax.text(x + 12, y + h - 4.5, HYP_TITLE, ha="left", va="center", fontsize=13,
+            fontweight="bold", color="#222", zorder=2)
+    why = HYP_WHY.split(" by ")                         # square panel: why and test on two lines each
+    test, what = HYP_TEST.split(": ")
+    for k, t in enumerate((why[0], "by " + why[1])):
+        ax.text(x + 12, y + h - 11.5 - 6 * k, t, ha="left", va="center", fontsize=12.5,
+                color="#222", zorder=2)
+    for k, t in enumerate((test + ":", "      " + what)):
+        ax.text(x + 12, y + h - 25.5 - 5.3 * k, t, ha="left", va="center", fontsize=10.2,
+                color="#444", zorder=2)
+
+
 # ---- 3. sort populations for population restoration ----------------------------------------
 def panel_sort(ax):
     """Sort populations: the three types and what to do with each — hypotheses
-    from phenotyping + modeling, to be tested with genetics (SRK)."""
-    rc.frame(ax, 3, "Sort populations for restoration", "hypotheses from seed yield for plant size")
-    # the sort is a hypothesis: genetics (SRK genotypes) tests it
-    ax.add_patch(FancyBboxPatch((3, 86), 94, 11, boxstyle="round,pad=0,rounding_size=2",
-                                fc="#F3F4F6", ec="#888", lw=1.2, zorder=1))
-    dna(ax, 9, 87.3, h=8.5, w=1.8)
-    ax.text(15, 94, "Hypotheses → test with genetics", ha="left", va="center", fontsize=13,
-            fontweight="bold", color="#222", zorder=2)
-    ax.text(15, 89.3, "SRK genotypes: S-allele diversity, compatible mates, selfing", ha="left",
-            va="center", fontsize=10, color="#555", zorder=2)
-    rows = [(72, INTACT, "reproductively intact", "→ source for seed bulking", None),
-            (48, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
-            (24, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
+    from phenotyping + prediction, tested with genetics (the SRK gene; banner at the foot)."""
+    rc.frame(ax, 3, "Sort populations for restoration", "")
+    rows = [(88, INTACT, "reproductively intact", "→ source for seed bulking", None),
+            (69, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
+            (50, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
     for y, c, lab, role, flaw in rows:
         badge(ax, KINDS[c], 15, y, 19)                   # type badges, as in Figures 2 and 10 – 11
         ax.text(31, y + 3, lab, ha="left", va="bottom", fontsize=13, color=c, fontweight="bold")
         ax.text(31, y + 0.5, role, ha="left", va="top", fontsize=12.5, color=c)
         if flaw:
             ax.text(31, y - 5.5, flaw, ha="left", va="top", fontsize=11, color=c, style="italic")
+    # the sort is a set of hypotheses: genetics (the SRK gene) tests it
+    hypotheses_banner(ax, 3, 3, 94, 33)
     # what to do with each type: protect, rescue, avoid
-    shield(ax, 88, 74, s=0.7)
-    ax.text(88, 64.5, "top\npriority", ha="center", va="top", fontsize=10.5, color=INTACT,
+    shield(ax, 88, 90, s=0.7)
+    ax.text(88, 81.5, "top priority", ha="center", va="top", fontsize=10.5, color=INTACT,
             fontweight="bold", linespacing=1.05)
-    lifebuoy(ax, 88, 50, r=5.5)
-    ax.text(88, 42.5, "rescue", ha="center", va="top", fontsize=10.5, color=MATE_LIM,
+    lifebuoy(ax, 88, 71, r=5.5)
+    ax.text(88, 63.5, "rescue", ha="center", va="top", fontsize=10.5, color=MATE_LIM,
             fontweight="bold")
-    no_sign(ax, 88, 26, r=5)
-    ax.text(88, 19.5, "avoid", ha="center", va="top", fontsize=10.5, color="#C62828",
+    no_sign(ax, 88, 52, r=5)
+    ax.text(88, 45.5, "avoid", ha="center", va="top", fontsize=10.5, color="#C62828",
             fontweight="bold")
 
 
@@ -201,15 +225,7 @@ def panel_sort_wide(ax):
         sp.set_edgecolor("#BBBBBB")
     ax.set_title("3. Sort populations for restoration", loc="left", fontsize=18, fontweight="bold",
                  pad=10)
-    ax.text(xmax / 2, 2.5, "hypotheses from seed yield for plant size", ha="center", va="bottom",
-            fontsize=13, color="#222")
-    ax.add_patch(FancyBboxPatch((3, 54), xmax - 6, 10, boxstyle="round,pad=0,rounding_size=2",
-                                fc="#F3F4F6", ec="#888", lw=1.2, zorder=1))
-    dna(ax, 9, 55, h=8, w=1.8)
-    ax.text(15, 59, "Hypotheses → test with genetics", ha="left", va="center", fontsize=13,
-            fontweight="bold", color="#222", zorder=2)
-    ax.text(88, 59, "SRK genotypes: S-allele diversity, compatible mates, selfing", ha="left",
-            va="center", fontsize=11.5, color="#555", zorder=2)
+    hypotheses_banner(ax, 3, 3, xmax - 6, 16, wide=True)
     pos = ax.get_position()
     cols = [(2, INTACT, "reproductively intact", "→ source for seed bulking", None),
             (73, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
@@ -217,21 +233,21 @@ def panel_sort_wide(ax):
     for x0, c, lab, role, flaw in cols:
         size = 27                                        # type badge, as in the square panel
         cx = pos.x0 + (x0 + 15) / xmax * pos.width
-        cy = pos.y0 + 31 / ymax * pos.height
+        cy = pos.y0 + 43 / ymax * pos.height
         w, h = size / xmax * pos.width, size / ymax * pos.height
         add_icon(ax.figure, KINDS[c], [cx - w / 2, cy - h / 2, w, h])
-        ax.text(x0 + 31, 46, lab, ha="left", va="center", fontsize=13, color=c, fontweight="bold")
-        ax.text(x0 + 31, 39.5, role, ha="left", va="center", fontsize=12.5, color=c)
+        ax.text(x0 + 31, 58, lab, ha="left", va="center", fontsize=13, color=c, fontweight="bold")
+        ax.text(x0 + 31, 51.5, role, ha="left", va="center", fontsize=12.5, color=c)
         if flaw:
-            ax.text(x0 + 31, 33, flaw, ha="left", va="center", fontsize=11, color=c, style="italic")
-    shield(ax, 40, 19.5, s=0.62)
-    ax.text(48, 20, "top priority", ha="left", va="center", fontsize=11.5, color=INTACT,
+            ax.text(x0 + 31, 45, flaw, ha="left", va="center", fontsize=11, color=c, style="italic")
+    shield(ax, 40, 31.5, s=0.62)
+    ax.text(48, 32, "top priority", ha="left", va="center", fontsize=11.5, color=INTACT,
             fontweight="bold")
-    lifebuoy(ax, 111, 20, r=5.5)
-    ax.text(119, 20, "rescue", ha="left", va="center", fontsize=11.5, color=MATE_LIM,
+    lifebuoy(ax, 111, 32, r=5.5)
+    ax.text(119, 32, "rescue", ha="left", va="center", fontsize=11.5, color=MATE_LIM,
             fontweight="bold")
-    no_sign(ax, 182, 20, r=5)
-    ax.text(190, 20, "avoid", ha="left", va="center", fontsize=11.5, color="#C62828",
+    no_sign(ax, 182, 32, r=5)
+    ax.text(190, 32, "avoid", ha="left", va="center", fontsize=11.5, color="#C62828",
             fontweight="bold")
 
 

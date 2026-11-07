@@ -4,12 +4,13 @@ audience: self-incompatibility (SI) under genetic control, its escape
 (self-compatibility, SC), and the cost of each.
 
 Two rows — SI on top, SC below; mechanism on the left, impact on the right:
-  1. **Plants reject their own pollen** — the S-locus (a male gene, SCR,
-     and a female gene, SRK) gives each plant an S-type; pollen carrying the flower's own S-type is
-     rejected (no seed), pollen of another S-type is accepted (seed).
-  2. **Few S-types → mate limitation → population decline** — small, isolated populations lose
-     S-types, plants run out of compatible mates and set little seed
-     (mate limitation).
+  1. **Self-incompatible breeding system: plants reject their own pollen** —
+     the S-locus (a male gene, SCR, and a female gene, SRK) gives each plant an
+     S-type; pollen carrying the flower's own S-type is rejected (no seed),
+     pollen of another S-type is accepted (seed).
+  2. **Fragmentation → genetic drift → mate limitation → population decline** —
+     small, isolated populations lose S-types, plants run out of compatible
+     mates and set little seed (mate limitation).
   3. **Some plants broke the gene** — plants whose S-locus copies are broken
      accept their own pollen and set seed alone (self-compatible).
   4. **Selfing → inbreeding → reduced fitness → population decline** —
@@ -23,8 +24,9 @@ figure. LEPA numbers from SRK_bioinformatics (Canu-amplicon genotypes:
 263 plants, 32 S-types). Other icons and colours as restoration_cartoon.py.
 The challenge (restoration_program_cartoon.panel_challenge, shared with
 Figure 2) sits on top: the problem these panels explain.
-Output: figures_seed_bulking/breeding_system_cartoon.{png,pdf}, plus
-breeding_system_cartoon_step0–3.png (same size, later panels blank).
+Output: figures_seed_bulking/breeding_system_cartoon.{png,pdf}, plus talk slides:
+_slide1 (the challenge alone, 16:9), _slide2 (panels 1, 2) and _slide3
+(panels 3, 4), with _slide2_step1 and _slide3_step1 showing the first panel.
 """
 from __future__ import annotations
 
@@ -33,7 +35,7 @@ import numpy as np
 from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, FancyBboxPatch
 
 import restoration_cartoon as rc
-from restoration_cartoon import (ALLELE, MATE_LIM, OUT, OVER, SPOT, arrow, bee, cross_mark,
+from restoration_cartoon import (ALLELE, MATE_LIM, OUT, OVER, SPOT, arrow, bee, cross_mark, dna,
                                  frame, lepa)
 
 # palette of the ISI breeding-system figure (SRK_bioinformatics)
@@ -129,13 +131,17 @@ def tag(ax, x, y, text, col):
 
 # ---- panels ------------------------------------------------------------------
 def panel_si(ax):
-    frame(ax, 1, "Self-incompatible: plants reject\n    their own pollen",
+    frame(ax, 1, "Self-incompatible breeding system:\n    plants reject their own pollen",
           "the S-locus (a male + a female gene) gives each plant an\n"
           "S-type: pollen with the flower's own S-type is rejected")
     tag(ax, 82, 93, "self-incompatible", SI_RED)
+    dna(ax, 6, 87.5, h=10.5, w=2.0)                      # S-types are under genetic control
+    ax.text(3.5, 84.5, "under genetic control", ha="left", va="center", fontsize=11, color="#333",
+            style="italic")
+    arrow(ax, (9.5, 93), (13, 93), col="#666", lw=1.6)
     for k, t in enumerate((0, 2, 4)):                    # key: colour = S-type
-        s_badge(ax, 6 + 4.5 * k, 93, t, r=1.6)
-    ax.text(19, 93, "color = S-type\n(32 known in LEPA)", ha="left", va="center", fontsize=11,
+        s_badge(ax, 16 + 4.5 * k, 93, t, r=1.6)
+    ax.text(29, 93, "color = S-type\n(32 known in LEPA)", ha="left", va="center", fontsize=11,
             linespacing=1.1, color="#333")
     # own pollen → no seed
     flower(ax, 24, 66, r=7, stem_bottom=50, s_type=0)
@@ -160,7 +166,7 @@ def panel_si(ax):
 
 
 def panel_mates(ax):
-    frame(ax, 2, "Fragmentation + drift → mate limitation\n    → population decline",
+    frame(ax, 2, "Fragmentation → genetic drift\n    → mate limitation → population decline",
           "small, isolated populations lose S-types by drift:\n"
           "plants run out of compatible mates and set little seed")
     tag(ax, 79, 93, "mate limitation", MATE_LIM)
@@ -182,7 +188,7 @@ def panel_mates(ax):
         for k in range(3):
             (silique_full if ok else silique_empty)(ax, x0 - 9 + 9 * k, 28, size=3.4)
     arrow(ax, (41, 82), (59, 82), col="#555", lw=2.2)    # many → few S-types
-    ax.text(50, 85, "habitat fragmentation\n+ genetic drift", ha="center", va="bottom",
+    ax.text(50, 85, "habitat fragmentation\n→ genetic drift", ha="center", va="bottom",
             fontsize=11, color="#333", fontweight="bold", linespacing=1.05)
     cross_mark(ax, 74 - 7, 70.5, s=1.4)
     cross_mark(ax, 74 + 7, 70.5, s=1.4)
@@ -245,50 +251,75 @@ def panel_inbreeding(ax):
 PANELS = (panel_si, panel_mates, panel_sc, panel_inbreeding)
 
 
-def draw(n_shown: int):
-    """n_shown: 0 = the challenge only, 1–4 = breeding-system panels."""
+def draw():
     from restoration_program_cartoon import panel_challenge      # (lazy: avoids an import cycle)
-    rc.RNG = np.random.default_rng(5)                    # same plants in every frame
+    rc.RNG = np.random.default_rng(5)
     fig = plt.figure(figsize=(16, 19.0))
     top = fig.add_axes([0.02, 0.825, 0.96, 0.96 * 16 / 19.0 * 38 / 200])
     panel_challenge(top, "The challenge: very little seed to start with — why?")
     gs = fig.add_gridspec(2, 2, left=0.02, right=0.98, top=0.735, bottom=0.015, wspace=0.1,
                           hspace=0.17)
     axes = np.array([[fig.add_subplot(gs[i, j]) for j in range(2)] for i in range(2)])
-    for k, (ax, f) in enumerate(zip(axes.flat, PANELS)):
-        if k < n_shown:
-            f(ax)
-        else:
-            ax.set_xlim(0, 100), ax.set_ylim(0, 100), ax.set_aspect("equal"), ax.axis("off")
-            ax.set_title(" ", fontsize=18, pad=10)
+    for ax, f in zip(axes.flat, PANELS):
+        f(ax)
     fig.canvas.draw()
-    if n_shown >= 1:                                     # challenge → why: the breeding system
-        p = fig.transFigure.inverted().transform(top.transData.transform((100, 0)))
-        q = fig.transFigure.inverted().transform(axes[0, 0].transData.transform((50, 100)))
-        fig.add_artist(FancyArrowPatch((p[0], p[1] - 0.004), (p[0], q[1] + 0.03),
-                                       transform=fig.transFigure, arrowstyle="-|>",
-                                       mutation_scale=26, color="#333", lw=3))
-    for k, (a, b) in enumerate(((axes[0, 0], axes[0, 1]), (axes[1, 0], axes[1, 1]))):
-        if 2 * k + 1 >= n_shown:                         # mechanism → impact, per row
-            continue
-        p = fig.transFigure.inverted().transform(a.transData.transform((100, 50)))
-        q = fig.transFigure.inverted().transform(b.transData.transform((0, 50)))
-        fig.add_artist(FancyArrowPatch(p, q, transform=fig.transFigure, arrowstyle="-|>",
-                                       mutation_scale=26, color="#333", lw=3))
+    to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
+    style = dict(transform=fig.transFigure, arrowstyle="-|>", mutation_scale=26, color="#333",
+                 lw=3)
+    p, q = to_fig(top, (100, 0)), to_fig(axes[0, 0], (50, 100))  # challenge → why
+    fig.add_artist(FancyArrowPatch((p[0], p[1] - 0.004), (p[0], q[1] + 0.03), **style))
+    for a, b in axes:                                    # mechanism → impact, per row
+        fig.add_artist(FancyArrowPatch(to_fig(a, (100, 50)), to_fig(b, (0, 50)), **style))
+    return fig
+
+
+def draw_challenge_slide():
+    """16:9 slide: the challenge alone, edge to edge."""
+    from restoration_program_cartoon import panel_challenge_slide
+    rc.RNG = np.random.default_rng(5)
+    fig = plt.figure(figsize=(16, 9))
+    panel_challenge_slide(fig.add_axes([0, 0, 1, 1]))
+    return fig
+
+
+def draw_pair_slide(left, right=None):
+    """Landscape slide: two square panels, cropped close to the titles and
+    panels (a slim white edge, for a colored slide background); the right
+    panel blank (same layout) until it is shown."""
+    rc.RNG = np.random.default_rng(5)
+    side, gap, title, m = 7.6, 0.5, 0.68, 0.12           # inches
+    x0, h = (16 - 2 * side - gap) / 2, m + side + title + m
+    fig = plt.figure(figsize=(16, h))
+    a, b = (fig.add_axes([x / 16, m / h, side / 16, side / h]) for x in (x0, x0 + side + gap))
+    left(a)
+    if right is None:
+        b.axis("off")
+        return fig
+    right(b)
+    fig.canvas.draw()
+    to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
+    fig.add_artist(FancyArrowPatch(to_fig(a, (100, 50)), to_fig(b, (0, 50)),
+                                   transform=fig.transFigure, arrowstyle="-|>", mutation_scale=26,
+                                   color="#333", lw=3))
     return fig
 
 
 def main():
     OUT.mkdir(exist_ok=True)
-    fig = draw(len(PANELS))
+    fig = draw()
     for ext in ("png", "pdf"):
         fig.savefig(OUT / f"breeding_system_cartoon.{ext}", dpi=200 if ext == "png" else None)
     plt.close(fig)
-    for n in range(0, len(PANELS)):
-        fig = draw(n)
-        fig.savefig(OUT / f"breeding_system_cartoon_step{n}.png", dpi=200)
+    slides = {"slide1": draw_challenge_slide,
+              "slide2_step1": lambda: draw_pair_slide(panel_si),
+              "slide2": lambda: draw_pair_slide(panel_si, panel_mates),
+              "slide3_step1": lambda: draw_pair_slide(panel_sc),
+              "slide3": lambda: draw_pair_slide(panel_sc, panel_inbreeding)}
+    for name, make in slides.items():
+        fig = make()
+        fig.savefig(OUT / f"breeding_system_cartoon_{name}.png", dpi=200)
         plt.close(fig)
-    print(f"  wrote {OUT}/breeding_system_cartoon.png (+ _step0–3 frames for slides)")
+    print(f"  wrote {OUT}/breeding_system_cartoon.png (+ talk slides _slide1–3)")
 
 
 if __name__ == "__main__":

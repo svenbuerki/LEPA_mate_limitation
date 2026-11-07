@@ -16,10 +16,10 @@ in [`figures_seed_bulking/`](figures_seed_bulking/); the population table is
 > three of the five lineages. Eleven more look intact but have a single
 > season of data, so a second season could add sources, including the
 > first for BL2 and BL4 (§ 7.3.3, § 7.4.3). All four still need the
-> genetic filters (SRK diversity, no self-compatible plants) before
+> genetic filters (S-allele diversity, no self-compatible plants) before
 > bulking. **Where SRK genotypes already exist, they mostly back the
 > seed-set call:** P34 (32 genotyped plants) carries a balanced set of
-> SRK alleles, no self-compatible plants and more compatible mates than
+> S-alleles, no self-compatible plants and more compatible mates than
 > the mate-limited P42 (67 % against 53 %; § 7.3.2). P13 is the
 > exception: its few genotyped plants (12) can mate with only 44 % of
 > their population. On its two seasons of seed set it stays BL1's
@@ -81,8 +81,8 @@ system explains why ([Figure 1](#fig-1)):
    S-type is rejected: a plant can only be fertilized by a mate of a
    different S-type (panel 1). SI prevents selfing and protects the
    species from inbreeding.
-2. **Habitat fragmentation and genetic drift lead to mate limitation and
-   population decline.** The species' range is split into isolated
+2. **Habitat fragmentation drives genetic drift, which leads to mate
+   limitation and population decline.** The species' range is split into isolated
    fragments — five on the Snake River Plain, the Bottleneck Lineages
    (§ 6.3). In small, isolated populations, genetic drift removes
    S-types, plants run out of compatible mates and set less seed than
@@ -106,7 +106,7 @@ and Jarbidge (JAR), which now define its management regions
 <a id="fig-1"></a>
 ![Figure 1](figures_seed_bulking/breeding_system_cartoon.png)
 
-**Figure 1.** The challenge and the breeding system behind it. **Top — the challenge:** the species is federally threatened and wild populations have limited fertility, so there is very little seed; far too little to restore populations directly, and collecting more would deplete the populations it comes from. **Below — why:** the breeding system of slickspot peppergrass and how it shapes populations. **1 — Self-incompatible:** the S-locus (combining a male and a female gene) gives each plant an S-type (color; 32 are known in LEPA); pollen with the flower's own S-type is rejected (no seed), pollen of another S-type is accepted (seed). **2 — Habitat fragmentation + genetic drift → mate limitation → population decline:** small, isolated populations lose S-types by drift, so plants find few compatible mates and set little seed. **3 — Rapid adaptation: escape from SI → self-compatible, a short-term gain:** plants whose S-locus copies are broken (LEPA has four copies of each chromosome) accept their own pollen and set seed alone, without mates — at first, seed goes up (seed ↑); of 263 genotyped plants, 247 are self-incompatible, 15 have some copies broken and 1 is self-compatible. **4 — Long-term cost: inbreeding depression → population decline:** selfed offspring are more alike and weaker, generation after generation (less seed, lower survival, less diversity). Flower, pollen and fruit drawings from the breeding-system figures of the SRK genotyping pipeline ([SRK_bioinformatics](https://github.com/svenbuerki/SRK_bioinformatics)). Source: `Scripts/breeding_system_cartoon.py`; one frame per panel for slides: `breeding_system_cartoon_step1–3.png`.
+**Figure 1.** The challenge and the breeding system behind it. **Top — the challenge:** the species is federally threatened and wild populations have limited fertility, so there is very little seed; far too little to restore populations directly, and collecting more would deplete the populations it comes from. **Below — why:** the breeding system of slickspot peppergrass and how it shapes populations. **1 — Self-incompatible breeding system**, under genetic control (DNA helix): the S-locus (combining a male and a female gene) gives each plant an S-type (color; 32 are known in LEPA); pollen with the flower's own S-type is rejected (no seed), pollen of another S-type is accepted (seed). **2 — Habitat fragmentation → genetic drift → mate limitation → population decline:** small, isolated populations lose S-types by drift, so plants find few compatible mates and set little seed. **3 — Rapid adaptation: escape from SI → self-compatible, a short-term gain:** plants whose S-locus copies are broken (LEPA has four copies of each chromosome) accept their own pollen and set seed alone, without mates — at first, seed goes up (seed ↑); of 263 genotyped plants, 247 are self-incompatible, 15 have some copies broken and 1 is self-compatible. **4 — Long-term cost: inbreeding depression → population decline:** selfed offspring are more alike and weaker, generation after generation (less seed, lower survival, less diversity). Flower, pollen and fruit drawings from the breeding-system figures of the SRK genotyping pipeline ([SRK_bioinformatics](https://github.com/svenbuerki/SRK_bioinformatics)). Source: `Scripts/breeding_system_cartoon.py`; talk slides: `breeding_system_cartoon_slide1–3.png`.
 
 **Three types of populations follow from the breeding system:**
 
@@ -157,7 +157,7 @@ would compromise the whole program.
 <a id="fig-2"></a>
 ![Figure 2](figures_seed_bulking/restoration_program_cartoon.png)
 
-**Figure 2.** The population restoration program, with slickspot peppergrass as the model. Panel titles are the three **objectives** — objective 3, rescue mate-limited populations, in two steps (3a, 3b) — and the gray tags name the **technique** used. **1 — Prioritize populations for population restoration** (technique: seed set for plant size, our approach in [Figure 3](#fig-3)): reproductively intact populations are the **sources** and the top conservation priority — losing one compromises the whole restoration — and their seed goes on to step 2; mate-limited populations are rescued (objective 3; ring buoy); populations under inbreeding depression (over-producing, likely selfing) are excluded as sources (red "avoid" sign). The badges mark the three population types, as in [Figure 3](#fig-3) and Figures 10 – 11. **2 — Multiply seed** from the sources (technique: seed bulking in the greenhouse, hand-crossed within each source, one row per mother). **3 — Rescue mate-limited populations**, which have limited genetic diversity and too few compatible mates, in two steps. **3a — Breed seed with new S-alleles** (technique: informed breeding — seedlings of the source (pollen donors, teal) and of the target population (mothers, gold) are grown together in the greenhouse and genotyped at SRK, colored dots = S-alleles; source pollen is put on target flowers, pairs chosen so that they share no S-allele — a source plant sharing S1 with the targets is not used; the seed, harvested from the target mothers, carries new S-alleles). **3b — Sow the seed into the population** (technique: seed outcasting — the bred seed is sown into the mate-limited population; new S-alleles give its plants more compatible mates and seed set recovers; seed set and S-alleles are monitored). Plants and alleles are invented. Source: `Scripts/restoration_program_cartoon.py`; one frame per part for slides: `restoration_program_cartoon_step1–3.png`; landscape slides `restoration_program_cartoon_slide1` (objectives 1 – 2) and `_slide2` (objective 3: 3a, 3b). The challenge is drawn in [Figure 1](#fig-1). The previous version of this figure is kept (`Scripts/restoration_cartoon.py`, `restoration_cartoon.png`).
+**Figure 2.** The population restoration program, with slickspot peppergrass as the model. Panel titles are the three **objectives** — objective 3, rescue mate-limited populations, in two steps (3a, 3b) — and the gray tags name the **technique** used. **1 — Prioritize populations for population restoration** (technique: seed set for plant size, our approach in [Figure 3](#fig-3)): reproductively intact populations are the **sources** and the top conservation priority — losing one compromises the whole restoration — and their seed goes on to step 2; mate-limited populations are rescued (objective 3; ring buoy); populations under inbreeding depression (over-producing, likely selfing) are excluded as sources (red "avoid" sign). The badges mark the three population types, as in [Figure 3](#fig-3) and Figures 10 – 11. **2 — Multiply seed** from the sources (technique: seed bulking in the greenhouse, hand-crossed within each source, one row per mother). **3 — Rescue mate-limited populations**, which have limited genetic diversity and too few compatible mates, in two steps. **3a — Breed seed with new S-alleles** (technique: informed breeding — seedlings of the source (pollen donors, teal) and of the target population (mothers, gold) are grown together in the greenhouse and genotyped at SRK, colored dots = S-alleles; source pollen is put on target flowers, pairs chosen so that they share no S-allele — a source plant sharing S1 with the targets is not used; the seed, harvested from the target mothers, carries new S-alleles). **3b — Sow the seed into the population** (technique: seed outcasting — the bred seed is sown into the mate-limited population; new S-alleles give its plants more compatible mates and seed set recovers; seed set and S-alleles are monitored). Plants and alleles are invented. Source: `Scripts/restoration_program_cartoon.py`; one frame per part for slides: `restoration_program_cartoon_step1–3.png`; landscape slides `restoration_program_cartoon_slide1` (objectives 1 – 2) and `_slide2` (objective 3: 3a, 3b); for the talk, the three types aligned: `_types`, then `_types_use`. The challenge is drawn in [Figure 1](#fig-1). The previous version of this figure is kept (`Scripts/restoration_cartoon.py`, `restoration_cartoon.png`).
 
 ---
 
@@ -171,8 +171,9 @@ in four steps ([Figure 3](#fig-3)):
 
 1. **Plant phenotyping** — plant size and seed yield of every flowering
    plant, in two seasons;
-2. **Modeling** — build the model of seed yield expected for plant size
-   on all plants, then deploy it population by population;
+2. **Predicting reproductive status** — build the model of seed yield
+   expected for plant size on all plants, then deploy it population by
+   population;
 3. **Sort populations for restoration** — sources, populations to
    rescue and populations excluded as sources;
 4. **Test with genetics** — the sort gives hypotheses: seed set shows how
@@ -184,7 +185,7 @@ in four steps ([Figure 3](#fig-3)):
 <a id="fig-3"></a>
 ![Figure 3](figures_seed_bulking/source_screening_cartoon_compact.png)
 
-**Figure 3.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 2](#fig-2). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant are measured in two seasons: fast and low cost, no genotyping. **2 — Modeling:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (teal line; band from half, gold, to twice, magenta); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026); the badge next to each population gives the type it is sorted into in panel 3. **3 — Sort populations for restoration** (one type badge per row, as in [Figure 2](#fig-2)): reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; the symbols on the right give the action for each type (shield = top priority, ring buoy = rescue, prohibition sign = avoid, as in [Figure 2](#fig-2)). **This sort is a set of hypotheses** (banner): phenotyping and modeling say how a population behaves, not why, so each type is tested with genetics — SRK genotypes give the S-allele diversity, the share of compatible mates and any selfing. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; landscape version for slides `source_screening_cartoon.png`, one frame per step: `source_screening_cartoon_step1–2.png`.
+**Figure 3.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 2](#fig-2). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant are measured in two seasons: fast and low cost, no genotyping. **2 — Predicting reproductive status:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (teal line; band from half, gold, to twice, magenta); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026); the badge next to each population gives the type it is sorted into in panel 3. **3 — Sort populations for restoration** (one type badge per row, as in [Figure 2](#fig-2)): reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; the symbols on the right give the action for each type (shield = top priority, ring buoy = rescue, prohibition sign = avoid, as in [Figure 2](#fig-2)). **This sort is a set of hypotheses** (banner at the foot of panel 3): plant size and seed yield can also be driven by resource availability, and phenotyping and prediction say how a population behaves, not why, so each type is tested with genetics — the SRK gene (S-types) gives the S-allele diversity, the share of compatible mates and any selfing. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; landscape version for slides `source_screening_cartoon.png`, one frame per step: `source_screening_cartoon_step1–2.png`.
 
 ---
 
@@ -300,7 +301,7 @@ only one of the two seasons.
 <a id="fig-7"></a>
 ![Figure 7](figures_seed_bulking/population_EO_map_BL.png)
 
-**Figure 7.** Every population at its real extent, colored by BL, with EO outlines; inset: population size per BL. The EO map colored by BL is [`EO_sampling_map_BL.png`](figures_seed_bulking/EO_sampling_map_BL.png); the fine-scale maps, one per BL, are kept locally (`./run_pipeline.sh talkmaps`).
+**Figure 7.** Every population at its real extent, colored by BL, with EO outlines; each BL is labeled with its number of EOs and populations (all populations seen over the two seasons, 44 in total); inset: population size per BL. The EO map colored by BL is [`EO_sampling_map_BL.png`](figures_seed_bulking/EO_sampling_map_BL.png); the fine-scale maps, one per BL, are kept locally (`./run_pipeline.sh talkmaps`).
 
 ### 6.4 Discussion
 
@@ -387,7 +388,7 @@ a season) but neither test is conclusive.
 **Genetic check.** Where a population's plants are genotyped at SRK
 (the Canu-amplicon pipeline of
 [SRK_bioinformatics](https://github.com/svenbuerki/SRK_bioinformatics)),
-its SRK alleles and the share of the population each plant can mate
+its S-alleles and the share of the population each plant can mate
 with under the self-incompatibility system are compared with its
 seed-set type.
 
@@ -442,7 +443,7 @@ seed its plants' size predicts in both seasons, P34 the expected amount
 ([Figure 10](#fig-10)).
 
 - **SRK genotypes (A).** The two populations hold a similar number of
-  S-types (SRK alleles): 6 in P42 and 7 in P34. What differs is **how
+  S-types (S-alleles): 6 in P42 and 7 in P34. What differs is **how
   they are arranged across plants**. In P42, most plants carry only one
   or both of the same two S-types, so three S-type sets make up 93 % of
   its 74 plants; in P34 the plants carry more varied sets (the three
@@ -506,9 +507,9 @@ and 4 of those are reproductively intact ([Figure 13](#fig-13),
   lowest compatibility of any genotyped site, so more of its mothers
   will be genotyped (§ 7.4.2).
 - P34 is also the large population of the SRK genotyping design
-  ([`Sampling_design.md`](Sampling_design.md)), so its SRK diversity will
+  ([`Sampling_design.md`](Sampling_design.md)), so its S-allele diversity will
   be known.
-- Next filters before bulking: SRK diversity, self-compatibility status
+- Next filters before bulking: S-allele diversity, self-compatibility status
   and representation of each BL.
 
 ### 7.4 Discussion
@@ -529,7 +530,7 @@ shortage.
 The seed-yield types are therefore **hypotheses about reproduction**.
 To confirm that a population is mate-limited — that its plants lack
 compatible mates — we need its **SRK genotypes**: a mate-limited
-population should hold fewer SRK alleles, or alleles so unevenly shared
+population should hold fewer S-alleles, or alleles so unevenly shared
 that each plant can mate with only part of the population. Where they
 exist, they mostly agree with seed set (§ 7.3.2); P13 is the exception
 (§ 7.4.2). The equivalence test strengthens the intact call — it shows
@@ -568,7 +569,7 @@ is significantly within half – twice the expectation in both seasons
 (0.81 in 2025, 1.13 in 2026), so by seed set it is reproductively intact
 — BL1's only source. But its genotyped plants have the lowest
 compatibility of any genotyped site: a plant can mate with only about
-44 % of its population (P42: 53 %, P34: 67 %), with 5 SRK alleles and
+44 % of its population (P42: 53 %, P34: 67 %), with 5 S-alleles and
 almost no Class I alleles. That rests on 12 plants from 7 mothers, so it
 is indicative. We keep P13 as BL1's source on its seed set; as it
 enters seed bulking, more of its mothers will be genotyped — seed–mother
@@ -604,16 +605,16 @@ program that produces seed for restoration ([Figure 2](#fig-2),
 **Reproductively intact populations are the basis for seed bulking.**
 Their seed comes from normal outcrossing among compatible plants, so a
 small collection grown in the greenhouse multiplies seed that carries the
-population's SRK diversity. The bulked seed is then used to restore the
+population's S-allele diversity. The bulked seed is then used to restore the
 mate-limited populations.
 
 **Mate-limited populations need to be restored.** Their plants lack
 compatible mates, so they cannot recover by themselves: seed translocated
-from intact sources brings new SRK alleles and, with them, new compatible
+from intact sources brings new S-alleles and, with them, new compatible
 mates. The genetic example (§ 7.3.2) shows what this means for P42: its
 plants can mate with only about half of their population, and P34's
 alleles differ from most of P42's (they share about a third of their
-SRK alleles), so P34 seed would add compatible mates.
+S-alleles), so P34 seed would add compatible mates.
 
 **Over-producing populations must stay out of seed production.** Setting
 more seed than their size predicts is the expected signature of plants
@@ -623,15 +624,15 @@ that have escaped self-incompatibility and fertilize themselves
 selfing through any population they are mixed into, so these
 populations cannot be part of a breeding program for seed production.
 The genotypes already point the same way at EO76: of its 77 genotyped
-plants, one carries no functional SRK allele — a self-compatible plant.
+plants, one carries no functional S-allele — a self-compatible plant.
 EO76 holds P40, which over-produced in 2025, and P41; the site is
 genotyped as one, so the plant cannot yet be placed in either.
 
 **What to confirm before acting.**
 - **The over-producing call is a hypothesis.** Seed–mother genotyping
   will test it directly: seedlings of a selfing mother carry only her own
-  SRK alleles.
-- **Sources need the genetic filters too** — enough SRK diversity, no
+  S-alleles.
+- **Sources need the genetic filters too** — enough S-allele diversity, no
   self-compatible plants and, ideally, one source per lineage.
 - **Recipients should receive alleles they lack**, which SRK genotypes of
   both source and recipient will show.
@@ -695,7 +696,7 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
   back the call for P34 against P42; P13's few genotyped plants have
   low compatibility, so more of its mothers will be genotyped.
 - **Next.**
-  - **Genetic filters on the sources** — SRK diversity and
+  - **Genetic filters on the sources** — S-allele diversity and
     self-compatibility status of P34 (SRK genotyping under way,
     [`Sampling_design.md`](Sampling_design.md)), P35 and P43; for P13,
     genotype more mothers too, since its few genotyped plants have

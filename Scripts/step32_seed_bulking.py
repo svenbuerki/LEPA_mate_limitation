@@ -300,7 +300,7 @@ def filter_funnel(pops: pd.DataFrame) -> None:
                 left += k
         ax.text(n + 0.6, yi, f"{n}", va="center", fontsize=17, weight="bold")
     ax.set_yticks(y); ax.set_yticklabels([s[0] for s in stages], fontsize=16)
-    ax.text(0.6, -0.95, "Next: genetic filters — SRK diversity, self-compatibility, one source per lineage",
+    ax.text(0.6, -0.95, "Next: genetic filters — S-allele diversity, self-compatibility, one source per lineage",
             fontsize=14, style="italic", color="#444")
     ax.set_xlim(0, n_all * 1.12); ax.set_ylim(-1.3, len(stages) - 0.5)
     ax.set_xlabel("Populations")
