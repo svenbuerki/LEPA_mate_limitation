@@ -11,11 +11,12 @@ Two rows — SI on top, SC below; mechanism on the left, impact on the right:
   2. **Fragmentation → genetic drift → mate limitation → population decline** —
      small, isolated populations lose S-types, plants run out of compatible
      mates and set little seed (mate limitation).
-  3. **Some plants broke the gene** — plants whose S-locus copies are broken
+  3. **Rapid adaptation to mate limitation → increase in seed (short-term
+     gain)** — some plants broke the gene: — plants whose S-locus copies are broken
      accept their own pollen and set seed alone (self-compatible).
-  4. **Selfing → inbreeding → reduced fitness → population decline** —
-     selfed offspring grow more alike and weaker
-     generation after generation (inbreeding depression).
+  4. **Long-term cost: inbreeding depression → population decline** —
+     selfed offspring grow more alike and weaker generation after generation
+     (seed, survival, genetic diversity and reproduction ↓).
 
 Flower, self-pollen loop and silique glyphs are borrowed from the ISI
 breeding-system cartoon of SRK_bioinformatics (Canu_amplicon,
@@ -32,7 +33,7 @@ from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, FancyBboxPatch
+from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, FancyBboxPatch, Wedge
 
 import restoration_cartoon as rc
 from restoration_cartoon import (ALLELE, MATE_LIM, OUT, OVER, SPOT, arrow, bee, cross_mark, dna,
@@ -197,7 +198,7 @@ def panel_mates(ax):
 
 
 def panel_sc(ax):
-    frame(ax, 3, "Rapid adaptation: escape from SI\n    → self-compatible, short-term gain",
+    frame(ax, 3, "Rapid adaptation to mate limitation:\n    → increase in seed (short-term gain)",
           "plants with broken S-locus copies accept their own pollen\n"
           "and set seed alone, without mates")
     tag(ax, 82, 93, "self-compatible", SC_GREEN)
@@ -206,6 +207,8 @@ def panel_sc(ax):
             linespacing=1.1)
     arrow(ax, (31, 69.5), (37, 69.5), col="#666", lw=1.8)
     gene_copies(ax, 39, 64, [False] * 4)
+    for x, lab, col in ((17.5, "SI", SI_RED), (50.5, "SC", SC_GREEN)):   # breeding system
+        ax.text(x, 79, lab, ha="center", va="bottom", fontsize=15, fontweight="bold", color=col)
     ax.text(50.5, 60, "broken copies", ha="center", va="top", fontsize=11.5, color=SI_RED)
     flower(ax, 80, 66, r=7, stem_bottom=50)
     self_loop(ax, 80, 66, 7)
@@ -215,15 +218,22 @@ def panel_sc(ax):
     ax.text(80, 15.5, "seed ↑", ha="center", va="top", fontsize=14.5, color=SC_GREEN,
             fontweight="bold")
     # LEPA numbers (SRK_bioinformatics, 263 genotyped plants)
-    ax.text(30, 44, "LEPA — 263 plants genotyped", ha="center", fontsize=12, fontweight="bold",
+    # as a pie chart (share of plants), quicker to read on a slide
+    ax.text(30, 46, "263 plants genotyped", ha="center", fontsize=12, fontweight="bold",
             color="#333")
-    for k, (n, lab, col) in enumerate(((247, "self-incompatible", SI_RED),
-                                       (15, "partly broken", "#E08214"),
-                                       (1, "self-compatible", SC_GREEN))):
-        y = 37 - 7 * k
-        ax.text(17, y, f"{n}", ha="right", va="center", fontsize=13, fontweight="bold", color=col)
-        ax.text(19, y, lab, ha="left", va="center", fontsize=12, color=col)
-    ax.text(30, 16, "in the field: more seed than\nplant size predicts", ha="center", va="center",
+    cx, cy, r, a0 = 16, 32, 10, 90
+    slices = ((247, "94%", "self-incompatible", SI_RED),
+              (15, "6%", "partly broken", "#E08214"),
+              (1, "<1%", "self-compatible", SC_GREEN))
+    for n, _, _, col in slices:                          # clockwise from 12 o'clock
+        a1 = a0 - 360 * n / 263
+        ax.add_patch(Wedge((cx, cy), r, a1, a0, fc=col, ec="white", lw=1.2, zorder=3))
+        a0 = a1
+    for k, (_, pct, lab, col) in enumerate(slices):
+        y = 39 - 7 * k
+        ax.text(36, y, pct, ha="right", va="center", fontsize=13, fontweight="bold", color=col)
+        ax.text(37.5, y, lab, ha="left", va="center", fontsize=11.5, color=col)
+    ax.text(30, 16.5, "in the field: more seed than\nplant size predicts", ha="center", va="center",
             fontsize=11.5, color=OVER, style="italic", linespacing=1.1)
 
 
@@ -231,7 +241,7 @@ def panel_inbreeding(ax):
     frame(ax, 4, "Long-term cost: inbreeding depression\n    → population decline",
           "selfed offspring grow more alike and weaker,\n"
           "generation after generation")
-    tag(ax, 82, 93, "inbreeding", OVER)
+    tag(ax, 72, 93, "inbreeding depression", SI_RED)
     gens = [(17, 26, (0, 2), True, "parent"), (50, 20, (0, 0), True, "selfed\noffspring"),
             (82, 14, (0, 0), False, "next\ngeneration")]
     for x, h, types, fr, lab in gens:
@@ -243,8 +253,8 @@ def panel_inbreeding(ax):
         arrow(ax, (xa, 70), (xb, 66), col=SELF_PURPLE, lw=2.4, rad=-0.4)
         ax.text((xa + xb) / 2, 76, "self", ha="center", fontsize=12, color=SELF_PURPLE,
                 style="italic", fontweight="bold")
-    for k, lab in enumerate(("seed ↓", "survival ↓", "diversity ↓")):
-        ax.text(17 + 32.5 * k, 18, lab, ha="center", va="center", fontsize=13.5,
+    for k, lab in enumerate(("seed ↓", "survival ↓", "genetic diversity ↓\nreproduction ↓")):
+        ax.text(17 + 32.5 * k, 18 - (2.5 if k == 2 else 0), lab, ha="center", va="center", fontsize=13.5, linespacing=1.15,
                 fontweight="bold", color=OVER)
 
 

@@ -77,6 +77,8 @@ def panel_phenotyping(ax):
     ax.add_patch(Ellipse((50, 74), 70, 22, fc=SPOT, ec=SPOT_EDGE, lw=1.4, zorder=1))
     for dx, h in ((-26, 7), (-14, 10), (-2, 6), (10, 12), (22, 8)):
         lepa(ax, 50 + dx, 67, h=h)
+    ax.text(80, 62.5, "slick spot", ha="center", va="top", fontsize=11.5, color="#8D6E3F",
+            fontweight="bold", style="italic")
     ax.text(50, 89, "every flowering plant", ha="center", fontsize=11.5, color="#555",
             style="italic")
     # one plant on the measuring board: crown width and height
