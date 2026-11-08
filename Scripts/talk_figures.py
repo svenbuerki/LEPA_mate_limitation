@@ -9,7 +9,7 @@ Figure 1 is split into three slides (the challenge alone, panels 1 – 2,
 panels 3 – 4, each pair built panel by panel); Figure 3 builds up step by step;
 Figure 2 opens on the three types (then what they mean for restoration)
 and is split into two landscape slides (objectives 1 – 2, then 3a – 3b); Figure 8 into two 16:9 slides, Figures 9 and 10
-start from an empty frame, and Figure 11 (talk version, no EO27 zoom) is followed by
+start from an empty frame, Figure 12 builds up panel 1 then adds panel 2, and Figure 11 (talk version, no EO27 zoom) is followed by
 the BL1 / BL3 close-ups (kept local, like every per-BL map). File names: NN_FigXX[-part]_name.png.
 
 White borders are trimmed to a slim edge (EDGE pixels), for a colored slide
@@ -61,7 +61,9 @@ TALK = [
     (10, "b", "population_seed_yield"),
     (11, "", "seed_bulking_status_map_talk"),                  # no EO27 zoom (talk only)
     (11, "BL1BL3", "BL1_BL3_seed_bulking_status_map"),           # close-ups, local only
-    (12, "", "genetic_example_P42_P34"),
+    (12, "a", "genetic_example_P42_P34_step1"),               # S-types and plants only
+    (12, "b", "genetic_example_P42_P34_step2"),               # + genotypes, 3 commonest sets
+    (12, "c", "genetic_example_P42_P34"),
     (13, "", "bulking_filter_funnel"),
     (14, "", "seed_bulking_model_map"),
 ]
