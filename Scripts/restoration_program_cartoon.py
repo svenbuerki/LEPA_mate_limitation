@@ -173,24 +173,28 @@ def panel_sources(ax):
     shield(ax, 17, 72, s=1.05)
     ax.text(17, 56.5, "top conservation\npriority: protect", ha="center", va="top",
             fontsize=11.5, color=INTACT, fontweight="bold", linespacing=1.1)
-    ax.plot([4, 96], [47, 47], color="#CCCCCC", lw=1.2, ls=(0, (4, 3)), zorder=0)
+    ax.plot([4, 96], [49, 49], color="#CCCCCC", lw=1.2, ls=(0, (4, 3)), zorder=0)
     # the other two types
     for y, col, kind, head, action in (
-            (35, MATE_LIM, "Mate-limited", "mate-limited", "→ rescue (objective 3)"),
-            (16, OVER, "Over-producing", "over-producing",
+            (39, MATE_LIM, "Mate-limited", "mate-limited", "→ rescue (objective 3)"),
+            (22, OVER, "Over-producing", "over-producing",
              "→ inbreeding depression:\n    excluded as source")):
         badge(ax, kind, 17, y, 17)
         ax.text(31, y + 2.5, head, ha="left", va="bottom", fontsize=13.5, color=col,
                 fontweight="bold")
         ax.text(31, y - 0.5, action, ha="left", va="top", fontsize=12.5, color=col,
                 linespacing=1.1)
-    lifebuoy(ax, 71, 38, r=5)                          # mate-limited: rescue
-    ax.text(71, 31.5, "rescue", ha="center", va="top", fontsize=11.5, color=MATE_LIM,
+    lifebuoy(ax, 71, 42, r=5)                          # mate-limited: rescue
+    ax.text(71, 35.5, "rescue", ha="center", va="top", fontsize=11.5, color=MATE_LIM,
             fontweight="bold")
-    no_sign(ax, 71, 20, r=5)                              # over-producing: avoid as source
-    ax.text(71, 13.5, "avoid", ha="center", va="top", fontsize=11.5, color="#C62828",
+    no_sign(ax, 71, 25, r=5)                              # over-producing: avoid as source
+    ax.text(71, 18.5, "avoid", ha="center", va="top", fontsize=11.5, color="#C62828",
             fontweight="bold")
-    technique(ax, "seed set for plant size (see Figure 3)", y=4)
+    # what a population is: the unit everything here is about
+    ax.text(50, 10.5, "population = the plants that mate together (the mating pool)",
+            ha="center", va="center", fontsize=11.5, color="#222", style="italic",
+            bbox=dict(boxstyle="round,pad=0.4", fc="#F3F4F6", ec="#888", lw=1))
+    technique(ax, "seed set for plant size (see Figure 3)", y=3.5)
 
 
 def panel_sources_talk(ax, use=True):
