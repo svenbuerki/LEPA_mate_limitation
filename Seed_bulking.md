@@ -307,13 +307,20 @@ BL1 holds the most populations but the smallest share present in both
 seasons (6 of 17); across all lineages, 18 populations were above ground in
 only one of the two seasons.
 
-**How EOs compare with populations.** The two are **nested**: no
-population crosses an EO boundary, so every population lies within a
-single EO. This is a real test: populations are built from all slick
-spots together, without reference to EOs, so a population would join
-two EOs wherever their slick spots came within 500 m. They never do —
-the closest slick spots of two different EOs (EO8 and EO26) are 1.1 km
-apart, and the next closest pair (EO18 and EO25) 1.25 km.
+**Do EOs reflect populations? Three results.**
+
+1. **EOs respect populations: none of our 44 populations crosses an EO
+   boundary.** Every population lies within a single EO, so the two are
+   **nested**. This is a real test: populations are built from all slick
+   spots together, without reference to EOs, so a population would join
+   two EOs wherever their slick spots came within 500 m. They never do —
+   the closest slick spots of two different EOs (EO8 and EO26) are
+   1.1 km apart, and the next closest pair (EO18 and EO25) 1.25 km.
+2. **Most EOs are one population: 13 of the 21 EOs we sampled hold a
+   single population.** In these EOs, the EO and the population align.
+3. **Some EOs hold many: the other 8 EOs hold 31 populations, and EO27
+   alone holds 10** (EO26 five, EO24 and EO30 four, EO8, EO25, EO32 and
+   EO76 two each).
 
 | EOs | Populations per EO | Populations |
 |---|---|:-:|
@@ -324,9 +331,10 @@ apart, and the next closest pair (EO18 and EO25) 1.25 km.
 | 1 | ten (EO27) | 10 |
 | **21** | | **44** |
 
-In the other direction, four populations join two parts of the same EO
+Within EOs, four populations join two parts of the same EO
 (P34 = EO18-7 + EO18-8; P16 = EO27-1 + EO27RT; P21 and P22 each join a
-part of EO26 with EO26 itself).
+part of EO26 with EO26 itself), so EO parts do not always mark separate
+populations either.
 
 <a id="fig-7"></a>
 ![Figure 7](figures_seed_bulking/population_EO_map_BL.png)
@@ -335,29 +343,19 @@ part of EO26 with EO26 itself).
 
 ### 6.4 Discussion
 
-- **EOs reflect populations in most places, and never cut across
-  them.** 13 of the 21 EOs hold exactly one population, and no
-  population is split between EOs: EOs and populations are nested, not
-  in conflict. Where an EO holds one population, the EO can be managed,
-  sampled and restored as that population.
-- **Where they differ, the EO is the coarser unit.** 8 EOs hold several
-  populations — 31 of the 44 — EO27 ten, EO26 five, EO24 and EO30 four.
-  This is expected: EOs are drawn to track where the species occurs and
-  to manage the landscape, while populations follow pollen movement
-  (§ 6.2). Mate limitation and genetic rescue act on the plants that
-  mate together, so in these EOs restoration works on the populations
-  within the EO, and the EO remains the frame for landscape
-  management.
-- **Populations within one EO differ in reproductive type** (§ 7).
-  EO27 holds BL1's only source, P13, next to three mate-limited
-  populations (P8, P10, P16) — P13 and P16 even share the EO part
-  EO27-1 ([Figure 11](#fig-11), zoom); EO25 holds the source P35 (EO25-A) and the candidate
-  mate-limited P36 (EO25-B). Judged as one unit, EO27 would either hide
-  BL1's only source or mask its mate limitation, and seed collected
-  across the EO would mix source seed with seed from mate-limited
-  plants. Seed bulking draws its seed from whole populations and
-  restoration targets whole populations, so in multi-population EOs
-  both work at the population level.
+- **EOs are a sound frame for populations.** Because no population
+  crosses an EO boundary (result 1), every population can be placed in
+  one EO, and the EO remains the frame for landscape management. Where
+  an EO holds one population (result 2), it can be managed, sampled and
+  restored as that population.
+- **Where they differ, the EO is the coarser unit** (result 3). This is
+  expected: EOs are drawn to track where the species occurs and to manage
+  the landscape, while populations follow pollen movement (§ 6.2). Mate
+  limitation and genetic rescue act on the plants that mate together, so
+  in the 8 EOs that hold several populations — 31 of the 44 —
+  **seed sourcing and rescue must work at the population level, inside
+  the EO frame.** Part 2 shows why this matters: populations within one
+  EO can differ in reproductive type (EO27, § 7.4.2).
 - **Demes are the unit of mating.** They set how many mothers to sample
   within a population for SRK genotyping
   ([`Sampling_design.md`](Sampling_design.md)).
@@ -453,6 +451,11 @@ twice the expectation: these three can be confirmed as sources first
 mate-limited candidates, P1, P4 and P32 show a strong seed shortfall
 and should be measured again before they are typed
 ([Figure 10](#fig-10), [Figure 11](#fig-11)).
+
+**Mate limitation is concentrated in EO27.** Three of the four
+confirmed mate-limited populations — P8, P10 and P16 — lie in one EO,
+EO27 (BL1); the fourth, P42, is in BL5. EO27 also holds P13, BL1's
+only reproductively intact population (§ 7.4.2).
 
 <a id="fig-10"></a>
 ![Figure 10](figures_seed_bulking/population_seed_yield.png)
@@ -593,8 +596,25 @@ pattern — a strong shortfall in 2025 (0.37 and 0.42), then about the
 expected seed in 2026 (1.15 and 0.86) — so their mate limitation may
 vary from year to year. P13 (EO27-1) sets the seed its size predicts in
 both seasons, and P9 (EO27, measured in 2026 only) does so too (1.30).
-EO27 is the clearest cluster of mate limitation in the dataset and the
-first place to confirm it genetically.
+**EO27 is a hotspot of mate limitation**: it holds three of the four
+confirmed mate-limited populations (P8, P10, P16), which need
+restoration actions (genetic rescue). It also holds BL1's only
+reproductively intact population, P13, a local source for that rescue,
+once its genetics are confirmed. EO27 is the first place to confirm
+mate limitation genetically. This is a concentration seen in the data,
+not a statistical test, and five of its ten populations have no seed
+data yet.
+
+**Why populations, not EOs (§ 6).** EO27 holds BL1's only source, P13,
+next to three mate-limited populations (P8, P10, P16) — P13 and P16 even
+share the EO part EO27-1 ([Figure 11](#fig-11), zoom); likewise, EO25
+holds the source P35 (EO25-A) and the candidate mate-limited P36
+(EO25-B). Judged as one unit, EO27 would either hide BL1's only source
+or mask its mate limitation, and seed collected across the EO would mix
+source seed with seed from mate-limited plants. Seed bulking draws its
+seed from whole populations and restoration targets whole populations,
+so in EOs that hold several populations both work at the population
+level.
 
 **P13: intact by seed set, at odds with its genetics.** Its seed set
 is significantly within half – twice the expectation in both seasons
@@ -727,7 +747,9 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
   within half – twice the expectation in both seasons — P34, P35 (BL3),
   P43 (BL5) and P13 (BL1), the sources; 4 mate-limited (P8,
   P10, P16, P42) plus 2 candidates (P6, P36), the restoration targets; 2
-  over-producing (P2, P37), excluded. Where SRK genotypes exist, they
+  over-producing (P2, P37), excluded. **EO27 is a hotspot of mate
+  limitation** (P8, P10, P16), with BL1's only source, P13, in the same
+  EO as a local source for their rescue. Where SRK genotypes exist, they
   back the call for P34 against P42; P13's few genotyped plants have
   low compatibility, so more of its mothers will be genotyped.
 - **Next.**

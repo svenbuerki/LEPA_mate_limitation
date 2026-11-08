@@ -197,6 +197,14 @@ def panel_sources(ax):
     technique(ax, "seed set for plant size (see Figure 3)", y=3.5)
 
 
+def type_counts() -> dict[str, int]:
+    """Populations per reproductive type, two seasons of seed data
+    (tables/step32_seed_bulking_populations.tsv, written by step32_seed_bulking.py)."""
+    import pandas as pd
+    st = pd.read_csv("tables/step32_seed_bulking_populations.tsv", sep="\t")
+    return st["type"].value_counts().to_dict()
+
+
 def panel_sources_talk(ax, use=True):
     """Talk version of panel_sources, no title: the three population types
     aligned, one row each (badge, type); use=True adds what each means for
@@ -215,6 +223,11 @@ def panel_sources_talk(ax, use=True):
         if use:
             ax.text(31, y - 0.5, action, ha="left", va="top", fontsize=17, color=col,
                     linespacing=1.1)
+            n = type_counts().get(kind, 0)               # populations typed (two seasons)
+            ax.text(31, y - 3 - 3.6 * (action.count("\n") + 1),
+                    f"{n} population{'s' if n != 1 else ''}", ha="left", va="top",
+                    fontsize=15, color=col, fontweight="bold",
+                    bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=col, lw=1.2))
     for y in (70.25, 40.75):
         ax.plot([4, 96], [y, y], color="#CCCCCC", lw=1.2, ls=(0, (4, 3)), zorder=0)
     technique(ax, "seed set for plant size", y=5)
