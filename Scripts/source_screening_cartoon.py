@@ -3,7 +3,7 @@ population restoration, with slickspot peppergrass (Lepidium papilliferum)
 as the model (Seed_bulking Figure 3). It is the technique of step 1 of
 restoration_program_cartoon.py (Figure 3).
 
-Three steps, left to right:
+Four steps, left to right:
   1. **Plant phenotyping** — plant size (crown width, height) and seed
      yield of every flowering plant, in two seasons: fast and low cost, no
      genotyping.
@@ -14,20 +14,24 @@ Three steps, left to right:
   3. **Sort populations for population restoration** — reproductively
      intact = source (seed bulking; top conservation priority);
      mate-limited = genetic rescue (flaw: reduced fecundity);
-     over-producing = excluded as source (flaw: inbreeding depression);
-     SRK genotypes are the genetic check.
+     over-producing = excluded as source (flaw: inbreeding depression).
+     The sort is a set of hypotheses, tested in panel 4.
+  4. **Test with genetics** — why (resource or pollinator availability can
+     also drive seed yield; our research shows pollinators are not
+     limiting), and what the SRK gene (S-types) should show for each type.
 
 Same icons and colors as restoration_cartoon.py; invented plants and
 values. Output: figures_seed_bulking/source_screening_cartoon.{png,pdf}
-(landscape, for the talk) plus source_screening_cartoon_step1–2.png (same
+(landscape, for the talk) plus source_screening_cartoon_step1–3.png (same
 size, later steps blank) to build a slide, and
-source_screening_cartoon_compact.{png,pdf} (panels 1 and 2 side by side,
-panel 3 short and wide below: the web document, Seed_bulking Figure 3).
+source_screening_cartoon_compact.{png,pdf} (2 × 2 grid: the web document,
+Seed_bulking Figure 4).
 """
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.path import Path as MPath
 from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, FancyBboxPatch, Polygon, Rectangle
 
 import restoration_cartoon as rc
@@ -159,115 +163,85 @@ def panel_modeling(ax):
     ax.text(88.5, 40.5, "2026", va="center", fontsize=9.5)
 
 
-HYP_TITLE = "Hypotheses → test with genetics"
-HYP_WHY = "plant size and seed yield can also be driven by resource or pollinator availability"
-HYP_POLL = "our research shows pollinators are not limiting → we focus on genetics"
-HYP_TEST = "→ test with the SRK gene (S-types): S-allele diversity, compatible mates, selfing"
-
-
-def hypotheses_banner(ax, x, y, w, h, wide=False):
-    """Gray banner: the sort is a set of hypotheses, tested with the SRK gene."""
-    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0,rounding_size=2",
-                                fc="#F3F4F6", ec="#888", lw=1.2, zorder=1))
-    dna(ax, x + 6, y + h / 2 - 4.25, h=8.5, w=1.8)
-    if wide:                                              # title left, two lines to its right
-        ax.text(x + 12, y + h / 2, HYP_TITLE, ha="left", va="center", fontsize=13,
-                fontweight="bold", color="#222", zorder=2)
-        ax.text(x + 85, y + h * 0.78, HYP_WHY, ha="left", va="center", fontsize=13.5,
-                color="#222", zorder=2)
-        ax.text(x + 85, y + h * 0.50, HYP_POLL, ha="left", va="center", fontsize=12,
-                color="#222", style="italic", zorder=2)
-        ax.text(x + 85, y + h * 0.22, HYP_TEST, ha="left", va="center", fontsize=11.5,
-                color="#444", zorder=2)
-        return
-    ax.text(x + 12, y + h - 4.5, HYP_TITLE, ha="left", va="center", fontsize=13,
-            fontweight="bold", color="#222", zorder=2)
-    why = HYP_WHY.split(" by ")                         # square panel: why and test on two lines each
-    test, what = HYP_TEST.split(": ")
-    for k, t in enumerate((why[0], "by " + why[1])):
-        ax.text(x + 12, y + h - 10.5 - 5.5 * k, t, ha="left", va="center", fontsize=12.5,
-                color="#222", zorder=2)
-    ax.text(x + 12, y + h - 22, HYP_POLL, ha="left", va="center", fontsize=10.8,
-            color="#222", style="italic", zorder=2)
-    for k, t in enumerate((test + ":", "      " + what)):
-        ax.text(x + 12, y + h - 27.8 - 5 * k, t, ha="left", va="center", fontsize=10.2,
-                color="#444", zorder=2)
-
-
 # ---- 3. sort populations for population restoration ----------------------------------------
 def panel_sort(ax):
     """Sort populations: the three types and what to do with each — hypotheses
-    from phenotyping + prediction, tested with genetics (the SRK gene; banner at the foot)."""
+    from phenotyping + prediction, tested with genetics in panel 4."""
     rc.frame(ax, 3, "Sort populations for restoration", "")
-    rows = [(88, INTACT, "reproductively intact", "→ source for seed bulking", None),
-            (69, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
-            (50, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
+    rows = [(83, INTACT, "reproductively intact", "→ source for seed bulking", None),
+            (57, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
+            (31, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
     for y, c, lab, role, flaw in rows:
-        badge(ax, KINDS[c], 15, y, 19)                   # type badges, as in Figures 2 and 10 – 11
+        badge(ax, KINDS[c], 15, y, 19)                   # type badges, as in Figures 2 – 3
         ax.text(31, y + 3, lab, ha="left", va="bottom", fontsize=13, color=c, fontweight="bold")
         ax.text(31, y + 0.5, role, ha="left", va="top", fontsize=12.5, color=c)
         if flaw:
             ax.text(31, y - 5.5, flaw, ha="left", va="top", fontsize=11, color=c, style="italic")
-    # the sort is a set of hypotheses: genetics (the SRK gene) tests it
-    hypotheses_banner(ax, 3, 3, 94, 36)
     # what to do with each type: protect, rescue, avoid
-    shield(ax, 88, 90, s=0.7)
-    ax.text(88, 81.5, "top priority", ha="center", va="top", fontsize=10.5, color=INTACT,
-            fontweight="bold", linespacing=1.05)
-    lifebuoy(ax, 88, 71, r=5.5)
-    ax.text(88, 63.5, "rescue", ha="center", va="top", fontsize=10.5, color=MATE_LIM,
-            fontweight="bold")
-    no_sign(ax, 88, 52, r=5)
-    ax.text(88, 45.5, "avoid", ha="center", va="top", fontsize=10.5, color="#C62828",
-            fontweight="bold")
+    for (y, c, *_), lab in zip(rows, ("top priority", "rescue", "avoid")):
+        ax.text(88, y - 8.5, lab, ha="center", va="top", fontsize=10.5, color=c,
+                fontweight="bold")
+    shield(ax, 88, 84, s=0.7)
+    lifebuoy(ax, 88, 57, r=5.5)
+    no_sign(ax, 88, 31, r=5)
+    ax.text(50, 8, "hypotheses → tested with genetics (panel 4)", ha="center", va="center",
+            fontsize=12.5, color="#222", style="italic",
+            bbox=dict(boxstyle="round,pad=0.45", fc="#F3F4F6", ec="#888", lw=1.1))
 
 
-def panel_sort_wide(ax):
-    """Panel 3 as a short, wide panel (214 × 66 data units, same scale as the
-    square panels): the three types side by side, for the compact layout."""
-    xmax, ymax = 214, 66
-    ax.set_xlim(0, xmax), ax.set_ylim(0, ymax), ax.set_aspect("equal")
-    ax.set_xticks([]), ax.set_yticks([])
-    for sp in ax.spines.values():
-        sp.set_edgecolor("#BBBBBB")
-    ax.set_title("3. Sort populations for restoration", loc="left", fontsize=18, fontweight="bold",
-                 pad=10)
-    hypotheses_banner(ax, 3, 3, xmax - 6, 16, wide=True)
-    pos = ax.get_position()
-    cols = [(2, INTACT, "reproductively intact", "→ source for seed bulking", None),
-            (73, MATE_LIM, "mate-limited", "→ genetic rescue", "flaw: reduced fecundity"),
-            (144, OVER, "over-producing", "→ excluded as source", "flaw: inbreeding depression")]
-    for x0, c, lab, role, flaw in cols:
-        size = 27                                        # type badge, as in the square panel
-        cx = pos.x0 + (x0 + 15) / xmax * pos.width
-        cy = pos.y0 + 43 / ymax * pos.height
-        w, h = size / xmax * pos.width, size / ymax * pos.height
-        add_icon(ax.figure, KINDS[c], [cx - w / 2, cy - h / 2, w, h])
-        ax.text(x0 + 31, 58, lab, ha="left", va="center", fontsize=13, color=c, fontweight="bold")
-        ax.text(x0 + 31, 51.5, role, ha="left", va="center", fontsize=12.5, color=c)
-        if flaw:
-            ax.text(x0 + 31, 45, flaw, ha="left", va="center", fontsize=11, color=c, style="italic")
-    shield(ax, 40, 31.5, s=0.62)
-    ax.text(48, 32, "top priority", ha="left", va="center", fontsize=11.5, color=INTACT,
-            fontweight="bold")
-    lifebuoy(ax, 111, 32, r=5.5)
-    ax.text(119, 32, "rescue", ha="left", va="center", fontsize=11.5, color=MATE_LIM,
-            fontweight="bold")
-    no_sign(ax, 182, 32, r=5)
-    ax.text(190, 32, "avoid", ha="left", va="center", fontsize=11.5, color="#C62828",
-            fontweight="bold")
+# ---- 4. test with genetics ----------------------------------------------------------------
+GEN_ROWS = (  # type color, what genetics should show if the call is right
+    (INTACT, "reproductively intact", "many S-types, many compatible mates"),
+    (MATE_LIM, "mate-limited", "few S-types, few compatible mates"),
+    (OVER, "over-producing", "seeds carry only the mother's S-types (selfing)"),
+)
 
 
-PANELS = (panel_phenotyping, panel_modeling, panel_sort)
+def panel_genetics(ax):
+    """Panel 4: why the sort must be tested (resource or pollinator availability
+    can also drive seed yield; pollinators are not limiting), and what the
+    SRK gene should show for each type."""
+    rc.frame(ax, 4, "Test with genetics", "")
+    ax.add_patch(FancyBboxPatch((3, 70), 94, 26, boxstyle="round,pad=0,rounding_size=2",
+                                fc="#F3F4F6", ec="#888", lw=1.2, zorder=1))
+    ax.text(7, 91, "Why test?", ha="left", va="center", fontsize=13, fontweight="bold",
+            color="#222", zorder=2)
+    ax.text(7, 85, "seed yield can also be driven by", ha="left", va="center", fontsize=12.5,
+            color="#222", zorder=2)
+    ax.text(7, 80, "resource or pollinator availability", ha="left", va="center",
+            fontsize=12.5, color="#222", zorder=2)
+    ax.text(7, 74.5, "our research: pollinators are not limiting → genetics", ha="left",
+            va="center", fontsize=11.5, color="#222", style="italic", zorder=2)
+    # leaf → tube → DNA: the SRK gene gives the S-types of every plant
+    ax.add_patch(Ellipse((9, 60), 5, 2.6, angle=30, fc=rc.LEAF, ec=rc.STEM, lw=0.8))
+    arrow(ax, (13, 60), (18, 60), lw=1.5)
+    rc.tube(ax, 22, 55, s=0.75)
+    arrow(ax, (26, 60), (31, 60), lw=1.5)
+    dna(ax, 35, 54, h=11, w=2.4)
+    ax.text(42, 62.5, "SRK gene:", ha="left", va="center", fontsize=12.5, fontweight="bold",
+            color="#222")
+    ax.text(42, 57.5, "the S-types of every plant", ha="left", va="center", fontsize=12.5,
+            color="#222")
+    ax.text(50, 48.5, "what genetics should show", ha="center", va="center", fontsize=11.5,
+            color="#555", style="italic")
+    for (c, lab, sign), y in zip(GEN_ROWS, (38, 24, 10)):
+        badge(ax, KINDS[c], 11, y, 13)
+        ax.text(21, y + 2.6, lab, ha="left", va="center", fontsize=12.5, color=c,
+                fontweight="bold")
+        ax.text(21, y - 2.6, sign, ha="left", va="center", fontsize=11, color="#222")
+
+
+PANELS = (panel_phenotyping, panel_modeling, panel_sort, panel_genetics)
 
 
 def draw(n_shown: int):
-    """Three square panels in a row (landscape, slides), arrows between them."""
+    """Four square panels in a row (landscape, slides), arrows between them."""
     rc.RNG = np.random.default_rng(11)                   # same plants in every frame
     side, gap, m = 7.2, 1.0, 0.35
-    w, h = 2 * m + 3 * side + 2 * gap, 2 * m + 0.6 + side
+    n = len(PANELS)
+    w, h = 2 * m + n * side + (n - 1) * gap, 2 * m + 0.6 + side
     fig = plt.figure(figsize=(w, h))
-    axes = [fig.add_axes([(m + k * (side + gap)) / w, m / h, side / w, side / h]) for k in range(3)]
+    axes = [fig.add_axes([(m + k * (side + gap)) / w, m / h, side / w, side / h]) for k in range(n)]
     for k, (ax, f) in enumerate(zip(axes, PANELS)):
         if k < n_shown:
             f(ax)
@@ -275,7 +249,7 @@ def draw(n_shown: int):
             ax.axis("off")
     fig.canvas.draw()
     to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
-    for k in range(min(n_shown, 3) - 1):
+    for k in range(min(n_shown, n) - 1):
         fig.add_artist(FancyArrowPatch(to_fig(axes[k], (100, 50)), to_fig(axes[k + 1], (0, 50)),
                                        transform=fig.transFigure, arrowstyle="-|>",
                                        mutation_scale=26, color="#333", lw=3, shrinkA=6,
@@ -284,28 +258,27 @@ def draw(n_shown: int):
 
 
 def draw_compact():
-    """The web document: panels 1 and 2 side by side, panel 3 short and wide
-    below, so the whole figure fits on a screen with larger text."""
+    """The web document: the four panels as a 2 × 2 grid (1 → 2, then down to
+    3 → 4), so the whole figure fits on a screen with larger text."""
     rc.RNG = np.random.default_rng(11)
-    side, gap, m, row = 7.2, 1.0, 0.35, 1.15
-    wide_w = 2 * side + gap
-    wide_h = wide_w * 66 / 214
-    w, h = 2 * m + wide_w, 2 * m + 0.6 + side + row + wide_h
+    side, gap, m, row = 7.2, 1.0, 0.35, 1.3
+    w, h = 2 * m + 2 * side + gap, 2 * m + 2 * (0.6 + side) + row - 0.6
     fig = plt.figure(figsize=(w, h))
-    y_top = m + wide_h + row
-    a1 = fig.add_axes([m / w, y_top / h, side / w, side / h])
-    a2 = fig.add_axes([(m + side + gap) / w, y_top / h, side / w, side / h])
-    a3 = fig.add_axes([m / w, m / h, wide_w / w, wide_h / h])
-    panel_phenotyping(a1)
-    panel_modeling(a2)
-    panel_sort_wide(a3)
+    ys = (m + side + row, m)                              # bottom of the top and lower rows
+    xs = (m, m + side + gap)
+    axes = [fig.add_axes([x / w, y / h, side / w, side / h]) for y in ys for x in xs]
+    for ax, f in zip(axes, PANELS):
+        f(ax)
     fig.canvas.draw()
     to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
     style = dict(transform=fig.transFigure, arrowstyle="-|>", mutation_scale=26, color="#333", lw=3)
-    fig.add_artist(FancyArrowPatch(to_fig(a1, (100, 50)), to_fig(a2, (0, 50)), shrinkA=6, shrinkB=6,
-                                   **style))
-    p = to_fig(a2, (50, 0))
-    fig.add_artist(FancyArrowPatch(p, (p[0], to_fig(a3, (0, 66))[1]), shrinkA=4, shrinkB=4, **style))
+    for a, b in ((0, 1), (2, 3)):
+        fig.add_artist(FancyArrowPatch(to_fig(axes[a], (100, 50)), to_fig(axes[b], (0, 50)),
+                                       shrinkA=6, shrinkB=6, **style))
+    (x0, y0), (x1, y1) = to_fig(axes[1], (50, 0)), to_fig(axes[2], (88, 100))
+    y_mid = y0 - 0.3 / h                                 # 2 → 3: elbow in the gap between rows
+    fig.add_artist(FancyArrowPatch(path=MPath([(x0, y0 - 0.002), (x0, y_mid), (x1, y_mid),
+                                              (x1, y1 + 0.08 / h)]), **style))
     return fig
 
 
@@ -321,7 +294,7 @@ def main():
         fig = draw(n)
         fig.savefig(OUT / f"source_screening_cartoon_step{n}.png", dpi=200)
         plt.close(fig)
-    print(f"  wrote {OUT}/source_screening_cartoon.png (landscape, talk; + _step1–2 frames) "
+    print(f"  wrote {OUT}/source_screening_cartoon.png (landscape, talk; + _step1–3 frames) "
           f"and _compact (web document)")
 
 

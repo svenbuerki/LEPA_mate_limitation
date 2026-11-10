@@ -74,7 +74,7 @@ Scripts are numbered `step01` – `step27` in run order (renumbered 2026-10-17, 
 ## Status
 
 - First commit: 2026-10-15. Repository seeded from the mate-limitation subset of the parent `SRK_bioinformatics` repo at commit `7e7ac29` (`6494fbc..7e7ac29` chain on `svenbuerki/SRK_bioinformatics`, pushed 2026-10-08).
-- Behavioral seed-yield test (`step13_size_seed_yield.py`, Figures 12a + 12b of `Project_outline.md`) covers all 44 populations. Population-level restoration priority list (both years combined, calls that hold with and without the 2026 year effect): **6 mate-limited** · **1 switching** (over → under, P19) · **3 candidate mate-limited** · **7 SI-escape candidates** · **8 at expectation** · **9 year-sensitive** · **3 insufficient data**.
+- Behavioral seed-yield test (`step13_size_seed_yield.py`, Figures 12a + 12b of `Project_outline.md`) covers all 44 populations. Population-level restoration priority list (both years combined, calls that hold with and without the 2026 year effect): **7 mate-limited** · **1 switching** (over → under, P19) · **3 candidate mate-limited** · **7 SI-escape candidates** · **11 at expectation** · **6 year-sensitive** · **3 insufficient data**.
 - Next test queued: within-BL stable small-vs-big pair D1 = P36 (EO25-B) × P34 (EO18-7 + EO18-8), 351 mothers with cleaned seed in the LEPA DB across 2025 + 2026.
 - Scope: Snake River Plain populations only (44 populations). Jarbidge Foothills populations are out of scope here.
 

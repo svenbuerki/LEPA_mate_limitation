@@ -1,17 +1,18 @@
 """traffic_light_results.py — the traffic light of Figure 1 filled with our
 results: every population with two seasons of seed data (2025, 2026) under
-its light, as a chip with its EO —
+its light, as a chip (EO on top, population below) —
 
   red     AVOID    over-producing populations
   orange  TARGET   mate-limited populations (hollow chip = candidate: below
                    expectation, but not significantly in either season)
-  green   INTACT   reproductively intact populations (the seed sources)
+  green   INTACT   reproductively intact populations (the seed sources;
+                   hollow chip = candidate source whose 2026 seed is being
+                   cleaned: one season, 2025 seed set significantly within
+                   half – twice, 2026 mothers collected — the green ring of
+                   the status map, Figure 13, step32_seed_bulking_maps.R)
 
 and, in the gray footer, the populations not yet under a light: switching
-between seasons (not yet clear) and one season of data so far, with the
-candidate sources whose 2026 seed is being cleaned (one season, 2025 seed set
-significantly within half – twice, 2026 mothers collected — the rule of the
-status map, step32_seed_bulking_maps.R). Read from
+between seasons (not yet clear) and the other one-season populations. Read from
 tables/step32_seed_bulking_populations.tsv (step32_seed_bulking.py), so it
 follows the data. Colors, badges and action symbols as Figures 1 – 4.
 Output: figures_seed_bulking/traffic_light_results.{png,pdf} (16:9, also the
@@ -38,7 +39,8 @@ ROWS = (  # lamp color, type, category, biological name, y
     (MATE_LIM, "Mate-limited", "TARGET", "mate-limited", 45),
     (INTACT, "Reproductively intact", "INTACT", "reproductively intact", 23),
 )
-CHIP_W, CHIP_H, CHIP_GAP, CHIP_X0 = 11.2, 10.5, 1.2, 74.0
+CHIP_W, CHIP_H, CHIP_GAP, CHIP_X0 = 9.8, 10.5, 0.9, 72.5
+SYM_X = 152.5                                           # action symbols, right edge
 
 
 def eo_label(codes: str) -> str:
@@ -52,9 +54,9 @@ def chip(ax, x, y, pid, eo, bl, col, hollow):
                                 boxstyle="round,pad=0,rounding_size=1.6",
                                 fc="white" if hollow else col, ec=col, lw=2.2, zorder=3))
     fg = col if hollow else "white"
-    ax.text(x + CHIP_W / 2, y + 2.3, f"P{pid}", ha="center", va="center", fontsize=15.5,
-            fontweight="bold", color=fg, zorder=4)
-    ax.text(x + CHIP_W / 2, y - 2.7, eo, ha="center", va="center", fontsize=14,
+    ax.text(x + CHIP_W / 2, y + 2.3, eo, ha="center", va="center", fontsize=15.5,
+            fontweight="bold", color=fg, zorder=4)            # EO on top, population below
+    ax.text(x + CHIP_W / 2, y - 2.7, f"P{pid}", ha="center", va="center", fontsize=14,
             color=fg, zorder=4)
 
 
@@ -88,33 +90,38 @@ def draw() -> None:
         ax.add_patch(Circle((18, y), 8.0, fc=col, ec="#111", lw=2, zorder=4))
         ax.add_patch(Circle((15.4, y + 2.7), 2.1, fc="white", alpha=0.35, ec="none", zorder=5))
         if y != 23:
-            ax.plot([33, 154], [y - 11] * 2, color="#DDD", lw=1, zorder=0)
+            ax.plot([33, 157], [y - 12] * 2, color="#DDD", lw=1, zorder=0)
         (x0, y0), (x1, y1) = to_fig([(33, y - 6.5), (46, y + 6.5)])
         add_icon(fig, kind, [x0, y0, x1 - x0, y1 - y0])
         pops = st[st["type"] == kind].sort_values(["candidate", "populationID"])
+        if col == INTACT:                                # candidate sources, as the ring on Figure 13
+            pops = pd.concat([pops, cand_src.assign(candidate=True).sort_values("populationID")])
         ax.text(49, y + 5, cat, ha="left", va="center", fontsize=24, fontweight="bold",
                 color=col)
         ax.text(49, y - 0.5, name, ha="left", va="center", fontsize=12, color=col,
                 fontweight="bold")
-        n = len(pops)
-        ax.text(49, y - 5.5, f"{n} population{'s' if n != 1 else ''}", ha="left",
-                va="center", fontsize=13, color="#333")
+        n, n_c = int((~pops["candidate"]).sum()), int(pops["candidate"].sum())
+        ax.text(49, y - 5.0, f"{n} population{'s' if n != 1 else ''}", ha="left",
+                va="center", fontsize=19, fontweight="bold", color="#333")
+        if n_c:
+            ax.text(49, y - 9.3, f"+ {n_c} candidate{'s' if n_c != 1 else ''}", ha="left",
+                    va="center", fontsize=13.5, color="#333")
         for k, (_, r) in enumerate(pops.iterrows()):
             chip(ax, CHIP_X0 + k * (CHIP_W + CHIP_GAP), y, int(r["populationID"]),
                  eo_label(r["locationCodes"]), r["BL"], col, bool(r["candidate"]))
-    no_sign(ax, 153.5, 67, r=4.8)                        # same symbols as Figures 1 and 3
-    lifebuoy(ax, 153.5, 45, r=4.8)
-    shield(ax, 153.5, 23.5, s=0.54)
-    # populations not yet under a light
+    no_sign(ax, SYM_X, 67, r=4.6)                        # same symbols as Figures 1 and 3
+    lifebuoy(ax, SYM_X, 45, r=4.6)
+    shield(ax, SYM_X, 23.5, s=0.52)
+    # hollow chips, then the populations not yet under a light
     unclear = st[st["type"] == "Not yet clear"]
-    src = ", ".join(f"P{p}" for p in sorted(cand_src["populationID"]))
-    lines = [f"Not yet under a light: {n_one} populations with one season of data so far "
-             f"(likely sources being confirmed: {src})"]
+    lines = ["hollow chip = candidate — orange: below expectation, not yet significant; "
+             "green: as expected, one season so far (2026 seed being cleaned)",
+             f"Not yet under a light: {n_one - len(cand_src)} other populations with one season "
+             "of data so far"]
     if len(unclear):
-        lines.append("and " + ", ".join(f"P{int(p)} ({eo_label(c)})" for p, c in
-                                        zip(unclear["populationID"], unclear["locationCodes"]))
-                     + " — switches between seasons · hollow chip = candidate "
-                     "(below expectation, not yet significant)")
+        lines[-1] += ", and " + ", ".join(f"{eo_label(c)} (P{int(p)})" for p, c in
+                                          zip(unclear["populationID"], unclear["locationCodes"])) \
+            + " — switches between seasons"
     ax.text(93, 4.8, "\n".join(lines), ha="center", va="center", fontsize=11.5, color="#333",
             linespacing=1.35,
             bbox=dict(boxstyle="round,pad=0.5", fc="#F3F4F6", ec="#999", lw=1))

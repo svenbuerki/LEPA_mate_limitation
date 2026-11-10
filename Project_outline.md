@@ -70,7 +70,7 @@ in model populations will test them.
 
 <span style="color:#777"><strong>Data.</strong></span> LEPA field database
 (Genetic-Rescue-DB): 2025 + 2026 event and occurrence records, per-plant crown
-and height, per-mother seed yield and germplasm records (**1 588
+and height, per-mother seed yield and germplasm records (**1 612
 plants** with crown, height and seed yield). From the SRK
 bioinformatics pipeline: the species-wide frequencies of **32
 functional SRK alleles**, the empirical plant zygosity
@@ -185,8 +185,8 @@ empirical zygosity**, averaged over demes weighted by size
    the complementary question — is the mean seed set significantly
    *within* half – twice the expectation? — so that "as expected" rests
    on evidence, not on a non-significant difference.
-3. **Year check.** Within populations, 2026 plants made 10 % fewer
-   seeds for their size than 2025 plants (fold 0.90, p = 0.04). The
+3. **Year check.** Within populations, 2026 plants made 11 % fewer
+   seeds for their size than 2025 plants (fold 0.89, p = 0.03). The
    test is therefore run twice: with the pooled curve, and with this
    year effect as an offset on 2026. Only statuses that agree are
    ranked; the others are flagged **year-sensitive** (they depend on
@@ -214,7 +214,7 @@ empirical zygosity**, averaged over demes weighted by size
 | 3 | Candidate mate-limited | 3 | P3 (EO30-4), P6 (EO67) (BL1) · P20 (EO26-2, BL2) |
 | 4 | **SI-escape candidate** | **7** | P2 (BL1) · P18, P23, P24, P25 (BL2) · P37, P40 (BL4) |
 | 5 | Reproduction intact | 12 | P5 (EO30-2), P9 (EO27, new 2026-11-03), P13 (EO27-1) (BL1) · P21, P22 (EO26, BL2) · P27 (EO48), P28 (EO32), P30 (EO24-7) (BL3) · P38 (EO52), P39 (EO118), P41 (EO76) (BL4) · P43 (EO68-3, BL5) |
-| — | **Year-sensitive** | **5** | mate-limited with the pooled curve, candidate with the offset: P36 (EO25-B) · SI-escape with the pooled curve, intact with the offset: P26, P29, P34, P35 |
+| — | **Year-sensitive** | **6** | mate-limited with the pooled curve, candidate with the offset: P36 (EO25-B) · SI-escape with the pooled curve, intact with the offset: P26, P29, P34, P35 · intact with the pooled curve, SI-escape with the offset: P9 (EO27, 2026 only) |
 | 6 | Insufficient data | 3 | P7, P31, P33 |
 
 The most severe shortfall is P10 EO27-3 (fold 0.44 in 2025, 0.02 in
@@ -222,10 +222,12 @@ The most severe shortfall is P10 EO27-3 (fold 0.44 in 2025, 0.02 in
 and at P37 (2.47 in 2026) and P40 (2.22).
 
 <span style="color:#777"><strong>Results — seed yield vs the predictions.</strong></span>
-**Seed yield does not track predicted pollen compatibility** (ρ = 0.16,
-p = 0.28, 48 population-years; 2026 alone ρ = 0.40, p = 0.09; 2025
-ρ = 0.07, n.s.). Predicted SRK diversity and census do not correlate
-either (ρ = 0.15). An earlier version of the drift model, which drew
+**Seed yield does not track predicted pollen compatibility** (ρ = 0.17,
+p = 0.23, 49 population-years; 2026 alone ρ = 0.43, p = 0.06; 2025
+ρ = 0.08, n.s.). Predicted SRK diversity and census do not correlate
+either across both years (ρ = 0.17); in 2026 alone they reach nominal
+significance (ρ = 0.44, p = 0.05 and ρ = 0.47, p = 0.04; 20
+population-years, uncorrected for the nine tests). An earlier version of the drift model, which drew
 each plant's four allele copies independently, gave ρ = 0.38
 (p = 0.01); simulating plants with the observed zygosity removed that
 signal. **The mate-limited populations sit at the species mean**
@@ -345,7 +347,7 @@ model expects it.** The EO27 cluster (P8, P10, P16),
 P42 EO70, P32 EO24 and two small late-season BL1 populations (P4, P1)
 under-produce seed, yet most are large and predicted at the
 species-mean compatibility; across all populations seed yield does
-not follow predicted compatibility (ρ = 0.16, n.s.). The
+not follow predicted compatibility (ρ = 0.17, n.s.). The
 genotyped sites point to the reason: local demes have lost far more
 SRK alleles than one draw from the species-wide frequencies
 predicts, and at P42, P34 and P13 that loss has skewed the allele
@@ -384,8 +386,8 @@ generation time is about 6.5 years. Two consequences follow:
 **Limitations.** Seed counts flag candidates; confirming the
 mechanism (outcrossing vs selfing) needs seed–mother genotyping,
 since selfed seedlings carry only maternal SRK alleles. 2026 seed set
-is 10 % below 2025 within populations; with two years we cannot tell a
-year effect from a real decline, so five statuses are year-sensitive.
+is 11 % below 2025 within populations; with two years we cannot tell a
+year effect from a real decline, so six statuses are year-sensitive.
 2026 calls should be re-run once the germplasm clean-up is complete. The 50 m
 deme is a geographic upper bound on realized gene flow. The
 seed-bank rates come from one study's sites and are averages; they
@@ -1354,8 +1356,9 @@ elsewhere in the species.
 **Caveat on 2026 germplasm coverage.** A fraction of the 2026
 mother-plant occurrences do not yet have associated germplasm
 records attached in the DB (clean-up in progress; on 2026-11-03,
-729 plants at 22 locations still to clean, after locationID 9 —
-P8 and P9, EO27 — was added). 2026 shortfall calls may therefore be
+704 plants at 21 locations still to clean, after locationID 9 —
+P8 and P9, EO27 — and, on 2026-11-10, locationID 4 — P39, EO118,
+now reproductively intact over two seasons — were added). 2026 shortfall calls may therefore be
 inflated at populations that are still missing collections; re-run
 the seed-dependent parts (seedyield, sampling, Step 31, design,
 bulking) as each location is added. The cleaning order — second
@@ -1447,19 +1450,19 @@ first; `restoration_action` gives the action):
 
 | Rank | Status | n (pooled curve / robust) | Rule | Action |
 |:-:|---|:-:|---|---|
-| 1 | **mate_limited** | **8 / 6** | FDR-sig under-producing in ≥ 1 year, never over | Intervene (cross-pollination / founder augmentation) |
+| 1 | **mate_limited** | **8 / 7** | FDR-sig under-producing in ≥ 1 year, never over | Intervene (cross-pollination / founder augmentation) |
 | 2 | **switching** | **1 / 1** | FDR-sig under in one year AND over in the other | Intervene; genotype seed + mothers from both years |
 | 3 | **candidate_mate_limited** | 3 / 3 | fold < 0.8 in ≥ 1 year, not FDR-sig | Watch; sample more mothers |
-| 4 | **si_escape_candidate** | 12 / 7 | FDR-sig over-producing in ≥ 1 year, never under | Genotype seed + mothers to confirm selfing |
-| 5 | **reproduction_intact** | 10 / 8 | every testable year at expectation | No action |
-| — | **year_sensitive** | — / 9 | status differs between the pooled curve and the year-offset curve | Re-test with 2027 data; genotype |
+| 4 | **si_escape_candidate** | 11 / 7 | FDR-sig over-producing in ≥ 1 year, never under | Genotype seed + mothers to confirm selfing |
+| 5 | **reproduction_intact** | 12 / 11 | every testable year at expectation | No action |
+| — | **year_sensitive** | — / 6 | status differs between the pooled curve and the year-offset curve | Re-test with 2027 data; genotype |
 | 6 | **insufficient_data** | 3 / 3 | no year with n ≥ 3 plants | Sample more plants |
 
 **The size → seed curve, and the year effect.** The curve is fitted
-on both years pooled (1 588 plants). A year effect estimated *within*
+on both years pooled (1 612 plants). A year effect estimated *within*
 populations (population random intercept) is significant: 2026
-plants made 10 % fewer seeds for their size than 2025 plants in the
-same populations (fold 0.90, p = 0.04;
+plants made 11 % fewer seeds for their size than 2025 plants in the
+same populations (fold 0.89, p = 0.03;
 [`step30i_year_effect_check.tsv`](tables/step30i_year_effect_check.tsv);
 it has ranged 0.85 – 0.90 as 2026 germplasm batches were added, the
 latest being P8 and P9 at EO27, 2026-11-03). With two
@@ -1524,7 +1527,7 @@ significantly above expectation under both curves):
   of compatible mates (EO76 holds 9/32 Fgs, § C.0.a).
 - **BL1**: **P2 EO30-1_13** (0.92 → 1.50 in 2026).
 
-**The 5 year-sensitive populations** — status depends on whether the
+**The 6 year-sensitive populations** — status depends on whether the
 2026 drop is treated as a year effect:
 
 - Mate-limited with the pooled curve, *candidate* with the offset:
@@ -1532,9 +1535,11 @@ significantly above expectation under both curves):
 - SI-escape with the pooled curve, intact with the offset (all from
   their 2025 surplus): **P26 EO29** (1.50), **P29 EO32** (1.57),
   **P34 EO18-7 + EO18-8** (the big side of D1) and **P35 EO25-A**.
+- Intact with the pooled curve, SI-escape with the offset: **P9 EO27**
+  (2026 only, 1.31 with the offset), since P39 was added (2026-11-10).
 
 The smaller 2026 year effect (fold 0.90 since P8 and P9 were added,
-2026-11-03) settled three earlier year-sensitive calls: **P16
+2026-11-03; 0.89 since P39 was added, 2026-11-10) settled three earlier year-sensitive calls: **P16
 EO27-1 + EO27RT** (0.39 in 2025, 1.10 in 2026) is mate-limited under
 both curves, and **P43 EO68-3** and **P27 EO48** (0.85, 2025) are
 intact under both. P13 EO27-1 is intact under both curves since the
@@ -1569,10 +1574,13 @@ and the predicted pollen compatibility, predicted SRK allele
 diversity and fertile-plant census.
 
 **Result.** Seed yield does not track predicted pollen compatibility
-(ρ = 0.16, p = 0.28, 48 population-years). The only hint is in 2026
-(ρ = 0.40, p = 0.09, 19 population-years); in 2025 there is none
-(ρ = 0.07, p = 0.70). Predicted SRK diversity (ρ = 0.15, p = 0.30)
-and census (ρ = 0.15, p = 0.31) do not correlate either
+(ρ = 0.17, p = 0.23, 49 population-years). The only hint is in 2026
+(ρ = 0.43, p = 0.06, 20 population-years); in 2025 there is none
+(ρ = 0.08, p = 0.68). Across both years, predicted SRK diversity
+(ρ = 0.17, p = 0.25) and census (ρ = 0.17, p = 0.26) do not correlate
+either; in 2026 alone both reach nominal significance (ρ = 0.44,
+p = 0.05; ρ = 0.47, p = 0.04), uncorrected for the nine tests and
+driven by the 2026 population-years only
 ([`step30i_seed_yield_vs_predictions_tests.tsv`](tables/step30i_seed_yield_vs_predictions_tests.tsv)).
 An earlier version of the drift model, which drew each plant's four
 SRK copies independently, gave ρ = 0.38 (p = 0.01); simulating plants

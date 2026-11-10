@@ -8,14 +8,14 @@ framework of [`Project_outline.md`](Project_outline.md). All figures are
 in [`figures_seed_bulking/`](figures_seed_bulking/); the population table is
 [`tables/step32_seed_bulking_populations.tsv`](tables/step32_seed_bulking_populations.tsv).
 
-> **Main result.** Of 44 populations, only **4 are reproductively intact
+> **Main result.** Of 44 populations, only **5 are reproductively intact
 > over two seasons** — their seed set is significantly within half –
 > twice what their plants' size predicts in both seasons — and qualify
 > as sources for seed bulking: **P34** (EO18) and **P35** (EO25-A) in
-> BL3, **P43** (EO68-3) in BL5 and **P13** (EO27-1) in BL1, covering
-> three of the five lineages. Eleven more look intact but have a single
-> season of data, so a second season could add sources, including the
-> first for BL2 and BL4 (§ 7.3.2, § 7.5.2). All four still need the
+> BL3, **P43** (EO68-3) in BL5, **P13** (EO27-1) in BL1 and **P39**
+> (EO118) in BL4, covering four of the five lineages. Ten more look
+> intact but have a single season of data, so a second season could add
+> sources, including the first for BL2 (§ 7.3.2, § 7.5.2). All five still need the
 > genetic filters (S-allele diversity, no self-compatible plants) before
 > bulking. **Where SRK genotypes already exist, they mostly back the
 > seed-set call:** P34 (32 genotyped plants) carries a balanced set of
@@ -193,10 +193,10 @@ objectives ([Figure 3](#fig-3)):
    reproductively intact populations that will be the seed sources, the
    mate-limited populations to rescue, and the populations under
    inbreeding depression, excluded as sources (panel 1).
-2. **Multiply seed from the source populations** — seed bulking: a few
+2. **Multiply seed for intact (source) populations** — seed bulking: a few
    seeds from each source are grown in a greenhouse to harvest a much
    larger quantity (panel 2).
-3. **Rescue mate-limited populations** — informed breeding: source
+3. **Rescue target (mate-limited) populations** — informed breeding: source
    pollen is put on plants of the mate-limited population, pairs chosen
    by their SRK genotypes so that the seed carries new S-alleles
    (step 3a); that seed is then sown into the population by seed
@@ -216,7 +216,7 @@ would compromise the whole program.
 <a id="fig-3"></a>
 ![Figure 3](figures_seed_bulking/restoration_program_cartoon.png)
 
-**Figure 3.** The population restoration program, with slickspot peppergrass as the model. Panel titles are the three **objectives** — objective 3, rescue mate-limited populations, in two steps (3a, 3b) — and the gray tags name the **technique** used. **1 — Prioritize populations for population restoration** (technique: seed set for plant size, our approach in [Figure 4](#fig-4)): the traffic light of [Figure 1](#fig-1) adapted to slickspot peppergrass — each light with its population type badge (as in [Figure 4](#fig-4) and Figures 10 – 13) and its biological name. **Red — avoid:** over-producing populations, under inbreeding depression, are excluded as seed sources (prohibition sign). **Orange — target:** mate-limited populations, with too few compatible mates, are rescued (objective 3; ring buoy). **Green — intact:** reproductively intact populations, with enough compatible mates, are the seed sources — their seed goes on to step 2 — and the top conservation priority (shield). The gray box at the foot of the panel defines the unit: a population is the plants that mate together (the mating pool). **2 — Multiply seed** from the sources (technique: seed bulking in the greenhouse, hand-crossed within each source, one row per mother). **3 — Rescue mate-limited populations**, which have limited genetic diversity and too few compatible mates, in two steps. **3a — Breed seed with new S-alleles** (technique: informed breeding — seedlings of the source (pollen donors, green) and of the target population (mothers, orange) are grown together in the greenhouse and genotyped at SRK, colored dots = S-alleles; source pollen is put on target flowers, pairs chosen so that they share no S-allele — a source plant sharing S1 with the targets is not used; the seed, harvested from the target mothers, carries new S-alleles). **3b — Sow the seed into the population** (technique: seed outcasting — the bred seed is sown into the mate-limited population; new S-alleles give its plants more compatible mates and seed set recovers; seed set and S-alleles are monitored). Plants and alleles are invented. Source: `Scripts/restoration_program_cartoon.py`; one frame per part for slides: `restoration_program_cartoon_step1–3.png`; landscape slides `restoration_program_cartoon_slide1` (objectives 1 – 2) and `_slide2` (objective 3: 3a, 3b); for the talk, the three types aligned: `_types`, then `_types_use`. The challenge is drawn in [Figure 2](#fig-2). The previous version of this figure is kept (`Scripts/restoration_cartoon.py`, `restoration_cartoon.png`).
+**Figure 3.** The population restoration program, with slickspot peppergrass as the model. Panel titles are the three **objectives** — objective 3, rescue target (mate-limited) populations, in two steps (3a, 3b); the words *intact* (green) and *target* (orange) in the titles of objectives 2 and 3 carry the colors of the traffic light, linking each objective to its light — and the gray tags name the **technique** used. **1 — Prioritize populations for population restoration** (technique: seed set for plant size, our approach in [Figure 4](#fig-4)): the traffic light of [Figure 1](#fig-1) adapted to slickspot peppergrass — each light with its population type badge (as in [Figure 4](#fig-4) and Figures 10 – 13) and its biological name. **Red — avoid:** over-producing populations, under inbreeding depression, are excluded as seed sources (prohibition sign). **Orange — target:** mate-limited populations, with too few compatible mates, are rescued (objective 3; ring buoy). **Green — intact:** reproductively intact populations, with enough compatible mates, are the seed sources — their seed goes on to step 2 — and the top conservation priority (shield). The gray box at the foot of the panel defines the unit: a population is the plants that mate together (the mating pool). **2 — Multiply seed for intact (source) populations** (technique: seed bulking in the greenhouse, hand-crossed within each source, one row per mother). **3 — Rescue target (mate-limited) populations**, which have limited genetic diversity and too few compatible mates, in two steps. **3a — Breed seed with new S-alleles** (technique: informed breeding — seedlings of the source (pollen donors, green) and of the target population (mothers, orange) are grown together in the greenhouse and genotyped at SRK, colored dots = S-alleles; source pollen is put on target flowers, pairs chosen so that they share no S-allele — a source plant sharing S1 with the targets is not used; the seed, harvested from the target mothers, carries new S-alleles). **3b — Sow the seed into the population** (technique: seed outcasting — the bred seed is sown into the mate-limited population; new S-alleles give its plants more compatible mates and seed set recovers; seed set and S-alleles are monitored). Plants and alleles are invented. Source: `Scripts/restoration_program_cartoon.py`; one frame per part for slides: `restoration_program_cartoon_step1–3.png`; landscape slides `restoration_program_cartoon_slide1` (objectives 1 – 2) and `_slide2` (objective 3: 3a, 3b); for the talk, the three types aligned: `_types`, then `_types_use`. The challenge is drawn in [Figure 2](#fig-2). The previous version of this figure is kept (`Scripts/restoration_cartoon.py`, `restoration_cartoon.png`).
 
 ---
 
@@ -247,7 +247,7 @@ in four steps ([Figure 4](#fig-4)):
 <a id="fig-4"></a>
 ![Figure 4](figures_seed_bulking/source_screening_cartoon_compact.png)
 
-**Figure 4.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 3](#fig-3). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant of each slick spot are measured in two seasons: fast and low cost, no genotyping. **2 — Predicting reproductive status:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (green line; band from half, orange, to twice, red); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026); the badge next to each population gives the type it is sorted into in panel 3. **3 — Sort populations for restoration** (one type badge per row, as in [Figure 3](#fig-3)): reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; the symbols on the right give the action for each type (shield = top priority, ring buoy = rescue, prohibition sign = avoid, as in [Figure 3](#fig-3)). **This sort is a set of hypotheses** (banner at the foot of panel 3): plant size and seed yield can also be driven by resource or pollinator availability — our research shows pollinators are not limiting, which is why we focus on genetics — and phenotyping and prediction say how a population behaves, not why, so each type is tested with genetics — the SRK gene (S-types) gives the S-allele diversity, the share of compatible mates and any selfing. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; landscape version for slides `source_screening_cartoon.png`, one frame per step: `source_screening_cartoon_step1–2.png`.
+**Figure 4.** Our approach to sort populations for population restoration — the technique of step 1 in [Figure 3](#fig-3). **1 — Plant phenotyping:** the plant size (crown width and height) and seed yield of every flowering plant of each slick spot are measured in two seasons: fast and low cost, no genotyping. **2 — Predicting reproductive status:** (a) *build* — all plants together give the seed yield a plant of a given size is expected to set (green line; band from half, orange, to twice, red); (b) *deploy* — the model is applied to each population and season: its seed yield relative to what its plants' size predicts (circle = 2025, square = 2026); the badge next to each population gives the type it is sorted into in panel 3. **3 — Sort populations for restoration** (one type badge per row, as in [Figure 3](#fig-3)): reproductively intact populations (as expected) are the sources for seed bulking and the top conservation priority; mate-limited populations (below) are the targets of genetic rescue — their flaw is reduced fecundity; over-producing populations (above) are excluded as sources — their flaw is inbreeding depression; the symbols on the right give the action for each type (shield = top priority, ring buoy = rescue, prohibition sign = avoid, as in [Figure 3](#fig-3)). This sort is a set of hypotheses (gray box at the foot of panel 3), tested in panel 4. **4 — Test with genetics:** plant size and seed yield can also be driven by resource or pollinator availability — our research shows pollinators are not limiting, which is why we focus on genetics — and phenotyping and prediction say how a population behaves, not why. The SRK gene gives the S-types of every plant (leaf → DNA), and each type has its own genetic signature: reproductively intact populations should show many S-types and many compatible mates; mate-limited populations few S-types and few compatible mates; over-producing populations seeds that carry only their mother's S-types (selfing) — the tests of § 7.4. Plants and values are invented. Source: `Scripts/source_screening_cartoon.py`; landscape version for slides `source_screening_cartoon.png`, one frame per step: `source_screening_cartoon_step1–3.png`.
 
 ---
 
@@ -285,7 +285,7 @@ Part 2 uses the plants measured for size and seed yield.
 | Locations (survey sites) | 39 | 43 | 52 |
 | Slick spots surveyed (events) | 237 | 486 | 723 |
 | Reproductive plants counted | 5 687 | 10 344 | 16 031 |
-| Plants measured for size and seed yield | 741 | 847 | 1 588 |
+| Plants measured for size and seed yield | 741 | 871 | 1 612 |
 
 An EO can hold several locations; a slick spot surveyed in both seasons
 counts once per season. Source:
@@ -449,7 +449,7 @@ reproduction; SRK genotypes, where they exist, are the genetic check.
 photographed against a whiteboard with rulers to measure its crown and
 height, and its seeds are cleaned, weighed and converted to a seed count
 ([Figure 9](#fig-9)). Larger plants set
-more seed. Across all **1 588 plants measured in 2025 and 2026** (§ 5.1), seed
+more seed. Across all **1 612 plants measured in 2025 and 2026** (§ 5.1), seed
 count rises with crown size along one curve shared by all populations,
 so each plant has an expected seed set for its size
 ([Figure 10](#fig-10)).
@@ -462,12 +462,12 @@ so each plant has an expected seed set for its size
 <a id="fig-10"></a>
 ![Figure 10](figures_seed_bulking/seed_by_size_plants.png)
 
-**Figure 10.** Seeds per plant against plant size (crown diameter), 1 588 plants, both seasons; log scales. Green line = the seed a plant of that size is expected to set (the relationship shared by all populations); green band = as expected, between half (orange line) and twice (red line) that seed — the colors of the three reproductive types used in the rest of the talk. Icons: over-producing (red — a flower pollinating itself, extra fruit) above the red line; mate-limited (orange — two flowers of the same S-type, pollen rejected, empty fruit) below the orange line.
+**Figure 10.** Seeds per plant against plant size (crown diameter), 1 612 plants, both seasons; log scales. Green line = the seed a plant of that size is expected to set (the relationship shared by all populations); green band = as expected, between half (orange line) and twice (red line) that seed — the colors of the three reproductive types used in the rest of the talk. Icons: over-producing (red — a flower pollinating itself, extra fruit) above the red line; mate-limited (orange — two flowers of the same S-type, pollen rejected, empty fruit) below the orange line.
 
 **Only populations with two seasons of data are typed.** All plants
 shape the curve, but a population is typed only if at least 3 of its
 plants were measured in **both** 2025 and 2026, so that no call rests on
-a single good or bad season. Seed set was 10 % lower in 2026 across
+a single good or bad season. Seed set was 11 % lower in 2026 across
 populations; the types allow for that shared drop. Each season is
 tested twice, with a false-discovery correction (q < 0.05): does seed
 set **differ** from expectation (below = mate-limited, above =
@@ -493,24 +493,26 @@ seed-set type.
 
 #### 7.3.1 Reproductive type of every population
 
-**44 populations** in all: **13 have two seasons of seed data and are
-typed** ([Figure 12](#fig-12)); the other **31 have one season of data** — 25 with seed data
+**44 populations** in all: **14 have two seasons of seed data and are
+typed** ([Figure 12](#fig-12)); the other **30 have one season of data** — 24 with seed data
 from that season and 6 seen only in 2026 whose seed has no data yet.
 One season gives a **candidate** type only, to be confirmed by a second
 season; one-season populations stay on every figure in light gray.
 
 | Type | Two seasons (typed) | One season (candidates) | Total |
 |---|---|---|:-:|
-| **Reproductively intact** | 4: **P13** EO27-1 (BL1), **P34** EO18-7 + EO18-8 (BL3), **P35** EO25-A (BL3), **P43** EO68-3 (BL5) | 11: **P26\*** EO29 (BL2), **P28\*** EO32 (BL3), **P39\*** EO118 (BL4); P5 EO30-2 (BL1), P9 EO27 (BL1), P21 EO26 + EO26-3 (BL2), P22 EO26 + EO26-4 (BL2), P27 EO48 (BL3), P30 EO24-7 (BL3), P38 EO52 (BL4), P41 EO76 (BL4) | 15 |
+| **Reproductively intact** | 5: **P13** EO27-1 (BL1), **P34** EO18-7 + EO18-8 (BL3), **P35** EO25-A (BL3), **P39** EO118 (BL4), **P43** EO68-3 (BL5) | 10: **P26\*** EO29 (BL2), **P28\*** EO32 (BL3); P5 EO30-2 (BL1), P9 EO27 (BL1), P21 EO26 + EO26-3 (BL2), P22 EO26 + EO26-4 (BL2), P27 EO48 (BL3), P30 EO24-7 (BL3), P38 EO52 (BL4), P41 EO76 (BL4) | 15 |
 | **Mate-limited** | 6: P8 EO27 (BL1), P10 EO27-3 (BL1), P16 EO27-1 + EO27RT (BL1), P42 EO70 (BL5); candidates P6 EO67 (BL1), P36 EO25-B (BL3) | 5: P1 EO112 (BL1), P4 EO30-3 (BL1), P32 EO24 (BL3); not significant: P3 EO30-4 (BL1), P20 EO26-2 (BL2) | 11 |
 | **Over-producing** | 2: P2 EO30-1 (BL1), P37 EO38 (BL4) | 5: P18 EO8, P23 EO26-3, P24 EO26-1, P25 EO61 (all BL2), P40 EO76 (BL4) | 7 |
 | Not yet clear | 1: P19 EO8 (BL2) — significantly above expectation in 2025, below in 2026 | — | 1 |
 | Not typed yet | — | 10: P7 EO72-2 (BL1), P29 EO32 (BL3), P31 EO24-1 (BL3), P33 EO24-2 (BL3) — too few plants or not conclusive; no seed data yet: P11, P12, P14, P15, P17 (EO27, BL1), P44 EO69 (BL5) | 10 |
-| **Total** | **13** | **31** | **44** |
+| **Total** | **14** | **30** | **44** |
 
 \* 2026 seed being cleaned, and 2025 seed set significantly within half –
-twice the expectation: these three can be confirmed as sources first
-(green rings in [Figure 13](#fig-13); § 7.5.3). Among the one-season
+twice the expectation: these two can be confirmed as sources first
+(green rings in [Figure 13](#fig-13); hollow green chips in
+[Figure 12](#fig-12); § 7.5.3). P39 (EO118, BL4), the first of this
+group, was confirmed on 2026-11-10 once its 2026 seed was cleaned. Among the one-season
 mate-limited candidates, P1, P4 and P32 show a strong seed shortfall
 and should be measured again before they are typed
 ([Figure 11](#fig-11), [Figure 13](#fig-13)).
@@ -523,22 +525,22 @@ only reproductively intact population (§ 7.5.1).
 <a id="fig-11"></a>
 ![Figure 11](figures_seed_bulking/population_seed_yield.png)
 
-**Figure 11.** Seed set relative to what plant size predicts, per population and season, allowing for the 2026 drop shared by all populations; 1 = as expected, dashed lines = half and twice. Circle = 2025, square = 2026; **filled = that season differs significantly from expectation** (false-discovery-corrected q < 0.05), open = not significant. P10 and P42 are significantly below expectation in both seasons, P8 and P16 in 2025; P2 and P37 significantly above in 2026 only; the four intact populations (P13, P34, P35, P43) are significantly within half – twice in both seasons (filled green); P6 and P36 (candidates) are not significant either way; P19 is significant in opposite directions. Bottom row: the 25 one-season populations. Icons above the headers: mate-limited (two flowers of the same S-type, pollen rejected, empty fruit), as expected (two flowers of different S-types, pollen accepted, full fruit) and over-producing (a flower pollinating itself, extra fruit) — the breeding-system logic of [Figure 2](#fig-2).
+**Figure 11.** Seed set relative to what plant size predicts, per population and season, allowing for the 2026 drop shared by all populations; 1 = as expected, dashed lines = half and twice. Circle = 2025, square = 2026; **filled = that season differs significantly from expectation** (false-discovery-corrected q < 0.05), open = not significant. P10 and P42 are significantly below expectation in both seasons, P8 and P16 in 2025; P2 and P37 significantly above in 2026 only; the five intact populations (P13, P34, P35, P39, P43) are significantly within half – twice in both seasons (filled green); P6 and P36 (candidates) are not significant either way; P19 is significant in opposite directions. Bottom row: the 24 one-season populations with seed data. Icons above the headers: mate-limited (two flowers of the same S-type, pollen rejected, empty fruit), as expected (two flowers of different S-types, pollen accepted, full fruit) and over-producing (a flower pollinating itself, extra fruit) — the breeding-system logic of [Figure 2](#fig-2).
 
 <a id="fig-12"></a>
 ![Figure 12](figures_seed_bulking/traffic_light_results.png)
 
-**Figure 12.** Our populations under the traffic light of [Figure 1](#fig-1): the 13 populations with two seasons of seed set for plant size (2025, 2026), each as a chip with its EO. **Red — avoid** (over-producing): P2 and P37. **Orange — target** (mate-limited): P8, P10 and P16 — all three in EO27 — and P42; hollow chips are candidates, below expectation but not significantly in either season (P6, P36). **Green — intact** (reproductively intact): P13, P34, P35 and P43, the seed sources. Gray box: populations not yet under a light — 31 with one season of data so far (the likely sources P26, P28 and P39 are being confirmed with their 2026 seed; § 7.5.3) and P19, which switches between seasons. Badges and symbols as in Figures 1 – 4. Source: `Scripts/traffic_light_results.py` (from `tables/step32_seed_bulking_populations.tsv`, so it follows the data).
+**Figure 12.** Our populations under the traffic light of [Figure 1](#fig-1): the 14 populations with two seasons of seed set for plant size (2025, 2026), each as a chip — EO on top, population below; the number of populations under each light is written next to its badge. **Red — avoid** (over-producing): P2 and P37. **Orange — target** (mate-limited): P8, P10 and P16 — all three in EO27 — and P42; hollow chips are candidates, below expectation but not significantly in either season (P6, P36). **Green — intact** (reproductively intact): P13, P34, P35, P39 and P43, the seed sources; hollow chips are the candidate sources of [Figure 13](#fig-13) (green rings), as expected in their one season so far and with their 2026 seed being cleaned (P26, P28; § 7.5.3). Gray box: populations not yet under a light — the 28 other populations with one season of data so far, and P19, which switches between seasons. Badges and symbols as in Figures 1 – 4. Source: `Scripts/traffic_light_results.py` (from `tables/step32_seed_bulking_populations.tsv`, so it follows the data).
 
 <a id="fig-13"></a>
 ![Figure 13](figures_seed_bulking/seed_bulking_status_map.png)
 
-**Figure 13.** Reproductive type of every population on the Snake River Plain (all 44; one season only = seen or measured in a single season, including 6 seen in 2026 whose seed has no data yet), sized by flowering plants; **green ring = candidate source**: one season so far, its 2025 seed set significantly within half – twice the expectation, and its 2026 seed being cleaned — P39 (BL4) and P28 (BL3), the two locations being cleaned first, and P26 (BL2, borderline; § 7.5.3); dashed outlines = Bottleneck Lineages. Inset, top: the reproductive-type icons of [Figures 10](#fig-10) and [11](#fig-11). Inset, right (under the icons): zoom on EO27 (box on the map; dashed outline = the EO) — one EO holding ten populations, each as a polygon (its slick spots, buffered 60 m) colored by its type: BL1's source P13 (green) next to the mate-limited P8, P10 and P16 (orange), and six populations with one season only (gray): P9 and P11, P12, P14, P15, P17, seen in 2026 with no seed data yet; an EO that holds several populations, so restoration works on the populations within it (§ 6.4). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
+**Figure 13.** Reproductive type of every population on the Snake River Plain (all 44; one season only = seen or measured in a single season, including 6 seen in 2026 whose seed has no data yet), sized by flowering plants; **green ring = candidate source**: one season so far, its 2025 seed set significantly within half – twice the expectation, and its 2026 seed being cleaned — P28 (BL3), the next location to clean, and P26 (BL2, borderline; § 7.5.3); dashed outlines = Bottleneck Lineages. Inset, top: the reproductive-type icons of [Figures 10](#fig-10) and [11](#fig-11). Inset, right (under the icons): zoom on EO27 (box on the map; dashed outline = the EO) — one EO holding ten populations, each as a polygon (its slick spots, buffered 60 m) colored by its type: BL1's source P13 (green) next to the mate-limited P8, P10 and P16 (orange), and six populations with one season only (gray): P9 and P11, P12, P14, P15, P17, seen in 2026 with no seed data yet; an EO that holds several populations, so restoration works on the populations within it (§ 6.4). Smaller populations are drawn on top, so P13 shows over the larger P16 at EO27-1.
 
 #### 7.3.2 Candidate sources for seed bulking
 
-Of the 44 populations, 38 have seed set measured, 13 in both seasons,
-and 4 of those are reproductively intact ([Figure 14](#fig-14),
+Of the 44 populations, 38 have seed set measured, 14 in both seasons,
+and 5 of those are reproductively intact ([Figure 14](#fig-14),
 [Figure 15](#fig-15)).
 
 <a id="fig-14"></a>
@@ -548,22 +550,24 @@ and 4 of those are reproductively intact ([Figure 14](#fig-14),
 
 | Population | BL | Fertile plants (2025 / 2026) | Plants measured (2025 / 2026) | Seed set for size (2025 / 2026) | Mothers with seed (2025 / 2026) |
 |---|:-:|:-:|:-:|:-:|:-:|
-| **P13** (EO27-1) | BL1 | 395 / 191 | 24 / 38 | 0.81 / 1.13 | 26 / 38 |
-| **P34** (EO18-7 + EO18-8) | BL3 | 523 / 1 150 | 113 / 239 | 1.20 / 0.98 | 115 / 239 |
+| **P13** (EO27-1) | BL1 | 395 / 191 | 24 / 38 | 0.81 / 1.14 | 26 / 38 |
+| **P34** (EO18-7 + EO18-8) | BL3 | 523 / 1 150 | 113 / 239 | 1.20 / 0.99 | 115 / 239 |
 | **P35** (EO25-A) | BL3 | 113 / 887 | 29 / 38 | 1.29 / 0.89 | 29 / 98 |
-| **P43** (EO68-3) | BL5 | 48 / 23 | 21 / 10 | 1.18 / 1.03 | 21 / 10 |
+| **P39** (EO118) | BL4 | 29 / 94 | 12 / 24 | 0.99 / 0.85 | 12 / 25 |
+| **P43** (EO68-3) | BL5 | 48 / 23 | 21 / 10 | 1.18 / 1.04 | 21 / 10 |
 
 <a id="fig-15"></a>
 ![Figure 15](figures_seed_bulking/seed_bulking_model_map.png)
 
-**Figure 15.** The four reproductively intact populations (green) — candidate sources for seed bulking; other populations in gray; dashed outlines = Bottleneck Lineages.
+**Figure 15.** The five reproductively intact populations (green) — candidate sources for seed bulking; other populations in gray; dashed outlines = Bottleneck Lineages.
 
 **What to keep in mind.**
-- All four are significantly within half – twice the expected seed set in
+- All five are significantly within half – twice the expected seed set in
   both seasons. P34, P35 and P43 set slightly more than expected in 2025
-  and the expected amount in 2026; P13 slightly less in 2025 (0.79) and
-  slightly more in 2026. A third season (2027) would confirm them.
-- Two lie in BL3, one in BL5 and one in BL1; BL2 and BL4 have no intact
+  and the expected amount in 2026; P13 slightly less in 2025 (0.81) and
+  slightly more in 2026; P39 the expected amount in 2025 (0.99) and
+  slightly less in 2026 (0.85). A third season (2027) would confirm them.
+- Two lie in BL3 and one each in BL1, BL4 and BL5; BL2 has no intact
   two-season population yet. Covering every lineage will need more
   seasons of data for the one-season populations.
 - **P13 is BL1's source; its genetics need a closer look.** Its seed set
@@ -652,7 +656,7 @@ comparison.
 
 **P13: intact by seed set, at odds with its genetics — the exception.** Its seed set
 is significantly within half – twice the expectation in both seasons
-(0.81 in 2025, 1.13 in 2026), so by seed set it is reproductively intact
+(0.81 in 2025, 1.14 in 2026), so by seed set it is reproductively intact
 — BL1's only source. But its genotyped plants have the lowest
 compatibility of any genotyped site: a plant can mate with only about
 44 % of its population (P42: 53 %, P34: 67 %), with 5 S-alleles and
@@ -670,7 +674,7 @@ too — sources first, because they carry the restoration:
 
 - 🟢 **Sources (intact).** **P34** — SRK genotyping of its 2025 – 2026
   seed is under way ([`Sampling_design.md`](Sampling_design.md));
-  **P35** and **P43** — not yet genotyped; **P13** — more of its mothers
+  **P35**, **P39** and **P43** — not yet genotyped; **P13** — more of its mothers
   (§ 7.4.2). Each source also needs the genetic filters: enough
   S-allele diversity, no self-compatible plants and, ideally, one
   source per lineage.
@@ -681,7 +685,7 @@ too — sources first, because they carry the restoration:
 - 🔴 **Avoid (over-producing).** **P2** and **P37**: seed–mother
   genotyping tests the selfing call directly — seedlings of a selfing
   mother carry only her own S-alleles.
-- ⚪ **One season so far.** The likely sources **P26, P28 and P39** get
+- ⚪ **One season so far.** The likely sources **P26 and P28** get
   their second season first (§ 7.5.3), then their genetics; the other
   one-season populations keep their place in the table only
   provisionally.
@@ -699,20 +703,20 @@ one of them — P13 — is reproductively intact:
 | Population | EO | Type (two seasons) | Seed set for size, 2025 / 2026 |
 |---|---|---|---|
 | P10 | EO27-3 | **mate-limited** — significant in both seasons | 0.43 / 0.03 |
-| P16 | EO27-1 + EO27RT | **mate-limited** — significant in 2025 | 0.37 / 1.15 |
+| P16 | EO27-1 + EO27RT | **mate-limited** — significant in 2025 | 0.37 / 1.16 |
 | P8 | EO27 | **mate-limited** — significant in 2025 | 0.42 / 0.86 |
-| P13 | EO27-1 | **reproductively intact** — within half – twice in both seasons | 0.81 / 1.13 |
+| P13 | EO27-1 | **reproductively intact** — within half – twice in both seasons | 0.81 / 1.14 |
 | P6 | EO67 | mate-limited (candidate) — not significant in either season | 0.52 / 0.56 |
-| P2 | EO30-1 | **over-producing** — significant in 2026 | 0.90 / 1.62 |
+| P2 | EO30-1 | **over-producing** — significant in 2026 | 0.90 / 1.63 |
 
 **EO27 stands out.** It holds ten populations; five have seed data so
 far (the other five, seen in 2026, have none yet). Three of these five set significantly
 less seed than their size predicts: P10 (EO27-3) in both seasons, and
 P16 (EO27-1 + EO27RT) and P8 (EO27) in 2025. P16 and P8 share the same
 pattern — a strong shortfall in 2025 (0.37 and 0.42), then about the
-expected seed in 2026 (1.15 and 0.86) — so their mate limitation may
+expected seed in 2026 (1.16 and 0.86) — so their mate limitation may
 vary from year to year. P13 (EO27-1) sets the seed its size predicts in
-both seasons, and P9 (EO27, measured in 2026 only) does so too (1.30).
+both seasons, and P9 (EO27, measured in 2026 only) does so too (1.31).
 **EO27 is a hotspot of mate limitation**: it holds three of the four
 confirmed mate-limited populations (P8, P10, P16), which need
 restoration actions (genetic rescue). It also holds BL1's only
@@ -737,7 +741,7 @@ level.
 
 1. **Measure P5 (EO30-2) and P9 (EO27) again in 2027.** Both set the
    seed their size predicts in 2026, their only season so far — P5 at
-   1.26 of expected (34 plants), P9 at 1.30 (25 plants), each
+   1.27 of expected (34 plants), P9 at 1.31 (25 plants), each
    significantly within half – twice — and their 2026 lots are cleaned.
    What they need is a second season. They are BL1's most likely
    candidate sources after P13.
@@ -755,7 +759,7 @@ program that produces seed for restoration ([Figure 3](#fig-3),
 
 | Type | What it suggests | Role in the program | Populations — two seasons (firm) | One season (to confirm) |
 |---|---|---|---|---|
-| **Reproductively intact** | Plants find enough compatible mates and outcross normally | **Sources for seed bulking** | **P34** (EO18, BL3), **P35** (EO25-A, BL3), **P43** (EO68-3, BL5), **P13** (EO27-1, BL1) | P5 (EO30-2, BL1), P9 (EO27, BL1), P21, P22 (EO26, BL2), P26 (EO29, BL2), P27 (EO48, BL3), P28 (EO32, BL3), P30 (EO24-7, BL3), P38 (EO52, BL4), P39 (EO118, BL4), P41 (EO76, BL4) |
+| **Reproductively intact** | Plants find enough compatible mates and outcross normally | **Sources for seed bulking** | **P34** (EO18, BL3), **P35** (EO25-A, BL3), **P43** (EO68-3, BL5), **P13** (EO27-1, BL1), **P39** (EO118, BL4) | P5 (EO30-2, BL1), P9 (EO27, BL1), P21, P22 (EO26, BL2), P26 (EO29, BL2), P27 (EO48, BL3), P28 (EO32, BL3), P30 (EO24-7, BL3), P38 (EO52, BL4), P41 (EO76, BL4) |
 | **Mate-limited** | Too few compatible mates — seed set falls short | **Restoration targets**: receive seed from intact sources | **P8** (EO27), **P10** (EO27-3), **P16** (EO27-1 + EO27RT), **P42** (EO70); candidates P6 (EO67), P36 (EO25-B) | P1 (EO112), P4 (EO30-3), P32 (EO24) |
 | **Over-producing** | Likely escaped self-incompatibility and self-fertilize (self-compatible) | **Excluded** from the breeding program | **P2** (EO30-1, BL1), **P37** (EO38, BL4) | P18 (EO8), P23 (EO26-3), P24 (EO26-1), P25 (EO61), all BL2; P40 (EO76, BL4) |
 
@@ -793,25 +797,26 @@ The 2026 seed is cleaned one location (locationID) at a time, and each
 cleaned location is added to the analyses as soon as it is in the
 database. On 2026-11-03, locationID 9 (P8 and P9, EO27) was added: it
 gave P8 its second season and its type (mate-limited) and P9 its first.
-**729 plants (seed lots) at 22 locations are still to clean.**
+On 2026-11-10, locationID 4 (P39, EO118) was added: it gave P39 its
+second season and its type — reproductively intact, **BL4's first
+source**. **704 plants (seed lots) at 21 locations are still to clean.**
 
 A location is worth cleaning first when it gives a **second season to a
 population that looked intact in 2025** — that can turn a one-season
 population into a candidate source — above all in a lineage that has no
-source yet (BL2, BL4). The order below follows that rule; "2025 seed
+source yet (BL2). The order below follows that rule; "2025 seed
 set" is seed set relative to what plant size predicts, and "within
 half – twice" means significantly so (equivalence test, q < 0.05).
 
 | Order | Population (EO, BL) | locationID (2026 eventIDs) | Lots to clean | 2025 seed set | Why |
 |:-:|---|---|:-:|---|---|
-| **1** | **P39** (EO118, BL4) | **4** (266 – 277) | 25 | 0.99, within half – twice | Strongest one-season intact population; **BL4 has no source**; small job |
-| **2** | **P28** (EO32, BL3) | **6** (385 – 408) | 74 | 1.19, within half – twice | Second season for a likely source; a backup for BL3 (P34, P35) |
-| 3 | P26 (EO29, BL2) | 8 (715) | 9 | 1.43, year-sensitive | Could give **BL2 its first source**; tiny job, but the 2025 call is borderline |
-| 4 | P21 (EO26, BL2) | 34 (665 – 671), 48 (672 – 681), 33 (660 – 664), 32 (654 – 656) | 18 + 18 + 11 + 5 | 1.35, not conclusive | BL2; looks intact but 2025 is not significant either way |
-| 5 | P22 (EO26-4, BL2) | 49 (682 – 685) | 7 | 1.21, not conclusive | BL2; small job |
-| 6 | P29 (EO32, BL3) | 6 (373 – 384) | 63 | 1.49, year-sensitive | Same location as P28 — clean together if convenient |
-| 7 | P18 (EO8), P23 (EO26-3), P25 (EO61), all BL2; P40 (EO76, BL4) | 47, 31 + 32, 38, 2 | 94, 39, 25, 8 | 1.8 – 2.2, significantly above | Second season to **confirm over-producing** (exclusion) |
-| 8 | P11, P12, P14, P15, P17 (EO27 cluster, BL1); P44 (EO69, BL5); P33 (EO24-2, BL3) | 44, 43, 45, 46, 50; 41; 23 | 17, 33, 21, 10, 17; 7; 1 | none (P33: 1 plant) | First season only; typed once measured again in 2027 |
+| **1** | **P28** (EO32, BL3) | **6** (385 – 408) | 74 | 1.19, within half – twice | Second season for a likely source; a backup for BL3 (P34, P35) |
+| **2** | **P26** (EO29, BL2) | 8 (715) | 9 | 1.43, year-sensitive | Could give **BL2 its first source**; tiny job, but the 2025 call is borderline |
+| 3 | P21 (EO26, BL2) | 34 (665 – 671), 48 (672 – 681), 33 (660 – 664), 32 (654 – 656) | 18 + 18 + 11 + 5 | 1.35, not conclusive | BL2; looks intact but 2025 is not significant either way |
+| 4 | P22 (EO26-4, BL2) | 49 (682 – 685) | 7 | 1.21, not conclusive | BL2; small job |
+| 5 | P29 (EO32, BL3) | 6 (373 – 384) | 63 | 1.49, year-sensitive | Same location as P28 — clean together if convenient |
+| 6 | P18 (EO8), P23 (EO26-3), P25 (EO61), all BL2; P40 (EO76, BL4) | 47, 31 + 32, 38, 2 | 94, 39, 25, 8 | 1.8 – 2.2, significantly above | Second season to **confirm over-producing** (exclusion) |
+| 7 | P11, P12, P14, P15, P17 (EO27 cluster, BL1); P44 (EO69, BL5); P33 (EO24-2, BL3) | 44, 43, 45, 46, 50; 41; 23 | 17, 33, 21, 10, 17; 7; 1 | none (P33: 1 plant) | First season only; typed once measured again in 2027 |
 | — | P16 (EO27-1 + EO27RT), P19 (EO8), P35 (EO25-A) | 12, 28, 20 | 126, 41, 60 | already typed | More lots refine a call that is already made; last |
 
 No mother on the D1 lab sheet ([`Sampling_design.md`](Sampling_design.md))
@@ -838,10 +843,10 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
   one-season populations gain the second season they need.
 
 **Part 2 — Prioritize populations for population restoration.**
-- **Outcome.** Seed set for plant size types the 13 two-season
-  populations: **4 reproductively intact** — seed set significantly
+- **Outcome.** Seed set for plant size types the 14 two-season
+  populations: **5 reproductively intact** — seed set significantly
   within half – twice the expectation in both seasons — P34, P35 (BL3),
-  P43 (BL5) and P13 (BL1), the sources; 4 mate-limited (P8,
+  P43 (BL5), P13 (BL1) and P39 (BL4), the sources; 4 mate-limited (P8,
   P10, P16, P42) plus 2 candidates (P6, P36), the restoration targets; 2
   over-producing (P2, P37), excluded. **EO27 is a hotspot of mate
   limitation** (P8, P10, P16), with BL1's only source, P13, in the same
@@ -851,18 +856,60 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
 - **Next.**
   - **Genetic filters on the sources** — S-allele diversity and
     self-compatibility status of P34 (SRK genotyping under way,
-    [`Sampling_design.md`](Sampling_design.md)), P35 and P43; for P13,
+    [`Sampling_design.md`](Sampling_design.md)), P35, P39 and P43; for P13,
     genotype more mothers too, since its few genotyped plants have
     low compatibility.
   - **More seasons** — measure the one-season populations again,
     starting with P5 and P9 (BL1's most likely sources) in 2027.
   - **Clean the 2026 seed that gives a second season to a likely
-    source** — next in the queue: P39 (EO118, BL4; locationID 4), then
-    P28 (EO32, BL3; locationID 6), then P26 (EO29, BL2; locationID 8)
+    source** — P39 (EO118, BL4; locationID 4) is done and is BL4's
+    first source; next in the queue: P28 (EO32, BL3; locationID 6), then
+    P26 (EO29, BL2; locationID 8)
     — the full order is in § 7.5.3.
   - **Test the over-producing call** by seed–mother genotyping (P2, P37).
-  - **Cover every lineage** — BL2 and BL4 still have no candidate
-    source.
+  - **Cover every lineage** — BL2 still has no source; P26 is its
+    candidate.
+
+**Back to the recovery plan — EO ranks must account for genetics.**
+- **What the ranks measure today.** The EO condition ranks behind
+  Recovery Criterion 2 (A – C = fair to excellent) are based on habitat
+  quality in and around the EO and on plant abundance
+  ([Kinter & Miller, 2016](#ref-kinter2016);
+  [Miller & Kinter, 2024](#ref-miller2024);
+  [USFWS, 2026](#ref-usfws2026), pp. 3 – 4). They follow the
+  NatureServe Element Occurrence standard
+  ([NatureServe, 2002](#ref-natureserve2002)). That framework allows
+  other factors bearing on an EO's viability into the rank, and states
+  that they must be included where they are relevant.
+  <!-- Sven: add the section / page of NatureServe (2002) that says this. -->
+- **Genetics is relevant for slickspot peppergrass.** The species is
+  self-incompatible, so an EO's plants can be abundant on good habitat
+  and still fail to reproduce. **Mate-limited** populations set much
+  less seed than their size predicts: EO27 holds three of them, and one
+  (P10) set 2 % of its expected seed in 2026. **Over-producing**
+  populations set plenty of seed, but most likely by selfing, with
+  inbreeding depression to follow (EO30, EO38). On habitat and
+  abundance alone, such EOs can rank fair or better while their
+  reproduction, and so their persistence over the 12 years of
+  Criterion 2, is at risk.
+- **Recommendation: amend the EO ranks with genetics.**
+  - Add each EO's traffic light to its rank: reproductive status from
+    seed set for plant size, confirmed with the SRK gene (§ 7.4).
+  - 🟢 **Intact** supports the rank.
+  - 🟠 **Target** flags an EO whose rank overstates its viability
+    until it is rescued.
+  - 🔴 **Avoid** flags an EO with inbreeding depression.
+  - This is what Recovery Action 7 asks for: genomics "to inform and
+    prioritize slickspot peppergrass EOs".
+- **Criterion 2.** Only EOs that can reproduce will persist for 12
+  years, so the count of 75 A – C EOs is only as sound as the ranks
+  behind it. Rescuing the orange EOs with seed from the green ones is
+  also a direct route to the **7 more EOs** at C or better that the
+  plan needs.
+- **Criterion 3.** A secure seed stock "preserves representation" only
+  if it carries the species' genetic diversity. Build it from intact
+  (green) sources, keep over-producing (red) seed out of it, and record
+  each lot's light with the seed.
 
 ---
 
@@ -879,6 +926,15 @@ rerun (`./run_pipeline.sh seedyield`, `sampling`, `design`, `bulking`).
 
 <a id="ref-usfws2026"></a>
 - **U.S. Fish and Wildlife Service (2026).** Recovery plan for slickspot peppergrass (*Lepidium papilliferum*). U.S. Fish and Wildlife Service, Region 1, Portland, Oregon, USA. iii + 32 pages. [ecos.fws.gov/ecp/species/4027](https://ecos.fws.gov/ecp/species/4027)
+
+<a id="ref-kinter2016"></a>
+- **Kinter, C.L. & Miller, J.J. (2016).** Assessment of *Lepidium papilliferum* (slickspot peppergrass) Element Occurrences. Idaho Natural Heritage Program, Idaho Department of Fish and Game, Boise. 71 pp. plus appendices.
+
+<a id="ref-miller2024"></a>
+- **Miller, J.J. & Kinter, C.L. (2024).** Field assessment of *Lepidium papilliferum* (slickspot peppergrass) Element Occurrences: 2016 to 2022. Idaho Department of Fish & Game report to U.S. Fish and Wildlife Service. 69 pp. plus appendices.
+
+<a id="ref-natureserve2002"></a>
+- **NatureServe (2002).** Element Occurrence Data Standard. NatureServe, Arlington, Virginia. 201 pp.
 
 <a id="ref-buerki2026"></a>
 - **Buerki, S., Geisler, M., Martinez, P., Beck, J. & Robertson, I. (2026).** Genomics and phylogenetics inform a species recovery plan for a threatened allopolyploid plant. *Botanical Journal of the Linnean Society* 212(3), 275–291. [doi:10.1093/botlinnean/boaf116](https://doi.org/10.1093/botlinnean/boaf116)

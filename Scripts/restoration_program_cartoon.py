@@ -15,8 +15,10 @@ Objectives are told apart from techniques: each panel's title is the
      populations are rescued (objective 3); populations under inbreeding
      depression (over-producing) are excluded as sources. Technique: seed
      set for plant size, drawn in Figure 3 (source_screening_cartoon.py).
-  2. Multiply seed — technique: seed bulking in the greenhouse.
-  3. Rescue mate-limited populations (header over two steps):
+  2. Multiply seed for intact (source) populations (intact in green) —
+     technique: seed bulking in the greenhouse.
+  3. Rescue target (mate-limited) populations (target in orange; header
+     over two steps):
      3a. Breed seed with new S-alleles (limited genetic diversity in the
      target) — technique: informed breeding. Seedlings of the source
      (pollen donors) and the target (mothers) are grown together; source
@@ -38,6 +40,7 @@ import numpy as np
 from matplotlib.patches import (Circle, Ellipse, FancyArrowPatch, FancyBboxPatch, Polygon,
                                 Rectangle)
 from matplotlib.path import Path as MPath
+from matplotlib.text import Annotation
 
 import restoration_cartoon as rc
 from type_icons import add_icon, lifebuoy, no_sign
@@ -54,13 +57,35 @@ def axes_in(fig, x, y_top, w, h):
     return fig.add_axes([x / W, 1 - (y_top + h) / H, w / W, h / H])
 
 
+TITLE = dict(fontsize=18, fontweight="bold")
+
+
+def rich(parts):
+    """Title as (text, color) pieces: a plain string is one black piece."""
+    return [(parts, "black")] if isinstance(parts, str) else list(parts)
+
+
+def chain(first, parts, add):
+    """Write the later (text, color) pieces of a title one after another,
+    each starting where the previous one ends (same baseline)."""
+    prev = first
+    for text, col in parts:
+        prev = add(Annotation(text, xy=(1, 0), xycoords=prev, ha="left", va="bottom", clip_on=False,
+                              color=col, **TITLE))
+
+
 def frame(ax, title, n=None, xmax=100, ymax=100):
+    """Panel frame; `title` is a string or (text, color) pieces, so a word can
+    carry its type color (intact green, target orange)."""
     ax.set_xlim(0, xmax), ax.set_ylim(0, ymax), ax.set_aspect("equal")
     ax.set_xticks([]), ax.set_yticks([])
     for sp in ax.spines.values():
         sp.set_edgecolor("#BBBBBB")
-    ax.set_title(f"{n}. {title}" if n else title, loc="left", fontsize=18, fontweight="bold",
-                 pad=10)
+    parts = rich(title)
+    if n:
+        parts[0] = (f"{n}. {parts[0][0]}", parts[0][1])
+    t = ax.set_title(parts[0][0], loc="left", color=parts[0][1], pad=10, **TITLE)
+    chain(t, parts[1:], ax.add_artist)
 
 
 def technique(ax, text, x=50, y=5):
@@ -251,7 +276,8 @@ def panel_sources_talk(ax, use=True):
 
 # ---- 2. multiply seed -----------------------------------------------------------
 def panel_bulking(ax):
-    frame(ax, "Multiply seed", 2)
+    frame(ax, [("Multiply seed for ", "black"), ("intact", INTACT),
+               (" (source) populations", "black")], 2)
     seed_bag(ax, 12, 66, 8, 8, 4, fc="#E0F2F1")
     ax.text(12, 62, "from\nsources", ha="center", va="top", fontsize=11.5, color=INTACT,
             linespacing=1.05)
@@ -362,8 +388,9 @@ def rescue_header(fig, ax_a, ax_b):
     tick = 0.12 / hin
     fig.add_artist(plt.Line2D([xl, xl, xr, xr], [yb - tick, yb, yb, yb - tick],
                               transform=fig.transFigure, color="#333", lw=2.2))
-    fig.text(xl, yb + 0.1 / hin, "3. Rescue mate-limited populations", ha="left", va="bottom",
-             fontsize=18, fontweight="bold")              # same style as titles 1 and 2
+    first = fig.text(xl, yb + 0.1 / hin, "3. Rescue ", ha="left", va="bottom", **TITLE)
+    chain(first, [("target", MATE_LIM), (" (mate-limited) populations", "black")],
+          fig.add_artist)                                 # same style as titles 1 and 2
 
 
 def source_arrow(fig, a, b, to_fig, style):
