@@ -24,7 +24,7 @@ draw_ISI_cartoon.py); the gene-copy icon follows its SRK functional-copy
 figure. LEPA numbers from SRK_bioinformatics (Canu-amplicon genotypes:
 263 plants, 32 S-types). Other icons and colours as restoration_cartoon.py.
 The challenge (restoration_program_cartoon.panel_challenge, shared with
-Figure 2) sits on top: the problem these panels explain.
+Figure 3) sits on top: the problem these panels explain.
 Output: figures_seed_bulking/breeding_system_cartoon.{png,pdf}, plus talk slides:
 _slide1 (the challenge alone, 16:9), _slide2 (panels 1, 2) and _slide3
 (panels 3, 4), with _slide2_step1 and _slide3_step1 showing the first panel.
@@ -130,6 +130,18 @@ def tag(ax, x, y, text, col):
             bbox=dict(boxstyle="round,pad=0.35", fc=col, ec="none"), zorder=10)
 
 
+def type_badge(ax, kind, x, y, size=14):
+    """Population-type badge of type_icons.py (as in Figures 3, 4, 11 – 13),
+    centered at (x, y), `size` data units wide; placed after layout, since the
+    panels are equal-aspect subplots."""
+    from type_icons import add_icon
+    fig = ax.figure
+    fig.canvas.draw()
+    (x0, y0), (x1, y1) = fig.transFigure.inverted().transform(
+        ax.transData.transform([(x - size / 2, y - size / 2), (x + size / 2, y + size / 2)]))
+    add_icon(fig, kind, [x0, y0, x1 - x0, y1 - y0])
+
+
 # ---- panels ------------------------------------------------------------------
 def panel_si(ax):
     frame(ax, 1, "Self-incompatible breeding system:\n    plants reject their own pollen",
@@ -171,6 +183,7 @@ def panel_mates(ax):
           "small, isolated populations lose S-types by drift:\n"
           "plants run out of compatible mates and set little seed")
     tag(ax, 79, 93, "mate limitation", MATE_LIM)
+    type_badge(ax, "Mate-limited", 9, 89.5)               # the badge used from here on
     for x0, ok, types in ((26, True, (0, 2, 4, 6, 1)), (74, False, (0, 0, 1, 0, 1))):
         ax.add_patch(Ellipse((x0, 58), 42, 30, fc=SPOT, ec="#B08D57", lw=1.5, zorder=1))
         ax.text(x0, 77, "many S-types" if ok else "few S-types", ha="center", fontsize=13,
@@ -242,6 +255,7 @@ def panel_inbreeding(ax):
           "selfed offspring grow more alike and weaker,\n"
           "generation after generation")
     tag(ax, 72, 93, "inbreeding depression", SI_RED)
+    type_badge(ax, "Over-producing", 9, 89.5)             # selfing: the over-producing badge
     gens = [(17, 26, (0, 2), True, "parent"), (50, 20, (0, 0), True, "selfed\noffspring"),
             (82, 14, (0, 0), False, "next\ngeneration")]
     for x, h, types, fr, lab in gens:

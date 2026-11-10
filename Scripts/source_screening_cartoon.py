@@ -1,7 +1,7 @@
 """source_screening_cartoon.py — our approach to sort populations for
 population restoration, with slickspot peppergrass (Lepidium papilliferum)
 as the model (Seed_bulking Figure 3). It is the technique of step 1 of
-restoration_program_cartoon.py (Figure 2).
+restoration_program_cartoon.py (Figure 3).
 
 Three steps, left to right:
   1. **Plant phenotyping** — plant size (crown width, height) and seed
@@ -160,7 +160,8 @@ def panel_modeling(ax):
 
 
 HYP_TITLE = "Hypotheses → test with genetics"
-HYP_WHY = "plant size and seed yield can also be driven by resource availability"
+HYP_WHY = "plant size and seed yield can also be driven by resource or pollinator availability"
+HYP_POLL = "our research shows pollinators are not limiting → we focus on genetics"
 HYP_TEST = "→ test with the SRK gene (S-types): S-allele diversity, compatible mates, selfing"
 
 
@@ -172,9 +173,11 @@ def hypotheses_banner(ax, x, y, w, h, wide=False):
     if wide:                                              # title left, two lines to its right
         ax.text(x + 12, y + h / 2, HYP_TITLE, ha="left", va="center", fontsize=13,
                 fontweight="bold", color="#222", zorder=2)
-        ax.text(x + 85, y + h * 0.70, HYP_WHY, ha="left", va="center", fontsize=13.5,
+        ax.text(x + 85, y + h * 0.78, HYP_WHY, ha="left", va="center", fontsize=13.5,
                 color="#222", zorder=2)
-        ax.text(x + 85, y + h * 0.28, HYP_TEST, ha="left", va="center", fontsize=11.5,
+        ax.text(x + 85, y + h * 0.50, HYP_POLL, ha="left", va="center", fontsize=12,
+                color="#222", style="italic", zorder=2)
+        ax.text(x + 85, y + h * 0.22, HYP_TEST, ha="left", va="center", fontsize=11.5,
                 color="#444", zorder=2)
         return
     ax.text(x + 12, y + h - 4.5, HYP_TITLE, ha="left", va="center", fontsize=13,
@@ -182,10 +185,12 @@ def hypotheses_banner(ax, x, y, w, h, wide=False):
     why = HYP_WHY.split(" by ")                         # square panel: why and test on two lines each
     test, what = HYP_TEST.split(": ")
     for k, t in enumerate((why[0], "by " + why[1])):
-        ax.text(x + 12, y + h - 11.5 - 6 * k, t, ha="left", va="center", fontsize=12.5,
+        ax.text(x + 12, y + h - 10.5 - 5.5 * k, t, ha="left", va="center", fontsize=12.5,
                 color="#222", zorder=2)
+    ax.text(x + 12, y + h - 22, HYP_POLL, ha="left", va="center", fontsize=10.8,
+            color="#222", style="italic", zorder=2)
     for k, t in enumerate((test + ":", "      " + what)):
-        ax.text(x + 12, y + h - 25.5 - 5.3 * k, t, ha="left", va="center", fontsize=10.2,
+        ax.text(x + 12, y + h - 27.8 - 5 * k, t, ha="left", va="center", fontsize=10.2,
                 color="#444", zorder=2)
 
 
@@ -204,7 +209,7 @@ def panel_sort(ax):
         if flaw:
             ax.text(31, y - 5.5, flaw, ha="left", va="top", fontsize=11, color=c, style="italic")
     # the sort is a set of hypotheses: genetics (the SRK gene) tests it
-    hypotheses_banner(ax, 3, 3, 94, 33)
+    hypotheses_banner(ax, 3, 3, 94, 36)
     # what to do with each type: protect, rescue, avoid
     shield(ax, 88, 90, s=0.7)
     ax.text(88, 81.5, "top priority", ha="center", va="top", fontsize=10.5, color=INTACT,

@@ -24,8 +24,8 @@ CACHE <- "map_cache"
 dir.create(CACHE, recursive = TRUE, showWarnings = FALSE)
 UTM <- 32611
 
-BL_COLORS <- c(BL1 = "#984EA3", BL2 = "#377EB8", BL3 = "#E41A1C",
-               BL4 = "#FF7F00", BL5 = "#4DAF4A")       # = srk_bl_constants.py
+BL_COLORS <- c(BL1 = "#303F9F", BL2 = "#29B6F6", BL3 = "#7B1FA2",
+               BL4 = "#546E7A", BL5 = "#B39DDB")       # = srk_bl_constants.py
 DEM_COLOURS <- c("#fff8e7", "#f0d9a8", "#d4a574", "#a87545", "#6b4423", "#3d2817")
 
 # ---------------------------------------------------------------- data

@@ -17,7 +17,7 @@ allows for the 2026 drop shared by all populations
 - **One season only** — populations with seed data in one season, shown
   in light grey and not typed.
 
-The three type colours (magenta / gold / teal, grey for not yet clear)
+The three type colours (traffic light: red / orange / green, grey for not yet clear)
 are used on every figure and map of the talk and differ from the BL
 colours. They are written to the population table so the R maps
 (`step32_seed_bulking_maps.R`) read the same colours.
@@ -26,7 +26,7 @@ Figures (talk style, no BL colours) → figures_seed_bulking/ (local):
   seed_by_size_points        the same frame, points only (animation step 1)
   seed_by_size_plants        every plant, seeds vs crown size; band between
                              half and twice the seed its size predicts in
-                             the type colours (magenta / teal / gold)
+                             the type colours (red / green / orange)
   population_seed_yield_frame  the same frame without data (animation step 1)
   population_seed_yield      seed yield for size per population and season,
                              coloured by type
@@ -97,9 +97,9 @@ def season_significant(r, yr: int) -> bool:
     q = r[f"qeq_{yr}"] if r["type"] == "Reproductively intact" else r[f"q_{yr}"]
     return bool(pd.notna(q) and q < ALPHA)
 TYPE_ORDER = ["Mate-limited", "Reproductively intact", "Over-producing", NOT_CLEAR, ONE_SEASON]
-TYPE_COLORS = {"Mate-limited": "#E6A100",          # gold
-               "Over-producing": "#C2185B",        # magenta (close to the red "avoid" sign)
-               "Reproductively intact": "#00897B",  # teal
+TYPE_COLORS = {"Mate-limited": "#F57C00",          # traffic light: orange = target (genetic rescue)
+               "Over-producing": "#C62828",        # red = avoid (inbreeding depression)
+               "Reproductively intact": "#2E7D32",  # green = intact (conserve; source)
                NOT_CLEAR: "#9E9E9E",               # grey
                ONE_SEASON: "#D9D9D9"}              # light grey
 BAND = 2.0          # lines at twice and half the seed predicted by size
@@ -155,9 +155,9 @@ def plants_with_type(pops: pd.DataFrame) -> pd.DataFrame:
 
 def seed_by_size(m: pd.DataFrame, name: str, bands: bool = True) -> None:
     """Every plant in one colour; the band between half and twice the seed
-    a plant's size predicts shaded teal (as expected), the fitted size →
-    seed line teal through its middle, the upper line gold
-    (more seed) and the lower line magenta (less seed) — the colour codes
+    a plant's size predicts shaded green (as expected), the fitted size →
+    seed line green through its middle, the upper line red
+    (more seed) and the lower line orange (less seed) — the colour codes
     of the reproductive types, leading into population_seed_yield.
     bands=False draws the same frame with the points only (band, lines
     and labels invisible), so the two images overlay exactly in a slide
@@ -197,8 +197,8 @@ def seed_by_size(m: pd.DataFrame, name: str, bands: bool = True) -> None:
         inv = fig.transFigure.inverted()
         size_in = 1.35
         w, h = size_in / fig.get_figwidth(), size_in / fig.get_figheight()
-        for tp, (xd, yd) in (("Over-producing", (1.9, 2500)),     # above the gold line
-                             ("Mate-limited", (40, 12))):         # below the magenta line
+        for tp, (xd, yd) in (("Over-producing", (1.9, 2500)),     # above the red line
+                             ("Mate-limited", (40, 12))):         # below the orange line
             cx, cy = inv.transform(ax.transData.transform((xd, yd)))
             type_icon(fig.add_axes([cx - w / 2, cy - h / 2, w, h]), tp)
     for ext in ("png", "pdf"):
@@ -255,7 +255,7 @@ def population_seed_yield(pops: pd.DataFrame, data: bool = True,
           Line2D([], [], marker="s", ls="", mfc="#444", mec="#444", ms=11, label="2026"),
           Line2D([], [], marker="o", ls="", mfc="#444", mec="#444", ms=11,
                  label="filled = significant (q < 0.05): differs from\n"
-                       "expectation, or (teal) lies within half – twice"),
+                       "expectation, or (green) lies within half – twice"),
           Line2D([], [], marker="o", ls="", mfc="white", mec="#444", mew=2, ms=9,
                  label="open = not significant"),
           Line2D([], [], ls="", label="x axis allows for the 2026 drop\n"
@@ -339,11 +339,11 @@ def seed_available(pops: pd.DataFrame) -> pd.DataFrame:
            for _, r in pops[pops["model_for_bulking"]].iterrows()}
     fig, ax = plt.subplots(figsize=(11, 6.5))
     xpos = np.arange(len(cand)); w = 0.38
-    teal = TYPE_COLORS["Reproductively intact"]
+    green = TYPE_COLORS["Reproductively intact"]
     for k, yr in enumerate((2025, 2026)):
         g = s[s["year"] == yr].set_index("populationID").loc[cand]
         bars = ax.bar(xpos + (k - 0.5) * w, g["seeds_cleaned"] / 1000, width=w,
-                      color=teal if yr == 2026 else "white", edgecolor=teal, linewidth=2.5,
+                      color=green if yr == 2026 else "white", edgecolor=green, linewidth=2.5,
                       label=str(yr))
         for b, (_, r) in zip(bars, g.iterrows()):
             note = f"{r['mothers']} mothers"
@@ -535,7 +535,7 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
     tab = pd.DataFrame(rows)
     tab.to_csv(TABLES / "step32_genetic_example_P42_P34.tsv", sep="\t", index=False)
 
-    # S-type colours as in Figure 1 (breeding_system_cartoon), A = commonest
+    # S-type colours as in Figure 2 (breeding_system_cartoon), A = commonest
     s_cols = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#17becf",
               "#bcbd22", "#aec7e8", "#ffbb78", "#98df8a", "#c5b0d5"]
     s_col = {i: s_cols[k % len(s_cols)] for k, i in enumerate(order)}
@@ -634,12 +634,12 @@ def genetic_example(pops: pd.DataFrame) -> pd.DataFrame:
         ax.set_title("2. Compatible mates per plant", loc="left", weight="bold")
         ax.set_visible(stage >= 3)
 
-        # boxed legend under the panels (as Figure 10)
+        # boxed legend under the panels (as Figure 11)
         from matplotlib.lines import Line2D
         from matplotlib.patches import Patch
         h = [Patch(fc="#F2F2F2", ec="#CFCFCF", label="1 square = 1 genotyped plant;\n4 dots = its 4 SRK copies (tetraploid)"),
              Line2D([], [], marker="o", ls="", color=s_cols[0], ms=9,
-                    label="color = S-type (as in Figure 1)"),
+                    label="color = S-type (as in Figure 2)"),
              Line2D([], [], marker="o", ls="", color="#888", ms=6, alpha=0.6,
                     label="dot = one plant; bar = population average")]
         h = h[:2] if stage == 2 else h if stage == 3 else []

@@ -6,8 +6,8 @@
 # both labelled (EO labels give their number of populations). Two versions:
 #   BL1_BL3_populations_EO_map       populations in the BL colour
 #   BL1_BL3_seed_bulking_status_map  populations by reproductive type (talk
-#                                    close-ups of Figure 11; hollow gold =
-#                                    candidate mate-limited, teal outline =
+#                                    close-ups of Figure 12; hollow orange =
+#                                    candidate mate-limited, green outline =
 #                                    candidate source)
 # Fine-scale per-BL maps: kept local (gitignored), like BL*_populations_EO_map.
 #
@@ -124,6 +124,6 @@ pair_map <- function(by_type, caption, name) {
 }
 pair_map(FALSE, "Filled polygons = populations (P), in the color of their bottleneck lineage",
          "BL1_BL3_populations_EO_map")
-pair_map(TRUE, paste("Populations (P) by seed set for plant size; hollow gold = candidate",
-                     "mate-limited; teal outline = candidate source (2026 seed being cleaned)"),
+pair_map(TRUE, paste("Populations (P) by seed set for plant size; hollow orange = candidate",
+                     "mate-limited; green outline = candidate source (2026 seed being cleaned)"),
          "BL1_BL3_seed_bulking_status_map")

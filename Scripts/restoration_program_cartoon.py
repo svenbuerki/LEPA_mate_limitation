@@ -1,13 +1,13 @@
 """restoration_program_cartoon.py — the population restoration program, with
 slickspot peppergrass (Lepidium papilliferum) as the model (Seed_bulking
-Figure 2). Replaces restoration_cartoon.py's figure, which is kept.
+Figure 3). Replaces restoration_cartoon.py's figure, which is kept.
 
 Objectives are told apart from techniques: each panel's title is the
 **objective** (what), and a gray tag at its foot names the **technique**
 (how).
 
   The challenge (very little seed to start with) is drawn here
-     (panel_challenge) but shown at the top of Figure 1
+     (panel_challenge) but shown at the top of Figure 2
      (breeding_system_cartoon.py), not in this figure.
   1. Prioritize populations for population restoration — reproductively
      intact populations are the sources (top conservation priority: losing
@@ -108,7 +108,7 @@ def consequences(ax, x, y, dy, size, indent=None):
 
 
 def panel_challenge(ax, title="The challenge: very little seed to start with"):
-    """Wide panel (200 × 38 data units): the top of Figure 1 (breeding_system_cartoon)."""
+    """Wide panel (200 × 38 data units): the top of Figure 2 (breeding_system_cartoon)."""
     frame(ax, title, xmax=200, ymax=38)
     threatened_tag(ax, 3, 34, size=13.5)
     ax.text(50, 34, "wild populations: limited fertility — few fruits", ha="left", va="center",
@@ -160,41 +160,46 @@ def badge(ax, kind, x, y, size):
 
 
 def panel_sources(ax):
-    """Prioritize populations: intact = source (priority 1, protect) → step 2;
-    mate-limited → rescue (objective 3); over-producing (inbreeding
-    depression) → excluded. Badges as in Figure 3; action symbols: shield,
-    ring buoy (rescue), no-sign (avoid)."""
+    """Prioritize populations: the traffic light of Figure 1 adapted to the
+    species — one lamp per category with its type badge (as Figure 4) and
+    its biological name: red AVOID = over-producing (inbreeding depression,
+    excluded as a seed source), orange TARGET = mate-limited (too few
+    compatible mates, genetic rescue = objective 3), green INTACT =
+    reproductively intact (seed source → step 2, protect). Action symbols:
+    prohibition sign, ring buoy, shield."""
     frame(ax, "Prioritize populations for population restoration", 1)
-    # reproductively intact = source: top conservation priority, on to step 2
-    badge(ax, "Reproductively intact", 58, 70, 24)
-    magnifier(ax, 58, 70, r=14.5)
-    ax.text(58, 89.5, "reproductively intact (source)", ha="center", fontsize=13.5, color=INTACT,
-            fontweight="bold")
-    shield(ax, 17, 72, s=1.05)
-    ax.text(17, 56.5, "top conservation\npriority: protect", ha="center", va="top",
-            fontsize=11.5, color=INTACT, fontweight="bold", linespacing=1.1)
-    ax.plot([4, 96], [49, 49], color="#CCCCCC", lw=1.2, ls=(0, (4, 3)), zorder=0)
-    # the other two types
-    for y, col, kind, head, action in (
-            (39, MATE_LIM, "Mate-limited", "mate-limited", "→ rescue (objective 3)"),
-            (22, OVER, "Over-producing", "over-producing",
-             "→ inbreeding depression:\n    excluded as source")):
-        badge(ax, kind, 17, y, 17)
-        ax.text(31, y + 2.5, head, ha="left", va="bottom", fontsize=13.5, color=col,
+    rows = ((79, OVER, "Over-producing", "AVOID", "over-producing",
+             "inbreeding depression", "excluded as a seed source"),
+            (55.5, MATE_LIM, "Mate-limited", "TARGET", "mate-limited",
+             "too few compatible mates", "genetic rescue (objective 3)"),
+            (32, INTACT, "Reproductively intact", "INTACT", "reproductively intact",
+             "enough compatible mates", "seed source (step 2): protect"))
+    # the traffic light of Figure 1: housing, three lamps
+    ax.add_patch(FancyBboxPatch((1.5, 20), 16, 72, boxstyle="round,pad=0,rounding_size=3",
+                                fc="#263238", ec="#111", lw=1.5, zorder=2))
+    for y, col, kind, cat, name, why, action in rows:
+        ax.add_patch(Polygon([[2.5, y + 7.4], [16.5, y + 7.4], [17.8, y + 8.6], [1.2, y + 8.6]],
+                             fc="#111", ec="none", zorder=3))                  # visor
+        ax.add_patch(Circle((9.5, y), 6.3, fc=col, ec="#111", lw=1.4, zorder=4))
+        ax.add_patch(Circle((7.6, y + 2.1), 1.6, fc="white", alpha=0.35, ec="none", zorder=5))
+        badge(ax, kind, 28.5, y, 16)
+        ax.text(39, y + 6.2, cat, ha="left", va="center", fontsize=15, color=col,
                 fontweight="bold")
-        ax.text(31, y - 0.5, action, ha="left", va="top", fontsize=12.5, color=col,
-                linespacing=1.1)
-    lifebuoy(ax, 71, 42, r=5)                          # mate-limited: rescue
-    ax.text(71, 35.5, "rescue", ha="center", va="top", fontsize=11.5, color=MATE_LIM,
-            fontweight="bold")
-    no_sign(ax, 71, 25, r=5)                              # over-producing: avoid as source
-    ax.text(71, 18.5, "avoid", ha="center", va="top", fontsize=11.5, color="#C62828",
-            fontweight="bold")
+        ax.text(39, y + 1.2, name, ha="left", va="center", fontsize=12.5, color=col,
+                fontweight="bold")
+        ax.text(39, y - 3.4, why, ha="left", va="center", fontsize=11.5, color="#333",
+                style="italic")
+        ax.text(39, y - 7.8, "→ " + action, ha="left", va="center", fontsize=12, color=col)
+    for y in (67.25, 43.75):
+        ax.plot([21, 97], [y, y], color="#CCCCCC", lw=1.2, ls=(0, (4, 3)), zorder=0)
+    no_sign(ax, 89, 79, r=5.5)                           # avoid as a source
+    lifebuoy(ax, 89, 55.5, r=5.5)                        # rescue
+    shield(ax, 89, 32, s=0.6)                            # protect: top conservation priority
     # what a population is: the unit everything here is about
-    ax.text(50, 10.5, "population = the plants that mate together (the mating pool)",
+    ax.text(50, 12, "population = the plants that mate together (the mating pool)",
             ha="center", va="center", fontsize=11.5, color="#222", style="italic",
             bbox=dict(boxstyle="round,pad=0.4", fc="#F3F4F6", ec="#888", lw=1))
-    technique(ax, "seed set for plant size (see Figure 3)", y=3.5)
+    technique(ax, "seed set for plant size (see Figure 4)", y=3.5)
 
 
 def type_counts() -> dict[str, int]:
@@ -361,6 +366,16 @@ def rescue_header(fig, ax_a, ax_b):
              fontsize=18, fontweight="bold")              # same style as titles 1 and 2
 
 
+def source_arrow(fig, a, b, to_fig, style):
+    """Panel 1 → 2: from the intact (green) row of the traffic light, an elbow
+    in the gap up to the seed bag of panel 2 ("from sources"), in green."""
+    (x0, y0), (x1, y1) = to_fig(a, (100, 32)), to_fig(b, (0, 70))
+    xm = (x0 + x1) / 2
+    fig.add_artist(FancyArrowPatch(path=MPath([(x0 + 0.004, y0), (xm, y0), (xm, y1),
+                                               (x1 - 0.004, y1)]),
+                                   **{**style, "color": INTACT}))
+
+
 def draw(n_shown: int):
     """n_shown: 1–4 = steps shown (4 = complete figure)."""
     rc.RNG = np.random.default_rng(7)                    # same plants in every frame
@@ -378,9 +393,8 @@ def draw(n_shown: int):
     to_fig = lambda ax, xy: fig.transFigure.inverted().transform(ax.transData.transform(xy))
     style = dict(transform=fig.transFigure, arrowstyle="-|>", mutation_scale=26, color="#333",
                  lw=3)
-    if n_shown >= 2:                                     # 1 → 2 leaves from the source
-        fig.add_artist(FancyArrowPatch(to_fig(grid[0][0], (75, 70)), to_fig(grid[0][1], (0, 70)),
-                                       shrinkA=4, shrinkB=6, **{**style, "color": INTACT}))
+    if n_shown >= 2:                                     # 1 → 2 leaves from the intact row
+        source_arrow(fig, grid[0][0], grid[0][1], to_fig, style)
     if n_shown >= 3:
         rescue_header(fig, grid[1][0], grid[1][1] if n_shown >= 4 else grid[1][0])
     if n_shown >= 4:
@@ -419,6 +433,9 @@ def draw_slide(panels, n_shown: int):
     for k in range(min(n_shown, len(panels)) - 1):
         yy = 70 if panels[k + 1] is panel_bulking else 50
         a, b = axes[k], axes[k + 1]
+        if panels[k] is panel_sources:                   # seed leaves from the intact row
+            source_arrow(fig, a, b, to_fig, style)
+            continue
         fig.add_artist(FancyArrowPatch(to_fig(a, (100, yy)), to_fig(b, (0, yy)), shrinkA=6,
                                        shrinkB=6, **style))
     return fig

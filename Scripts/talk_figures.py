@@ -2,15 +2,18 @@
 talk_figures/, numbered in presentation order (zero-padded prefix), so the
 slides can be built by sorting the folder.
 
-Order follows Seed_bulking.md (Figures 1 – 14, plus a field-board photo before
-Figure 8); where a figure has slide or
-build-up versions, those come instead of (or before) the document version:
-Figure 1 is split into three slides (the challenge alone, panels 1 – 2,
-panels 3 – 4, each pair built panel by panel); Figure 3 builds up step by step;
-Figure 2 opens on the three types (then what they mean for restoration)
-and is split into two landscape slides (objectives 1 – 2, then 3a – 3b); Figure 8 into two 16:9 slides, Figures 9 and 10
-start from an empty frame, Figure 12 builds up panel 1 then adds panel 2, and Figure 11 (talk version, no EO27 zoom) is followed by
-the BL1 / BL3 close-ups (kept local, like every per-BL map). File names: NN_FigXX[-part]_name.png.
+Order follows Seed_bulking.md (Figures 1 – 16, plus a field-board photo before
+Figure 9); where a figure has slide or build-up versions, those come instead
+of (or before) the document version: Figure 1 is the traffic light (Recovery
+Criterion 2); Figure 2 is split into three slides (the challenge alone, panels
+1 – 2, panels 3 – 4, each pair built panel by panel); Figure 3 opens on the
+three types (then what they mean for restoration) and is split into two
+landscape slides (objectives 1 – 2, then 3a – 3b); Figure 4 builds up step by
+step; Figure 9 is split into two 16:9 slides; Figures 10 and 11 start from an
+empty frame; Figure 12 is the traffic light filled with our populations;
+Figure 13 (talk version, no EO27 zoom) is followed by the BL1 / BL3 close-ups
+(kept local, like every per-BL map); Figure 16 (validation with genetics)
+builds up panel 1, then adds panel 2. File names: NN_FigXX[-part]_name.png.
 
 White borders are trimmed to a slim edge (EDGE pixels), for a colored slide
 background; frames of one build-up share the same crop, so that nothing jumps
@@ -34,38 +37,40 @@ EDGE = 30                                                # white edge kept, pixe
 
 # (figure number, part label, source file stem) in presentation order
 TALK = [
-    (1, "slide1", "breeding_system_cartoon_slide1"),
-    (1, "slide2a", "breeding_system_cartoon_slide2_step1"),
-    (1, "slide2b", "breeding_system_cartoon_slide2"),
-    (1, "slide3a", "breeding_system_cartoon_slide3_step1"),
-    (1, "slide3b", "breeding_system_cartoon_slide3"),
-    (2, "typesa", "restoration_program_cartoon_types"),
-    (2, "typesb", "restoration_program_cartoon_types_use"),
-    (2, "slide1", "restoration_program_cartoon_slide1"),
-    (2, "slide2a", "restoration_program_cartoon_slide2_step1"),
-    (2, "slide2b", "restoration_program_cartoon_slide2"),
-    (3, "a", "source_screening_cartoon_step1"),
-    (3, "b", "source_screening_cartoon_step2"),
-    (3, "c", "source_screening_cartoon"),
-    (4, "", "EO_sampling_map_BL_outline"),
-    (5, "", "BL_fragmentation_network_map"),
-    (6, "", "units_cartoon_landscape"),
-    (7, "", "population_EO_map_BL"),
-    (7, "BL1BL3", "BL1_BL3_populations_EO_map"),   # EO27 (BL1), EO24 (BL3); local only
-    (8, "photo", "plant_photos/size_medium_OC2592_crown13cm"),   # field board, whole photo
-    (8, "slide1", "plant_size_examples_slide1"),
-    (8, "slide2", "plant_size_examples_slide2"),
-    (9, "a", "seed_by_size_points"),
-    (9, "b", "seed_by_size_plants"),
-    (10, "a", "population_seed_yield_frame"),
-    (10, "b", "population_seed_yield"),
-    (11, "", "seed_bulking_status_map_talk"),                  # no EO27 zoom (talk only)
-    (11, "BL1BL3", "BL1_BL3_seed_bulking_status_map"),           # close-ups, local only
-    (12, "a", "genetic_example_P42_P34_step1"),               # S-types and plants only
-    (12, "b", "genetic_example_P42_P34_step2"),               # + genotypes, 3 commonest sets
-    (12, "c", "genetic_example_P42_P34"),
-    (13, "", "bulking_filter_funnel"),
-    (14, "", "seed_bulking_model_map"),
+    (1, "", "traffic_light_cartoon"),                    # recovery plan (Criterion 2) → traffic light
+    (2, "slide1", "breeding_system_cartoon_slide1"),
+    (2, "slide2a", "breeding_system_cartoon_slide2_step1"),
+    (2, "slide2b", "breeding_system_cartoon_slide2"),
+    (2, "slide3a", "breeding_system_cartoon_slide3_step1"),
+    (2, "slide3b", "breeding_system_cartoon_slide3"),
+    (3, "typesa", "restoration_program_cartoon_types"),
+    (3, "typesb", "restoration_program_cartoon_types_use"),
+    (3, "slide1", "restoration_program_cartoon_slide1"),
+    (3, "slide2a", "restoration_program_cartoon_slide2_step1"),
+    (3, "slide2b", "restoration_program_cartoon_slide2"),
+    (4, "a", "source_screening_cartoon_step1"),
+    (4, "b", "source_screening_cartoon_step2"),
+    (4, "c", "source_screening_cartoon"),
+    (5, "", "EO_sampling_map_BL_outline"),
+    (6, "", "BL_fragmentation_network_map"),
+    (7, "", "units_cartoon_landscape"),
+    (8, "", "population_EO_map_BL"),
+    (8, "BL1BL3", "BL1_BL3_populations_EO_map"),   # EO27 (BL1), EO24 (BL3); local only
+    (9, "photo", "plant_photos/size_medium_OC2592_crown13cm"),   # field board, whole photo
+    (9, "slide1", "plant_size_examples_slide1"),
+    (9, "slide2", "plant_size_examples_slide2"),
+    (10, "a", "seed_by_size_points"),
+    (10, "b", "seed_by_size_plants"),
+    (11, "a", "population_seed_yield_frame"),
+    (11, "b", "population_seed_yield"),
+    (12, "", "traffic_light_results"),                    # our populations under the traffic light
+    (13, "", "seed_bulking_status_map_talk"),                  # no EO27 zoom (talk only)
+    (13, "BL1BL3", "BL1_BL3_seed_bulking_status_map"),           # close-ups, local only
+    (14, "", "bulking_filter_funnel"),
+    (15, "", "seed_bulking_model_map"),
+    (16, "a", "genetic_example_P42_P34_step1"),               # validation: S-types and plants only
+    (16, "b", "genetic_example_P42_P34_step2"),               # + genotypes, 3 commonest sets
+    (16, "c", "genetic_example_P42_P34"),
 ]
 
 

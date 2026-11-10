@@ -108,6 +108,8 @@ if [[ "$PART" == all || "$PART" == bulking ]]; then
   run source_screening_cartoon      # schematic: our approach to find candidate sources
   run breeding_system_cartoon       # schematic: SI, mate limitation, SC escape, inbreeding
   run type_icons                    # badge icons of the reproductive types (also used by step32)
+  run traffic_light_cartoon         # Figure 1: traffic light (intact / target / avoid) for Recovery Criterion 2
+  run traffic_light_results         # Figure 12: our populations under the traffic light (reads step32 table)
   echo "▶ step32_seed_bulking_maps (R)"
   Rscript Scripts/step32_seed_bulking_maps.R > logs/step32_seed_bulking_maps.log 2>&1 \
     || { echo "✖ step32_seed_bulking_maps failed — see logs/step32_seed_bulking_maps.log"; exit 1; }
@@ -115,6 +117,7 @@ if [[ "$PART" == all || "$PART" == bulking ]]; then
   Rscript Scripts/step32_BL_pair_map.R > logs/step32_BL_pair_map.log 2>&1 \
     || { echo "✖ step32_BL_pair_map failed — see logs/step32_BL_pair_map.log"; exit 1; }
   run talk_figures                  # numbered copies in talk order → talk_figures/ (local)
+  run print_figures                 # every figure of Seed_bulking.md, as PDFs to print → print_figures/ (local)
 fi
 
 echo "✔ done (logs in logs/)"

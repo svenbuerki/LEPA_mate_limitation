@@ -50,3 +50,4 @@ figures_seed_bulking/plant_photos/same_size_*
 
 # talk figures: numbered copies of figures_seed_bulking/ (Scripts/talk_figures.py)
 talk_figures/
+print_figures/

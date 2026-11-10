@@ -84,7 +84,7 @@ p_status <- ggplot() + base_layers(dem_reg, bb_reg) + bl_layers() +
   geom_point(data = typed[typed$candidate, ], aes(X, Y, size = avg_fertile),
              shape = 21, fill = "white", color = TYPE_COLORS[["Mate-limited"]], stroke = 2) +
   scale_fill_manual(values = TYPE_COLORS, labels = lab_of, drop = FALSE,
-                    name = "Seed set for plant size\n(populations; hollow =\ncandidate mate-limited;\nteal ring = candidate source,\n2026 seed being cleaned)") +
+                    name = "Seed set for plant size\n(populations; hollow =\ncandidate mate-limited;\ngreen ring = candidate source,\n2026 seed being cleaned)") +
   size_scale +
   city_layers(bb_reg) +
   guides(fill = guide_legend(order = 1, override.aes = list(size = 6, color = "grey10",

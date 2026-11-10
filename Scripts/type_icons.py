@@ -1,11 +1,11 @@
 """type_icons.py — small badge icons for the three reproductive types, to
 help read the seed-set figures (seed by size, population seed yield).
 
-  Mate-limited (magenta)      two flowers of the same S-type: pollen
+  Mate-limited (orange)       two flowers of the same S-type: pollen
                               rejected (✗), empty fruit — no compatible mate.
-  Reproductively intact (teal) two flowers of different S-types: pollen
+  Reproductively intact (green) two flowers of different S-types: pollen
                               accepted (✓), full fruit — seed as expected.
-  Over-producing (gold)       one flower pollinating itself (own-pollen
+  Over-producing (red)        one flower pollinating itself (own-pollen
                               loop), extra-full fruit — selfing, more seed.
 
 Drawn with the flower, pollen-arc and fruit glyphs of

@@ -8,7 +8,7 @@ with the LEPA_EO_spatial_clustering figures.
 
 Public API
 ----------
-BL_COLORS dict {BLn: hex colour} — Set1 cluster-index mapping.
+BL_COLORS dict {BLn: hex colour} — neutral palette (no traffic-light colors).
 BL_ORDER list of BLn strings — the population BLs, BL1 → BL5.
 load_eo_to_bl(...) map {EOcode: BL} from EO_group_BL_summary.csv
 locationCode_to_bl(...) map {locationCode: BL} — the current population
@@ -36,13 +36,14 @@ from project_paths import EO_BL_SUMMARY_CSV, EO_GROUP_BL_SUMMARY_CSV
 DEFAULT_BL_SUMMARY_CSV = EO_BL_SUMMARY_CSV # external — see project_paths.py
 DEFAULT_EO_GROUP_BL_CSV = EO_GROUP_BL_SUMMARY_CSV
 
-# BL → hex colour (Set1 palette, cluster-index mapping).
+# BL → hex colour (neutral palette, 2026-11-09: green/orange/red are kept for the
+# reproductive categories of the seed-bulking work).
 BL_COLORS: dict[str, str] = {
-    "BL1": "#984EA3", # purple
-    "BL2": "#377EB8", # blue
-    "BL3": "#E41A1C", # red
-    "BL4": "#FF7F00", # orange
-    "BL5": "#4DAF4A", # green
+    "BL1": "#303F9F", # indigo   (neutral palette: no green, orange or red,
+    "BL2": "#29B6F6", # sky blue  which are the traffic-light categories)
+    "BL3": "#7B1FA2", # purple
+    "BL4": "#546E7A", # slate
+    "BL5": "#B39DDB", # lavender
 }
 
 
@@ -185,7 +186,7 @@ def location_label_series(df: pd.DataFrame,
 # survives only as legacy_locationCode_to_bl() / legacy_bl_order()
 # (Step 01 placeholder).
 #
-# BL_COLORS stay the same 5-colour Set1 palette (BL names BL1..BL5
+# BL_COLORS: one fixed 5-colour neutral palette (BL names BL1..BL5
 # are reused with new meanings). The new BL_ORDER is read from
 # tables/step30h_bl_definition.tsv (area DESC → connectivity
 # DESC rule) and will typically read BL1 → BL5 directly.
